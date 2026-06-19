@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตรวจใบงาน Basic Flowchart — ครู</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f1f5f9; --card: #fff; --primary: #4f46e5;
+      --primary-h: #4338ca; --success: #16a34a; --warn: #d97706;
+      --danger: #dc2626; --muted: #64748b; --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Sarabun', sans-serif; background: var(--bg); color: #1e293b; min-height: 100vh; }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #312e81, #4f46e5);
+      color: #fff; padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(79,70,229,0.3);
+    }
+    .header h1 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; }
+    .header-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 2px; }
+    .teacher-input { display: flex; align-items: center; gap: 0.6rem; }
+    .teacher-input label { font-size: 0.85rem; opacity: 0.9; white-space: nowrap; }
+    .teacher-input input {
+      border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.15);
+      color: #fff; border-radius: 8px; padding: 0.35rem 0.75rem; font-size: 0.9rem;
+      font-family: 'Sarabun', sans-serif; width: 180px;
+    }
+    .teacher-input input::placeholder { color: rgba(255,255,255,0.6); }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      max-width: 1400px; margin: 1.5rem auto 0; padding: 0 1.5rem;
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 1.2rem; border-radius: 8px; border: none;
+      font-family: 'Sarabun', sans-serif; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-h); }
+    .btn-outline { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+    .btn-outline:hover { background: #ede9fe; }
+    .badge { background: #ede9fe; color: var(--primary); border-radius: 20px; padding: 0.2rem 0.75rem; font-size: 0.85rem; font-weight: 600; }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      max-width: 1400px; margin: 1rem auto; padding: 0 1.5rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;
+    }
+    .stat-card {
+      background: #fff; border-radius: 12px; padding: 1rem 1.25rem;
+      border-left: 4px solid var(--primary); box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stat-card .val { font-size: 1.8rem; font-weight: 700; color: var(--primary); line-height: 1; }
+    .stat-card .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── Cards Grid ── */
+    .cards-grid {
+      max-width: 1400px; margin: 1rem auto 3rem; padding: 0 1.5rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(700px, 1fr)); gap: 1.5rem;
+    }
+
+    /* ── Submission Card ── */
+    .sub-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07); border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .sub-card.graded { border-color: #bbf7d0; }
+    .sub-card.graded .card-head { background: #f0fdf4; }
+
+    .card-head {
+      background: #f8fafc; padding: 0.9rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .student-info { display: flex; align-items: center; gap: 0.75rem; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 1.1rem;
+    }
+    .student-name { font-weight: 700; font-size: 1rem; }
+    .student-meta { font-size: 0.8rem; color: var(--muted); }
+    .status-badge {
+      padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+    }
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-graded  { background: #dcfce7; color: #166534; }
+
+    .card-body { padding: 1.25rem; }
+
+    /* ── รูป Flowchart ── */
+    .flowcharts-section h3 {
+      font-size: 0.9rem; font-weight: 700; color: #475569; margin-bottom: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .flowchart-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
+    .fc-item { border: 2px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .fc-label {
+      background: #f1f5f9; padding: 0.35rem 0.6rem;
+      font-size: 0.78rem; font-weight: 600; color: #475569;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .fc-img-wrap {
+      height: 140px; background: #f8fafc; display: flex;
+      align-items: center; justify-content: center; overflow: hidden; cursor: pointer;
+    }
+    .fc-img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .fc-img-wrap .no-img { color: #cbd5e1; font-size: 0.8rem; text-align: center; }
+    .fc-score-row {
+      display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.6rem;
+      background: #fafafa; border-top: 1px solid var(--border);
+    }
+    .fc-score-row label { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+    .score-input {
+      width: 56px; border: 1.5px solid #c7d2fe; border-radius: 6px;
+      padding: 0.2rem 0.4rem; font-size: 0.9rem; font-weight: 700; text-align: center;
+      color: var(--primary); font-family: 'Sarabun', sans-serif;
+    }
+    .score-input:focus { outline: none; border-color: var(--primary); }
+    .max-score { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── Score summary ── */
+    .score-summary {
+      background: #f8fafc; border-radius: 10px; padding: 1rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .score-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+    .score-row .lbl { color: var(--muted); }
+    .score-row .val { font-weight: 700; }
+    .total-row {
+      grid-column: 1/-1; display: flex; justify-content: space-between; align-items: center;
+      padding-top: 0.75rem; border-top: 2px dashed var(--border); font-size: 1rem;
+    }
+    .total-row .lbl { font-weight: 700; }
+    .total-val { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+
+    /* ── Note + Save ── */
+    .note-row { margin-bottom: 1rem; }
+    .note-row label { font-size: 0.85rem; font-weight: 600; color: #475569; display: block; margin-bottom: 0.35rem; }
+    .note-row textarea {
+      width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 0.5rem 0.75rem; font-size: 0.9rem; font-family: 'Sarabun', sans-serif;
+      resize: vertical; min-height: 60px;
+    }
+    .note-row textarea:focus { outline: none; border-color: var(--primary); }
+
+    .save-row { display: flex; justify-content: flex-end; gap: 0.75rem; align-items: center; }
+    .graded-info { font-size: 0.8rem; color: var(--success); }
+
+    /* ── Lightbox ── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      z-index: 9999; align-items: center; justify-content: center;
+    }
+    #lightbox.show { display: flex; }
+    #lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+    #lightbox .close-lb {
+      position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.15);
+      color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px;
+      font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      background: #1e293b; color: #fff; padding: 0.75rem 1.5rem; border-radius: 10px;
+      font-size: 0.95rem; z-index: 10000; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s; white-space: nowrap;
+    }
+    #toast.show { opacity: 1; }
+
+    /* ── Empty / Loading ── */
+    .center-msg { text-align: center; padding: 4rem 1rem; color: var(--muted); }
+    .center-msg .icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    @media (max-width: 760px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .flowchart-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h1>📋 ตรวจใบงาน Basic Flowchart</h1>
+      <div class="header-sub">การเขียนผังงาน — หน้าสำหรับครูผู้สอน</div>
+    </div>
+    <div class="teacher-input">
+      <label>ชื่อครูผู้ตรวจ:</label>
+      <input id="teacherName" type="text" placeholder="อ.ชื่อ นามสกุล" value="">
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="btn btn-primary" onclick="loadSubmissions()">🔄 โหลด/รีเฟรชรายการ</button>
+    <button class="btn btn-outline" onclick="filterUnchecked()">⏳ แสดงเฉพาะที่ยังไม่ตรวจ</button>
+    <button class="btn btn-outline" onclick="showAll()">📋 แสดงทั้งหมด</button>
+    <span class="badge" id="countBadge">— รายการ</span>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar" id="statsBar" style="display:none">
+    <div class="stat-card">
+      <div class="val" id="statTotal">0</div>
+      <div class="lbl">ส่งงานทั้งหมด</div>
+    </div>
+    <div class="stat-card" style="border-color:#16a34a">
+      <div class="val" id="statGraded" style="color:#16a34a">0</div>
+      <div class="lbl">ตรวจแล้ว</div>
+    </div>
+    <div class="stat-card" style="border-color:#d97706">
+      <div class="val" id="statPending" style="color:#d97706">0</div>
+      <div class="lbl">รอตรวจ</div>
+    </div>
+    <div class="stat-card">
+      <div class="val" id="statAvg">—</div>
+      <div class="lbl">คะแนนเฉลี่ย</div>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards-grid" id="cardsGrid">
+    <div class="center-msg">
+      <div class="icon">📂</div>
+      <p>กดปุ่ม "โหลด/รีเฟรชรายการ" เพื่อดูงานที่นักเรียนส่งมา</p>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <button class="close-lb" onclick="closeLightbox()">✕</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <script>
+    const SCRIPT_URL = window.location.href.split('?')[0];
+    let allRows = [];
+    let showingAll = true;
+
+    // ── โหลดรายการ ──
+    function loadSubmissions() {
+      document.getElementById('cardsGrid').innerHTML =
+        '<div class="center-msg"><div class="icon">⏳</div><p>กำลังโหลดข้อมูล...</p></div>';
+
+      google.script.run
+        .withSuccessHandler(function(result) {
+          if (result.status === 'empty') {
+            document.getElementById('cardsGrid').innerHTML =
+              '<div class="center-msg"><div class="icon">📭</div><p>ยังไม่มีนักเรียนส่งงาน</p></div>';
+            return;
+          }
+          allRows = result.rows || [];
+          updateStats();
+          renderCards(allRows);
+        })
+        .withFailureHandler(function(err) {
+          document.getElementById('cardsGrid').innerHTML =
+            '<div class="center-msg"><div class="icon">❌</div><p>โหลดไม่ได้: ' + err.message + '</p></div>';
+        })
+        .getSubmissions();
+    }
+
+    // ── สถิติ ──
+    function updateStats() {
+      const total   = allRows.length;
+      const graded  = allRows.filter(r => r.finalScore !== '' && r.finalScore !== null && r.finalScore !== undefined).length;
+      const pending = total - graded;
+      const scores  = allRows.filter(r => r.finalScore !== '' && r.finalScore !== null).map(r => parseFloat(r.finalScore) || 0);
+      const avg     = scores.length ? (scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1) : '—';
+
+      document.getElementById('statTotal').textContent  = total;
+      document.getElementById('statGraded').textContent = graded;
+      document.getElementById('statPending').textContent= pending;
+      document.getElementById('statAvg').textContent    = avg;
+      document.getElementById('statsBar').style.display = 'grid';
+      document.getElementById('countBadge').textContent = total + ' รายการ';
+    }
+
+    // ── Filter ──
+    function filterUnchecked() {
+      showingAll = false;
+      const filtered = allRows.filter(r => r.finalScore === '' || r.finalScore === null || r.finalScore === undefined);
+      renderCards(filtered);
+      document.getElementById('countBadge').textContent = filtered.length + ' รายการ (รอตรวจ)';
+    }
+    function showAll() {
+      showingAll = true;
+      renderCards(allRows);
+      document.getElementById('countBadge').textContent = allRows.length + ' รายการ';
+    }
+
+    // ── Render Cards ──
+    function renderCards(rows) {
+      if (!rows.length) {
+        document.getElementById('cardsGrid').innerHTML =
+          '<div class="center-msg"><div class="icon">✅</div><p>ตรวจครบทุกรายการแล้ว</p></div>';
+        return;
+      }
+      document.getElementById('cardsGrid').innerHTML = rows.map(r => buildCard(r)).join('');
+    }
+
+    function buildCard(r) {
+      const isGraded = r.finalScore !== '' && r.finalScore !== null && r.finalScore !== undefined;
+      const initials = (r.studentName || '?').charAt(0).toUpperCase();
+
+      function fcItem(label, imgUrl, scoreKey, maxPt) {
+        const hasImg = imgUrl && imgUrl !== 'ไม่ได้แนบรูป';
+        const imgHtml = hasImg
+          ? `<img src="${imgUrl}" onclick="openLightbox('${imgUrl}')" title="คลิกขยาย" loading="lazy">`
+          : `<div class="no-img">📷 ไม่แนบรูป</div>`;
+        const val = isGraded ? (r[scoreKey] !== '' ? r[scoreKey] : '') : '';
+        return `
+          <div class="fc-item">
+            <div class="fc-label">
+              <span>${label}</span>
+              <span style="color:${hasImg?'#16a34a':'#dc2626'}">${hasImg?'✓ มีรูป':'✗ ไม่มี'}</span>
+            </div>
+            <div class="fc-img-wrap">${imgHtml}</div>
+            <div class="fc-score-row">
+              <label>คะแนน:</label>
+              <input class="score-input" type="number" min="0" max="${maxPt}" step="0.5"
+                     id="${scoreKey}_${r.rowIndex}" value="${val}" placeholder="0">
+              <span class="max-score">/ ${maxPt}</span>
+            </div>
+          </div>`;
+      }
+
+      // parse non-pic auto score
+      let autoNonPic = 0;
+      const symM = (r.autoDetail||'').match(/สัญลักษณ์: (\d+)/);
+      if (symM) autoNonPic += parseInt(symM[1]);
+      const ipoM = (r.autoDetail||'').match(/IPO: (\d+)/);
+      if (ipoM) autoNonPic += parseInt(ipoM[1]);
+      const concM = (r.autoDetail||'').match(/สรุปผล: (\d+)/);
+      if (concM) autoNonPic += parseInt(concM[1]);
+
+      return `
+        <div class="sub-card ${isGraded?'graded':''}" id="card_${r.rowIndex}">
+          <div class="card-head">
+            <div class="student-info">
+              <div class="avatar">${initials}</div>
+              <div>
+                <div class="student-name">${r.studentName}</div>
+                <div class="student-meta">รหัส: ${r.studentId} &nbsp;|&nbsp; ห้อง: ${r.studentGroup} &nbsp;|&nbsp; ส่งเมื่อ: ${r.timestamp}</div>
+              </div>
+            </div>
+            <span class="status-badge ${isGraded?'status-graded':'status-pending'}">
+              ${isGraded ? '✅ ตรวจแล้ว' : '⏳ รอตรวจ'}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <!-- ข้อ 2.2 -->
+            <div class="flowcharts-section">
+              <h3>ข้อ 2.2 — Flowchart (ดับเบิลคลิกรูปเพื่อขยาย)</h3>
+              <div class="flowchart-grid">
+                ${fcItem('2.2.1 ต้มบะหมี่', r.img221, 't221', 5)}
+                ${fcItem('2.2.2 ฝนตก', r.img222, 't222', 5)}
+                ${fcItem('2.2.3 Number', r.img223, 't223', 5)}
+              </div>
+            </div>
+
+            <!-- ข้อ 2.3 -->
+            <div class="flowcharts-section">
+              <h3>ข้อ 2.3 — Flowchart</h3>
+              <div class="flowchart-grid">
+                ${fcItem('2.3.1 Calories', r.img231, 't231', 5)}
+                ${fcItem('2.3.2 Circle', r.img232, 't232', 5)}
+                ${fcItem('2.3.3 Fahrenheit', r.img233, 't233', 5)}
+              </div>
+            </div>
+
+            <!-- สรุปคะแนน -->
+            <div class="score-summary">
+              <div class="score-row">
+                <span class="lbl">2.1 สัญลักษณ์ + IPO + สรุปผล (อัตโนมัติ)</span>
+                <span class="val">${autoNonPic}/15</span>
+              </div>
+              <div class="score-row">
+                <span class="lbl">คะแนน Flowchart ครูตรวจ (2.2+2.3)</span>
+                <span class="val" id="fcTotal_${r.rowIndex}">—/30</span>
+              </div>
+              <div class="total-row">
+                <span class="lbl">🏆 คะแนนรวมสุดท้าย</span>
+                <span class="total-val" id="finalTotal_${r.rowIndex}">${isGraded ? r.finalScore : '—'}</span>
+              </div>
+            </div>
+
+            <!-- หมายเหตุครู -->
+            <div class="note-row">
+              <label>💬 หมายเหตุ / ข้อเสนอแนะจากครู:</label>
+              <textarea id="note_${r.rowIndex}" placeholder="เช่น: ผังงานถูกต้อง, ขาดสัญลักษณ์ Start/End, ฯลฯ">${isGraded ? (r.teacherNote||'') : ''}</textarea>
+            </div>
+
+            <!-- ปุ่มบันทึก -->
+            <div class="save-row">
+              ${isGraded ? `<span class="graded-info">✅ ตรวจโดย ${r.gradedBy} เมื่อ ${r.gradedAt}</span>` : ''}
+              <button class="btn btn-primary" onclick="saveScore(${r.rowIndex}, ${autoNonPic})">
+                💾 บันทึกคะแนน
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    // ── Live preview คะแนนรวม ──
+    document.addEventListener('input', function(e) {
+      if (e.target.classList.contains('score-input')) {
+        const idParts = e.target.id.split('_');
+        const rowIndex = idParts[idParts.length - 1];
+        updatePreview(rowIndex);
+      }
+    });
+
+    function updatePreview(rowIndex) {
+      const keys = ['t221','t222','t223','t231','t232','t233'];
+      let fcTotal = 0;
+      keys.forEach(function(k) {
+        const el = document.getElementById(k + '_' + rowIndex);
+        if (el) fcTotal += parseFloat(el.value) || 0;
+      });
+      const fcTotalEl = document.getElementById('fcTotal_' + rowIndex);
+      if (fcTotalEl) fcTotalEl.textContent = fcTotal.toFixed(1) + '/30';
+
+      // หา autoNonPic จาก card
+      const card = document.getElementById('card_' + rowIndex);
+      if (!card) return;
+      const finalEl = document.getElementById('finalTotal_' + rowIndex);
+      const summaryRows = card.querySelectorAll('.score-row .val');
+      const autoNonPic = parseFloat((summaryRows[0]?.textContent||'0').split('/')[0]) || 0;
+      if (finalEl) finalEl.textContent = (autoNonPic + fcTotal).toFixed(1);
+    }
+
+    // ── บันทึกคะแนน ──
+    function saveScore(rowIndex, autoNonPic) {
+      const teacherName = document.getElementById('teacherName').value.trim();
+      if (!teacherName) {
+        showToast('⚠️ กรุณากรอกชื่อครูผู้ตรวจก่อน');
+        document.getElementById('teacherName').focus();
+        return;
+      }
+
+      const get = function(key) {
+        const el = document.getElementById(key + '_' + rowIndex);
+        return el ? (parseFloat(el.value) || 0) : 0;
+      };
+
+      const payload = {
+        action: 'saveTeacherScore',
+        rowIndex: rowIndex,
+        t221: get('t221'), t222: get('t222'), t223: get('t223'),
+        t231: get('t231'), t232: get('t232'), t233: get('t233'),
+        teacherNote: document.getElementById('note_' + rowIndex)?.value || '',
+        gradedBy: teacherName
+      };
+
+      showToast('⏳ กำลังบันทึก...');
+
+      google.script.run
+        .withSuccessHandler(function(result) {
+          if (result.status === 'success') {
+            showToast('✅ บันทึกคะแนนสำเร็จ! รวม ' + result.finalScore + ' คะแนน');
+            const card = document.getElementById('card_' + rowIndex);
+            if (card) card.classList.add('graded');
+            // อัปเดต badge
+            const badge = card?.querySelector('.status-badge');
+            if (badge) {
+              badge.className = 'status-badge status-graded';
+              badge.textContent = '✅ ตรวจแล้ว';
+            }
+            // refresh stats
+            loadSubmissions();
+          } else {
+            showToast('❌ ' + result.message);
+          }
+        })
+        .withFailureHandler(function(err) {
+          showToast('❌ ส่งข้อมูลไม่ได้: ' + err.message);
+        })
+        .saveTeacherScore(payload);
+    }
+
+    // ── Lightbox ──
+    function openLightbox(url) {
+      document.getElementById('lightboxImg').src = url;
+      document.getElementById('lightbox').classList.add('show');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('show');
+    }
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    // ── Toast ──
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3000);
+    }
+  </script>
+</body>
+</html>

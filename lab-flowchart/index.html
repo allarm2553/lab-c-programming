@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบงานที่ 2 เรื่อง การเขียนผังงาน Flowchart (Interactive)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f1f5f9; }
+        @media print {
+            body { background-color: #ffffff; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none !important; }
+            @page { size: A4; margin: 1.5cm; }
+            input, textarea { border: none !important; background: transparent !important; padding: 0 !important; resize: none !important; }
+            .input-dashed { border-bottom: 1px dashed #94a3b8 !important; }
+            .upload-label { display: none !important; }
+        }
+        .a4-page { width: 210mm; min-height: 297mm; padding: 2cm; margin: 0 auto; background: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        @media print { .a4-page { width: auto; min-height: auto; padding: 0; margin: 0; box-shadow: none; } }
+        .flowchart-shape { width: 140px; height: 60px; border: 2px solid #333; display: inline-block; }
+        .shape-terminator { border-radius: 30px; background-color: #fef08a; }
+        .shape-io { transform: skewX(-20deg); background-color: #bbf7d0; }
+        .shape-decision { width: 70px; height: 70px; transform: rotate(45deg); background-color: #fed7aa; margin: 15px 35px; }
+        .shape-process { background-color: #bfdbfe; }
+        .shape-connector { width: 50px; height: 50px; border-radius: 50%; background-color: #fca5a5; }
+        .image-preview { max-width: 100%; max-height: 100%; object-fit: contain; display: none; }
+        .upload-zone { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .upload-zone.has-image .upload-controls { display: none !important; }
+        .remove-img-btn { position: absolute; top: 6px; right: 6px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 26px; height: 26px; font-size: 14px; cursor: pointer; display: none; align-items: center; justify-content: center; line-height: 1; z-index: 10; }
+        .upload-zone.has-image .remove-img-btn { display: flex; }
+
+        /* Modal */
+        #submitModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; }
+        #submitModal.show { display:flex; }
+        #submitModalBox { background:white; border-radius:16px; padding:2rem; max-width:460px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body class="py-10">
+
+    <!-- แผงควบคุมด้านบน -->
+    <div class="max-w-4xl mx-auto mb-6 p-4 bg-white rounded-xl shadow-sm flex flex-wrap justify-between items-center gap-4 no-print">
+        <div>
+            <h3 class="font-bold text-lg text-slate-800">โหมดใบงานแบบโต้ตอบ (Interactive)</h3>
+            <p class="text-sm text-slate-500">กรอกคำตอบ แนบรูปผังงาน แล้วกด "ส่งใบงานออนไลน์"</p>
+        </div>
+        <div class="flex gap-3 flex-wrap">
+            <button onclick="window.print()" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2.5 px-5 rounded-lg shadow-md transition duration-300 flex items-center gap-2">
+                <span>🖨️</span> พิมพ์ / PDF
+            </button>
+            <button onclick="submitLab()" id="submitBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-md transition duration-300 flex items-center gap-2">
+                <span>📤</span> ส่งใบงานออนไลน์
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 1 ================= -->
+    <div class="a4-page bg-white mb-8">
+        <div class="border-b-2 border-slate-300 pb-4 mb-6">
+            <h1 class="text-2xl font-bold text-center text-slate-800">ใบงานที่ 2</h1>
+            <p class="text-xl text-center font-medium text-slate-600 mt-1">เรื่อง การเขียนผังงาน Flowchart</p>
+        </div>
+
+        <!-- ข้อมูลผู้เรียน -->
+        <div class="grid grid-cols-3 gap-4 mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200">
+            <div class="flex items-center gap-2">
+                <span class="font-medium text-slate-700 whitespace-nowrap">ชื่อ-นามสกุล:</span>
+                <input id="studentName" type="text" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500 input-dashed" placeholder="พิมพ์ชื่อของคุณ">
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="font-medium text-slate-700 whitespace-nowrap">ชั้น/ห้อง:</span>
+                <input id="studentGroup" type="text" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500 input-dashed" placeholder="4/1">
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="font-medium text-slate-700 whitespace-nowrap">รหัสประจำตัว:</span>
+                <input id="studentId" type="text" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500 input-dashed" placeholder="465895666">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-800">1. วัตถุประสงค์</h2>
+            <p class="text-md pl-6 text-slate-600">1.1. สามารถเขียนผังงานได้</p>
+        </div>
+        <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-800">2. ขั้นตอนการปฏิบัติงาน</h2>
+            <p class="text-md pl-6 font-semibold text-slate-700">2.1. จงบอกสัญลักษณ์ของผังงานต่อไปนี้</p>
+        </div>
+
+        <div class="space-y-6 pl-6 mt-6">
+            <!-- 2.1.1 -->
+            <div class="flex items-center space-x-8">
+                <div class="w-40 flex justify-center"><div class="flowchart-shape shape-terminator"></div></div>
+                <div class="flex-1 flex items-center gap-2">
+                    <span class="text-md font-medium whitespace-nowrap">2.1.1 คือ </span>
+                    <input id="ans211" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
+                </div>
+            </div>
+            <!-- 2.1.2 -->
+            <div class="flex items-center space-x-8">
+                <div class="w-40 flex justify-center"><div class="flowchart-shape shape-io"></div></div>
+                <div class="flex-1 flex items-center gap-2">
+                    <span class="text-md font-medium whitespace-nowrap">2.1.2 คือ </span>
+                    <input id="ans212" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
+                </div>
+            </div>
+            <!-- 2.1.3 -->
+            <div class="flex items-center space-x-8">
+                <div class="w-40 flex justify-center"><div class="shape-decision"></div></div>
+                <div class="flex-1 flex items-center gap-2 pt-4">
+                    <span class="text-md font-medium whitespace-nowrap">2.1.3 คือ </span>
+                    <input id="ans213" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
+                </div>
+            </div>
+            <!-- 2.1.4 -->
+            <div class="flex items-center space-x-8">
+                <div class="w-40 flex justify-center"><div class="flowchart-shape shape-process"></div></div>
+                <div class="flex-1 flex items-center gap-2">
+                    <span class="text-md font-medium whitespace-nowrap">2.1.4 คือ </span>
+                    <input id="ans214" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
+                </div>
+            </div>
+            <!-- 2.1.5 -->
+            <div class="flex items-center space-x-8">
+                <div class="w-40 flex justify-center"><div class="shape-connector"></div></div>
+                <div class="flex-1 flex items-center gap-2">
+                    <span class="text-md font-medium whitespace-nowrap">2.1.5 คือ </span>
+                    <input id="ans215" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 2 ================= -->
+    <div class="a4-page bg-white mb-8 page-break">
+        <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-800">2.2. นักเรียนพิจารณาข้อความนี้ แล้วนำไปเขียนผังงานให้ถูกต้อง</h2>
+        </div>
+
+        <!-- 2.2.1 -->
+        <div class="border border-slate-300 rounded-lg p-4 mb-6">
+            <span class="font-bold text-slate-700">2.2.1.</span>
+            <div class="grid grid-cols-2 gap-2 mt-2 text-md pl-4 text-slate-600">
+                <div>1. เริ่มต้น</div><div>2. จบ</div>
+                <div>3. รับประทาน</div><div>4. ต้มน้ำให้เดือด</div>
+                <div>5. ต้มประมาณ 1 นาที</div><div>6. ใส่เครื่องปรุงแล้วยกภาชนะลงจากเตา</div>
+                <div class="col-span-2">7. ใส่บะหมี่ลงในน้ำเดือด</div>
+            </div>
+            <div class="mt-4 border-t border-dashed border-slate-300 pt-4">
+                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
+                <div class="border-2 border-dashed border-slate-300 h-80 bg-slate-50 rounded-lg overflow-hidden">
+                    <div class="upload-zone h-full" id="zone-221">
+                        <div class="upload-controls flex flex-col items-center gap-2">
+                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
+                                📁 คลิกเพื่อแนบรูปภาพผังงาน
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-221')">
+                            </label>
+                            <span class="upload-label text-xs text-slate-400 no-print">รองรับไฟล์รูปภาพ PNG, JPG</span>
+                        </div>
+                        <img class="image-preview" alt="Flowchart Preview">
+                        <button class="remove-img-btn no-print" onclick="removeImage('zone-221')" title="ลบรูป">✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.2.2 -->
+        <div class="border border-slate-300 rounded-lg p-4">
+            <span class="font-bold text-slate-700">2.2.2.</span>
+            <div class="grid grid-cols-2 gap-2 mt-2 text-md pl-4 text-slate-600">
+                <div>1. เริ่มต้น</div><div>2. จบ</div>
+                <div>3. ซักเสื้อผ้า</div><div>4. ฝนตกหรือไม่</div>
+                <div class="col-span-2">5. ถ้าฝนไม่ตก ออกไปดูภาพยนตร์</div>
+                <div class="col-span-2">6. ถ้าฝนตก อยู่บ้านอ่านหนังสือ</div>
+            </div>
+            <div class="mt-4 border-t border-dashed border-slate-300 pt-4">
+                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
+                <div class="border-2 border-dashed border-slate-300 h-80 bg-slate-50 rounded-lg overflow-hidden">
+                    <div class="upload-zone h-full" id="zone-222">
+                        <div class="upload-controls flex flex-col items-center gap-2">
+                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
+                                📁 คลิกเพื่อแนบรูปภาพผังงาน
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-222')">
+                            </label>
+                            <span class="upload-label text-xs text-slate-400 no-print">รองรับไฟล์รูปภาพ PNG, JPG</span>
+                        </div>
+                        <img class="image-preview" alt="Flowchart Preview">
+                        <button class="remove-img-btn no-print" onclick="removeImage('zone-222')" title="ลบรูป">✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 3 ================= -->
+    <div class="a4-page bg-white mb-8 page-break">
+        <!-- 2.2.3 -->
+        <div class="border border-slate-300 rounded-lg p-4 mb-6">
+            <span class="font-bold text-slate-700">2.2.3.</span>
+            <div class="space-y-1 mt-2 text-md pl-4 text-slate-600">
+                <div>1. เริ่มต้น</div><div>2. รับค่า num</div><div>3. ตรวจสอบค่า num</div>
+                <div>4. ถ้า num = 1 แสดงข้อความ "Number One"</div>
+                <div>5. ถ้า num = 2 แสดงข้อความ "Number Two"</div>
+                <div>6. ถ้า num = 3 แสดงข้อความ "Number Three"</div>
+                <div>7. ค่าไม่เท่ากับ num แสดงข้อความ "Error"</div>
+                <div>8. จบการทำงาน</div>
+            </div>
+            <div class="mt-4 border-t border-dashed border-slate-300 pt-4">
+                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
+                <div class="border-2 border-dashed border-slate-300 h-80 bg-slate-50 rounded-lg overflow-hidden">
+                    <div class="upload-zone h-full" id="zone-223">
+                        <div class="upload-controls flex flex-col items-center gap-2">
+                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
+                                📁 คลิกเพื่อแนบรูปภาพผังงาน
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-223')">
+                            </label>
+                            <span class="upload-label text-xs text-slate-400 no-print">รองรับไฟล์รูปภาพ PNG, JPG</span>
+                        </div>
+                        <img class="image-preview" alt="Flowchart Preview">
+                        <button class="remove-img-btn no-print" onclick="removeImage('zone-223')" title="ลบรูป">✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-800">2.3. จงเขียนผังงานจากโจทย์ที่กำหนดให้ ให้ทำการแนบรูปผังงานใต้โจทย์ที่กำหนด</h2>
+        </div>
+
+        <!-- 2.3.1 -->
+        <div class="border border-slate-300 rounded-lg p-4">
+            <p class="text-md font-medium text-slate-800 leading-relaxed">
+                <span class="font-bold text-slate-700">2.3.1.</span> ให้นักเรียนเขียนผังงาน (Flowchart) ในการคำนวณปริมาณแคลอรี่มาตรฐาน สูตร <span class="font-semibold">Calories = bodyweight * 19</span> โดยน้ำหนักตัวเป็นปอนด์
+            </p>
+            <div class="mt-3 space-y-2 text-md pl-4">
+                <div class="flex items-center gap-2"><strong>Input คือ:</strong>
+                    <input id="input231" type="text" class="w-full border-b border-slate-300 px-2 py-0.5" value="bodyweight" readonly>
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+                <div class="flex items-center gap-2"><strong>Process คือ:</strong>
+                    <input id="process231" type="text" class="w-full border-b border-slate-300 px-2 py-0.5" value="Calories = bodyweight * 19" readonly>
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+                <div class="flex items-center gap-2"><strong>Output คือ:</strong>
+                    <input id="output231" type="text" class="w-full border-b border-slate-300 px-2 py-0.5" value="Calories" readonly>
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+            </div>
+            <div class="mt-4 border-t border-dashed border-slate-300 pt-3">
+                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
+                <div class="border-2 border-dashed border-slate-300 h-64 bg-slate-50 rounded-lg overflow-hidden">
+                    <div class="upload-zone h-full" id="zone-231">
+                        <div class="upload-controls flex flex-col items-center gap-2">
+                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
+                                📁 คลิกเพื่อแนบรูปภาพผังงาน
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-231')">
+                            </label>
+                        </div>
+                        <img class="image-preview" alt="Flowchart Preview">
+                        <button class="remove-img-btn no-print" onclick="removeImage('zone-231')" title="ลบรูป">✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 4 ================= -->
+    <div class="a4-page bg-white mb-8 page-break">
+        <!-- 2.3.2 -->
+        <div class="border border-slate-300 rounded-lg p-4 mb-6">
+            <p class="text-md font-medium text-slate-800 leading-relaxed">
+                <span class="font-bold text-slate-700">2.3.2.</span> ให้เขียนผังงานแสดงการคำนวณพื้นที่และเส้นรอบวงของวงกลม <span class="font-semibold">CircleArea = PI * r * r</span> และ <span class="font-semibold">CirclePerimeter = 2 * PI * r</span> (PI = 3.14)
+            </p>
+            <div class="mt-3 space-y-2 text-md pl-4">
+                <div class="flex items-center gap-2"><strong>Input คือ:</strong>
+                    <input id="input232" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+                <div class="flex items-center gap-2"><strong>Process คือ:</strong>
+                    <input id="process232" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+                <div class="flex items-center gap-2"><strong>Output คือ:</strong>
+                    <input id="output232" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+            </div>
+            <div class="mt-4 border-t border-dashed border-slate-300 pt-3">
+                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
+                <div class="border-2 border-dashed border-slate-300 h-64 bg-slate-50 rounded-lg overflow-hidden">
+                    <div class="upload-zone h-full" id="zone-232">
+                        <div class="upload-controls flex flex-col items-center gap-2">
+                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
+                                📁 คลิกเพื่อแนบรูปภาพผังงาน
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-232')">
+                            </label>
+                        </div>
+                        <img class="image-preview" alt="Flowchart Preview">
+                        <button class="remove-img-btn no-print" onclick="removeImage('zone-232')" title="ลบรูป">✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.3.3 -->
+        <div class="border border-slate-300 rounded-lg p-4 mb-6">
+            <p class="text-md font-medium text-slate-800 leading-relaxed">
+                <span class="font-bold text-slate-700">2.3.3.</span> จงเขียนผังงานเพื่อทำการแปลงค่าองศาฟาเรนไฮต์ (F) ให้เป็น องศาเซลเซียส (C) โดยใช้สูตร <span class="font-semibold">C = (F - 32) / 1.8</span>
+            </p>
+            <div class="mt-3 space-y-2 text-md pl-4">
+                <div class="flex items-center gap-2"><strong>Input คือ:</strong>
+                    <input id="input233" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+                <div class="flex items-center gap-2"><strong>Process คือ:</strong>
+                    <input id="process233" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+                <div class="flex items-center gap-2"><strong>Output คือ:</strong>
+                    <input id="output233" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
+                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
+            </div>
+            <div class="mt-4 border-t border-dashed border-slate-300 pt-3">
+                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
+                <div class="border-2 border-dashed border-slate-300 h-64 bg-slate-50 rounded-lg overflow-hidden">
+                    <div class="upload-zone h-full" id="zone-233">
+                        <div class="upload-controls flex flex-col items-center gap-2">
+                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
+                                📁 คลิกเพื่อแนบรูปภาพผังงาน
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-233')">
+                            </label>
+                        </div>
+                        <img class="image-preview" alt="Flowchart Preview">
+                        <button class="remove-img-btn no-print" onclick="removeImage('zone-233')" title="ลบรูป">✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. สรุปผล -->
+        <div class="border border-slate-300 rounded-lg p-4">
+            <h2 class="text-lg font-bold mb-2 text-slate-800">3. สรุปผล <span class="text-sm font-normal text-slate-400">(5 คะแนน)</span></h2>
+            <textarea id="conclusion" class="w-full border border-slate-300 rounded p-2 text-md focus:outline-none focus:border-blue-500" rows="4" placeholder="พิมพ์สรุปผลการปฏิบัติงานของคุณที่นี่..."></textarea>
+        </div>
+
+        <!-- ปุ่มส่งงาน (ด้านล่างใบงาน) -->
+        <div class="mt-6 flex justify-center no-print">
+            <button onclick="submitLab()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-xl shadow-lg transition duration-300 text-lg flex items-center gap-3">
+                <span>📤</span> ส่งใบงานออนไลน์
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== MODAL แสดงผลการส่ง ===== -->
+    <div id="submitModal">
+        <div id="submitModalBox">
+            <div id="modalIcon" class="text-5xl mb-3">⏳</div>
+            <h3 id="modalTitle" class="text-xl font-bold text-slate-800 mb-2">กำลังส่งใบงาน...</h3>
+            <p id="modalMsg" class="text-slate-600 text-sm whitespace-pre-line mb-5">กรุณารอสักครู่</p>
+            <button id="modalCloseBtn" onclick="closeModal()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-lg transition">ตกลง</button>
+        </div>
+    </div>
+
+    <script>
+        // ══════════════════════════════════════════════════
+        // 🔧 ใส่ URL ของ Google Apps Script ที่ Deploy แล้ว
+        // ══════════════════════════════════════════════════
+        const SCRIPT_URL = "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec";
+
+        // ──────────────────────────────────────────────────
+        // Image Preview & Remove
+        // ──────────────────────────────────────────────────
+        function previewImage(input, zoneId) {
+            const file = input.files[0];
+            if (!file) return;
+            const zone = document.getElementById(zoneId);
+            if (!zone) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = zone.querySelector('.image-preview');
+                img.src = e.target.result;
+                img.style.display = 'block';
+                zone.classList.add('has-image');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(zoneId) {
+            const zone = document.getElementById(zoneId);
+            if (!zone) return;
+            const img = zone.querySelector('.image-preview');
+            img.src = '';
+            img.style.display = 'none';
+            zone.classList.remove('has-image');
+            const fi = zone.querySelector('input[type="file"]');
+            if (fi) fi.value = '';
+        }
+
+        // ──────────────────────────────────────────────────
+        // Modal helpers
+        // ──────────────────────────────────────────────────
+        function showModal(icon, title, msg, showClose) {
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMsg').textContent = msg;
+            document.getElementById('modalCloseBtn').classList.toggle('hidden', !showClose);
+            document.getElementById('submitModal').classList.add('show');
+        }
+        function closeModal() {
+            document.getElementById('submitModal').classList.remove('show');
+        }
+
+        // ──────────────────────────────────────────────────
+        // Helper: ดึง base64 จากรูปใน zone
+        // ──────────────────────────────────────────────────
+        function getZoneImageData(zoneId) {
+            const zone = document.getElementById(zoneId);
+            if (!zone) return { base64: null, name: null, type: null };
+            const img = zone.querySelector('.image-preview');
+            const fi = zone.querySelector('input[type="file"]');
+            if (!img || !img.src || img.style.display === 'none') return { base64: null, name: null, type: null };
+            const file = fi && fi.files[0];
+            return {
+                base64: img.src,   // already data URL
+                name: file ? file.name : 'flowchart.png',
+                type: file ? file.type : 'image/png'
+            };
+        }
+
+        // ──────────────────────────────────────────────────
+        // Submit
+        // ──────────────────────────────────────────────────
+        function submitLab() {
+            // Validate
+            const name = document.getElementById('studentName').value.trim();
+            const id   = document.getElementById('studentId').value.trim();
+            const grp  = document.getElementById('studentGroup').value.trim();
+            if (!name || !id || !grp) {
+                showModal('⚠️', 'กรอกข้อมูลไม่ครบ', 'กรุณากรอก ชื่อ-นามสกุล / ชั้น-ห้อง / รหัสประจำตัว ให้ครบก่อนส่งใบงาน', true);
+                return;
+            }
+            if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+                showModal('⚙️', 'ยังไม่ได้ตั้งค่า Script URL', 'กรุณาแก้ไขค่า SCRIPT_URL ในไฟล์ index.html ให้เป็น URL ของ Google Apps Script ที่ Deploy แล้ว', true);
+                return;
+            }
+
+            showModal('⏳', 'กำลังส่งใบงาน...', 'กรุณารอสักครู่ ระบบกำลังอัปโหลดไฟล์และบันทึกข้อมูล', false);
+
+            // รวบรวมข้อมูล
+            const img221 = getZoneImageData('zone-221');
+            const img222 = getZoneImageData('zone-222');
+            const img223 = getZoneImageData('zone-223');
+            const img231 = getZoneImageData('zone-231');
+            const img232 = getZoneImageData('zone-232');
+            const img233 = getZoneImageData('zone-233');
+
+            const payload = {
+                studentName:  name,
+                studentId:    id,
+                studentGroup: grp,
+                // ข้อ 2.1
+                ans211: document.getElementById('ans211').value,
+                ans212: document.getElementById('ans212').value,
+                ans213: document.getElementById('ans213').value,
+                ans214: document.getElementById('ans214').value,
+                ans215: document.getElementById('ans215').value,
+                // รูป 2.2
+                flowchart221Base64: img221.base64, flowchart221Name: img221.name, flowchart221Type: img221.type,
+                flowchart222Base64: img222.base64, flowchart222Name: img222.name, flowchart222Type: img222.type,
+                flowchart223Base64: img223.base64, flowchart223Name: img223.name, flowchart223Type: img223.type,
+                // IPO 2.3
+                input231: document.getElementById('input231').value,
+                process231: document.getElementById('process231').value,
+                output231: document.getElementById('output231').value,
+                flowchart231Base64: img231.base64, flowchart231Name: img231.name, flowchart231Type: img231.type,
+                input232: document.getElementById('input232').value,
+                process232: document.getElementById('process232').value,
+                output232: document.getElementById('output232').value,
+                flowchart232Base64: img232.base64, flowchart232Name: img232.name, flowchart232Type: img232.type,
+                input233: document.getElementById('input233').value,
+                process233: document.getElementById('process233').value,
+                output233: document.getElementById('output233').value,
+                flowchart233Base64: img233.base64, flowchart233Name: img233.name, flowchart233Type: img233.type,
+                // สรุปผล
+                conclusion: document.getElementById('conclusion').value
+            };
+
+            // ส่งไปยัง Google Apps Script
+            // ใช้ Content-Type: text/plain เพื่อหลีกเลี่ยง CORS preflight
+            // และ redirect: 'follow' เพราะ GAS redirect POST → GET
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload),
+                redirect: 'follow'
+            })
+            .then(r => r.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    showModal('✅', 'ส่งใบงานสำเร็จ!', result.message, true);
+                    document.getElementById('submitBtn').disabled = true;
+                    document.getElementById('submitBtn').textContent = '✓ ส่งแล้ว';
+                } else {
+                    showModal('❌', 'เกิดข้อผิดพลาด', result.message, true);
+                }
+            })
+            .catch(err => {
+                showModal('❌', 'ไม่สามารถเชื่อมต่อได้', 'ไม่สามารถส่งข้อมูลได้: ' + err.message, true);
+            });
+        }
+    </script>
+</body>
+</html>

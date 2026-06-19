@@ -1,0 +1,11 @@
+{
+  "name": "lab-c-programming",
+  "version": "1.0.0",
+  "description": "C Programming Lab Worksheet Web Apps",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Antigravity AI",
+  "license": "MIT"
+}
