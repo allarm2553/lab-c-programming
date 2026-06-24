@@ -2703,7 +2703,7 @@ function generateIndexHtml(lab) {
       setupDragAndDrop('codeArea', 'codeInput', 'code');
       
       // Setup default placeholder correctly
-      document.getElementById('challengeCode').value = \\\`${lab.challengePlaceholder.replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\\\`;
+      document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
     });
 
     // Copy code helper
@@ -2876,7 +2876,7 @@ function generateIndexHtml(lab) {
             if (response.status === 'success') {
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
               // Clear fields
-              document.getElementById('challengeCode').value = \\\`${lab.challengePlaceholder.replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\\\`;
+              document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
               document.getElementById('question1').value = '';
               document.getElementById('question2').value = '';
               document.getElementById('conclusion').value = '';

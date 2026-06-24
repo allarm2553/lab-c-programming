@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -634,7 +634,6 @@
       font-size: 0.95rem;
       margin-bottom: 1.5rem;
       line-height: 1.5;
-      white-space: pre-line;
     }
 
     .modal-close-btn {
@@ -1154,87 +1153,51 @@ int main() {
       setupDragAndDrop('codeArea', 'codeInput', 'code');
       
       // Setup default placeholder correctly
-      document.getElementById('challengeCode').value = \`#include <stdio.h>
+      document.getElementById('challengeCode').value = `#include <stdio.h>
 
 int main() {
     FILE *fp;
     // เขียนโปรแกรมสร้างไฟล์ เขียนข้อมูล ปิดไฟล์ แล้วทำการเปิดขึ้นมาอ่านแสดงผลอีกรอบ
     return 0;
-}\`;
+}`;
     });
 
     // Copy code helper
     function copyCode(elementId) {
-      const el = document.getElementById(elementId);
-      const codeText = el ? el.innerText : '';
-      if (!codeText) return;
-
-      function showCopyToast(msg, isError) {
-        let toast = document.getElementById('_copyToast');
-        if (!toast) {
-          toast = document.createElement('div');
-          toast.id = '_copyToast';
-          toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);' +
-            'padding:10px 24px;border-radius:8px;font-size:15px;font-weight:600;' +
-            'z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:opacity 0.4s;pointer-events:none;white-space:nowrap;';
-          document.body.appendChild(toast);
+      const codeText = document.getElementById(elementId).innerText;
+      
+      function fallbackCopy() {
+        const textArea = document.createElement("textarea");
+        textArea.value = codeText;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          const successful = document.execCommand('copy');
+          if (successful) {
+            alert('คัดลอกโค้ดเรียบร้อยแล้ว!');
+          } else {
+            alert('ไม่สามารถคัดลอกโค้ดได้ กรุณาครอบดำคัดลอกด้วยตนเอง');
+          }
+        } catch (err) {
+          alert('ไม่สามารถคัดลอกโค้ดได้: ' + err);
         }
-        toast.style.background = isError ? '#ef4444' : '#22c55e';
-        toast.style.color = '#fff';
-        toast.textContent = msg;
-        toast.style.opacity = '1';
-        clearTimeout(toast._t);
-        toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+        document.body.removeChild(textArea);
       }
 
-      // วิธีที่ 1: intercept copy event - ทำงานได้บน HTTP ทุก browser รุ่นใหม่
-      function copyViaEvent() {
-        let done = false;
-        const handler = function(e) {
-          e.preventDefault();
-          e.clipboardData.setData('text/plain', codeText);
-          done = true;
-          document.removeEventListener('copy', handler, true);
-        };
-        document.addEventListener('copy', handler, true);
-        try { document.execCommand('copy'); } catch(e) {}
-        if (!done) document.removeEventListener('copy', handler, true);
-        return done;
-      }
-
-      // วิธีที่ 2: textarea fallback
-      function copyViaTextarea() {
-        const ta = document.createElement('textarea');
-        ta.value = codeText;
-        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:2em;height:2em;border:0;padding:0;margin:0;outline:none;font-size:12pt;';
-        document.body.appendChild(ta);
-        ta.focus();
-        ta.select();
-        ta.setSelectionRange(0, ta.value.length);
-        let ok = false;
-        try { ok = document.execCommand('copy'); } catch(e) {}
-        document.body.removeChild(ta);
-        return ok;
-      }
-
-      // ลอง Clipboard API (HTTPS/localhost เท่านั้น)
-      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(codeText)
-          .then(() => showCopyToast('✓ คัดลอกโค้ดแล้ว!'))
-          .catch(() => {
-            if (copyViaEvent() || copyViaTextarea()) {
-              showCopyToast('✓ คัดลอกโค้ดแล้ว!');
-            } else {
-              showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true);
-            }
-          });
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(codeText).then(() => {
+          alert('คัดลอกโค้ดเรียบร้อยแล้ว!');
+        }).catch(err => {
+          console.warn('Clipboard API failed, using fallback:', err);
+          fallbackCopy();
+        });
       } else {
-        // HTTP: ใช้ copy event หรือ textarea
-        if (copyViaEvent() || copyViaTextarea()) {
-          showCopyToast('✓ คัดลอกโค้ดแล้ว!');
-        } else {
-          showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true);
-        }
+        fallbackCopy();
       }
     }
 
@@ -1369,13 +1332,13 @@ int main() {
             if (response.status === 'success') {
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
               // Clear fields
-              document.getElementById('challengeCode').value = \`#include <stdio.h>
+              document.getElementById('challengeCode').value = `#include <stdio.h>
 
 int main() {
     FILE *fp;
     // เขียนโปรแกรมสร้างไฟล์ เขียนข้อมูล ปิดไฟล์ แล้วทำการเปิดขึ้นมาอ่านแสดงผลอีกรอบ
     return 0;
-}\`;
+}`;
               document.getElementById('question1').value = '';
               document.getElementById('question2').value = '';
               document.getElementById('conclusion').value = '';
@@ -1396,50 +1359,7 @@ int main() {
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
-          
-          // Local auto-grading simulation
-          const codeKeywords = ["fopen","fclose","fprintf","fscanf","students.txt","w","r"];
-          const q1Keywords = ["text","binary","ตัวอักษร","ไบนารี","มนุษย์อ่าน"];
-          const q2Keywords = ["null","สำเร็จ","แครช","ความปลอดภัย"];
-          
-          const code = document.getElementById('challengeCode').value || '';
-          const q1 = document.getElementById('question1').value || '';
-          const q2 = document.getElementById('question2').value || '';
-          
-          let codeMatches = 0;
-          codeKeywords.forEach(kw => {
-            if (new RegExp(kw, 'i').test(code)) codeMatches++;
-          });
-          const codeScore = codeKeywords.length > 0 ? Math.round((codeMatches / codeKeywords.length) * 5) : 5;
-          
-          let q1Matches = 0;
-          q1Keywords.forEach(kw => {
-            if (new RegExp(kw, 'i').test(q1)) q1Matches++;
-          });
-          const q1Score = q1Keywords.length > 0 ? (q1Matches >= 1 ? 2 : 0) : 2;
-          
-          let q2Matches = 0;
-          q2Keywords.forEach(kw => {
-            if (new RegExp(kw, 'i').test(q2)) q2Matches++;
-          });
-          const q2Score = q2Keywords.length > 0 ? (q2Matches >= 1 ? 2 : 0) : 2;
-          
-          let attachScore = 0;
-          if (filesData.screenshotBase64) attachScore += 0.5;
-          if (filesData.codeBase64) attachScore += 0.5;
-          
-          const score = codeScore + q1Score + q2Score + attachScore;
-          
-          const feedback = [
-            `Challenge Code: ${codeScore}/5 (พบ ${codeMatches}/${codeKeywords.length} คีย์เวิร์ด)`,
-            `Q1: ${q1Score}/2`,
-            `Q2: ${q2Score}/2`,
-            `ไฟล์แนบ: ${attachScore}/1`
-          ];
-          
-          const localMessage = `จำลองการส่งข้อมูลเสร็จสิ้น! (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)\n\nคะแนนรวมประเมินออโต้: ${score}/10\n\nรายละเอียดคะแนน:\n- ` + feedback.join('\n- ');
-          
-          openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', localMessage);
+          openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', 'จำลองการส่งข้อมูลเสร็จสิ้น ข้อมูลผู้ส่งได้รับการเก็บบันทึกบนเบราว์เซอร์ของท่านแล้ว (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)');
         }, 1500);
       }
     }
