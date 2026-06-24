@@ -98,7 +98,13 @@ function submitLabData(data) {
         Utilities.base64Decode(base64.split(",")[1]), mimeType, prefix + fileName
       );
       var file = folder.createFile(blob);
-      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      try {
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      } catch (e) {
+        try {
+          file.setSharing(DriveApp.Access.DOMAIN_WITH_LINK, DriveApp.Permission.VIEW);
+        } catch (e2) {}
+      }
       return file.getUrl();
     }
 

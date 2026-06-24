@@ -58,7 +58,13 @@ function submitLabData(data) {
         data.studentId + "_" + data.studentName.replace(/\s+/g, '_') + "_screenshot_" + data.screenshotName
       );
       var file = folder.createFile(screenshotBlob);
-      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      try {
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      } catch (e) {
+        try {
+          file.setSharing(DriveApp.Access.DOMAIN_WITH_LINK, DriveApp.Permission.VIEW);
+        } catch (e2) {}
+      }
       screenshotUrl = file.getUrl();
     }
     
@@ -70,7 +76,13 @@ function submitLabData(data) {
         data.studentId + "_" + data.studentName.replace(/\s+/g, '_') + "_code_" + data.codeFileName
       );
       var file = folder.createFile(codeBlob);
-      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      try {
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      } catch (e) {
+        try {
+          file.setSharing(DriveApp.Access.DOMAIN_WITH_LINK, DriveApp.Permission.VIEW);
+        } catch (e2) {}
+      }
       codeFileUrl = file.getUrl();
     }
     
