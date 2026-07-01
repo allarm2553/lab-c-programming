@@ -2399,6 +2399,10 @@ function generateIndexHtml(lab) {
         border-radius: 0 !important;
         color: #000 !important;
         padding: 0.25rem 0 !important;
+        field-sizing: content !important;
+      }
+      textarea {
+        overflow: visible !important;
       }
       .input-icon {
         display: none !important;
@@ -2410,6 +2414,7 @@ function generateIndexHtml(lab) {
         height: auto !important;
         min-height: 150px;
         white-space: pre-wrap;
+        field-sizing: content !important;
       }
       .print-file-indicator {
         display: block !important;
@@ -2478,7 +2483,7 @@ function generateIndexHtml(lab) {
             <span>example1.c</span>
             <button class="copy-btn" type="button" onclick="copyCode('ex1Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
           </div>
-          <pre><code id="ex1Code">${lab.example1Code}</code></pre>
+          <pre><code id="ex1Code">${lab.example1Code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
         </div>
 
         <h3>${lab.example2Title}</h3>
@@ -2488,7 +2493,7 @@ function generateIndexHtml(lab) {
             <span>example2_fill.c</span>
             <button class="copy-btn" type="button" onclick="copyCode('ex2Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
           </div>
-          <pre><code id="ex2Code">${lab.example2Code}</code></pre>
+          <pre><code id="ex2Code">${lab.example2Code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
         </div>
 
         <div class="challenge-frame">
@@ -2554,9 +2559,19 @@ function generateIndexHtml(lab) {
             <div class="form-section-title">
               <i class="fa-solid fa-file-code"></i> ผลการทำกิจกรรมท้าทาย (Source Code)
             </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <label>โค้ดโปรแกรมตั้งต้นสำหรับกิจกรรมท้าทาย (สามารถคัดลอกไปเขียน/รันบนเครื่องคอมพิวเตอร์ได้):</label>
+              <div class="code-container" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <div class="code-header">
+                  <span>challenge_starter.c</span>
+                  <button class="copy-btn" type="button" onclick="copyCode('challengeStarterCode')"><i class="fa-regular fa-copy"></i> คัดลอกโค้ดตั้งต้น</button>
+                </div>
+                <pre><code id="challengeStarterCode">${lab.challengePlaceholder.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
+              </div>
+            </div>
             <div class="form-group">
-              <label for="challengeCode">พิมพ์โค้ดภาษา C ตอบคำท้าทายของคุณที่นี่</label>
-              <textarea id="challengeCode" class="code-textarea" required placeholder="${lab.challengePlaceholder.replace(/"/g, '&quot;').replace(/\\n/g, '\\\\n')}"></textarea>
+              <label for="challengeCode">พิมพ์หรือวางโค้ดภาษา C คำตอบของคุณที่นี่ (หลังจากแก้ไขและรันสำเร็จแล้ว):</label>
+              <textarea id="challengeCode" class="code-textarea" required placeholder="วางโค้ด C ที่เขียนและทดสอบเรียบร้อยแล้วที่นี่..."></textarea>
             </div>
           </div>
 
@@ -2703,7 +2718,7 @@ function generateIndexHtml(lab) {
       setupDragAndDrop('codeArea', 'codeInput', 'code');
       
       // Setup default placeholder correctly
-      document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
+      document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(/</g, '\\u003C').replace(/>/g, '\\u003E').replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
     });
 
     // Copy code helper
@@ -2876,7 +2891,7 @@ function generateIndexHtml(lab) {
             if (response.status === 'success') {
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
               // Clear fields
-              document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
+              document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(/</g, '\\u003C').replace(/>/g, '\\u003E').replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
               document.getElementById('question1').value = '';
               document.getElementById('question2').value = '';
               document.getElementById('conclusion').value = '';
@@ -2931,6 +2946,27 @@ function generateIndexHtml(lab) {
     function closeModal() {
       document.getElementById('statusModal').style.display = 'none';
     }
+
+    // Auto-expand textareas when printing to prevent cropped text/scrollbars
+    window.addEventListener('beforeprint', () => {
+      document.querySelectorAll('textarea').forEach(el => {
+        el.dataset.origHeight = el.style.height;
+        el.style.height = 'auto';
+        el.style.height = (el.scrollHeight + 4) + 'px';
+        el.style.overflow = 'hidden';
+      });
+    });
+
+    window.addEventListener('afterprint', () => {
+      document.querySelectorAll('textarea').forEach(el => {
+        if (el.dataset.origHeight !== undefined) {
+          el.style.height = el.dataset.origHeight;
+        } else {
+          el.style.height = '';
+        }
+        el.style.overflow = '';
+      });
+    });
   </script>
 </body>
 </html>

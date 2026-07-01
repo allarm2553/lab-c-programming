@@ -751,6 +751,10 @@
         border-radius: 0 !important;
         color: #000 !important;
         padding: 0.25rem 0 !important;
+        field-sizing: content !important;
+      }
+      textarea {
+        overflow: visible !important;
       }
       .input-icon {
         display: none !important;
@@ -762,6 +766,7 @@
         height: auto !important;
         min-height: 150px;
         white-space: pre-wrap;
+        field-sizing: content !important;
       }
       .print-file-indicator {
         display: block !important;
@@ -928,7 +933,7 @@
    เขียนขึ้นเพื่อศึกษาหน้าที่ของแต่ละคำสั่ง
 */
 
-#include <stdio.h> // 1. Preprocessor directive: นำเข้าส่วนหัวไลบรารีอินพุต/เอาต์พุต
+#include &lt;stdio.h&gt; // 1. Preprocessor directive: นำเข้าส่วนหัวไลบรารีอินพุต/เอาต์พุต
 
 // 2. Main function: ฟังก์ชันหลักและจุดเริ่มต้นการรันโปรแกรม
 int main() {
@@ -948,7 +953,7 @@ int main() {
             <span>example2_fill.c</span>
             <button class="copy-btn" type="button" onclick="copyCode('ex2Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
           </div>
-          <pre><code id="ex2Code">// เติมส่วนการประกาศนำเข้าห้องสมุด stdio.h (แทนที่ ____ ด้วย #include <stdio.h>)
+          <pre><code id="ex2Code">// เติมส่วนการประกาศนำเข้าห้องสมุด stdio.h (แทนที่ ____ ด้วย #include &lt;stdio.h&gt;)
 ____
 
 // เติมคำสำคัญประกาศฟังก์ชันหลักของระบบ (แทนที่ ____ ด้วย int main())
@@ -1024,9 +1029,14 @@ ____ {
             <div class="form-section-title">
               <i class="fa-solid fa-file-code"></i> ผลการทำกิจกรรมท้าทาย (Source Code)
             </div>
-            <div class="form-group">
-              <label for="challengeCode">พิมพ์โค้ดภาษา C ตอบคำท้าทายของคุณที่นี่</label>
-              <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <label>โค้ดโปรแกรมตั้งต้นสำหรับกิจกรรมท้าทาย (สามารถคัดลอกไปเขียน/รันบนเครื่องคอมพิวเตอร์ได้):</label>
+              <div class="code-container" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <div class="code-header">
+                  <span>challenge_starter.c</span>
+                  <button class="copy-btn" type="button" onclick="copyCode('challengeStarterCode')"><i class="fa-regular fa-copy"></i> คัดลอกโค้ดตั้งต้น</button>
+                </div>
+                <pre><code id="challengeStarterCode">#include &lt;stdio.h&gt;
 
 // ฟังก์ชันสำหรับแบบฝึกหัดกิจกรรม
 void runSyntaxDebugger();
@@ -1034,11 +1044,11 @@ void printStudentProfile();
 void runBlockSelection();
 
 int main() {
-    printf(&quot;=== กิจกรรมท้าทาย: C Program Structure ===\\n&quot;);
+    printf("=== กิจกรรมท้าทาย: C Program Structure ===\n");
     runSyntaxDebugger();
-    printf(&quot;\\n&quot;);
+    printf("\n");
     printStudentProfile();
-    printf(&quot;\\n&quot;);
+    printf("\n");
     runBlockSelection();
     return 0;
 }
@@ -1047,15 +1057,15 @@ int main() {
 void runSyntaxDebugger() {
     // --- โค้ดที่มีข้อผิดพลาด ---
     /*
-    include <stdio.h>
+    include &lt;stdio.h&gt;
     void runSyntaxDebugger() {
-        print(&quot;Debugging test\\n&quot;)
+        print("Debugging test\n")
         return 0
     }
     */
     
     // --- เขียนแก้ไขโครงสร้างที่ถูกต้องที่นี่ เพื่อรันคำสั่งและพิมพ์ข้อความได้ ---
-    printf(&quot;แก้ไขคำสั่งเรียบร้อย: [อธิบายจุดแก้ไข 4 จุดที่นี่ในสายอักขระพิมพ์ข้อความ]\\n&quot;);
+    printf("แก้ไขคำสั่งเรียบร้อย: [อธิบายจุดแก้ไข 4 จุดที่นี่ในสายอักขระพิมพ์ข้อความ]\n");
 }
 
 // โจทย์ข้อที่ 2: เขียนโปรแกรมโครงสร้างสมบูรณ์และใส่คอมเมนต์ประกอบทีละบรรทัด
@@ -1066,9 +1076,14 @@ void printStudentProfile() {
 // โจทย์ข้อที่ 3: เขียนรับเลข 1/2 และสลับแสดงคำอธิบาย
 void runBlockSelection() {
     int choice;
-    printf(&quot;ป้อนตัวเลือก (1 หรือ 2): &quot;);
+    printf("ป้อนตัวเลือก (1 หรือ 2): ");
     // เขียนคำสั่งรับค่าและจัดโครงสร้างตรวจสอบเงื่อนไขที่นี่
-}"></textarea>
+}</code></pre>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="challengeCode">พิมพ์หรือวางโค้ดภาษา C คำตอบของคุณที่นี่ (หลังจากแก้ไขและรันสำเร็จแล้ว):</label>
+              <textarea id="challengeCode" class="code-textarea" required placeholder="วางโค้ด C ที่เขียนและทดสอบเรียบร้อยแล้วที่นี่..."></textarea>
             </div>
           </div>
 
@@ -1215,7 +1230,7 @@ void runBlockSelection() {
       setupDragAndDrop('codeArea', 'codeInput', 'code');
       
       // Setup default placeholder correctly
-      document.getElementById('challengeCode').value = `#include <stdio.h>
+      document.getElementById('challengeCode').value = `#include \u003Cstdio.h\u003E
 
 // ฟังก์ชันสำหรับแบบฝึกหัดกิจกรรม
 void runSyntaxDebugger();
@@ -1236,7 +1251,7 @@ int main() {
 void runSyntaxDebugger() {
     // --- โค้ดที่มีข้อผิดพลาด ---
     /*
-    include <stdio.h>
+    include \u003Cstdio.h\u003E
     void runSyntaxDebugger() {
         print("Debugging test\n")
         return 0
@@ -1430,7 +1445,7 @@ void runBlockSelection() {
             if (response.status === 'success') {
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
               // Clear fields
-              document.getElementById('challengeCode').value = `#include <stdio.h>
+              document.getElementById('challengeCode').value = `#include \u003Cstdio.h\u003E
 
 // ฟังก์ชันสำหรับแบบฝึกหัดกิจกรรม
 void runSyntaxDebugger();
@@ -1451,7 +1466,7 @@ int main() {
 void runSyntaxDebugger() {
     // --- โค้ดที่มีข้อผิดพลาด ---
     /*
-    include <stdio.h>
+    include \u003Cstdio.h\u003E
     void runSyntaxDebugger() {
         print("Debugging test\n")
         return 0
@@ -1527,6 +1542,27 @@ void runBlockSelection() {
     function closeModal() {
       document.getElementById('statusModal').style.display = 'none';
     }
+
+    // Auto-expand textareas when printing to prevent cropped text/scrollbars
+    window.addEventListener('beforeprint', () => {
+      document.querySelectorAll('textarea').forEach(el => {
+        el.dataset.origHeight = el.style.height;
+        el.style.height = 'auto';
+        el.style.height = (el.scrollHeight + 4) + 'px';
+        el.style.overflow = 'hidden';
+      });
+    });
+
+    window.addEventListener('afterprint', () => {
+      document.querySelectorAll('textarea').forEach(el => {
+        if (el.dataset.origHeight !== undefined) {
+          el.style.height = el.dataset.origHeight;
+        } else {
+          el.style.height = '';
+        }
+        el.style.overflow = '';
+      });
+    });
   </script>
 </body>
 </html>

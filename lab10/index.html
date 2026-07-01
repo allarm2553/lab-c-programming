@@ -751,6 +751,10 @@
         border-radius: 0 !important;
         color: #000 !important;
         padding: 0.25rem 0 !important;
+        field-sizing: content !important;
+      }
+      textarea {
+        overflow: visible !important;
       }
       .input-icon {
         display: none !important;
@@ -762,6 +766,7 @@
         height: auto !important;
         min-height: 150px;
         white-space: pre-wrap;
+        field-sizing: content !important;
       }
       .print-file-indicator {
         display: block !important;
@@ -928,8 +933,8 @@
             <span>example1.c</span>
             <button class="copy-btn" type="button" onclick="copyCode('ex1Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
           </div>
-          <pre><code id="ex1Code">#include <stdio.h>
-#include <string.h>
+          <pre><code id="ex1Code">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
 
 int main() {
     char firstName[50];
@@ -983,8 +988,8 @@ int main() {
             <span>example2_fill.c</span>
             <button class="copy-btn" type="button" onclick="copyCode('ex2Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
           </div>
-          <pre><code id="ex2Code">#include <stdio.h>
-#include <string.h>
+          <pre><code id="ex2Code">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
 
 int main() {
     char buffer[15];
@@ -1069,45 +1074,55 @@ int main() {
             <div class="form-section-title">
               <i class="fa-solid fa-file-code"></i> ผลการทำกิจกรรมท้าทาย (Source Code)
             </div>
-            <div class="form-group">
-              <label for="challengeCode">พิมพ์โค้ดภาษา C ตอบคำท้าทายของคุณที่นี่</label>
-              <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
-#include <string.h>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <label>โค้ดโปรแกรมตั้งต้นสำหรับกิจกรรมท้าทาย (สามารถคัดลอกไปเขียน/รันบนเครื่องคอมพิวเตอร์ได้):</label>
+              <div class="code-container" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <div class="code-header">
+                  <span>challenge_starter.c</span>
+                  <button class="copy-btn" type="button" onclick="copyCode('challengeStarterCode')"><i class="fa-regular fa-copy"></i> คัดลอกโค้ดตั้งต้น</button>
+                </div>
+                <pre><code id="challengeStarterCode">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
 
 void testSerialNumber();
 void generateReportFilename();
 void deviceStatusSimulator();
 
 int main() {
-    printf(&quot;=== กิจกรรมท้าทาย: String Functions ===\\n&quot;);
+    printf("=== กิจกรรมท้าทาย: String Functions ===\n");
     testSerialNumber();
-    printf(&quot;\\n&quot;);
+    printf("\n");
     generateReportFilename();
-    printf(&quot;\\n&quot;);
+    printf("\n");
     deviceStatusSimulator();
     return 0;
 }
 
 void testSerialNumber() {
     char sn[30];
-    printf(&quot;กรุณาป้อน Serial Number (สูงสุด 20 ตัวอักษร): &quot;);
+    printf("กรุณาป้อน Serial Number (สูงสุด 20 ตัวอักษร): ");
     // เขียนคำสั่งรับค่าและตรวจสอบรูปแบบขึ้นต้นด้วย SN- ที่นี่
 }
 
 void generateReportFilename() {
     char deviceName[50];
     char filename[100];
-    printf(&quot;กรุณาป้อนชื่ออุปกรณ์: &quot;);
+    printf("กรุณาป้อนชื่ออุปกรณ์: ");
     // เขียนคำสั่งรับค่าและต่อคำท้ายด้วย _Report.txt ที่นี่
 }
 
 void deviceStatusSimulator() {
-    char status[20] = &quot;Offline&quot;;
+    char status[20] = "Offline";
     char command[30];
-    printf(&quot;สถานะอุปกรณ์ปัจจุบัน: %s\\n&quot;, status);
-    printf(&quot;ป้อนคำสั่ง (connect/disconnect): &quot;);
+    printf("สถานะอุปกรณ์ปัจจุบัน: %s\n", status);
+    printf("ป้อนคำสั่ง (connect/disconnect): ");
     // เขียนคำสั่งรับค่า เปรียบเทียบเพื่อสลับสถานะ และแสดงผลสถานะที่นี่
-}"></textarea>
+}</code></pre>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="challengeCode">พิมพ์หรือวางโค้ดภาษา C คำตอบของคุณที่นี่ (หลังจากแก้ไขและรันสำเร็จแล้ว):</label>
+              <textarea id="challengeCode" class="code-textarea" required placeholder="วางโค้ด C ที่เขียนและทดสอบเรียบร้อยแล้วที่นี่..."></textarea>
             </div>
           </div>
 
@@ -1254,8 +1269,8 @@ void deviceStatusSimulator() {
       setupDragAndDrop('codeArea', 'codeInput', 'code');
       
       // Setup default placeholder correctly
-      document.getElementById('challengeCode').value = `#include <stdio.h>
-#include <string.h>
+      document.getElementById('challengeCode').value = `#include \u003Cstdio.h\u003E
+#include \u003Cstring.h\u003E
 
 void testSerialNumber();
 void generateReportFilename();
@@ -1463,8 +1478,8 @@ void deviceStatusSimulator() {
             if (response.status === 'success') {
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
               // Clear fields
-              document.getElementById('challengeCode').value = `#include <stdio.h>
-#include <string.h>
+              document.getElementById('challengeCode').value = `#include \u003Cstdio.h\u003E
+#include \u003Cstring.h\u003E
 
 void testSerialNumber();
 void generateReportFilename();
@@ -1554,6 +1569,27 @@ void deviceStatusSimulator() {
     function closeModal() {
       document.getElementById('statusModal').style.display = 'none';
     }
+
+    // Auto-expand textareas when printing to prevent cropped text/scrollbars
+    window.addEventListener('beforeprint', () => {
+      document.querySelectorAll('textarea').forEach(el => {
+        el.dataset.origHeight = el.style.height;
+        el.style.height = 'auto';
+        el.style.height = (el.scrollHeight + 4) + 'px';
+        el.style.overflow = 'hidden';
+      });
+    });
+
+    window.addEventListener('afterprint', () => {
+      document.querySelectorAll('textarea').forEach(el => {
+        if (el.dataset.origHeight !== undefined) {
+          el.style.height = el.dataset.origHeight;
+        } else {
+          el.style.height = '';
+        }
+        el.style.overflow = '';
+      });
+    });
   </script>
 </body>
 </html>
