@@ -65,20 +65,16 @@ const labs = [
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 160">
-            <!-- Memory blocks -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">Memory Allocation Representation</text>
             
-            <!-- char x (1 byte) -->
             <rect x="30" y="45" width="40" height="50" rx="4" fill="#1e293b" stroke="#6366f1" stroke-width="2" />
             <text x="50" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">char</text>
             <text x="50" y="115" fill="#94a3b8" font-size="10" font-family="Sarabun" text-anchor="middle">1 Byte</text>
             
-            <!-- int n (4 bytes) -->
             <rect x="90" y="45" width="160" height="50" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
             <text x="170" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">int</text>
             <text x="170" y="115" fill="#94a3b8" font-size="10" font-family="Sarabun" text-anchor="middle">4 Bytes</text>
 
-            <!-- double d (8 bytes) -->
             <rect x="270" y="45" width="280" height="50" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="2" />
             <text x="410" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">double</text>
             <text x="410" y="115" fill="#94a3b8" font-size="10" font-family="Sarabun" text-anchor="middle">8 Bytes</text>
@@ -99,20 +95,39 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: การรับค่าทางแป้นพิมพ์และการเติม Syntax",
-    example2Desc: "ศึกษาโค้ดด้านล่าง และเติมส่วนคำสั่งรับค่าหน่วยความจำ (ช่องว่าง <code>____</code>) ใน IDE ของคุณเพื่อทดสอบการรันโปรแกรม:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาโค้ดด้านล่าง และเติมส่วนคำสั่งรับค่าหน่วยความจำ ในช่องว่างกล่องข้อความด้านล่าง เพื่อทดสอบการรันโปรแกรม:",
+    blanks: [
+      { id: "blank1", label: "อ้างอิงตำแหน่งหน่วยความจำของ num", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["&num", "& num"] },
+      { id: "blank2", label: "Format Specifier ตัวแปร float (score)", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["%f"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 int main() {
     int num;
     float score;
     
     printf("Enter integer: ");
-    // เติมส่วนสัญลักษณ์อ้างอิงตำแหน่งในหน่วยความจำของ num (แทนที่ ____ ด้วย &num)
-    scanf("%d", ____);
+    // เติมส่วนสัญลักษณ์อ้างอิงตำแหน่งในหน่วยความจำของ num
+    scanf("%d", [BLANK1]);
     
     printf("Enter float score: ");
-    // เติมส่วน Format Specifier สำหรับตัวแปร float (แทนที่ ____ ด้วย %f)
-    scanf("____", &score);
+    // เติมส่วน Format Specifier สำหรับตัวแปร float
+    scanf("[BLANK2]", &score);
+    
+    printf("Value = %d, Score = %.1f\\n", num, score);
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+int main() {
+    int num;
+    float score;
+    
+    printf("Enter integer: ");
+    scanf("%d", &num);
+    
+    printf("Enter float score: ");
+    scanf("%f", &score);
     
     printf("Value = %d, Score = %.1f\\n", num, score);
     return 0;
@@ -126,6 +141,24 @@ int main() {
     
     printf("Enter radius: ");
     // เขียนโค้ดรับค่า รันผลการคำนวณ และแสดงผลลัพธ์ที่นี่
+    
+    return 0;
+}`,
+    challengeSolutionCode: `#include <stdio.h>
+#define PI 3.14159265
+
+int main() {
+    float radius, area, circumference;
+    
+    printf("Enter radius: ");
+    if (scanf("%f", &radius) == 1) {
+        area = PI * radius * radius;
+        circumference = 2 * PI * radius;
+        
+        printf("Radius = %.2f\\n", radius);
+        printf("Area = %.2f\\n", area);
+        printf("Circumference = %.2f\\n", circumference);
+    }
     
     return 0;
 }`,
@@ -174,17 +207,13 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Bitwise operations visualization -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">Bitwise AND Operation (5 & 3)</text>
-            <!-- Binary 5: 0101 -->
             <rect x="50" y="45" width="100" height="30" rx="3" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
             <text x="100" y="65" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">5 = 0 1 0 1</text>
             
-            <!-- Binary 3: 0011 -->
             <rect x="50" y="85" width="100" height="30" rx="3" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
             <text x="100" y="105" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">3 = 0 0 1 1</text>
 
-            <!-- Operator and output -->
             <text x="170" y="85" fill="#94a3b8" font-size="16" font-family="JetBrains Mono" text-anchor="middle">&amp;</text>
 
             <rect x="200" y="65" width="100" height="30" rx="3" fill="#1e295b" stroke="#10b981" stroke-width="2" />
@@ -207,18 +236,35 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: ตัวดำเนินการระดับบิต (Bitwise Operators) และการเติม Syntax",
-    example2Desc: "ศึกษาความสัมพันธ์ของข้อมูลแบบบิตคู่ และกรอกตัวดำเนินการในตำแหน่งช่องว่าง <code>____</code> เพื่อทำการหาค่าระดับบิต AND และ OR:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาความสัมพันธ์ของข้อมูลแบบบิตคู่ และกรอกตัวดำเนินการในตำแหน่งช่องว่างกล่องข้อความ เพื่อทำการหาค่าระดับบิต AND และ OR:",
+    blanks: [
+      { id: "blank1", label: "ตัวดำเนินการระดับบิต AND", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["&"] },
+      { id: "blank2", label: "ตัวดำเนินการระดับบิต OR", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["|"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 int main() {
     int a = 5;  // Binary: 0101
     int b = 3;  // Binary: 0011
     
-    // เติมตัวดำเนินการระดับบิต AND (แทนที่ ____ ด้วย &)
-    int and_res = a ____ b;
+    // เติมตัวดำเนินการระดับบิต AND
+    int and_res = a [BLANK1] b;
     
-    // เติมตัวดำเนินการระดับบิต OR (แทนที่ ____ ด้วย |)
-    int or_res = a ____ b;
+    // เติมตัวดำเนินการระดับบิต OR
+    int or_res = a [BLANK2] b;
+    
+    printf("Bitwise AND result: %d\\n", and_res);
+    printf("Bitwise OR result: %d\\n", or_res);
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+int main() {
+    int a = 5;  // Binary: 0101
+    int b = 3;  // Binary: 0011
+    
+    int and_res = a & b;
+    int or_res = a | b;
     
     printf("Bitwise AND result: %d\\n", and_res);
     printf("Bitwise OR result: %d\\n", or_res);
@@ -233,12 +279,25 @@ int main() {
     // เขียนโค้ดรับข้อมูลและทำการวิเคราะห์ตัวดำเนินการระดับบิต (Bitwise Operators)
     return 0;
 }`,
+    challengeSolutionCode: `#include <stdio.h>
+
+int main() {
+    int a, b;
+    printf("Enter two integers: ");
+    if (scanf("%d %d", &a, &b) == 2) {
+        printf("a & b  = %d\\n", a & b);
+        printf("a | b  = %d\\n", a | b);
+        printf("a ^ b  = %d\\n", a ^ b);
+        printf("a << 2 = %d\\n", a << 2);
+    }
+    return 0;
+}`,
     question1: "1. ตัวดำเนินการเลื่อนบิต << (Left Shift) และ >> (Right Shift) ทำงานอย่างไร และมีผลลัพธ์สัมพันธ์กับการคูณ/หารอย่างไร?",
     question1Placeholder: "การเลื่อนบิตไปทางซ้าย 1 ตำแหน่งเสมือนการคูณด้วย 2 และการเลื่อนบิตขวาเสมือนการหารด้วย 2...",
     question2: "2. เพราะเหตุใดนิพจน์ 5 / 2 ในภาษา C จึงคำนวณได้ 2 และหากต้องการผลลัพธ์ทศนิยม 2.5 ต้องเขียนโค้ดอย่างไร?",
     question2Placeholder: "เนื่องจากเป็นการหารตัวเลขจำนวนเต็ม (Integer Division) หากต้องการทศนิยมต้องพิมพ์แบบ Type Casting เช่น (float)5 / 2 หรือใช้ 5.0 / 2...",
     conclusionPlaceholder: "สรุปสิ่งที่ได้รับจากการเรียนรู้ในบทที่ 2 และปัญหาเกี่ยวกับลำดับหรือระดับความละเอียดตัวดำเนินการ...",
-    codeKeywords: ["&","\\\\|","\\\\^","<<",">>"],
+    codeKeywords: ["&","\\|","\\^","<<",">>"],
     q1Keywords: ["เลื่อนบิต","คูณ","หาร","2"],
     q2Keywords: ["หาร","จำนวนเต็ม","casting","float","ทศนิยม"]
   },
@@ -270,30 +329,23 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Decision Flowchart -->
-            <!-- Score input -->
             <rect x="20" y="50" width="100" height="40" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
             <text x="70" y="75" fill="#f8fafc" font-size="11" font-family="Sarabun" text-anchor="middle">รับคะแนน (Score)</text>
             
             <line x1="120" y1="70" x2="160" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Diamond Condition -->
             <polygon points="160,70 210,40 260,70 210,100" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
             <text x="210" y="74" fill="#f8fafc" font-size="10" font-family="JetBrains Mono" text-anchor="middle">score >= 50</text>
 
-            <!-- Yes Arrow -->
             <line x1="260" y1="70" x2="330" y2="70" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)" />
             <text x="295" y="62" fill="#10b981" font-size="10" font-family="Outfit" font-weight="600">YES</text>
 
-            <!-- Pass Box -->
             <rect x="330" y="50" width="90" height="40" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.5" />
             <text x="375" y="75" fill="#10b981" font-size="11" font-family="Sarabun" text-anchor="middle" font-weight="600">ผ่าน (Pass)</text>
 
-            <!-- No Arrow -->
             <path d="M 210 100 L 210 130 L 330 130" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow)" />
             <text x="230" y="122" fill="#ef4444" font-size="10" font-family="Outfit" font-weight="600">NO</text>
 
-            <!-- Fail Box -->
             <rect x="330" y="110" width="90" height="30" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="1.5" />
             <text x="375" y="130" fill="#f8fafc" font-size="11" font-family="Sarabun" text-anchor="middle">ตก (Fail)</text>
 
@@ -321,23 +373,46 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: โครงสร้างแบบ switch-case และการเติม Syntax",
-    example2Desc: "ศึกษาการจับคู่ความเท่ากันของค่าเกรดตัวอักษร และกรอกคีย์เวิร์ดควบคุมในตำแหน่งช่องว่าง <code>____</code>:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการจับคู่ความเท่ากันของค่าเกรดตัวอักษร และกรอกคีย์เวิร์ดควบคุมในตำแหน่งช่องว่างกล่องข้อความ:",
+    blanks: [
+      { id: "blank1", label: "คีย์เวิร์ดสำหรับเริ่มการประเมิน switch", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["switch"] },
+      { id: "blank2", label: "คีย์เวิร์ดหยุดการทำงานเล็ดลอดเคส", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["break"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 int main() {
     char grade;
     printf("Enter grade (A, B, C): ");
     scanf(" %c", &grade);
     
-    // เติมคีย์เวิร์ดสำหรับเริ่มการประเมิน switch (แทนที่ ____ ด้วย switch)
-    ____ (grade) {
+    // เติมคีย์เวิร์ดสำหรับเริ่มการประเมิน switch
+    [BLANK1] (grade) {
         case 'A':
             printf("Excellent!\\n");
             break;
         case 'B':
             printf("Good job!\\n");
-            // เติมคีย์เวิร์ดหยุดการทำงานเล็ดลอดเคส (แทนที่ ____ ด้วย break)
-            ____;
+            // เติมคีย์เวิร์ดหยุดการทำงานเล็ดลอดเคส
+            [BLANK2];
+        default:
+            printf("Try harder!\\n");
+    }
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+int main() {
+    char grade;
+    printf("Enter grade (A, B, C): ");
+    scanf(" %c", &grade);
+    
+    switch (grade) {
+        case 'A':
+            printf("Excellent!\\n");
+            break;
+        case 'B':
+            printf("Good job!\\n");
+            break;
         default:
             printf("Try harder!\\n");
     }
@@ -350,6 +425,27 @@ int main() {
     float income, tax = 0.0;
     printf("Enter net annual income: ");
     // คำนวณภาษีตามขั้นบันได และแสดงผลลัพธ์
+    return 0;
+}`,
+    challengeSolutionCode: `#include <stdio.h>
+
+int main() {
+    float income, tax = 0.0;
+    printf("Enter net annual income: ");
+    if (scanf("%f", &income) == 1) {
+        if (income <= 150000) {
+            tax = 0.0;
+        } else if (income <= 300000) {
+            tax = (income - 150000) * 0.05;
+        } else if (income <= 500000) {
+            tax = (150000 * 0.05) + ((income - 300000) * 0.10);
+        } else {
+            tax = (150000 * 0.05) + (200000 * 0.10) + ((income - 500000) * 0.15);
+        }
+        
+        printf("Income: %.2f Baht\\n", income);
+        printf("Calculated Tax: %.2f Baht\\n", tax);
+    }
     return 0;
 }`,
     question1: "1. ในการตรวจสอบเงื่อนไขคะแนนเกรด เพราะเหตุใดโครงสร้างแบบ if-else if-else จึงมีประสิทธิภาพดีกว่าการใช้ if เดี่ยวหลายๆ ตัวแยกกัน?",
@@ -389,30 +485,23 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Loop Visualization -->
-            <!-- Start -->
             <circle cx="60" cy="70" r="25" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
             <text x="60" y="74" fill="#f8fafc" font-size="11" font-family="Sarabun" text-anchor="middle">i = 0</text>
 
             <line x1="85" y1="70" x2="140" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Condition -->
             <polygon points="140,70 190,40 240,70 190,100" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
             <text x="190" y="74" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">i < N</text>
 
-            <!-- Run statement arrow -->
             <line x1="240" y1="70" x2="310" y2="70" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)" />
             <text x="275" y="62" fill="#10b981" font-size="10" font-family="Outfit" font-weight="600">TRUE</text>
 
-            <!-- Statement box -->
             <rect x="310" y="50" width="120" height="40" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1.5" />
             <text x="370" y="75" fill="#f8fafc" font-size="11" font-family="Sarabun" text-anchor="middle">รันโค้ดและพิมพ์ค่า</text>
 
-            <!-- Increment and feedback loop -->
             <path d="M 370 90 L 370 120 L 190 120 L 190 100" fill="none" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)" />
             <text x="280" y="115" fill="#a5b4fc" font-size="10" font-family="JetBrains Mono">i++ (ปรับค่า)</text>
 
-            <!-- Exit arrow -->
             <path d="M 190 40 L 190 20 L 480 20 L 480 50" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow)" />
             <text x="310" y="15" fill="#ef4444" font-size="10" font-family="Outfit" font-weight="600">FALSE (จบการทำงาน)</text>
 
@@ -437,18 +526,33 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: ลูปแบบตรวจสอบเงื่อนไข (while) และการเติม Syntax",
-    example2Desc: "ศึกษาการทำซ้ำเงื่อนไขตราบเท่าที่เป็นจริง และกรอกรหัสอัปเดตตัวแปรนับรอบในช่องว่าง <code>____</code> เพื่อป้องกัน Infinite Loop:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการทำซ้ำเงื่อนไขตราบเท่าที่เป็นจริง และกรอกรหัสอัปเดตตัวแปรนับรอบในช่องว่างกล่องข้อความ เพื่อป้องกัน Infinite Loop:",
+    blanks: [
+      { id: "blank1", label: "เงื่อนไขเมื่อ count <= 3", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["count <= 3", "count<=3", "count < 4", "count<4"] },
+      { id: "blank2", label: "การบวกเพิ่มค่าตัวแปรนับรอบ", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["count++", "count ++", "++count", "count += 1", "count=count+1", "count = count + 1"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 int main() {
     int count = 1;
     
-    // เติมเงื่อนไขเมื่อ count น้อยกว่าหรือเท่ากับ 3 (แทนที่ ____ ด้วย count <= 3)
-    while (____) {
+    // เติมเงื่อนไขเมื่อ count น้อยกว่าหรือเท่ากับ 3
+    while ([BLANK1]) {
         printf("Count: %d\\n", count);
         
-        // เติมการบวกเพิ่มค่าตัวแปรนับรอบ (แทนที่ ____ ด้วย count++)
-        ____;
+        // เติมการบวกเพิ่มค่าตัวแปรนับรอบ
+        [BLANK2];
+    }
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+int main() {
+    int count = 1;
+    
+    while (count <= 3) {
+        printf("Count: %d\\n", count);
+        count++;
     }
     return 0;
 }`,
@@ -461,12 +565,27 @@ int main() {
     // รับค่า N และใช้ลูป 2 ชั้นเพื่อวาดรูปสามเหลี่ยมดาว
     return 0;
 }`,
+    challengeSolutionCode: `#include <stdio.h>
+
+int main() {
+    int n, i, j;
+    printf("Enter number of rows (N): ");
+    if (scanf("%d", &n) == 1) {
+        for (i = 1; i <= n; i++) {
+            for (j = 1; j <= i; j++) {
+                printf("*");
+            }
+            printf("\\n");
+        }
+    }
+    return 0;
+}`,
     question1: "1. อธิบายความแตกต่างของเงื่อนไขการตรวจสอบลูปของ while และ do-while ในการใช้งานจริง",
     question1Placeholder: "while ตรวจสอบเงื่อนไขก่อนรัน หากเป็นเท็จจะไม่รันเลย แต่ do-while รันคำสั่งก่อน 1 รอบแล้วจึงตรวจสอบ...",
     question2: "2. อธิบายการทำงานและผลต่างของคำสั่ง break และ continue เมื่อเขียนควบคุมภายในตัวลูป",
     question2Placeholder: "break ใช้สำหรับออกจากลูปทันที แต่ continue จะข้ามคำสั่งที่เหลือในรอบปัจจุบันเพื่อไปเริ่มรอบถัดไป...",
     conclusionPlaceholder: "สรุปผลการศึกษาโครงสร้างลูปซ้อนลูป และปัญหาที่พบบ่อยในการเขียนเงื่อนไขที่ไม่มีวันสิ้นสุด (Infinite Loop)...",
-    codeKeywords: ["for","while","scanf","rows","n","\\\\*"],
+    codeKeywords: ["for","while","scanf","rows","n","\\*"],
     q1Keywords: ["ก่อน","หลัง","do-while","รอบ","อย่างน้อย"],
     q2Keywords: ["break","continue","ออก","ข้าม"]
   },
@@ -499,30 +618,24 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Call Stack Diagram -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">Call Stack Visualization (Recursion)</text>
             
-            <!-- main frame -->
             <rect x="30" y="45" width="100" height="50" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
             <text x="80" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">main()</text>
             <text x="80" y="115" fill="#94a3b8" font-size="10" font-family="Sarabun" text-anchor="middle">Active Frame</text>
 
-            <!-- Arrow calling -->
             <line x1="130" y1="70" x2="170" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Recursive call 1 -->
             <rect x="170" y="45" width="110" height="50" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
             <text x="225" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">fact(3)</text>
             
             <line x1="280" y1="70" x2="320" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Recursive call 2 -->
             <rect x="320" y="45" width="110" height="50" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="2" />
             <text x="375" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">fact(2)</text>
 
             <line x1="430" y1="70" x2="470" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Base Case -->
             <rect x="470" y="45" width="90" height="50" rx="4" fill="#311212" stroke="#ef4444" stroke-width="2" />
             <text x="515" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">fact(1)</text>
             <text x="515" y="115" fill="#ef4444" font-size="9" font-family="Sarabun" text-anchor="middle">Base Case (= 1)</text>
@@ -547,17 +660,34 @@ int addNumbers(int a, int b) {
     return a + b;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: ฟังก์ชันเรียกตัวเอง (Recursion) และการเติม Syntax",
-    example2Desc: "ศึกษาการประมวลผลเลขยกกำลังแบบวนทำลายพารามิเตอร์ซ้อน และระบุตัวส่งเงื่อนไขกรณีฐานในช่องว่าง <code>____</code>:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการประมวลผลเลขยกกำลังแบบวนทำลายพารามิเตอร์ซ้อน และระบุตัวส่งเงื่อนไขกรณีฐานในช่องว่างกล่องข้อความ:",
+    blanks: [
+      { id: "blank1", label: "เงื่อนไข Base Case เมื่อ exp == 0", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["exp == 0", "exp==0", "exp <= 0", "exp<=0"] },
+      { id: "blank2", label: "การเรียก Recursion ย่อยรอบ", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["power(base, exp - 1)", "power(base,exp-1)", "power(base, exp-1)"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 // ฟังก์ชันคำนวณหาค่าเลขยกกำลัง base^exp
 int power(int base, int exp) {
-    // เติมกรณีฐาน (Base Case) เมื่อยกกำลัง 0 ให้ส่งค่ากลับเป็น 1 (แทนที่ ____ ด้วย exp == 0)
-    if (____) {
+    // เติมกรณีฐาน (Base Case) เมื่อยกกำลัง 0 ให้ส่งค่ากลับเป็น 1
+    if ([BLANK1]) {
         return 1;
     }
-    // เติมการเรียกตัวเอง Recursion ย่อยรอบลงไป (แทนที่ ____ ด้วย power(base, exp - 1))
-    return base * ____;
+    // เติมการเรียกตัวเอง Recursion ย่อยรอบลงไป
+    return base * [BLANK2];
+}
+
+int main() {
+    printf("2^3 = %d\\n", power(2, 3));
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+int power(int base, int exp) {
+    if (exp == 0) {
+        return 1;
+    }
+    return base * power(base, exp - 1);
 }
 
 int main() {
@@ -574,6 +704,30 @@ int main() {
     int num;
     printf("Enter an integer: ");
     // รับข้อมูลและแสดงผลลัพธ์การเรียกใช้งานเปรียบเทียบฟังก์ชันทั้งสองแบบ
+    return 0;
+}`,
+    challengeSolutionCode: `#include <stdio.h>
+
+long long factorialIterative(int n) {
+    long long res = 1;
+    for (int i = 1; i <= n; i++) {
+        res *= i;
+    }
+    return res;
+}
+
+long long factorialRecursive(int n) {
+    if (n <= 1) return 1;
+    return n * factorialRecursive(n - 1);
+}
+
+int main() {
+    int num;
+    printf("Enter an integer: ");
+    if (scanf("%d", &num) == 1 && num >= 0) {
+        printf("Iterative: %d! = %lld\\n", num, factorialIterative(num));
+        printf("Recursive: %d! = %lld\\n", num, factorialRecursive(num));
+    }
     return 0;
 }`,
     question1: "1. การส่งค่าพารามิเตอร์แบบ Call-by-Value และ Call-by-Reference ในภาษา C แตกต่างกันอย่างไร?",
@@ -609,37 +763,29 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Memory Array structure -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">String "Hello" in Memory Array</text>
             
-            <!-- Elements -->
             <g transform="translate(30, 45)">
-              <!-- H -->
               <rect x="0" y="0" width="50" height="50" fill="#1e293b" stroke="#6366f1" stroke-width="2" />
               <text x="25" y="30" fill="#f8fafc" font-size="14" font-family="JetBrains Mono" text-anchor="middle">'H'</text>
               <text x="25" y="65" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">str[0]</text>
               
-              <!-- e -->
               <rect x="50" y="0" width="50" height="50" fill="#1e293b" stroke="#6366f1" stroke-width="2" />
               <text x="75" y="30" fill="#f8fafc" font-size="14" font-family="JetBrains Mono" text-anchor="middle">'e'</text>
               <text x="75" y="65" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">str[1]</text>
 
-              <!-- l -->
               <rect x="100" y="0" width="50" height="50" fill="#1e293b" stroke="#6366f1" stroke-width="2" />
               <text x="125" y="30" fill="#f8fafc" font-size="14" font-family="JetBrains Mono" text-anchor="middle">'l'</text>
               <text x="125" y="65" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">str[2]</text>
 
-              <!-- l -->
               <rect x="150" y="0" width="50" height="50" fill="#1e293b" stroke="#6366f1" stroke-width="2" />
               <text x="175" y="30" fill="#f8fafc" font-size="14" font-family="JetBrains Mono" text-anchor="middle">'l'</text>
               <text x="175" y="65" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">str[3]</text>
 
-              <!-- o -->
               <rect x="200" y="0" width="50" height="50" fill="#1e293b" stroke="#6366f1" stroke-width="2" />
               <text x="225" y="30" fill="#f8fafc" font-size="14" font-family="JetBrains Mono" text-anchor="middle">'o'</text>
               <text x="225" y="65" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">str[4]</text>
 
-              <!-- \\0 -->
               <rect x="250" y="0" width="60" height="50" fill="#311212" stroke="#ef4444" stroke-width="2" />
               <text x="280" y="30" fill="#ef4444" font-size="14" font-family="JetBrains Mono" text-anchor="middle">'\\0'</text>
               <text x="280" y="65" fill="#ef4444" font-size="10" font-family="JetBrains Mono" text-anchor="middle">str[5]</text>
@@ -658,16 +804,31 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: สตริงอาร์เรย์ตัวอักษรและการเติม Syntax",
-    example2Desc: "ศึกษาการใช้สตริงอาร์เรย์ และระบุประเภทชนิดของข้อมูลและฟอร์แมตตัวแปรในช่องว่าง <code>____</code> เพื่อรับข้อมูลชื่อ:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการใช้สตริงอาร์เรย์ และระบุประเภทชนิดของข้อมูลและฟอร์แมตตัวแปรในช่องว่างกล่องข้อความ เพื่อรับข้อมูลชื่อ:",
+    blanks: [
+      { id: "blank1", label: "ประเภทชนิดข้อมูลอาร์เรย์ตัวอักษร", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["char"] },
+      { id: "blank2", label: "Format Specifier สำหรับสตริง", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["%s", "%29s"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 int main() {
-    // ประกาศประเภทข้อมูลอาร์เรย์ตัวอักษรสำหรับเก็บชื่อ (แทนที่ ____ ด้วย char)
-    ____ name[30];
+    // ประกาศประเภทข้อมูลอาร์เรย์ตัวอักษรสำหรับเก็บชื่อ
+    [BLANK1] name[30];
     
     printf("Enter your name: ");
-    // เติม Format Specifier สำหรับตัวแปรสายอักษร (แทนที่ ____ ด้วย %s)
-    scanf("____", name);
+    // เติม Format Specifier สำหรับตัวแปรสายอักษร
+    scanf("[BLANK2]", name);
+    
+    printf("Hello, %s!\\n", name);
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+int main() {
+    char name[30];
+    
+    printf("Enter your name: ");
+    scanf("%s", name);
     
     printf("Hello, %s!\\n", name);
     return 0;
@@ -681,14 +842,35 @@ int main() {
     // รับค่า ย้อนกลับสตริง และหาความยาวสตริงด้วยการวนลูปเช็คตัวอักขระ '\\0'
     return 0;
 }`,
+    challengeSolutionCode: `#include <stdio.h>
+
+int main() {
+    char str[100];
+    int len = 0;
+    
+    printf("Enter string: ");
+    if (scanf("%99s", str) == 1) {
+        while (str[len] != '\\0') {
+            len++;
+        }
+        
+        printf("Length: %d\\n", len);
+        printf("Reversed: ");
+        for (int i = len - 1; i >= 0; i--) {
+            putchar(str[i]);
+        }
+        printf("\\n");
+    }
+    return 0;
+}`,
     question1: "1. สตริงในภาษา C แตกต่างจากอาร์เรย์ชนิด char ทั่วไปอย่างไร และตัวอักษร '\\0' (Null character) มีความสำคัญอย่างไร?",
     question1Placeholder: "อาร์เรย์ char ทั่วไปไม่ต้องลงท้ายด้วยศูนย์ แต่สตริงจำเป็นต้องลงท้ายด้วย '\\0' เพื่อระบุการจบประโยคข้อความแก่ฟังก์ชันแสดงผล...",
     question2: "2. การจองขนาดพื้นที่อาร์เรย์แบบคงที่ (Static Array) เช่น int score[5]; มีข้อดีและข้อจำกัดอย่างไรในการทำงานจริง?",
     question2Placeholder: "ข้อดีคือประมวลผลเร็วและเขียนง่าย ข้อจำกัดคือไม่สามารถปรับยืดหรือขยายขนาดพื้นที่เมื่อต้องการเพิ่มข้อมูลตอนโปรแกรมกำลังทำงานได้...",
     conclusionPlaceholder: "เขียนสรุปความเข้าใจที่ได้รับเกี่ยวกับมิติของอาร์เรย์ และการเข้าถึงข้อมูลตัวชี้อาร์เรย์...",
-    codeKeywords: ["stds","score","average","sum","for"],
-    q1Keywords: ["1 มิติ","2 มิติ","แถว","คอลัมน์","ตาราง"],
-    q2Keywords: ["\\\\0","null","จบ","array","character"]
+    codeKeywords: ["stds","score","average","sum","for","str","len"],
+    q1Keywords: ["1 มิติ","2 มิติ","แถว","คอลัมน์","ตาราง","\\0","null"],
+    q2Keywords: ["\\0","null","จบ","array","character","static"]
   },
   {
     num: "7",
@@ -718,20 +900,16 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Pointer Diagram -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">Pointer Concept (*ptr points to variable x)</text>
             
-            <!-- Variable x -->
             <rect x="50" y="55" width="100" height="40" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
             <text x="100" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">x = 42</text>
             <text x="100" y="115" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">Addr: 0x7ffd</text>
 
-            <!-- Pointer ptr -->
             <rect x="250" y="55" width="120" height="40" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1.5" />
             <text x="310" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">ptr = 0x7ffd</text>
             <text x="310" y="115" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">Addr: 0x7fff</text>
 
-            <!-- Connection arrow -->
             <path d="M 250 75 L 160 75" fill="none" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrow)" />
             <text x="205" y="62" fill="#f59e0b" font-size="10" font-family="JetBrains Mono" text-anchor="middle">*ptr</text>
 
@@ -753,19 +931,23 @@ int main() {
     printf("Value of x: %d\\n", x);
     printf("Address of x: %p\\n", &x);
     printf("Value of ptr (Address): %p\\n", ptr);
-    printf("Value pointed by ptr (*ptr): %d\\n", *ptr); // ดึงค่าจาก Address
+    printf("Value pointed by ptr (*ptr): %d\\n", *ptr);
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: การจองหน่วยความจำพลวัตและการเติม Syntax",
-    example2Desc: "ศึกษาการจองข้อมูลแบบแมนนวลด้วย malloc() และเติมคำสั่งคืนพื้นที่ในช่องว่าง <code>____</code> เพื่อความปลอดภัย:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการจองข้อมูลแบบแมนนวลด้วย malloc() และเติมคำสั่งคืนพื้นที่ในช่องว่างกล่องข้อความ เพื่อความปลอดภัย:",
+    blanks: [
+      { id: "blank1", label: "คำสั่งจองพื้นที่ขนาด int 1 ช่อง", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["malloc(sizeof(int))", "malloc(sizeof (int))", "malloc(4)"] },
+      { id: "blank2", label: "คำสั่งคืนหน่วยความจำให้ระบบ", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["free(p)", "free( p )"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 #include <stdlib.h>
 
 int main() {
     int *p;
     
-    // เติมคำสั่งสำหรับจองพื้นที่ขนาด int 1 ช่อง (แทนที่ ____ ด้วย malloc(sizeof(int)))
-    p = (int *)____;
+    // เติมคำสั่งสำหรับจองพื้นที่ขนาด int 1 ช่อง
+    p = (int *)[BLANK1];
     
     if (p == NULL) {
         printf("Memory allocation failed!\\n");
@@ -775,8 +957,27 @@ int main() {
     *p = 500;
     printf("Value in allocated memory: %d\\n", *p);
     
-    // เติมคำสั่งคืนหน่วยความจำให้กับระบบเพื่อลดปัญหา Memory leak (แทนที่ ____ ด้วย free(p))
-    ____;
+    // เติมคำสั่งคืนหน่วยความจำให้กับระบบเพื่อลดปัญหา Memory leak
+    [BLANK2];
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int *p;
+    
+    p = (int *)malloc(sizeof(int));
+    
+    if (p == NULL) {
+        printf("Memory allocation failed!\\n");
+        return 1;
+    }
+    
+    *p = 500;
+    printf("Value in allocated memory: %d\\n", *p);
+    
+    free(p);
     return 0;
 }`,
     challengeDesc: "เขียนโปรแกรมภาษา C เพื่อรับขนาดจำนวนเต็ม N จากผู้ใช้ จากนั้นจองหน่วยความจำแบบพลวัตสำหรับเก็บอาร์เรย์จำนวนเต็มขนาด N ตัวด้วย malloc() จากนั้นรับข้อมูลตัวเลข N ตัว คำนวณหาค่าเฉลี่ยของข้อมูลทั้งหมด แล้วแสดงผลลัพธ์ออกทางจอภาพ สุดท้ายให้คืนหน่วยความจำที่จองไว้ด้วย free()",
@@ -789,13 +990,39 @@ int main() {
     // รับค่า N, ทำการ malloc(), ตรวจเช็คค่า NULL, รับข้อมูลและหาเฉลี่ย และปิดท้ายด้วย free()
     return 0;
 }`,
+    challengeSolutionCode: `#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, *arr;
+    float sum = 0.0;
+    
+    printf("Enter number of elements (N): ");
+    if (scanf("%d", &n) == 1 && n > 0) {
+        arr = (int *)malloc(n * sizeof(int));
+        if (arr == NULL) {
+            printf("Memory allocation failed!\\n");
+            return 1;
+        }
+        
+        printf("Enter %d integers:\\n", n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+            sum += arr[i];
+        }
+        
+        printf("Average = %.2f\\n", sum / n);
+        free(arr);
+    }
+    return 0;
+}`,
     question1: "1. ตัวดำเนินการสัญลักษณ์ * (Dereference operator) และ & (Address-of operator) มีความสัมพันธ์และต่างกันอย่างไรในพอยน์เตอร์?",
     question1Placeholder: "& ใช้สำหรับหา Address หรือที่อยู่อ้างอิงของตัวแปร ส่วน * ใช้สำหรับดึงข้อมูลหรือเข้าถึงตัวแปรผ่าน Address ที่ชี้ไป...",
     question2: "2. อธิบายเหตุผลสำคัญในการต้องเรียกคำสั่ง free() คืนหน่วยความจำหลังสิ้นสุดการใช้งาน และหากลืมจะเกิดความผิดพลาดใด?",
     question2Placeholder: "หากลืมเรียก free() หน่วยความจำจะถูกจองค้างไว้ทำให้เสียพื้นที่ระบบไปเปล่าๆ เกิดปัญหาหน่วยความจำรั่วไหล (Memory Leak)...",
     conclusionPlaceholder: "สรุปสิ่งที่เรียนรู้เกี่ยวกับแนวคิด RAM, Pointer และความสำคัญของการระมัดระวังข้อผิดพลาดของการใช้พอยน์เตอร์...",
     codeKeywords: ["malloc","free","sizeof","ptr","for"],
-    q1Keywords: ["&","\\\\*","address","ชี้","ค่า","ตำแหน่ง"],
+    q1Keywords: ["&","\\*","address","ชี้","ค่า","ตำแหน่ง"],
     q2Keywords: ["free","leak","หน่วยความจำ","คืน","ram"]
   },
   {
@@ -825,10 +1052,8 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Struct vs Union Memory -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">Struct vs Union Memory Layout</text>
             
-            <!-- Struct layout -->
             <g transform="translate(30, 45)">
               <text x="0" y="-8" fill="#f8fafc" font-size="11" font-family="Outfit" font-weight="600">struct Layout (Parallel)</text>
               <rect x="0" y="0" width="50" height="35" rx="3" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
@@ -838,7 +1063,6 @@ int main() {
               <text x="85" y="50" fill="#94a3b8" font-size="9" font-family="Sarabun" text-anchor="middle">รวมเนื้อที่ = แยกขนาดจอง</text>
             </g>
 
-            <!-- Union layout -->
             <g transform="translate(300, 45)">
               <text x="0" y="-8" fill="#f8fafc" font-size="11" font-family="Outfit" font-weight="600">union Layout (Overlapping)</text>
               <rect x="0" y="0" width="150" height="35" rx="3" fill="#1e293b" stroke="#ef4444" stroke-width="2" />
@@ -863,8 +1087,12 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: การนิยามสมาชิกและการจอง และการเติม Syntax",
-    example2Desc: "ศึกษาการดึงตัวแปรและข้อมูลภายใน struct มาประมวลผล และกรอกคำสั่งสมาชิกในช่องว่าง <code>____</code>:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการดึงตัวแปรและข้อมูลภายใน struct มาประมวลผล และกรอกคำสั่งสมาชิกในช่องว่างกล่องข้อความ:",
+    blanks: [
+      { id: "blank1", label: "ประกาศและกำหนดค่าเริ่มต้นโครงสร้าง User", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["struct User"] },
+      { id: "blank2", label: "การเข้าถึงตัวแปร username ด้านใน struct", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["user1.username"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 // นิยามโครงสร้างผู้ใช้งานระบบ
 struct User {
@@ -873,11 +1101,23 @@ struct User {
 };
 
 int main() {
-    // ประกาศและก๊อปปี้ค่าเริ่มต้นลงตัวแปรโครงสร้าง (แทนที่ ____ ด้วย struct User)
-    ____ user1 = {101, "admin"};
+    // ประกาศและกำหนดค่าเริ่มต้นลงตัวแปรโครงสร้าง User
+    [BLANK1] user1 = {101, "admin"};
     
-    // เติมการเข้าถึงตัวแปร username ด้านใน struct (แทนที่ ____ ด้วย user1.username)
-    printf("User ID: %d, Name: %s\\n", user1.id, ____);
+    // เติมการเข้าถึงตัวแปร username ด้านใน struct
+    printf("User ID: %d, Name: %s\\n", user1.id, [BLANK2]);
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+struct User {
+    int id;
+    char username[20];
+};
+
+int main() {
+    struct User user1 = {101, "admin"};
+    printf("User ID: %d, Name: %s\\n", user1.id, user1.username);
     return 0;
 }`,
     challengeDesc: "สร้างโครงสร้างข้อมูล struct Student เพื่อบันทึกข้อมูลนักเรียน ได้แก่ รหัสนักศึกษา (สตริง), ชื่อ-นามสกุล (สตริง) และคะแนนเก็บ (ทศนิยม) จากนั้นเขียนโปรแกรมรับข้อมูลนักศึกษา 3 คน บันทึกค่าลงตัวแปร แสดงผลลัพธ์เป็นตารางให้เรียบร้อย และหาคะแนนเฉลี่ยรวมของนักศึกษาทุกคน",
@@ -892,6 +1132,40 @@ struct Student {
 int main() {
     struct Student stds[3];
     // เขียนคำสั่งวนซ้ำรับข้อมูล 3 คน แสดงผลลัพธ์ตารางและค่าเฉลี่ย
+    return 0;
+}`,
+    challengeSolutionCode: `#include <stdio.h>
+
+struct Student {
+    char id[15];
+    char name[50];
+    float score;
+};
+
+int main() {
+    struct Student stds[3];
+    float total = 0.0;
+    
+    printf("--- Input 3 Students ---\\n");
+    for (int i = 0; i < 3; i++) {
+        printf("Student #%d ID: ", i + 1);
+        scanf("%14s", stds[i].id);
+        printf("Student #%d Name: ", i + 1);
+        scanf("%49s", stds[i].name);
+        printf("Student #%d Score: ", i + 1);
+        scanf("%f", &stds[i].score);
+        total += stds[i].score;
+    }
+    
+    printf("\\n--- Student Records ---\\n");
+    printf("%-15s %-20s %s\\n", "ID", "Name", "Score");
+    printf("---------------------------------------------\\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%-15s %-20s %.2f\\n", stds[i].id, stds[i].name, stds[i].score);
+    }
+    printf("---------------------------------------------\\n");
+    printf("Average Score: %.2f\\n", total / 3.0);
+    
     return 0;
 }`,
     question1: "1. อธิบายความแตกต่างที่สำคัญของการทำงานและการจองตำแหน่งหน่วยความจำระหว่าง struct และ union",
@@ -959,18 +1233,14 @@ int main() {
     `,
     diagramSvg: `
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- File handling visual -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">File Stream Communication Model</text>
             
-            <!-- C Program -->
             <rect x="50" y="55" width="130" height="40" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
             <text x="115" y="79" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">C Program (RAM)</text>
 
-            <!-- Stream Arrow -->
             <path d="M 180 75 L 350 75" fill="none" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrow)" />
             <text x="265" y="65" fill="#f59e0b" font-size="10" font-family="JetBrains Mono" text-anchor="middle">fopen("w", "r")</text>
 
-            <!-- Disk File -->
             <rect x="350" y="45" width="150" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2" />
             <text x="425" y="70" fill="#10b981" font-size="12" font-family="Outfit" text-anchor="middle" font-weight="600">Data File (Storage)</text>
             <text x="425" y="90" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="middle">students.txt</text>
@@ -998,18 +1268,40 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: การเปิดอ่านดึงข้อมูลและการเติม Syntax",
-    example2Desc: "ศึกษาการเปิดอ่านไฟล์ด้วยโหมดอ่านข้อความ และเติมตัวเช็คค่าพอยน์เตอร์ล้มเหลวในช่องว่าง <code>____</code>:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการเปิดอ่านไฟล์ด้วยโหมดอ่านข้อความ และเติมตัวเช็คค่าพอยน์เตอร์ล้มเหลวในช่องว่างกล่องข้อความ:",
+    blanks: [
+      { id: "blank1", label: "โหมดการเปิดเพื่ออ่านไฟล์ข้อความ", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["\"r\"", "'r'", "r"] },
+      { id: "blank2", label: "ตรวจสอบพอยน์เตอร์การชี้ว่าเปิดล้มเหลวหรือไม่", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["NULL", "0"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 
 int main() {
     FILE *fp;
     char buffer[50];
     
-    // เติมโหมดการเปิดเพื่ออ่านไฟล์ข้อความ (แทนที่ ____ ด้วย "r")
-    fp = fopen("test.txt", "____");
+    // เติมโหมดการเปิดเพื่ออ่านไฟล์ข้อความ
+    fp = fopen("test.txt", "[BLANK1]");
     
-    // ตรวจสอบพอยน์เตอร์การชี้ว่าเปิดล้มเหลวหรือไม่ (แทนที่ ____ ด้วย NULL)
-    if (fp == ____) {
+    // ตรวจสอบพอยน์เตอร์การชี้ว่าเปิดล้มเหลวหรือไม่
+    if (fp == [BLANK2]) {
+        printf("Could not open file!\\n");
+        return 1;
+    }
+    
+    fgets(buffer, 50, fp);
+    printf("File Content: %s\\n", buffer);
+    fclose(fp);
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char buffer[50];
+    
+    fp = fopen("test.txt", "r");
+    
+    if (fp == NULL) {
         printf("Could not open file!\\n");
         return 1;
     }
@@ -1025,6 +1317,35 @@ int main() {
 int main() {
     FILE *fp;
     // เขียนโปรแกรมสร้างไฟล์ เขียนข้อมูล ปิดไฟล์ แล้วทำการเปิดขึ้นมาอ่านแสดงผลอีกรอบ
+    return 0;
+}`,
+    challengeSolutionCode: `#include <stdio.h>
+
+int main() {
+    FILE *fp = fopen("students.txt", "w");
+    if (fp == NULL) {
+        printf("Cannot create file!\\n");
+        return 1;
+    }
+    
+    fprintf(fp, "Name: Somchai Deejai, Grade: 4.00\\n");
+    fclose(fp);
+    printf("File written successfully.\\n");
+    
+    // อ่านไฟล์กลับมาแสดงผล
+    fp = fopen("students.txt", "r");
+    if (fp == NULL) {
+        printf("Cannot open file for reading!\\n");
+        return 1;
+    }
+    
+    char buffer[100];
+    printf("\\nReading from file:\\n");
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        printf("%s", buffer);
+    }
+    fclose(fp);
+    
     return 0;
 }`,
     question1: "1. การจัดการไฟล์ข้อมูลในรูปแบบ Text Mode และ Binary Mode แตกต่างกันอย่างไรในแง่ลักษณะไฟล์และขนาด?",
@@ -1201,8 +1522,12 @@ int main() {
     return 0;
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: การใช้งาน strncpy() และ strncat()",
-    example2Desc: "ศึกษาการคัดลอกและเชื่อมต่อข้อความแบบระบุจำนวนตัวอักษรสูงสุดเพื่อความปลอดภัย เติมคีย์เวิร์ดฟังก์ชันสตริงในช่องว่าง <code>____</code> ใน IDE เพื่อทดลองรัน:",
-    example2Code: `#include <stdio.h>
+    example2Desc: "ศึกษาการคัดลอกและเชื่อมต่อข้อความแบบระบุจำนวนตัวอักษรสูงสุดเพื่อความปลอดภัย เติมคีย์เวิร์ดฟังก์ชันสตริงในช่องว่างกล่องข้อความ:",
+    blanks: [
+      { id: "blank1", label: "คำสั่งคัดลอกสตริงแบบจำกัดจำนวน", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["strncpy"] },
+      { id: "blank2", label: "คำสั่งเชื่อมสตริงแบบจำกัดจำนวน", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["strncat"] }
+    ],
+    example2RawCode: `#include <stdio.h>
 #include <string.h>
 
 int main() {
@@ -1212,13 +1537,32 @@ int main() {
 
     printf("--- การใช้งาน strncpy() และ strncat() ---\\n");
     
-    // เติมคำสั่งคัดลอกสตริงแบบจำกัดจำนวนเพื่อความปลอดภัย (แทนที่ ____ ด้วย strncpy)
-    ____(buffer, source, sizeof(buffer) - 1);
+    // เติมคำสั่งคัดลอกสตริงแบบจำกัดจำนวนเพื่อความปลอดภัย
+    [BLANK1](buffer, source, sizeof(buffer) - 1);
     buffer[sizeof(buffer) - 1] = '\\0'; // ใส่ null terminator ด้วยตนเองเสมอเมื่อใช้ strncpy
     printf("strncpy ผลลัพธ์ใน buffer: '%s'\\n", buffer);
 
-    // เติมคำสั่งเชื่อมสตริงสูงสุด 5 ตัวอักษรแรก (แทนที่ ____ ด้วย strncat)
-    ____(result, source, 5);
+    // เติมคำสั่งเชื่อมสตริงสูงสุด 5 ตัวอักษรแรก
+    [BLANK2](result, source, 5);
+    printf("strncat ผลลัพธ์ใน result: '%s'\\n", result);
+
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char buffer[15];
+    char source[] = "SuperLongString";
+    char result[30] = "Prefix_";
+
+    printf("--- การใช้งาน strncpy() และ strncat() ---\\n");
+    
+    strncpy(buffer, source, sizeof(buffer) - 1);
+    buffer[sizeof(buffer) - 1] = '\\0';
+    printf("strncpy ผลลัพธ์ใน buffer: '%s'\\n", buffer);
+
+    strncat(result, source, 5);
     printf("strncat ผลลัพธ์ใน result: '%s'\\n", result);
 
     return 0;
@@ -1261,14 +1605,70 @@ void deviceStatusSimulator() {
     printf("ป้อนคำสั่ง (connect/disconnect): ");
     // เขียนคำสั่งรับค่า เปรียบเทียบเพื่อสลับสถานะ และแสดงผลสถานะที่นี่
 }`,
+    challengeSolutionCode: `#include <stdio.h>
+#include <string.h>
+
+void testSerialNumber() {
+    char sn[30];
+    printf("กรุณาป้อน Serial Number (สูงสุด 20 ตัวอักษร): ");
+    if (fgets(sn, sizeof(sn), stdin) != NULL) {
+        sn[strcspn(sn, "\\n")] = 0;
+        printf("Length: %zu\\n", strlen(sn));
+        if (strncmp(sn, "SN-", 3) == 0) {
+            printf("Valid Serial Number!\\n");
+        } else {
+            printf("Invalid Serial Number (must start with SN-)\\n");
+        }
+    }
+}
+
+void generateReportFilename() {
+    char deviceName[50];
+    char filename[100];
+    printf("กรุณาป้อนชื่ออุปกรณ์: ");
+    if (fgets(deviceName, sizeof(deviceName), stdin) != NULL) {
+        deviceName[strcspn(deviceName, "\\n")] = 0;
+        strcpy(filename, deviceName);
+        strcat(filename, "_Report.txt");
+        printf("Generated Filename: %s\\n", filename);
+    }
+}
+
+void deviceStatusSimulator() {
+    char status[20] = "Offline";
+    char command[30];
+    printf("สถานะอุปกรณ์ปัจจุบัน: %s\\n", status);
+    printf("ป้อนคำสั่ง (connect/disconnect): ");
+    if (fgets(command, sizeof(command), stdin) != NULL) {
+        command[strcspn(command, "\\n")] = 0;
+        if (strcmp(command, "connect") == 0) {
+            strcpy(status, "Online");
+        } else if (strcmp(command, "disconnect") == 0) {
+            strcpy(status, "Offline");
+        } else {
+            printf("คำสั่งไม่ถูกต้อง\\n");
+        }
+        printf("สถานะอุปกรณ์หลังประมวลผล: %s\\n", status);
+    }
+}
+
+int main() {
+    printf("=== กิจกรรมท้าทาย: String Functions ===\\n");
+    testSerialNumber();
+    printf("\\n");
+    generateReportFilename();
+    printf("\\n");
+    deviceStatusSimulator();
+    return 0;
+}`,
     question1: "1. อธิบายความแตกต่างและเหตุผลด้านความปลอดภัยในการเลือกใช้งานระหว่างฟังก์ชัน strcpy() และ strncpy()",
     question1Placeholder: "strcpy มีความเสี่ยงที่จะทำให้เกิด Buffer Overflow หากสตริงต้นทางมีความยาวมากกว่าอาเรย์ปลายทาง ขณะที่ strncpy จะกำหนดขนาดสูงสุดที่จะก๊อปปี้ทำให้ปลอดภัยกว่า แต่มีข้อควรระวังคือต้องใส่ \\0 ตัวปิดท้ายเองหากต้นทางยาวเกินกำหนด...",
     question2: "2. เพราะเหตุใดฟังก์ชัน fgets() จึงต้องมีพารามิเตอร์จำกัดขนาด (size) และเพราะเหตุใดนักพัฒนาจึงต้องจัดการกับอักษรขึ้นบรรทัดใหม่ (\\n) หลังการรับข้อมูล?",
     question2Placeholder: "เนื่องจาก fgets จะจำกัดจำนวนการอ่านข้อมูลจากอินพุตไม่ให้เกินขนาดของบัฟเฟอร์ (ป้องกัน Buffer Overflow) และเมื่อผู้ใช้กด Enter จะมีอักขระ \\n ติดเข้ามาในข้อความด้วย ทำให้ต้องเคลียร์ออกเพื่อให้ข้อมูลไม่ขึ้นบรรทัดใหม่เวลานำไปเชื่อมต่อหรือตรวจสอบ...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของฟังก์ชันสำเร็จรูปใน string.h ในการลดความซับซ้อนและเพิ่มความปลอดภัยของการพัฒนาแอปพลิเคชัน...",
     codeKeywords: ["fgets","strlen","strncmp","strcpy","strcat","connect","disconnect"],
-    q1Keywords: ["overflow","ความยาว","n","ปลอดภัย","\\\\0"],
-    q2Keywords: ["gets","ปลอดภัย","ขนาด","buffer","\\\\n","enter"]
+    q1Keywords: ["overflow","ความยาว","n","ปลอดภัย","\\0"],
+    q2Keywords: ["gets","ปลอดภัย","ขนาด","buffer","\\n","enter"]
   },
   {
     num: "basic-structure",
@@ -1339,37 +1739,28 @@ void deviceStatusSimulator() {
           <svg class="stages-diagram" viewBox="0 0 580 160">
             <text x="30" y="20" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">Compilation & Linking Workflow</text>
             
-            <!-- Source Code -->
             <rect x="20" y="45" width="90" height="50" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
             <text x="65" y="70" fill="#f8fafc" font-size="10" font-family="JetBrains Mono" text-anchor="middle">Source Code</text>
             <text x="65" y="85" fill="#3b82f6" font-size="9" font-family="JetBrains Mono" text-anchor="middle">main.c</text>
             
-            <!-- Arrow 1 -->
             <line x1="110" y1="70" x2="140" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)" />
             
-            <!-- Compiler -->
             <rect x="140" y="45" width="90" height="50" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
             <text x="185" y="75" fill="#f8fafc" font-size="11" font-family="Outfit" text-anchor="middle">Compiler</text>
             
-            <!-- Arrow 2 -->
             <line x1="230" y1="70" x2="260" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)" />
             
-            <!-- Object File -->
             <rect x="260" y="45" width="90" height="50" rx="4" fill="#1e293b" stroke="#a855f7" stroke-width="2" />
             <text x="305" y="70" fill="#f8fafc" font-size="10" font-family="JetBrains Mono" text-anchor="middle">Object File</text>
             <text x="305" y="85" fill="#a855f7" font-size="9" font-family="JetBrains Mono" text-anchor="middle">main.obj</text>
             
-            <!-- Arrow 3 -->
             <line x1="350" y1="70" x2="380" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)" />
             
-            <!-- Linker -->
             <rect x="380" y="45" width="90" height="50" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="2" />
             <text x="425" y="75" fill="#f8fafc" font-size="11" font-family="Outfit" text-anchor="middle">Linker</text>
             
-            <!-- Arrow 4 -->
             <line x1="470" y1="70" x2="500" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)" />
             
-            <!-- Executable -->
             <rect x="500" y="45" width="70" height="50" rx="4" fill="#311212" stroke="#ef4444" stroke-width="2" />
             <text x="535" y="70" fill="#f8fafc" font-size="10" font-family="JetBrains Mono" text-anchor="middle">Executable</text>
             <text x="535" y="85" fill="#ef4444" font-size="9" font-family="JetBrains Mono" text-anchor="middle">main.exe</text>
@@ -1400,74 +1791,152 @@ int main() {
     return 0; 
 }`,
     example2Title: "โปรแกรมตัวอย่างที่ 2: การเติมคำสั่งในโครงสร้างพื้นฐาน",
-    example2Desc: "ศึกษาตำแหน่งสำคัญของสัญกรณ์ไวยากรณ์ภาษา C และเติมส่วนโค้ดที่หายไปในช่องว่าง <code>____</code> เพื่อให้คอมไพเลอร์แปลโค้ดได้ผ่านการทดสอบ:",
-    example2Code: `// เติมส่วนการประกาศนำเข้าห้องสมุด stdio.h (แทนที่ ____ ด้วย #include <stdio.h>)
-____
+    example2Desc: "ศึกษาตำแหน่งสำคัญของสัญกรณ์ไวยากรณ์ภาษา C และเติมส่วนโค้ดที่หายไปในช่องว่างกล่องข้อความ เพื่อให้คอมไพเลอร์แปลโค้ดได้ผ่านการทดสอบ:",
+    blanks: [
+      { id: "blank1", label: "ประกาศนำเข้าห้องสมุด stdio.h", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["#include <stdio.h>", "#include<stdio.h>"] },
+      { id: "blank2", label: "ประกาศฟังก์ชันหลัก int main()", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["int main()", "int main(void)", "int main( void )"] },
+      { id: "blank3", label: "ปิดท้ายคำสั่งแสดงข้อความ", placeholder: "พิมพ์คำตอบที่นี่...", answers: [";"] },
+      { id: "blank4", label: "ส่งค่ากลับจบโปรแกรมปกติ", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["return 0;", "return 0 ;", "return(0);"] }
+    ],
+    example2RawCode: `// เติมส่วนการประกาศนำเข้าห้องสมุด stdio.h
+[BLANK1]
 
-// เติมคำสำคัญประกาศฟังก์ชันหลักของระบบ (แทนที่ ____ ด้วย int main())
-____ {
-    // เติมส่วนปิดท้ายคำสั่งแสดงข้อความด้วย Semi-colon (แทนที่ ____ ด้วย ;)
-    printf("ตรวจสอบโครงสร้างโปรแกรมสำเร็จ")____
+// เติมคำสำคัญประกาศฟังก์ชันหลักของระบบ
+[BLANK2] {
+    // เติมส่วนปิดท้ายคำสั่งแสดงข้อความ
+    printf("ตรวจสอบโครงสร้างโปรแกรมสำเร็จ")[BLANK3]
     
-    // เติมส่วนส่งค่ากลับเพื่อยืนยันจบโปรแกรมปกติ (แทนที่ ____ ด้วย return 0;)
-    ____
+    // เติมส่วนส่งค่ากลับเพื่อยืนยันจบโปรแกรมปกติ
+    [BLANK4]
 }`,
-    challengeDesc: "พัฒนาและฝึกแก้ไขโครงสร้างโปรแกรมภาษา C ตามโจทย์กิจกรรมท้าทายดังนี้:<br>1. <b>Syntax Debugger</b>: ค้นหาและแก้ไขจุดผิดไวยากรณ์ 4 จุดในโค้ด C ที่เตรียมไว้ เพื่อให้คอมไพล์สำเร็จ (สังเกตเครื่องหมาย `;`, `#include`, การสะกด `printf`, และปีกกาเปิด-ปิด)<br>2. <b>โปรแกรมแสดงข้อมูลนักศึกษาพร้อมคอมเมนต์</b>: เขียนโปรแกรมที่ใช้ Directives และฟังก์ชัน `main` ในการพิมพ์ชื่อ-นามสกุล, รหัสนักศึกษา และกลุ่มเรียนของตัวคุณเอง พร้อมใช้คอมเมนต์แบบ Single-line (`//`) อธิบายหน้าที่ของโค้ดแต่ละบรรทัด<br>3. <b>ระบบสลับแสดงข้อความแบบโครงสร้างบล็อก</b>: รับเลข 1 หรือ 2 จากแป้นพิมพ์ หากเป็น 1 ให้พิมพ์ชื่อวิชา 'การเขียนโปรแกรมคอมพิวเตอร์' หากเป็น 2 ให้พิมพ์ชื่อสาขา 'เทคโนโลยีอิเล็กทรอนิกส์' หากเป็นค่าอื่นให้พิมพ์ 'เลือกไม่ถูกต้อง'",
-    challengePlaceholder: `#include <stdio.h>
-
-// ฟังก์ชันสำหรับแบบฝึกหัดกิจกรรม
-void runSyntaxDebugger();
-void printStudentProfile();
-void runBlockSelection();
+    example2SolutionCode: `#include <stdio.h>
 
 int main() {
-    printf("=== กิจกรรมท้าทาย: C Program Structure ===\\n");
-    runSyntaxDebugger();
-    printf("\\n");
-    printStudentProfile();
-    printf("\\n");
-    runBlockSelection();
+    printf("ตรวจสอบโครงสร้างโปรแกรมสำเร็จ");
+    return 0;
+}`,
+    challengeDesc: "ให้นักศึกษาเติมคำสั่งที่ถูกต้องลงในกล่องข้อความ [ กล่องข้อความ ] ของกิจกรรมท้าทาย เพื่อประกอบโครงสร้างโปรแกรมภาษา C ให้สมบูรณ์ ทั้งส่วน Preprocessor Directives, Function Prototype, ฟังก์ชันหลัก main(), การเรียกใช้ฟังก์ชัน และการส่งค่ากลับ (Return Value)",
+    challengeBlanks: [
+      { id: "ch_blank1", label: "Preprocessor Directive นำเข้า stdio.h", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["#include <stdio.h>", "#include<stdio.h>"] },
+      { id: "ch_blank2", label: "ประกาศ Function Prototype void showInfo()", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["void showInfo()", "void showInfo(void)", "void showInfo( void )"] },
+      { id: "ch_blank3", label: "ประกาศฟังก์ชันหลัก int main()", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["int main()", "int main(void)", "int main( void )"] },
+      { id: "ch_blank4", label: "คำสั่งแสดงข้อความ printf", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["printf"] },
+      { id: "ch_blank5", label: "คำสั่งส่งค่ากลับจบโปรแกรม return 0;", placeholder: "พิมพ์คำตอบที่นี่...", answers: ["return 0;", "return 0 ;", "return(0);"] }
+    ],
+    challengeRawCode: `/* 
+   กิจกรรมท้าทาย: โครงสร้างโปรแกรมภาษา C ที่สมบูรณ์ (Complete Program Structure)
+   เติมคำสั่งที่ถูกต้องลงในกล่องข้อความ เพื่อให้โปรแกรมคอมไพล์และทำงานได้อย่างสมบูรณ์
+*/
+
+// 1. เติมคำสั่ง Preprocessor Directive นำเข้าไลบรารี Standard I/O
+[CH_BLANK1]
+
+// 2. เติมการประกาศฟังก์ชันต้นแบบ (Function Prototype)
+[CH_BLANK2];
+
+// 3. จุดเริ่มต้นการทำงานของโปรแกรม (Main Function)
+[CH_BLANK3] {
+    // เรียกใช้งานฟังก์ชันย่อย
+    showInfo();
+    
+    // 4. เติมคำสั่งแสดงข้อความทางหน้าจอ
+    [CH_BLANK4]("C Program Structure Validated Successfully!\\n");
+    
+    // 5. เติมคำสั่งส่งค่ากลับเพื่อแจ้งระบบว่าโปรแกรมทำงานเสร็จสมบูรณ์
+    [CH_BLANK5]
+}
+
+// นิยามฟังก์ชันย่อย (Function Definition)
+void showInfo() {
+    printf("=======================================\\n");
+    printf("  C Programming: Structure Challenge   \\n");
+    printf("=======================================\\n");
+}`,
+    challengePlaceholder: ``,
+    challengeSolutionCode: `#include <stdio.h>
+
+// 1. ประกาศ Function Prototype
+void showInfo();
+
+// 2. Main Function
+int main() {
+    // เรียกใช้งานฟังก์ชันย่อย
+    showInfo();
+    
+    // แสดงข้อความยืนยันความถูกต้อง
+    printf("C Program Structure Validated Successfully!\\n");
+    
+    // ส่งค่ากลับ 0 เพื่อยืนยันจบโปรแกรมปกติ
     return 0;
 }
 
-// โจทย์ข้อที่ 1: ตรวจหาและแก้ไขคำสั่งให้ถูกต้อง (มีจุดผิด 4 ตำแหน่งในฟังก์ชันนี้)
-void runSyntaxDebugger() {
-    // --- โค้ดที่มีข้อผิดพลาด ---
-    /*
-    include <stdio.h>
-    void runSyntaxDebugger() {
-        print("Debugging test\\n")
-        return 0
-    }
-    */
-    
-    // --- เขียนแก้ไขโครงสร้างที่ถูกต้องที่นี่ เพื่อรันคำสั่งและพิมพ์ข้อความได้ ---
-    printf("แก้ไขคำสั่งเรียบร้อย: [อธิบายจุดแก้ไข 4 จุดที่นี่ในสายอักขระพิมพ์ข้อความ]\\n");
-}
-
-// โจทย์ข้อที่ 2: เขียนโปรแกรมโครงสร้างสมบูรณ์และใส่คอมเมนต์ประกอบทีละบรรทัด
-void printStudentProfile() {
-    // เขียนโค้ดประวัติของคุณพร้อมคอมเมนต์กำกับทุกคำสั่งที่นี่
-}
-
-// โจทย์ข้อที่ 3: เขียนรับเลข 1/2 และสลับแสดงคำอธิบาย
-void runBlockSelection() {
-    int choice;
-    printf("ป้อนตัวเลือก (1 หรือ 2): ");
-    // เขียนคำสั่งรับค่าและจัดโครงสร้างตรวจสอบเงื่อนไขที่นี่
+// 3. Function Definition
+void showInfo() {
+    printf("=======================================\\n");
+    printf("  C Programming: Structure Challenge   \\n");
+    printf("=======================================\\n");
 }`,
     question1: "1. อธิบายหน้าที่ของ Preprocessor Directives (เช่น #include <stdio.h>) และระบุว่าจะเกิดข้อผิดพลาดอย่างไรหากเราลืมใส่ในโค้ดโปรแกรม?",
     question1Placeholder: "#include มีหน้าที่นำเข้าไฟล์ส่วนหัวของไลบรารีเพื่อเรียกใช้ฟังก์ชันสำเร็จรูป เช่น printf() หากลืมคอมไพเลอร์จะแสดงข้อผิดพลาด (Warning/Error) ว่าไม่รู้จักฟังก์ชันดังกล่าว...",
     question2: "2. อธิบายขั้นตอนที่คอมไพเลอร์ทำการแปลซอร์สโค้ดภาษา C ตั้งแต่ไฟล์ .c ไปจนกระทั่งได้ไฟล์ผลลัพธ์ .exe อย่างสังเขป",
     question2Placeholder: "เริ่มจาก Preprocessing เคลียร์คอมเมนต์และดึงไลบรารี -> Compiling แปลเป็นรหัสแอสเซมบลี -> Assembling แปลเป็นรหัสภาษาเครื่อง (.obj) -> Linking เชื่อมโยงไลบรารีเพื่อสร้างไฟล์รันผลลัพธ์ .exe...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของการจัดโครงสร้างโปรแกรมที่มีระเบียบ การใช้ย่อหน้า (Indentation) และความสำคัญของการคอมเมนต์ในกระบวนการทำงานร่วมกัน...",
-    codeKeywords: ["include","stdio.h","int main()","runSyntaxDebugger","printStudentProfile","runBlockSelection"],
+    codeKeywords: ["include","stdio.h","int main()","showInfo","printf","return 0"],
     q1Keywords: ["preprocessor","include","ห้องสมุด","ฟังก์ชันสำเร็จรูป","error","warning"],
     q2Keywords: ["compiling","linking","assembly","object","exe"]
   }
 ];
 
 function generateCodeGs(lab) {
+  const blanks = lab.blanks || [];
+  const blanksCheckingJs = blanks.map((b, idx) => {
+    const answersArr = JSON.stringify(b.answers || []);
+    return `
+    var b${idx+1} = (data.${b.id} || "").toString().trim();
+    var isB${idx+1}Correct = ${answersArr}.indexOf(b${idx+1}) !== -1;
+    if (isB${idx+1}Correct) blankCorrectCount++;
+    `;
+  }).join('\n');
+
+  const blanksSummaryJs = blanks.map((b, idx) => `"${idx+1}:" + b${idx+1}`).join(' + ", " + ');
+
+  const challengeBlanks = lab.challengeBlanks || null;
+  let challengeGradingJs = '';
+  if (challengeBlanks) {
+    const chBlanksCheckJs = challengeBlanks.map((b, idx) => {
+      const answersArr = JSON.stringify(b.answers || []);
+      return `
+    var ch_b${idx+1} = (data.${b.id} || "").toString().trim();
+    var isChB${idx+1}Correct = ${answersArr}.indexOf(ch_b${idx+1}) !== -1;
+    if (isChB${idx+1}Correct) chBlankCorrectCount++;
+      `;
+    }).join('\n');
+
+    challengeGradingJs = `
+    // Check Challenge Blanks (Max 4 pts)
+    var chBlankCorrectCount = 0;
+    ${chBlanksCheckJs}
+    var totalChBlanks = ${challengeBlanks.length};
+    var codeScore = totalChBlanks > 0 ? Math.round((chBlankCorrectCount / totalChBlanks) * 4 * 10) / 10 : 4;
+    score += codeScore;
+    feedback.push("Challenge Blanks: " + codeScore + "/4 (" + chBlankCorrectCount + "/" + totalChBlanks + " ช่อง)");
+    `;
+  } else {
+    challengeGradingJs = `
+    // Check Challenge Code (Max 4 pts)
+    var code = data.challengeCode || "";
+    var codeMatches = 0;
+    codeKeywords.forEach(function(kw) {
+      if (new RegExp(kw, 'i').test(code)) {
+        codeMatches++;
+      }
+    });
+    var codeScore = codeKeywords.length > 0 ? Math.round((codeMatches / codeKeywords.length) * 4 * 10) / 10 : 4;
+    score += codeScore;
+    feedback.push("Challenge Code: " + codeScore + "/4 (พบ " + codeMatches + "/" + codeKeywords.length + " คีย์เวิร์ด)");
+    `;
+  }
+
   return `/**
  * Web App for ${lab.titleEn}
  * Designed by Antigravity AI
@@ -1496,6 +1965,7 @@ function submitLabData(data) {
       sheet = ss.insertSheet(sheetName);
       var headers = [
         "Timestamp", "ชื่อ-นามสกุล", "รหัสนักศึกษา", "กลุ่ม/ห้อง", "วันที่ทำการทดลอง",
+        "เติมคำตอบตัวอย่างที่ 2 (Blanks)",
         "โค้ดโปรแกรมตอบคำท้าทาย", 
         "คำถามข้อที่ 1", "คำถามข้อที่ 2",
         "ลิงก์ไฟล์รูปภาพผลการทดลอง", "ลิงก์ไฟล์โค้ด (.c)", "สรุปผลการทดลอง",
@@ -1564,19 +2034,19 @@ function submitLabData(data) {
     var score = 0;
     var feedback = [];
     
-    // Check Challenge Code (Max 5 pts)
-    var code = data.challengeCode || "";
-    var codeMatches = 0;
-    codeKeywords.forEach(function(kw) {
-      if (new RegExp(kw, 'i').test(code)) {
-        codeMatches++;
-      }
-    });
-    var codeScore = codeKeywords.length > 0 ? Math.round((codeMatches / codeKeywords.length) * 5) : 5;
-    score += codeScore;
-    feedback.push("Challenge Code: " + codeScore + "/5 (พบ " + codeMatches + "/" + codeKeywords.length + " คีย์เวิร์ด)");
+    // Check Fill-in-the-Blanks (Max 2 pts)
+    var blankCorrectCount = 0;
+    ${blanksCheckingJs}
+    var totalBlanks = ${blanks.length};
+    var blankScore = totalBlanks > 0 ? Math.round((blankCorrectCount / totalBlanks) * 2 * 10) / 10 : 2;
+    score += blankScore;
+    feedback.push("เติมคำตอบตัวอย่างที่ 2: " + blankScore + "/2 (" + blankCorrectCount + "/" + totalBlanks + " ช่อง)");
     
-    // Check Q1 (Max 2 pts)
+    var blanksSummary = ${blanks.length > 0 ? blanksSummaryJs : '""'};
+
+    ${challengeGradingJs}
+    
+    // Check Q1 (Max 1.5 pts)
     var q1 = data.question1 || "";
     var q1Matches = 0;
     q1Keywords.forEach(function(kw) {
@@ -1584,11 +2054,11 @@ function submitLabData(data) {
         q1Matches++;
       }
     });
-    var q1Score = q1Keywords.length > 0 ? (q1Matches >= 1 ? 2 : 0) : 2;
+    var q1Score = q1Keywords.length > 0 ? (q1Matches >= 1 ? 1.5 : 0) : 1.5;
     score += q1Score;
-    feedback.push("Q1: " + q1Score + "/2");
+    feedback.push("Q1: " + q1Score + "/1.5");
     
-    // Check Q2 (Max 2 pts)
+    // Check Q2 (Max 1.5 pts)
     var q2 = data.question2 || "";
     var q2Matches = 0;
     q2Keywords.forEach(function(kw) {
@@ -1596,9 +2066,9 @@ function submitLabData(data) {
         q2Matches++;
       }
     });
-    var q2Score = q2Keywords.length > 0 ? (q2Matches >= 1 ? 2 : 0) : 2;
+    var q2Score = q2Keywords.length > 0 ? (q2Matches >= 1 ? 1.5 : 0) : 1.5;
     score += q2Score;
-    feedback.push("Q2: " + q2Score + "/2");
+    feedback.push("Q2: " + q2Score + "/1.5");
     
     // Check Attachments (Max 1 pt)
     var attachScore = 0;
@@ -1611,6 +2081,8 @@ function submitLabData(data) {
     score += attachScore;
     feedback.push("ไฟล์แนบ: " + attachScore + "/1");
     
+    score = Math.round(score * 10) / 10;
+
     // 3. Log data to Spreadsheet
     var rowData = [
       new Date(),
@@ -1618,6 +2090,7 @@ function submitLabData(data) {
       data.studentId,
       data.studentGroup,
       data.labDate,
+      blanksSummary,
       data.challengeCode,
       data.question1,
       data.question2,
@@ -1632,7 +2105,7 @@ function submitLabData(data) {
     
     return {
       status: "success",
-      message: "บันทึกข้อมูลใบงานสำเร็จแล้ว! ข้อมูลของท่านถูกส่งไปที่ Google Sheet เรียบร้อย (คะแนนรวมประเมินออโต้: " + score + "/10)"
+      message: "บันทึกข้อมูลใบงานสำเร็จแล้ว! ข้อมูลของท่านถูกส่งไปที่ Google Sheet เรียบร้อย (คะแนนรวมประเมินออโต้: " + score + "/10)\\n\\nรายละเอียดคะแนน:\\n- " + feedback.join("\\n- ")
     };
     
   } catch (error) {
@@ -1646,6 +2119,60 @@ function submitLabData(data) {
 }
 
 function generateIndexHtml(lab) {
+  const blanks = lab.blanks || [];
+  const challengeBlanks = lab.challengeBlanks || null;
+
+  // Generate interactive code snippet for Example 2
+  let interactiveSnippetHtml = lab.example2RawCode || lab.example2Code;
+  blanks.forEach((b, idx) => {
+    const inputHtml = `<input type="text" id="${b.id}" class="code-inline-input" placeholder="____" maxlength="30" autocomplete="off" spellcheck="false" oninput="handleBlankInput('${b.id}', this.value)">`;
+    interactiveSnippetHtml = interactiveSnippetHtml.replace(`[BLANK${idx+1}]`, inputHtml);
+  });
+
+  // JS for blank validation (Example 2)
+  const jsBlankChecking = blanks.map((b, idx) => {
+    const answersArr = JSON.stringify(b.answers || []);
+    return `
+      const b${idx+1} = (document.getElementById('${b.id}')?.value || '').trim();
+      const isB${idx+1}Correct = ${answersArr}.indexOf(b${idx+1}) !== -1;
+      const el${idx+1} = document.getElementById('${b.id}');
+      applyClass(el${idx+1}, isB${idx+1}Correct);
+      if (isB${idx+1}Correct) correctCount++;
+    `;
+  }).join('\n');
+
+  const jsBlankPayload = blanks.map(b => `${b.id}: (document.getElementById('${b.id}')?.value || '').trim()`).join(',\n        ');
+
+  const jsBlankClear = blanks.map(b => `'${b.id}'`).join(', ');
+
+  // Challenge Blanks handling
+  let challengeInteractiveSnippetHtml = '';
+  let jsChallengeChecking = '';
+  let jsChallengePayload = '';
+  let jsChallengeClear = '';
+
+  if (challengeBlanks) {
+    challengeInteractiveSnippetHtml = lab.challengeRawCode;
+    challengeBlanks.forEach((b, idx) => {
+      const inputHtml = `<input type="text" id="${b.id}" class="code-inline-input" placeholder="____" maxlength="30" autocomplete="off" spellcheck="false" oninput="handleChallengeBlankInput('${b.id}', this.value)">`;
+      challengeInteractiveSnippetHtml = challengeInteractiveSnippetHtml.replace(`[CH_BLANK${idx+1}]`, inputHtml);
+    });
+
+    jsChallengeChecking = challengeBlanks.map((b, idx) => {
+      const answersArr = JSON.stringify(b.answers || []);
+      return `
+        const ch_b${idx+1} = (document.getElementById('${b.id}')?.value || '').trim();
+        const isChB${idx+1}Correct = ${answersArr}.indexOf(ch_b${idx+1}) !== -1;
+        const ch_el${idx+1} = document.getElementById('${b.id}');
+        applyClass(ch_el${idx+1}, isChB${idx+1}Correct);
+        if (isChB${idx+1}Correct) chCorrectCount++;
+      `;
+    }).join('\n');
+
+    jsChallengePayload = challengeBlanks.map(b => `${b.id}: (document.getElementById('${b.id}')?.value || '').trim()`).join(',\n        ');
+    jsChallengeClear = challengeBlanks.map(b => `'${b.id}'`).join(', ');
+  }
+
   return `<!DOCTYPE html>
 <html lang="th">
 <head>
@@ -1977,6 +2504,141 @@ function generateIndexHtml(lab) {
       color: #38bdf8;
     }
 
+    /* Compact Interactive Fill-in-the-Blank Code Block */
+    .interactive-code-container {
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .code-comment {
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    input.code-inline-input,
+    input[type="text"].code-inline-input {
+      display: inline-block !important;
+      vertical-align: middle !important;
+      background: rgba(15, 23, 42, 0.95) !important;
+      border: 1.5px dashed #818cf8 !important;
+      border-radius: 5px !important;
+      color: #38bdf8 !important;
+      font-family: var(--mono-font) !important;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+      padding: 2px 6px !important;
+      width: 7ch;
+      min-width: 55px !important;
+      max-width: 95% !important;
+      height: 25px !important;
+      line-height: 21px !important;
+      text-align: center !important;
+      outline: none !important;
+      box-shadow: none !important;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, width 0.15s ease !important;
+      margin: 0 4px !important;
+      box-sizing: content-box !important;
+    }
+
+    input.code-inline-input:focus,
+    input[type="text"].code-inline-input:focus {
+      border: 1.5px solid #6366f1 !important;
+      background: rgba(30, 41, 59, 0.98) !important;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4) !important;
+      color: #ffffff !important;
+    }
+
+    input.code-inline-input.correct,
+    input[type="text"].code-inline-input.correct {
+      border: 1.5px solid #10b981 !important;
+      background: rgba(16, 185, 129, 0.2) !important;
+      color: #34d399 !important;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25) !important;
+    }
+
+    input.code-inline-input.incorrect,
+    input[type="text"].code-inline-input.incorrect {
+      border: 1.5px solid #ef4444 !important;
+      background: rgba(239, 68, 68, 0.2) !important;
+      color: #f87171 !important;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+    }
+
+    .check-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.78rem;
+      font-family: var(--heading-font);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+    }
+
+    .check-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .blank-feedback-bar {
+      background: rgba(15, 23, 42, 0.95);
+      padding: 0.65rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .blank-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .blank-score-badge.success { color: #34d399; }
+    .blank-score-badge.partial { color: #fbbf24; }
+    .blank-score-badge.idle { color: var(--text-muted); }
+
+    /* Anti-Cheat Styling */
+    .anti-cheat-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-left: auto;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    @keyframes antiCheatShake {
+      0%, 100% { transform: translateX(0); border-color: var(--card-border); }
+      20%, 60% { transform: translateX(-6px); border-color: var(--danger); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35); }
+      40%, 80% { transform: translateX(6px); border-color: var(--danger); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35); }
+    }
+
+    .anti-cheat-alert {
+      animation: antiCheatShake 0.5s ease-in-out !important;
+      border-color: var(--danger) !important;
+    }
+
     /* Forms */
     .form-section {
       margin-bottom: 1.5rem;
@@ -2282,6 +2944,7 @@ function generateIndexHtml(lab) {
       font-size: 0.95rem;
       margin-bottom: 1.5rem;
       line-height: 1.5;
+      white-space: pre-line;
     }
 
     .modal-close-btn {
@@ -2334,7 +2997,7 @@ function generateIndexHtml(lab) {
         margin: 0 !important;
         padding: 0 !important;
       }
-      header, .course-badge, .logo-container, .btn, .upload-area, .remove-file-btn, .modal-overlay, .copy-btn, .code-header, .connection-status {
+      header, .course-badge, .logo-container, .btn, .upload-area, .remove-file-btn, .modal-overlay, .copy-btn, .code-header, .connection-status, .check-btn, .blank-feedback-bar {
         display: none !important;
       }
       .dashboard-grid {
@@ -2399,10 +3062,14 @@ function generateIndexHtml(lab) {
         border-radius: 0 !important;
         color: #000 !important;
         padding: 0.25rem 0 !important;
-        field-sizing: content !important;
       }
-      textarea {
-        overflow: visible !important;
+      input.code-inline-input {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px dotted #000 !important;
+        color: #000 !important;
+        font-weight: bold !important;
+        min-width: 50px !important;
       }
       .input-icon {
         display: none !important;
@@ -2414,7 +3081,6 @@ function generateIndexHtml(lab) {
         height: auto !important;
         min-height: 150px;
         white-space: pre-wrap;
-        field-sizing: content !important;
       }
       .print-file-indicator {
         display: block !important;
@@ -2449,7 +3115,7 @@ function generateIndexHtml(lab) {
 
         <h2>1. จุดประสงค์การทดลอง</h2>
         <ul>
-          ${lab.purpose.map(p => '<li>' + p + '</li>').join('\n          ')}
+          ${lab.purpose.map(p => `<li>${p}</li>`).join('\n          ')}
         </ul>
 
         <h2>2. อุปกรณ์และเครื่องมือการทดลอง</h2>
@@ -2463,13 +3129,19 @@ function generateIndexHtml(lab) {
               </tr>
             </thead>
             <tbody>
-              ${lab.equipments.map((e, index) => '<tr><td>' + (index + 1) + '</td><td>' + e.name + '</td><td>' + e.desc + '</td></tr>').join('')}
+              ${lab.equipments.map((eq, i) => `
+              <tr>
+                <td>${i+1}</td>
+                <td>${eq.name}</td>
+                <td>${eq.desc}</td>
+              </tr>
+              `).join('')}
             </tbody>
           </table>
         </div>
 
         ${lab.theoryHtml}
-
+        
         <div class="stages-diagram-container">
           ${lab.diagramSvg}
         </div>
@@ -2483,22 +3155,49 @@ function generateIndexHtml(lab) {
             <span>example1.c</span>
             <button class="copy-btn" type="button" onclick="copyCode('ex1Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
           </div>
-          <pre><code id="ex1Code">${lab.example1Code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
+          <pre><code id="ex1Code">${lab.example1Code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
         </div>
 
         <h3>${lab.example2Title}</h3>
         <p>${lab.example2Desc}</p>
-        <div class="code-container">
+        <div class="code-container interactive-code-container">
           <div class="code-header">
-            <span>example2_fill.c</span>
-            <button class="copy-btn" type="button" onclick="copyCode('ex2Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
+            <span><i class="fa-solid fa-pen-to-square"></i> example2_fill.c (เติมคำสั่งลงในกล่องข้อความ)</span>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <button class="check-btn" type="button" onclick="checkBlanks()"><i class="fa-solid fa-circle-check"></i> ตรวจคำตอบ</button>
+              <button class="copy-btn" type="button" onclick="copyInteractiveCode()"><i class="fa-regular fa-copy"></i> คัดลอกโค้ด</button>
+            </div>
           </div>
-          <pre><code id="ex2Code">${lab.example2Code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
+          <pre><code id="ex2Code">${interactiveSnippetHtml.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&lt;input([^&]*)&gt;/g, '<input$1>')}</code></pre>
+          <div class="blank-feedback-bar">
+            <span id="blankFeedbackBadge" class="blank-score-badge idle">
+              <i class="fa-solid fa-circle-info"></i> พิมพ์คำตอบลงในช่องว่างแล้วคลิก "ตรวจคำตอบ"
+            </span>
+            <span id="blankScoreSummary" style="font-size:0.8rem;color:#94a3b8;">คะแนนส่วนนี้: 2 คะแนน (ช่องละ ${(2 / Math.max(1, blanks.length)).toFixed(1)} คะแนน)</span>
+          </div>
         </div>
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
           <p>${lab.challengeDesc}</p>
+          ${challengeBlanks ? `
+          <div class="code-container interactive-code-container" style="margin-top: 1rem; border-color: rgba(245, 158, 11, 0.4);">
+            <div class="code-header" style="background: rgba(245, 158, 11, 0.15);">
+              <span style="color: #fde047;"><i class="fa-solid fa-pen-to-square"></i> challenge_fill.c (เติมคำสั่งกิจกรรมท้าทาย)</span>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button class="check-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" type="button" onclick="checkChallengeBlanks()"><i class="fa-solid fa-circle-check"></i> ตรวจคำตอบ</button>
+                <button class="copy-btn" type="button" onclick="copyChallengeInteractiveCode()"><i class="fa-regular fa-copy"></i> คัดลอกโค้ด</button>
+              </div>
+            </div>
+            <pre><code id="chExCode">${challengeInteractiveSnippetHtml.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&lt;input([^&]*)&gt;/g, '<input$1>')}</code></pre>
+            <div class="blank-feedback-bar">
+              <span id="chBlankFeedbackBadge" class="blank-score-badge idle">
+                <i class="fa-solid fa-circle-info"></i> พิมพ์คำตอบลงในช่องว่างแล้วคลิก "ตรวจคำตอบ"
+              </span>
+              <span id="chBlankScoreSummary" style="font-size:0.8rem;color:#94a3b8;">คะแนนส่วนนี้: 4 คะแนน (ช่องละ ${(4 / challengeBlanks.length).toFixed(1)} คะแนน)</span>
+            </div>
+          </div>
+          ` : ''}
         </div>
       </div>
 
@@ -2517,7 +3216,7 @@ function generateIndexHtml(lab) {
           <!-- Section 1: Student Info -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-user-graduate"></i> ข้อมูลผู้ส่งใบงาน
+              <i class="fa-solid fa-user-graduate"></i> 1. ข้อมูลผู้ส่งใบงาน
             </div>
             
             <div class="form-group">
@@ -2554,31 +3253,31 @@ function generateIndexHtml(lab) {
             </div>
           </div>
 
-          <!-- Section 2: Code Submission -->
+          <!-- Section 2: Code Submission / Challenge -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-file-code"></i> ผลการทำกิจกรรมท้าทาย (Source Code)
+              <i class="fa-solid fa-file-code"></i> 2. ผลการทำกิจกรรมท้าทาย (${challengeBlanks ? 'Lab Challenge' : 'Source Code'})
             </div>
-            <div class="form-group" style="margin-bottom: 1.5rem;">
-              <label>โค้ดโปรแกรมตั้งต้นสำหรับกิจกรรมท้าทาย (สามารถคัดลอกไปเขียน/รันบนเครื่องคอมพิวเตอร์ได้):</label>
-              <div class="code-container" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
-                <div class="code-header">
-                  <span>challenge_starter.c</span>
-                  <button class="copy-btn" type="button" onclick="copyCode('challengeStarterCode')"><i class="fa-regular fa-copy"></i> คัดลอกโค้ดตั้งต้น</button>
-                </div>
-                <pre><code id="challengeStarterCode">${lab.challengePlaceholder.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
-              </div>
+            ${challengeBlanks ? `
+            <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem;">
+              <p style="margin: 0; font-size: 0.9rem; color: #cbd5e1; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 1.1rem;"></i>
+                <span>ระบบเชื่อมต่อและดึงคำตอบจากกล่องข้อความใน <strong>กิจกรรมท้าทาย (ฝั่งซ้าย)</strong> ไปประเมินและบันทึกคะแนนโดยอัตโนมัติ (คะแนนเต็ม 4.0 คะแนน)</span>
+              </p>
             </div>
+            ` : `
             <div class="form-group">
-              <label for="challengeCode">พิมพ์หรือวางโค้ดภาษา C คำตอบของคุณที่นี่ (หลังจากแก้ไขและรันสำเร็จแล้ว):</label>
-              <textarea id="challengeCode" class="code-textarea" required placeholder="วางโค้ด C ที่เขียนและทดสอบเรียบร้อยแล้วที่นี่..."></textarea>
+              <label for="challengeCode">พิมพ์โค้ดภาษา C ของคุณที่นี่</label>
+              <textarea id="challengeCode" class="code-textarea" required placeholder="${lab.challengePlaceholder.replace(/"/g, '&quot;')}"></textarea>
             </div>
+            `}
           </div>
 
           <!-- Section 3: Questions -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-circle-question"></i> คำถามท้ายการทดลอง
+              <i class="fa-solid fa-circle-question"></i> 3. คำถามท้ายการทดลอง
+              <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
 
             <div class="form-group">
@@ -2595,7 +3294,7 @@ function generateIndexHtml(lab) {
           <!-- Section 4: File Uploads -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-paperclip"></i> ไฟล์แนบ (Attachments)
+              <i class="fa-solid fa-paperclip"></i> 4. ไฟล์แนบ (Attachments)
             </div>
 
             <!-- Screenshot upload -->
@@ -2642,7 +3341,8 @@ function generateIndexHtml(lab) {
           <!-- Section 5: Conclusion -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-comment-dots"></i> สรุปผลการทดลอง
+              <i class="fa-solid fa-comment-dots"></i> 5. สรุปผลการทดลอง
+              <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
             <div class="form-group">
               <label for="conclusion">สรุปและข้อเสนอแนะจากการทดลอง</label>
@@ -2690,6 +3390,7 @@ function generateIndexHtml(lab) {
       // 1. Check environment
       const isGoogleAppsScript = (typeof google !== 'undefined' && google.script && google.script.run);
       const connBanner = document.getElementById('connectionStatus');
+      const connText = document.getElementById('connectionText');
       
       if (isGoogleAppsScript) {
         connBanner.className = 'connection-status cloud';
@@ -2716,47 +3417,344 @@ function generateIndexHtml(lab) {
       // 4. Drag & Drop features
       setupDragAndDrop('screenshotArea', 'screenshotInput', 'screenshot');
       setupDragAndDrop('codeArea', 'codeInput', 'code');
-      
-      // Setup default placeholder correctly
-      document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(/</g, '\\u003C').replace(/>/g, '\\u003E').replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
+
+      // 5. Initialize Anti-Cheat protection
+      initAntiCheat();
+
+      // 6. Initialize Auto-Resize on inline inputs
+      document.querySelectorAll('input.code-inline-input').forEach(input => {
+        autoResizeInlineInput(input);
+        input.addEventListener('input', () => autoResizeInlineInput(input));
+      });
     });
 
-    // Copy code helper
-    function copyCode(elementId) {
-      const codeText = document.getElementById(elementId).innerText;
+    // Auto-Resize inline input to fit content dynamically
+    function autoResizeInlineInput(el) {
+      if (!el) return;
+      const textLen = (el.value || '').length;
+      const placeholderLen = (el.placeholder || '____').length;
+      const chCount = Math.max(placeholderLen, textLen);
+      el.style.width = (chCount + 2) + 'ch';
+    }
+
+    // Anti-Cheat: Prevent Paste and Drag-Drop in Questions and Conclusion
+    function initAntiCheat() {
+      const protectedIds = ['question1', 'question2', 'conclusion'];
       
-      function fallbackCopy() {
-        const textArea = document.createElement("textarea");
-        textArea.value = codeText;
-        textArea.style.top = "0";
-        textArea.style.left = "0";
-        textArea.style.position = "fixed";
-        textArea.style.opacity = "0";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-          const successful = document.execCommand('copy');
-          if (successful) {
-            alert('คัดลอกโค้ดเรียบร้อยแล้ว!');
-          } else {
-            alert('ไม่สามารถคัดลอกโค้ดได้ กรุณาครอบดำคัดลอกด้วยตนเอง');
-          }
-        } catch (err) {
-          alert('ไม่สามารถคัดลอกโค้ดได้: ' + err);
+      function showAntiCheatWarning(targetEl) {
+        if (targetEl) {
+          targetEl.classList.add('anti-cheat-alert');
+          setTimeout(() => targetEl.classList.remove('anti-cheat-alert'), 800);
         }
-        document.body.removeChild(textArea);
+        
+        let toast = document.getElementById('_antiCheatToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = '_antiCheatToast';
+          toast.style.cssText = 'position:fixed;top:25px;left:50%;transform:translateX(-50%);' +
+            'padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;' +
+            'z-index:999999;box-shadow:0 8px 24px rgba(239,68,68,0.4);transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);' +
+            'pointer-events:none;white-space:nowrap;display:flex;align-items:center;gap:8px;' +
+            'background:linear-gradient(135deg, #ef4444, #dc2626);color:#ffffff;border:1px solid #fca5a5;';
+          document.body.appendChild(toast);
+        }
+        toast.innerHTML = '<i class="fa-solid fa-shield-halved" style="font-size:16px;"></i> <span>ระบบตรวจจับการลอก: ไม่อนุญาตให้วางข้อความ (Paste) กรุณาพิมพ์คำตอบด้วยตนเอง</span>';
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(-50%) translateY(-10px)';
+        }, 2800);
       }
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(codeText).then(() => {
-          alert('คัดลอกโค้ดเรียบร้อยแล้ว!');
-        }).catch(err => {
-          console.warn('Clipboard API failed, using fallback:', err);
-          fallbackCopy();
+      protectedIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        el.addEventListener('paste', (e) => {
+          e.preventDefault();
+          showAntiCheatWarning(el);
         });
+
+        el.addEventListener('drop', (e) => {
+          e.preventDefault();
+          showAntiCheatWarning(el);
+        });
+
+        el.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'V')) {
+            e.preventDefault();
+            showAntiCheatWarning(el);
+          }
+          if (e.shiftKey && e.key === 'Insert') {
+            e.preventDefault();
+            showAntiCheatWarning(el);
+          }
+        });
+
+        let lastVal = el.value;
+        el.addEventListener('input', (e) => {
+          if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+            el.value = lastVal;
+            showAntiCheatWarning(el);
+            return;
+          }
+          if (el.value.length - lastVal.length > 25 && e.inputType !== 'historyUndo') {
+            el.value = lastVal;
+            showAntiCheatWarning(el);
+            return;
+          }
+          lastVal = el.value;
+        });
+      });
+    }
+
+    // Handle blank input typing (Example 2)
+    function handleBlankInput(id, val) {
+      const inlineEl = document.getElementById(id);
+      if (inlineEl) {
+        inlineEl.classList.remove('correct', 'incorrect');
+        autoResizeInlineInput(inlineEl);
+      }
+
+      const badge = document.getElementById('blankFeedbackBadge');
+      if (badge) {
+        badge.className = 'blank-score-badge idle';
+        badge.innerHTML = '<i class="fa-solid fa-circle-info"></i> พิมพ์คำตอบลงในช่องว่างแล้วคลิก "ตรวจคำตอบ"';
+      }
+    }
+
+    // Check blanks helper (Example 2)
+    function checkBlanks(silent = false) {
+      function applyClass(el, isOk) {
+        if (!el) return;
+        el.classList.remove('correct', 'incorrect');
+        if (el.value.trim().length > 0) {
+          el.classList.add(isOk ? 'correct' : 'incorrect');
+        }
+      }
+
+      let correctCount = 0;
+      ${jsBlankChecking}
+
+      const totalBlanks = ${blanks.length};
+      const blankScore = totalBlanks > 0 ? Number(((correctCount / totalBlanks) * 2).toFixed(1)) : 2.0;
+
+      if (!silent) {
+        const badge = document.getElementById('blankFeedbackBadge');
+        if (badge) {
+          if (correctCount === totalBlanks) {
+            badge.className = 'blank-score-badge success';
+            badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> ถูกต้องครบถ้วน ' + totalBlanks + '/' + totalBlanks + ' ช่อง! (ได้ ' + blankScore + '/2.0 คะแนน)';
+          } else if (correctCount > 0) {
+            badge.className = 'blank-score-badge partial';
+            badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ถูกต้อง ' + correctCount + '/' + totalBlanks + ' ช่อง (ได้ ' + blankScore + '/2.0 คะแนน) — กรุณาตรวจดูอีกครั้ง';
+          } else {
+            badge.className = 'blank-score-badge';
+            badge.style.color = 'var(--danger)';
+            badge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ยังไม่ถูกต้อง กรุณาพิจารณาโค้ดและพิมพ์คำตอบใหม่';
+          }
+        }
+      }
+
+      return {
+        correctCount: correctCount,
+        blankScore: blankScore,
+        totalBlanks: totalBlanks
+      };
+    }
+
+    // Copy interactive code helper (Example 2)
+    function copyInteractiveCode() {
+      let codeStr = \`${lab.example2RawCode || lab.example2Code}\`;
+      ${blanks.map((b, idx) => `
+      const val_${b.id} = (document.getElementById('${b.id}')?.value || '____').trim();
+      codeStr = codeStr.replace('[BLANK${idx+1}]', val_${b.id});
+      `).join('')}
+
+      function showCopyToast(msg, isError) {
+        let toast = document.getElementById('_copyToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = '_copyToast';
+          toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);' +
+            'padding:10px 24px;border-radius:8px;font-size:15px;font-weight:600;' +
+            'z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:opacity 0.4s;pointer-events:none;white-space:nowrap;';
+          document.body.appendChild(toast);
+        }
+        toast.style.background = isError ? '#ef4444' : '#22c55e';
+        toast.style.color = '#fff';
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+      }
+
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(codeStr)
+          .then(() => showCopyToast('✓ คัดลอกโค้ดตัวอย่างที่ 2 แล้ว!'))
+          .catch(() => showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true));
       } else {
-        fallbackCopy();
+        const ta = document.createElement('textarea');
+        ta.value = codeStr;
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showCopyToast('✓ คัดลอกโค้ดตัวอย่างที่ 2 แล้ว!');
+        } catch(e) {
+          showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true);
+        }
+        document.body.removeChild(ta);
+      }
+    }
+
+    ${challengeBlanks ? `
+    // Handle Challenge Blank input
+    function handleChallengeBlankInput(id, val) {
+      const inlineEl = document.getElementById(id);
+      if (inlineEl) {
+        inlineEl.classList.remove('correct', 'incorrect');
+        autoResizeInlineInput(inlineEl);
+      }
+
+      const badge = document.getElementById('chBlankFeedbackBadge');
+      if (badge) {
+        badge.className = 'blank-score-badge idle';
+        badge.innerHTML = '<i class="fa-solid fa-circle-info"></i> พิมพ์คำตอบลงในช่องว่างแล้วคลิก "ตรวจคำตอบ"';
+      }
+    }
+
+    // Check Challenge Blanks helper
+    function checkChallengeBlanks(silent = false) {
+      function applyClass(el, isOk) {
+        if (!el) return;
+        el.classList.remove('correct', 'incorrect');
+        if (el.value.trim().length > 0) {
+          el.classList.add(isOk ? 'correct' : 'incorrect');
+        }
+      }
+
+      let chCorrectCount = 0;
+      ${jsChallengeChecking}
+
+      const totalChBlanks = ${challengeBlanks.length};
+      const chScore = totalChBlanks > 0 ? Number(((chCorrectCount / totalChBlanks) * 4).toFixed(1)) : 4.0;
+
+      if (!silent) {
+        const badge = document.getElementById('chBlankFeedbackBadge');
+        if (badge) {
+          if (chCorrectCount === totalChBlanks) {
+            badge.className = 'blank-score-badge success';
+            badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> ถูกต้องครบถ้วน ' + totalChBlanks + '/' + totalChBlanks + ' ช่อง! (ได้ ' + chScore + '/4.0 คะแนน)';
+          } else if (chCorrectCount > 0) {
+            badge.className = 'blank-score-badge partial';
+            badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ถูกต้อง ' + chCorrectCount + '/' + totalChBlanks + ' ช่อง (ได้ ' + chScore + '/4.0 คะแนน) — กรุณาตรวจดูอีกครั้ง';
+          } else {
+            badge.className = 'blank-score-badge';
+            badge.style.color = 'var(--danger)';
+            badge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ยังไม่ถูกต้อง กรุณาพิจารณาโครงสร้างโค้ดและพิมพ์คำตอบใหม่';
+          }
+        }
+      }
+
+      return {
+        chCorrectCount: chCorrectCount,
+        challengeScore: chScore,
+        totalChBlanks: totalChBlanks
+      };
+    }
+
+    // Copy interactive code helper (Challenge)
+    function copyChallengeInteractiveCode() {
+      let codeStr = \`${lab.challengeRawCode || ''}\`;
+      ${challengeBlanks.map((b, idx) => `
+      const val_${b.id} = (document.getElementById('${b.id}')?.value || '____').trim();
+      codeStr = codeStr.replace('[CH_BLANK${idx+1}]', val_${b.id});
+      `).join('')}
+
+      function showCopyToast(msg, isError) {
+        let toast = document.getElementById('_copyToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = '_copyToast';
+          toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);' +
+            'padding:10px 24px;border-radius:8px;font-size:15px;font-weight:600;' +
+            'z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:opacity 0.4s;pointer-events:none;white-space:nowrap;';
+          document.body.appendChild(toast);
+        }
+        toast.style.background = isError ? '#ef4444' : '#22c55e';
+        toast.style.color = '#fff';
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+      }
+
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(codeStr)
+          .then(() => showCopyToast('✓ คัดลอกโค้ดกิจกรรมท้าทายแล้ว!'))
+          .catch(() => showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = codeStr;
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showCopyToast('✓ คัดลอกโค้ดกิจกรรมท้าทายแล้ว!');
+        } catch(e) {
+          showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true);
+        }
+        document.body.removeChild(ta);
+      }
+    }
+    ` : ''}
+
+    // Copy standard code helper
+    function copyCode(elementId) {
+      const el = document.getElementById(elementId);
+      const codeText = el ? el.innerText : '';
+      if (!codeText) return;
+
+      function showCopyToast(msg, isError) {
+        let toast = document.getElementById('_copyToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = '_copyToast';
+          toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);' +
+            'padding:10px 24px;border-radius:8px;font-size:15px;font-weight:600;' +
+            'z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:opacity 0.4s;pointer-events:none;white-space:nowrap;';
+          document.body.appendChild(toast);
+        }
+        toast.style.background = isError ? '#ef4444' : '#22c55e';
+        toast.style.color = '#fff';
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+      }
+
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(codeText)
+          .then(() => showCopyToast('✓ คัดลอกโค้ดแล้ว!'))
+          .catch(() => showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = codeText;
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showCopyToast('✓ คัดลอกโค้ดแล้ว!');
+        } catch(e) {
+          showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true);
+        }
+        document.body.removeChild(ta);
       }
     }
 
@@ -2789,7 +3787,6 @@ function generateIndexHtml(lab) {
       const file = input.files[0];
       if (!file) return;
 
-      // Validate size
       const maxMegaBytes = (type === 'screenshot') ? 5 : 2;
       if (file.size > maxMegaBytes * 1024 * 1024) {
         alert(\`ขนาดไฟล์เกินกำหนด! ไฟล์ต้องมีขนาดไม่เกิน \${maxMegaBytes}MB\`);
@@ -2865,13 +3862,35 @@ function generateIndexHtml(lab) {
       localStorage.setItem('student_id', idVal);
       localStorage.setItem('student_group', groupVal);
 
+      // Check Blanks (Example 2)
+      const blankResult = checkBlanks(true);
+
+      // Check Challenge Code / Blanks
+      let assembledCode = '';
+      let chScore = 4.0;
+      ${challengeBlanks ? `
+      const chResult = checkChallengeBlanks(true);
+      chScore = chResult.challengeScore;
+      let tempCode = \`${lab.challengeRawCode || ''}\`;
+      ${challengeBlanks.map((b, idx) => `
+      const ch_val_${b.id} = (document.getElementById('${b.id}')?.value || '____').trim();
+      tempCode = tempCode.replace('[CH_BLANK${idx+1}]', ch_val_${b.id});
+      `).join('')}
+      assembledCode = tempCode;
+      ` : `
+      assembledCode = document.getElementById('challengeCode')?.value || '';
+      `}
+
       // Collect data
       const payload = {
         studentName: nameVal,
         studentId: idVal,
         studentGroup: groupVal,
         labDate: document.getElementById('labDate').value,
-        challengeCode: document.getElementById('challengeCode').value,
+        ${jsBlankPayload},
+        ${challengeBlanks ? jsChallengePayload + ',' : ''}
+        blankScore: blankResult.blankScore,
+        challengeCode: assembledCode,
         question1: document.getElementById('question1').value,
         question2: document.getElementById('question2').value,
         conclusion: document.getElementById('conclusion').value,
@@ -2891,7 +3910,15 @@ function generateIndexHtml(lab) {
             if (response.status === 'success') {
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
               // Clear fields
-              document.getElementById('challengeCode').value = \`${lab.challengePlaceholder.replace(/</g, '\\u003C').replace(/>/g, '\\u003E').replace(new RegExp('\\\\x60', 'g'), String.fromCharCode(96)).replace(new RegExp('\\\\\\\\$', 'g'), String.fromCharCode(36))}\`;
+              [${jsBlankClear}${challengeBlanks ? ', ' + jsChallengeClear : ''}].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                  el.value = '';
+                  el.classList.remove('correct', 'incorrect');
+                  autoResizeInlineInput(el);
+                }
+              });
+              if (document.getElementById('challengeCode')) document.getElementById('challengeCode').value = '';
               document.getElementById('question1').value = '';
               document.getElementById('question2').value = '';
               document.getElementById('conclusion').value = '';
@@ -2912,7 +3939,64 @@ function generateIndexHtml(lab) {
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
-          openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', 'จำลองการส่งข้อมูลเสร็จสิ้น ข้อมูลผู้ส่งได้รับการเก็บบันทึกบนเบราว์เซอร์ของท่านแล้ว (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)');
+          
+          const codeKeywords = ${JSON.stringify(lab.codeKeywords || [])};
+          const q1Keywords = ${JSON.stringify(lab.q1Keywords || [])};
+          const q2Keywords = ${JSON.stringify(lab.q2Keywords || [])};
+          
+          const q1 = document.getElementById('question1').value || '';
+          const q2 = document.getElementById('question2').value || '';
+          
+          // 1. Blank score (Max 2 pts)
+          const blankScore = blankResult.blankScore;
+
+          // 2. Challenge Score (Max 4 pts)
+          let finalChScore = 4.0;
+          let chFeedbackText = '';
+          ${challengeBlanks ? `
+          finalChScore = chScore;
+          chFeedbackText = \`กิจกรรมท้าทาย (เติมคำสั่ง): \${finalChScore}/4 (\${chResult.chCorrectCount}/\${chResult.totalChBlanks} ช่อง)\`;
+          ` : `
+          let codeMatches = 0;
+          codeKeywords.forEach(kw => {
+            if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;
+          });
+          finalChScore = codeKeywords.length > 0 ? Number(((codeMatches / codeKeywords.length) * 4).toFixed(1)) : 4;
+          chFeedbackText = \`Challenge Code: \${finalChScore}/4 (พบ \${codeMatches}/\${codeKeywords.length} คีย์เวิร์ด)\`;
+          `}
+          
+          // 3. Q1 (Max 1.5 pts)
+          let q1Matches = 0;
+          q1Keywords.forEach(kw => {
+            if (new RegExp(kw, 'i').test(q1)) q1Matches++;
+          });
+          const q1Score = q1Keywords.length > 0 ? (q1Matches >= 1 ? 1.5 : 0) : 1.5;
+          
+          // 4. Q2 (Max 1.5 pts)
+          let q2Matches = 0;
+          q2Keywords.forEach(kw => {
+            if (new RegExp(kw, 'i').test(q2)) q2Matches++;
+          });
+          const q2Score = q2Keywords.length > 0 ? (q2Matches >= 1 ? 1.5 : 0) : 1.5;
+          
+          // 5. Attachments (Max 1 pt)
+          let attachScore = 0;
+          if (filesData.screenshotBase64) attachScore += 0.5;
+          if (filesData.codeBase64) attachScore += 0.5;
+          
+          const score = Number((blankScore + finalChScore + q1Score + q2Score + attachScore).toFixed(1));
+          
+          const feedback = [
+            \`เติมคำตอบตัวอย่างที่ 2: \${blankScore}/2 (\${blankResult.correctCount}/\${blankResult.totalBlanks} ช่อง)\`,
+            chFeedbackText,
+            \`Q1: \${q1Score}/1.5\`,
+            \`Q2: \${q2Score}/1.5\`,
+            \`ไฟล์แนบ: \${attachScore}/1\`
+          ];
+          
+          const localMessage = \`จำลองการส่งข้อมูลเสร็จสิ้น! (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)\\n\\nคะแนนรวมประเมินออโต้: \${score}/10\\n\\nรายละเอียดคะแนน:\\n- \` + feedback.join('\\n- ');
+          
+          openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', localMessage);
         }, 1500);
       }
     }
@@ -2947,7 +4031,7 @@ function generateIndexHtml(lab) {
       document.getElementById('statusModal').style.display = 'none';
     }
 
-    // Auto-expand textareas when printing to prevent cropped text/scrollbars
+    // Auto-expand textareas when printing
     window.addEventListener('beforeprint', () => {
       document.querySelectorAll('textarea').forEach(el => {
         el.dataset.origHeight = el.style.height;
@@ -2973,11 +4057,45 @@ function generateIndexHtml(lab) {
 `;
 }
 
-// Ensure the root path and subdirectories are created
-const destDir = path.join(__dirname, 'scratch', 'lab-c-programming');
-const labsDestDir = fs.existsSync(destDir) ? destDir : path.join(__dirname);
+function generateSolutionReadme(lab) {
+  const blanksList = (lab.blanks || []).map((b, idx) => `  ${idx+1}. **${b.label}:** \`${b.answers[0]}\``).join('\n');
+  const chBlanksList = (lab.challengeBlanks || []).map((b, idx) => `  ${idx+1}. **${b.label}:** \`${b.answers[0]}\``).join('\n');
 
-console.log(`Generating C programming labs basic, structure and 1 to 10 in: ${labsDestDir}`);
+  return `# เฉลยกิจกรรม ${lab.titleTh} (Solutions)
+
+โฟลเดอร์นี้รวบรวมโค้ดเฉลยสำหรับ **${lab.titleTh}** (${lab.titleEn})
+
+---
+
+## รายการไฟล์เฉลย
+
+### 1. \`challenge_solution.c\`
+โค้ดเฉลยสำหรับ **กิจกรรมท้าทาย (Lab Challenge)**
+${lab.challengeBlanks ? `- **คำตอบที่เติมลงในช่องว่างกิจกรรมท้าทาย:**\n${chBlanksList}\n` : ''}
+- **คำสั่งคอมไพล์และรัน:**
+  \`\`\`bash
+  gcc -o challenge_solution.exe challenge_solution.c
+  ./challenge_solution.exe
+  \`\`\`
+
+---
+
+### 2. \`example2_solution.c\`
+โค้ดเฉลยสำหรับ **โปรแกรมตัวอย่างที่ 2 (Fill in the Blanks)**
+- **คำตอบที่เติมลงในช่องว่าง:**
+${blanksList}
+- **คำสั่งคอมไพล์และรัน:**
+  \`\`\`bash
+  gcc -o example2_solution.exe example2_solution.c
+  ./example2_solution.exe
+  \`\`\`
+`;
+}
+
+// Ensure the root path and subdirectories are created
+const labsDestDir = __dirname;
+
+console.log(`Generating C programming labs in: ${labsDestDir}`);
 
 labs.forEach(lab => {
   const labDir = path.join(labsDestDir, lab.idName);
@@ -2985,16 +4103,32 @@ labs.forEach(lab => {
     fs.mkdirSync(labDir, { recursive: true });
   }
 
-  // Write Code.gs
+  // 1. Write Code.gs
   const codeGsContent = generateCodeGs(lab);
   fs.writeFileSync(path.join(labDir, 'Code.gs'), codeGsContent, 'utf-8');
 
-  // Write index.html
+  // 2. Write index.html
   const indexHtmlContent = generateIndexHtml(lab);
   fs.writeFileSync(path.join(labDir, 'index.html'), indexHtmlContent, 'utf-8');
 
-  console.log(`Generated files for ${lab.idName} successfully!`);
+  // 3. Create solution/ directory and files
+  const solutionDir = path.join(labDir, 'solution');
+  if (!fs.existsSync(solutionDir)) {
+    fs.mkdirSync(solutionDir, { recursive: true });
+  }
+
+  if (lab.challengeSolutionCode) {
+    fs.writeFileSync(path.join(solutionDir, 'challenge_solution.c'), lab.challengeSolutionCode, 'utf-8');
+  }
+
+  if (lab.example2SolutionCode) {
+    fs.writeFileSync(path.join(solutionDir, 'example2_solution.c'), lab.example2SolutionCode, 'utf-8');
+  }
+
+  const solutionReadmeContent = generateSolutionReadme(lab);
+  fs.writeFileSync(path.join(solutionDir, 'README.md'), solutionReadmeContent, 'utf-8');
+
+  console.log(`✓ Generated index.html, Code.gs, and solution/ for ${lab.idName} successfully!`);
 });
 
-console.log('All C Labs generation complete!');
-
+console.log('\nAll C Labs generation complete!');

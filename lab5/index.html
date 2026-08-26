@@ -329,6 +329,141 @@
       color: #38bdf8;
     }
 
+    /* Compact Interactive Fill-in-the-Blank Code Block */
+    .interactive-code-container {
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .code-comment {
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    input.code-inline-input,
+    input[type="text"].code-inline-input {
+      display: inline-block !important;
+      vertical-align: middle !important;
+      background: rgba(15, 23, 42, 0.95) !important;
+      border: 1.5px dashed #818cf8 !important;
+      border-radius: 5px !important;
+      color: #38bdf8 !important;
+      font-family: var(--mono-font) !important;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+      padding: 2px 6px !important;
+      width: 7ch;
+      min-width: 55px !important;
+      max-width: 95% !important;
+      height: 25px !important;
+      line-height: 21px !important;
+      text-align: center !important;
+      outline: none !important;
+      box-shadow: none !important;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, width 0.15s ease !important;
+      margin: 0 4px !important;
+      box-sizing: content-box !important;
+    }
+
+    input.code-inline-input:focus,
+    input[type="text"].code-inline-input:focus {
+      border: 1.5px solid #6366f1 !important;
+      background: rgba(30, 41, 59, 0.98) !important;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4) !important;
+      color: #ffffff !important;
+    }
+
+    input.code-inline-input.correct,
+    input[type="text"].code-inline-input.correct {
+      border: 1.5px solid #10b981 !important;
+      background: rgba(16, 185, 129, 0.2) !important;
+      color: #34d399 !important;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25) !important;
+    }
+
+    input.code-inline-input.incorrect,
+    input[type="text"].code-inline-input.incorrect {
+      border: 1.5px solid #ef4444 !important;
+      background: rgba(239, 68, 68, 0.2) !important;
+      color: #f87171 !important;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+    }
+
+    .check-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.78rem;
+      font-family: var(--heading-font);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+    }
+
+    .check-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .blank-feedback-bar {
+      background: rgba(15, 23, 42, 0.95);
+      padding: 0.65rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .blank-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .blank-score-badge.success { color: #34d399; }
+    .blank-score-badge.partial { color: #fbbf24; }
+    .blank-score-badge.idle { color: var(--text-muted); }
+
+    /* Anti-Cheat Styling */
+    .anti-cheat-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-left: auto;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    @keyframes antiCheatShake {
+      0%, 100% { transform: translateX(0); border-color: var(--card-border); }
+      20%, 60% { transform: translateX(-6px); border-color: var(--danger); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35); }
+      40%, 80% { transform: translateX(6px); border-color: var(--danger); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35); }
+    }
+
+    .anti-cheat-alert {
+      animation: antiCheatShake 0.5s ease-in-out !important;
+      border-color: var(--danger) !important;
+    }
+
     /* Forms */
     .form-section {
       margin-bottom: 1.5rem;
@@ -634,6 +769,7 @@
       font-size: 0.95rem;
       margin-bottom: 1.5rem;
       line-height: 1.5;
+      white-space: pre-line;
     }
 
     .modal-close-btn {
@@ -686,7 +822,7 @@
         margin: 0 !important;
         padding: 0 !important;
       }
-      header, .course-badge, .logo-container, .btn, .upload-area, .remove-file-btn, .modal-overlay, .copy-btn, .code-header, .connection-status {
+      header, .course-badge, .logo-container, .btn, .upload-area, .remove-file-btn, .modal-overlay, .copy-btn, .code-header, .connection-status, .check-btn, .blank-feedback-bar {
         display: none !important;
       }
       .dashboard-grid {
@@ -751,10 +887,14 @@
         border-radius: 0 !important;
         color: #000 !important;
         padding: 0.25rem 0 !important;
-        field-sizing: content !important;
       }
-      textarea {
-        overflow: visible !important;
+      input.code-inline-input {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px dotted #000 !important;
+        color: #000 !important;
+        font-weight: bold !important;
+        min-width: 50px !important;
       }
       .input-icon {
         display: none !important;
@@ -766,7 +906,6 @@
         height: auto !important;
         min-height: 150px;
         white-space: pre-wrap;
-        field-sizing: content !important;
       }
       .print-file-indicator {
         display: block !important;
@@ -817,7 +956,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>1</td><td>GCC Compiler (MinGW)</td><td>ใช้แปลซอร์สโค้ดภาษา C (.c) เป็น Executable</td></tr><tr><td>2</td><td>VS Code หรือ Text Editor</td><td>ใช้สำหรับเขียนและตรวจสอบไวยากรณ์ภาษา C</td></tr>
+              
+              <tr>
+                <td>1</td>
+                <td>GCC Compiler (MinGW)</td>
+                <td>ใช้แปลซอร์สโค้ดภาษา C (.c) เป็น Executable</td>
+              </tr>
+              
+              <tr>
+                <td>2</td>
+                <td>VS Code หรือ Text Editor</td>
+                <td>ใช้สำหรับเขียนและตรวจสอบไวยากรณ์ภาษา C</td>
+              </tr>
+              
             </tbody>
           </table>
         </div>
@@ -831,34 +982,28 @@
           <li><strong>การเรียกใช้ฟังก์ชัน (Call):</strong> สั่งประมวลผลและส่งพารามิเตอร์จากฟังก์ชันหลัก</li>
         </ol>
     
-
+        
         <div class="stages-diagram-container">
           
           <svg class="stages-diagram" viewBox="0 0 580 150">
-            <!-- Call Stack Diagram -->
             <text x="30" y="25" fill="#a5b4fc" font-size="12" font-family="Outfit" font-weight="600">Call Stack Visualization (Recursion)</text>
             
-            <!-- main frame -->
             <rect x="30" y="45" width="100" height="50" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
             <text x="80" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">main()</text>
             <text x="80" y="115" fill="#94a3b8" font-size="10" font-family="Sarabun" text-anchor="middle">Active Frame</text>
 
-            <!-- Arrow calling -->
             <line x1="130" y1="70" x2="170" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Recursive call 1 -->
             <rect x="170" y="45" width="110" height="50" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
             <text x="225" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">fact(3)</text>
             
             <line x1="280" y1="70" x2="320" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Recursive call 2 -->
             <rect x="320" y="45" width="110" height="50" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="2" />
             <text x="375" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">fact(2)</text>
 
             <line x1="430" y1="70" x2="470" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
 
-            <!-- Base Case -->
             <rect x="470" y="45" width="90" height="50" rx="4" fill="#311212" stroke="#ef4444" stroke-width="2" />
             <text x="515" y="75" fill="#f8fafc" font-size="11" font-family="JetBrains Mono" text-anchor="middle">fact(1)</text>
             <text x="515" y="115" fill="#ef4444" font-size="9" font-family="Sarabun" text-anchor="middle">Base Case (= 1)</text>
@@ -894,33 +1039,43 @@ int addNumbers(int a, int b) {
         </div>
 
         <h3>โปรแกรมตัวอย่างที่ 2: ฟังก์ชันเรียกตัวเอง (Recursion) และการเติม Syntax</h3>
-        <p>ศึกษาการประมวลผลเลขยกกำลังแบบวนทำลายพารามิเตอร์ซ้อน และระบุตัวส่งเงื่อนไขกรณีฐานในช่องว่าง <code>____</code>:</p>
-        <div class="code-container">
+        <p>ศึกษาการประมวลผลเลขยกกำลังแบบวนทำลายพารามิเตอร์ซ้อน และระบุตัวส่งเงื่อนไขกรณีฐานในช่องว่างกล่องข้อความ:</p>
+        <div class="code-container interactive-code-container">
           <div class="code-header">
-            <span>example2_fill.c</span>
-            <button class="copy-btn" type="button" onclick="copyCode('ex2Code')"><i class="fa-regular fa-copy"></i> คัดลอก</button>
+            <span><i class="fa-solid fa-pen-to-square"></i> example2_fill.c (เติมคำสั่งลงในกล่องข้อความ)</span>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <button class="check-btn" type="button" onclick="checkBlanks()"><i class="fa-solid fa-circle-check"></i> ตรวจคำตอบ</button>
+              <button class="copy-btn" type="button" onclick="copyInteractiveCode()"><i class="fa-regular fa-copy"></i> คัดลอกโค้ด</button>
+            </div>
           </div>
           <pre><code id="ex2Code">#include &lt;stdio.h&gt;
 
 // ฟังก์ชันคำนวณหาค่าเลขยกกำลัง base^exp
 int power(int base, int exp) {
-    // เติมกรณีฐาน (Base Case) เมื่อยกกำลัง 0 ให้ส่งค่ากลับเป็น 1 (แทนที่ ____ ด้วย exp == 0)
-    if (____) {
+    // เติมกรณีฐาน (Base Case) เมื่อยกกำลัง 0 ให้ส่งค่ากลับเป็น 1
+    if (<input type="text" id="blank1" class="code-inline-input" placeholder="____" maxlength="30" autocomplete="off" spellcheck="false" oninput="handleBlankInput('blank1', this.value)">) {
         return 1;
     }
-    // เติมการเรียกตัวเอง Recursion ย่อยรอบลงไป (แทนที่ ____ ด้วย power(base, exp - 1))
-    return base * ____;
+    // เติมการเรียกตัวเอง Recursion ย่อยรอบลงไป
+    return base * <input type="text" id="blank2" class="code-inline-input" placeholder="____" maxlength="30" autocomplete="off" spellcheck="false" oninput="handleBlankInput('blank2', this.value)">;
 }
 
 int main() {
     printf("2^3 = %d\n", power(2, 3));
     return 0;
 }</code></pre>
+          <div class="blank-feedback-bar">
+            <span id="blankFeedbackBadge" class="blank-score-badge idle">
+              <i class="fa-solid fa-circle-info"></i> พิมพ์คำตอบลงในช่องว่างแล้วคลิก "ตรวจคำตอบ"
+            </span>
+            <span id="blankScoreSummary" style="font-size:0.8rem;color:#94a3b8;">คะแนนส่วนนี้: 2 คะแนน (ช่องละ 1.0 คะแนน)</span>
+          </div>
         </div>
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
           <p>พัฒนาโปรแกรมภาษา C เพื่อคำนวณหาค่าแฟกทอเรียล (Factorial) ของตัวเลขจำนวนเต็มบวก N โดยเปรียบเทียบการเขียน 2 ฟังก์ชันย่อยในซอร์สโค้ดเดียวกัน: ฟังก์ชันแรกใช้วิธีวนซ้ำด้วยลูป (Iterative) และฟังก์ชันที่สองใช้วิธีเรียกซ้อนตัวเอง (Recursive)</p>
+          
         </div>
       </div>
 
@@ -939,7 +1094,7 @@ int main() {
           <!-- Section 1: Student Info -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-user-graduate"></i> ข้อมูลผู้ส่งใบงาน
+              <i class="fa-solid fa-user-graduate"></i> 1. ข้อมูลผู้ส่งใบงาน
             </div>
             
             <div class="form-group">
@@ -976,41 +1131,34 @@ int main() {
             </div>
           </div>
 
-          <!-- Section 2: Code Submission -->
+          <!-- Section 2: Code Submission / Challenge -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-file-code"></i> ผลการทำกิจกรรมท้าทาย (Source Code)
+              <i class="fa-solid fa-file-code"></i> 2. ผลการทำกิจกรรมท้าทาย (Source Code)
             </div>
-            <div class="form-group" style="margin-bottom: 1.5rem;">
-              <label>โค้ดโปรแกรมตั้งต้นสำหรับกิจกรรมท้าทาย (สามารถคัดลอกไปเขียน/รันบนเครื่องคอมพิวเตอร์ได้):</label>
-              <div class="code-container" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
-                <div class="code-header">
-                  <span>challenge_starter.c</span>
-                  <button class="copy-btn" type="button" onclick="copyCode('challengeStarterCode')"><i class="fa-regular fa-copy"></i> คัดลอกโค้ดตั้งต้น</button>
-                </div>
-                <pre><code id="challengeStarterCode">#include &lt;stdio.h&gt;
+            
+            <div class="form-group">
+              <label for="challengeCode">พิมพ์โค้ดภาษา C ของคุณที่นี่</label>
+              <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
 long long factorialIterative(int n);
 long long factorialRecursive(int n);
 
 int main() {
     int num;
-    printf("Enter an integer: ");
+    printf(&quot;Enter an integer: &quot;);
     // รับข้อมูลและแสดงผลลัพธ์การเรียกใช้งานเปรียบเทียบฟังก์ชันทั้งสองแบบ
     return 0;
-}</code></pre>
-              </div>
+}"></textarea>
             </div>
-            <div class="form-group">
-              <label for="challengeCode">พิมพ์หรือวางโค้ดภาษา C คำตอบของคุณที่นี่ (หลังจากแก้ไขและรันสำเร็จแล้ว):</label>
-              <textarea id="challengeCode" class="code-textarea" required placeholder="วางโค้ด C ที่เขียนและทดสอบเรียบร้อยแล้วที่นี่..."></textarea>
-            </div>
+            
           </div>
 
           <!-- Section 3: Questions -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-circle-question"></i> คำถามท้ายการทดลอง
+              <i class="fa-solid fa-circle-question"></i> 3. คำถามท้ายการทดลอง
+              <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
 
             <div class="form-group">
@@ -1027,7 +1175,7 @@ int main() {
           <!-- Section 4: File Uploads -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-paperclip"></i> ไฟล์แนบ (Attachments)
+              <i class="fa-solid fa-paperclip"></i> 4. ไฟล์แนบ (Attachments)
             </div>
 
             <!-- Screenshot upload -->
@@ -1074,7 +1222,8 @@ int main() {
           <!-- Section 5: Conclusion -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-comment-dots"></i> สรุปผลการทดลอง
+              <i class="fa-solid fa-comment-dots"></i> 5. สรุปผลการทดลอง
+              <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
             <div class="form-group">
               <label for="conclusion">สรุปและข้อเสนอแนะจากการทดลอง</label>
@@ -1122,6 +1271,7 @@ int main() {
       // 1. Check environment
       const isGoogleAppsScript = (typeof google !== 'undefined' && google.script && google.script.run);
       const connBanner = document.getElementById('connectionStatus');
+      const connText = document.getElementById('connectionText');
       
       if (isGoogleAppsScript) {
         connBanner.className = 'connection-status cloud';
@@ -1148,57 +1298,274 @@ int main() {
       // 4. Drag & Drop features
       setupDragAndDrop('screenshotArea', 'screenshotInput', 'screenshot');
       setupDragAndDrop('codeArea', 'codeInput', 'code');
-      
-      // Setup default placeholder correctly
-      document.getElementById('challengeCode').value = `#include \u003Cstdio.h\u003E
 
-long long factorialIterative(int n);
-long long factorialRecursive(int n);
+      // 5. Initialize Anti-Cheat protection
+      initAntiCheat();
 
-int main() {
-    int num;
-    printf("Enter an integer: ");
-    // รับข้อมูลและแสดงผลลัพธ์การเรียกใช้งานเปรียบเทียบฟังก์ชันทั้งสองแบบ
-    return 0;
-}`;
+      // 6. Initialize Auto-Resize on inline inputs
+      document.querySelectorAll('input.code-inline-input').forEach(input => {
+        autoResizeInlineInput(input);
+        input.addEventListener('input', () => autoResizeInlineInput(input));
+      });
     });
 
-    // Copy code helper
-    function copyCode(elementId) {
-      const codeText = document.getElementById(elementId).innerText;
+    // Auto-Resize inline input to fit content dynamically
+    function autoResizeInlineInput(el) {
+      if (!el) return;
+      const textLen = (el.value || '').length;
+      const placeholderLen = (el.placeholder || '____').length;
+      const chCount = Math.max(placeholderLen, textLen);
+      el.style.width = (chCount + 2) + 'ch';
+    }
+
+    // Anti-Cheat: Prevent Paste and Drag-Drop in Questions and Conclusion
+    function initAntiCheat() {
+      const protectedIds = ['question1', 'question2', 'conclusion'];
       
-      function fallbackCopy() {
-        const textArea = document.createElement("textarea");
-        textArea.value = codeText;
-        textArea.style.top = "0";
-        textArea.style.left = "0";
-        textArea.style.position = "fixed";
-        textArea.style.opacity = "0";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-          const successful = document.execCommand('copy');
-          if (successful) {
-            alert('คัดลอกโค้ดเรียบร้อยแล้ว!');
-          } else {
-            alert('ไม่สามารถคัดลอกโค้ดได้ กรุณาครอบดำคัดลอกด้วยตนเอง');
-          }
-        } catch (err) {
-          alert('ไม่สามารถคัดลอกโค้ดได้: ' + err);
+      function showAntiCheatWarning(targetEl) {
+        if (targetEl) {
+          targetEl.classList.add('anti-cheat-alert');
+          setTimeout(() => targetEl.classList.remove('anti-cheat-alert'), 800);
         }
-        document.body.removeChild(textArea);
+        
+        let toast = document.getElementById('_antiCheatToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = '_antiCheatToast';
+          toast.style.cssText = 'position:fixed;top:25px;left:50%;transform:translateX(-50%);' +
+            'padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;' +
+            'z-index:999999;box-shadow:0 8px 24px rgba(239,68,68,0.4);transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);' +
+            'pointer-events:none;white-space:nowrap;display:flex;align-items:center;gap:8px;' +
+            'background:linear-gradient(135deg, #ef4444, #dc2626);color:#ffffff;border:1px solid #fca5a5;';
+          document.body.appendChild(toast);
+        }
+        toast.innerHTML = '<i class="fa-solid fa-shield-halved" style="font-size:16px;"></i> <span>ระบบตรวจจับการลอก: ไม่อนุญาตให้วางข้อความ (Paste) กรุณาพิมพ์คำตอบด้วยตนเอง</span>';
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(-50%) translateY(-10px)';
+        }, 2800);
       }
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(codeText).then(() => {
-          alert('คัดลอกโค้ดเรียบร้อยแล้ว!');
-        }).catch(err => {
-          console.warn('Clipboard API failed, using fallback:', err);
-          fallbackCopy();
+      protectedIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        el.addEventListener('paste', (e) => {
+          e.preventDefault();
+          showAntiCheatWarning(el);
         });
+
+        el.addEventListener('drop', (e) => {
+          e.preventDefault();
+          showAntiCheatWarning(el);
+        });
+
+        el.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'V')) {
+            e.preventDefault();
+            showAntiCheatWarning(el);
+          }
+          if (e.shiftKey && e.key === 'Insert') {
+            e.preventDefault();
+            showAntiCheatWarning(el);
+          }
+        });
+
+        let lastVal = el.value;
+        el.addEventListener('input', (e) => {
+          if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+            el.value = lastVal;
+            showAntiCheatWarning(el);
+            return;
+          }
+          if (el.value.length - lastVal.length > 25 && e.inputType !== 'historyUndo') {
+            el.value = lastVal;
+            showAntiCheatWarning(el);
+            return;
+          }
+          lastVal = el.value;
+        });
+      });
+    }
+
+    // Handle blank input typing (Example 2)
+    function handleBlankInput(id, val) {
+      const inlineEl = document.getElementById(id);
+      if (inlineEl) {
+        inlineEl.classList.remove('correct', 'incorrect');
+        autoResizeInlineInput(inlineEl);
+      }
+
+      const badge = document.getElementById('blankFeedbackBadge');
+      if (badge) {
+        badge.className = 'blank-score-badge idle';
+        badge.innerHTML = '<i class="fa-solid fa-circle-info"></i> พิมพ์คำตอบลงในช่องว่างแล้วคลิก "ตรวจคำตอบ"';
+      }
+    }
+
+    // Check blanks helper (Example 2)
+    function checkBlanks(silent = false) {
+      function applyClass(el, isOk) {
+        if (!el) return;
+        el.classList.remove('correct', 'incorrect');
+        if (el.value.trim().length > 0) {
+          el.classList.add(isOk ? 'correct' : 'incorrect');
+        }
+      }
+
+      let correctCount = 0;
+      
+      const b1 = (document.getElementById('blank1')?.value || '').trim();
+      const isB1Correct = ["exp == 0","exp==0","exp <= 0","exp<=0"].indexOf(b1) !== -1;
+      const el1 = document.getElementById('blank1');
+      applyClass(el1, isB1Correct);
+      if (isB1Correct) correctCount++;
+    
+
+      const b2 = (document.getElementById('blank2')?.value || '').trim();
+      const isB2Correct = ["power(base, exp - 1)","power(base,exp-1)","power(base, exp-1)"].indexOf(b2) !== -1;
+      const el2 = document.getElementById('blank2');
+      applyClass(el2, isB2Correct);
+      if (isB2Correct) correctCount++;
+    
+
+      const totalBlanks = 2;
+      const blankScore = totalBlanks > 0 ? Number(((correctCount / totalBlanks) * 2).toFixed(1)) : 2.0;
+
+      if (!silent) {
+        const badge = document.getElementById('blankFeedbackBadge');
+        if (badge) {
+          if (correctCount === totalBlanks) {
+            badge.className = 'blank-score-badge success';
+            badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> ถูกต้องครบถ้วน ' + totalBlanks + '/' + totalBlanks + ' ช่อง! (ได้ ' + blankScore + '/2.0 คะแนน)';
+          } else if (correctCount > 0) {
+            badge.className = 'blank-score-badge partial';
+            badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ถูกต้อง ' + correctCount + '/' + totalBlanks + ' ช่อง (ได้ ' + blankScore + '/2.0 คะแนน) — กรุณาตรวจดูอีกครั้ง';
+          } else {
+            badge.className = 'blank-score-badge';
+            badge.style.color = 'var(--danger)';
+            badge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ยังไม่ถูกต้อง กรุณาพิจารณาโค้ดและพิมพ์คำตอบใหม่';
+          }
+        }
+      }
+
+      return {
+        correctCount: correctCount,
+        blankScore: blankScore,
+        totalBlanks: totalBlanks
+      };
+    }
+
+    // Copy interactive code helper (Example 2)
+    function copyInteractiveCode() {
+      let codeStr = `#include <stdio.h>
+
+// ฟังก์ชันคำนวณหาค่าเลขยกกำลัง base^exp
+int power(int base, int exp) {
+    // เติมกรณีฐาน (Base Case) เมื่อยกกำลัง 0 ให้ส่งค่ากลับเป็น 1
+    if ([BLANK1]) {
+        return 1;
+    }
+    // เติมการเรียกตัวเอง Recursion ย่อยรอบลงไป
+    return base * [BLANK2];
+}
+
+int main() {
+    printf("2^3 = %d\n", power(2, 3));
+    return 0;
+}`;
+      
+      const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
+      codeStr = codeStr.replace('[BLANK1]', val_blank1);
+      
+      const val_blank2 = (document.getElementById('blank2')?.value || '____').trim();
+      codeStr = codeStr.replace('[BLANK2]', val_blank2);
+      
+
+      function showCopyToast(msg, isError) {
+        let toast = document.getElementById('_copyToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = '_copyToast';
+          toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);' +
+            'padding:10px 24px;border-radius:8px;font-size:15px;font-weight:600;' +
+            'z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:opacity 0.4s;pointer-events:none;white-space:nowrap;';
+          document.body.appendChild(toast);
+        }
+        toast.style.background = isError ? '#ef4444' : '#22c55e';
+        toast.style.color = '#fff';
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+      }
+
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(codeStr)
+          .then(() => showCopyToast('✓ คัดลอกโค้ดตัวอย่างที่ 2 แล้ว!'))
+          .catch(() => showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true));
       } else {
-        fallbackCopy();
+        const ta = document.createElement('textarea');
+        ta.value = codeStr;
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showCopyToast('✓ คัดลอกโค้ดตัวอย่างที่ 2 แล้ว!');
+        } catch(e) {
+          showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true);
+        }
+        document.body.removeChild(ta);
+      }
+    }
+
+    
+
+    // Copy standard code helper
+    function copyCode(elementId) {
+      const el = document.getElementById(elementId);
+      const codeText = el ? el.innerText : '';
+      if (!codeText) return;
+
+      function showCopyToast(msg, isError) {
+        let toast = document.getElementById('_copyToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = '_copyToast';
+          toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);' +
+            'padding:10px 24px;border-radius:8px;font-size:15px;font-weight:600;' +
+            'z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:opacity 0.4s;pointer-events:none;white-space:nowrap;';
+          document.body.appendChild(toast);
+        }
+        toast.style.background = isError ? '#ef4444' : '#22c55e';
+        toast.style.color = '#fff';
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+      }
+
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(codeText)
+          .then(() => showCopyToast('✓ คัดลอกโค้ดแล้ว!'))
+          .catch(() => showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = codeText;
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showCopyToast('✓ คัดลอกโค้ดแล้ว!');
+        } catch(e) {
+          showCopyToast('กรุณากด Ctrl+C หลังเลือกโค้ด', true);
+        }
+        document.body.removeChild(ta);
       }
     }
 
@@ -1231,7 +1598,6 @@ int main() {
       const file = input.files[0];
       if (!file) return;
 
-      // Validate size
       const maxMegaBytes = (type === 'screenshot') ? 5 : 2;
       if (file.size > maxMegaBytes * 1024 * 1024) {
         alert(`ขนาดไฟล์เกินกำหนด! ไฟล์ต้องมีขนาดไม่เกิน ${maxMegaBytes}MB`);
@@ -1307,13 +1673,27 @@ int main() {
       localStorage.setItem('student_id', idVal);
       localStorage.setItem('student_group', groupVal);
 
+      // Check Blanks (Example 2)
+      const blankResult = checkBlanks(true);
+
+      // Check Challenge Code / Blanks
+      let assembledCode = '';
+      let chScore = 4.0;
+      
+      assembledCode = document.getElementById('challengeCode')?.value || '';
+      
+
       // Collect data
       const payload = {
         studentName: nameVal,
         studentId: idVal,
         studentGroup: groupVal,
         labDate: document.getElementById('labDate').value,
-        challengeCode: document.getElementById('challengeCode').value,
+        blank1: (document.getElementById('blank1')?.value || '').trim(),
+        blank2: (document.getElementById('blank2')?.value || '').trim(),
+        
+        blankScore: blankResult.blankScore,
+        challengeCode: assembledCode,
         question1: document.getElementById('question1').value,
         question2: document.getElementById('question2').value,
         conclusion: document.getElementById('conclusion').value,
@@ -1333,17 +1713,15 @@ int main() {
             if (response.status === 'success') {
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
               // Clear fields
-              document.getElementById('challengeCode').value = `#include \u003Cstdio.h\u003E
-
-long long factorialIterative(int n);
-long long factorialRecursive(int n);
-
-int main() {
-    int num;
-    printf("Enter an integer: ");
-    // รับข้อมูลและแสดงผลลัพธ์การเรียกใช้งานเปรียบเทียบฟังก์ชันทั้งสองแบบ
-    return 0;
-}`;
+              ['blank1', 'blank2'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                  el.value = '';
+                  el.classList.remove('correct', 'incorrect');
+                  autoResizeInlineInput(el);
+                }
+              });
+              if (document.getElementById('challengeCode')) document.getElementById('challengeCode').value = '';
               document.getElementById('question1').value = '';
               document.getElementById('question2').value = '';
               document.getElementById('conclusion').value = '';
@@ -1364,7 +1742,61 @@ int main() {
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
-          openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', 'จำลองการส่งข้อมูลเสร็จสิ้น ข้อมูลผู้ส่งได้รับการเก็บบันทึกบนเบราว์เซอร์ของท่านแล้ว (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)');
+          
+          const codeKeywords = ["factorial","n","factorialIterative","factorialRecursive"];
+          const q1Keywords = ["value","reference","copy","address","ตัวแปรเดิม"];
+          const q2Keywords = ["base case","กรณีฐาน","ล้น","infinite","stack overflow"];
+          
+          const q1 = document.getElementById('question1').value || '';
+          const q2 = document.getElementById('question2').value || '';
+          
+          // 1. Blank score (Max 2 pts)
+          const blankScore = blankResult.blankScore;
+
+          // 2. Challenge Score (Max 4 pts)
+          let finalChScore = 4.0;
+          let chFeedbackText = '';
+          
+          let codeMatches = 0;
+          codeKeywords.forEach(kw => {
+            if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;
+          });
+          finalChScore = codeKeywords.length > 0 ? Number(((codeMatches / codeKeywords.length) * 4).toFixed(1)) : 4;
+          chFeedbackText = `Challenge Code: ${finalChScore}/4 (พบ ${codeMatches}/${codeKeywords.length} คีย์เวิร์ด)`;
+          
+          
+          // 3. Q1 (Max 1.5 pts)
+          let q1Matches = 0;
+          q1Keywords.forEach(kw => {
+            if (new RegExp(kw, 'i').test(q1)) q1Matches++;
+          });
+          const q1Score = q1Keywords.length > 0 ? (q1Matches >= 1 ? 1.5 : 0) : 1.5;
+          
+          // 4. Q2 (Max 1.5 pts)
+          let q2Matches = 0;
+          q2Keywords.forEach(kw => {
+            if (new RegExp(kw, 'i').test(q2)) q2Matches++;
+          });
+          const q2Score = q2Keywords.length > 0 ? (q2Matches >= 1 ? 1.5 : 0) : 1.5;
+          
+          // 5. Attachments (Max 1 pt)
+          let attachScore = 0;
+          if (filesData.screenshotBase64) attachScore += 0.5;
+          if (filesData.codeBase64) attachScore += 0.5;
+          
+          const score = Number((blankScore + finalChScore + q1Score + q2Score + attachScore).toFixed(1));
+          
+          const feedback = [
+            `เติมคำตอบตัวอย่างที่ 2: ${blankScore}/2 (${blankResult.correctCount}/${blankResult.totalBlanks} ช่อง)`,
+            chFeedbackText,
+            `Q1: ${q1Score}/1.5`,
+            `Q2: ${q2Score}/1.5`,
+            `ไฟล์แนบ: ${attachScore}/1`
+          ];
+          
+          const localMessage = `จำลองการส่งข้อมูลเสร็จสิ้น! (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)\n\nคะแนนรวมประเมินออโต้: ${score}/10\n\nรายละเอียดคะแนน:\n- ` + feedback.join('\n- ');
+          
+          openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', localMessage);
         }, 1500);
       }
     }
@@ -1399,7 +1831,7 @@ int main() {
       document.getElementById('statusModal').style.display = 'none';
     }
 
-    // Auto-expand textareas when printing to prevent cropped text/scrollbars
+    // Auto-expand textareas when printing
     window.addEventListener('beforeprint', () => {
       document.querySelectorAll('textarea').forEach(el => {
         el.dataset.origHeight = el.style.height;
