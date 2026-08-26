@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["printf", "\\\\n"];
+    var codeKeywords = ["printf", "\\\\n", "\\\\t"];
     var q1Keywords = ["แปล", "คอมไพล์", "ภาษาเครื่อง", "compiler", "แปลภาษา"];
     var q2Keywords = ["เริ่มต้น", "หลัก", "main", "จุดแรก", "จุดเริ่มต้น"];
     

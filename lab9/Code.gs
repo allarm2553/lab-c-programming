@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["fopen","fclose","fprintf","fscanf","students.txt","w","r"];
+    var codeKeywords = ["fopen","fclose","fprintf","students.txt","fgets","w","r"];
     var q1Keywords = ["text","binary","ตัวอักษร","ไบนารี","มนุษย์อ่าน"];
     var q2Keywords = ["null","สำเร็จ","แครช","ความปลอดภัย"];
     

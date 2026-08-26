@@ -297,7 +297,7 @@ int main() {
     question2: "2. เพราะเหตุใดนิพจน์ 5 / 2 ในภาษา C จึงคำนวณได้ 2 และหากต้องการผลลัพธ์ทศนิยม 2.5 ต้องเขียนโค้ดอย่างไร?",
     question2Placeholder: "เนื่องจากเป็นการหารตัวเลขจำนวนเต็ม (Integer Division) หากต้องการทศนิยมต้องพิมพ์แบบ Type Casting เช่น (float)5 / 2 หรือใช้ 5.0 / 2...",
     conclusionPlaceholder: "สรุปสิ่งที่ได้รับจากการเรียนรู้ในบทที่ 2 และปัญหาเกี่ยวกับลำดับหรือระดับความละเอียดตัวดำเนินการ...",
-    codeKeywords: ["&","\\|","\\^","<<",">>"],
+    codeKeywords: ["&","\\|","\\^","<<","scanf","printf"],
     q1Keywords: ["เลื่อนบิต","คูณ","หาร","2"],
     q2Keywords: ["หาร","จำนวนเต็ม","casting","float","ทศนิยม"]
   },
@@ -585,7 +585,7 @@ int main() {
     question2: "2. อธิบายการทำงานและผลต่างของคำสั่ง break และ continue เมื่อเขียนควบคุมภายในตัวลูป",
     question2Placeholder: "break ใช้สำหรับออกจากลูปทันที แต่ continue จะข้ามคำสั่งที่เหลือในรอบปัจจุบันเพื่อไปเริ่มรอบถัดไป...",
     conclusionPlaceholder: "สรุปผลการศึกษาโครงสร้างลูปซ้อนลูป และปัญหาที่พบบ่อยในการเขียนเงื่อนไขที่ไม่มีวันสิ้นสุด (Infinite Loop)...",
-    codeKeywords: ["for","while","scanf","rows","n","\\*"],
+    codeKeywords: ["for","scanf","n","\\*","printf"],
     q1Keywords: ["ก่อน","หลัง","do-while","รอบ","อย่างน้อย"],
     q2Keywords: ["break","continue","ออก","ข้าม"]
   },
@@ -735,7 +735,7 @@ int main() {
     question2: "2. เพราะเหตุใดฟังก์ชันแบบเรียกตัวเอง (Recursion) จึงต้องกำหนดกรณีฐาน (Base Case) ไว้ และหากไม่มีจะเกิดอะไรขึ้น?",
     question2Placeholder: "ถ้าไม่มี Base case ลูปจะทำงานซ้ำไม่รู้จบ ส่งผลให้เกิดปัญหาระบบเมมโมรี่ล้นหรือ Stack Overflow และทำให้โปรแกรมแครช...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของการแยกงานเป็นฟังก์ชันและข้อดีข้อเสียของโค้ดแบบ Recursive...",
-    codeKeywords: ["factorial","n","factorialIterative","factorialRecursive"],
+    codeKeywords: ["factorialIterative","factorialRecursive","for","scanf","printf"],
     q1Keywords: ["value","reference","copy","address","ตัวแปรเดิม"],
     q2Keywords: ["base case","กรณีฐาน","ล้น","infinite","stack overflow"]
   },
@@ -868,7 +868,7 @@ int main() {
     question2: "2. การจองขนาดพื้นที่อาร์เรย์แบบคงที่ (Static Array) เช่น int score[5]; มีข้อดีและข้อจำกัดอย่างไรในการทำงานจริง?",
     question2Placeholder: "ข้อดีคือประมวลผลเร็วและเขียนง่าย ข้อจำกัดคือไม่สามารถปรับยืดหรือขยายขนาดพื้นที่เมื่อต้องการเพิ่มข้อมูลตอนโปรแกรมกำลังทำงานได้...",
     conclusionPlaceholder: "เขียนสรุปความเข้าใจที่ได้รับเกี่ยวกับมิติของอาร์เรย์ และการเข้าถึงข้อมูลตัวชี้อาร์เรย์...",
-    codeKeywords: ["stds","score","average","sum","for","str","len"],
+    codeKeywords: ["str","len","for","\\0","scanf"],
     q1Keywords: ["1 มิติ","2 มิติ","แถว","คอลัมน์","ตาราง","\\0","null"],
     q2Keywords: ["\\0","null","จบ","array","character","static"]
   },
@@ -1021,7 +1021,7 @@ int main() {
     question2: "2. อธิบายเหตุผลสำคัญในการต้องเรียกคำสั่ง free() คืนหน่วยความจำหลังสิ้นสุดการใช้งาน และหากลืมจะเกิดความผิดพลาดใด?",
     question2Placeholder: "หากลืมเรียก free() หน่วยความจำจะถูกจองค้างไว้ทำให้เสียพื้นที่ระบบไปเปล่าๆ เกิดปัญหาหน่วยความจำรั่วไหล (Memory Leak)...",
     conclusionPlaceholder: "สรุปสิ่งที่เรียนรู้เกี่ยวกับแนวคิด RAM, Pointer และความสำคัญของการระมัดระวังข้อผิดพลาดของการใช้พอยน์เตอร์...",
-    codeKeywords: ["malloc","free","sizeof","ptr","for"],
+    codeKeywords: ["malloc","free","sizeof","sum","scanf","printf"],
     q1Keywords: ["&","\\*","address","ชี้","ค่า","ตำแหน่ง"],
     q2Keywords: ["free","leak","หน่วยความจำ","คืน","ram"]
   },
@@ -1353,7 +1353,7 @@ int main() {
     question2: "2. เพราะเหตุใดเมื่อเขียนชุดคำสั่งภาษา C เพื่อจัดการไฟล์ เราจึงต้องตรวจสอบค่า pointer ของไฟล์ว่าเท่ากับ NULL หรือไม่หลัง fopen()?",
     question2Placeholder: "เพื่อตรวจสอบความปลอดภัยว่าเปิดไฟล์ได้สำเร็จจริงหรือไม่ ป้องกันข้อผิดพลาดหากพาธไฟล์ผิดหรือไม่มีสิทธิ์เขียนเพื่อไม่ให้โปรแกรมแครช...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของการบันทึกไฟล์ในการพัฒนาระบบ และข้อควรระวังในการปิดไฟล์ (fclose) ทุกครั้ง...",
-    codeKeywords: ["fopen","fclose","fprintf","fscanf","students.txt","w","r"],
+    codeKeywords: ["fopen","fclose","fprintf","students.txt","fgets","w","r"],
     q1Keywords: ["text","binary","ตัวอักษร","ไบนารี","มนุษย์อ่าน"],
     q2Keywords: ["null","สำเร็จ","แครช","ความปลอดภัย"]
   },

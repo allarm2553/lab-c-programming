@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["&","\\|","\\^","<<",">>"];
+    var codeKeywords = ["&","\\|","\\^","<<","scanf","printf"];
     var q1Keywords = ["เลื่อนบิต","คูณ","หาร","2"];
     var q2Keywords = ["หาร","จำนวนเต็ม","casting","float","ทศนิยม"];
     

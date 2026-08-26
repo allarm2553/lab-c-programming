@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["factorial","n","factorialIterative","factorialRecursive"];
+    var codeKeywords = ["factorialIterative","factorialRecursive","for","scanf","printf"];
     var q1Keywords = ["value","reference","copy","address","ตัวแปรเดิม"];
     var q2Keywords = ["base case","กรณีฐาน","ล้น","infinite","stack overflow"];
     

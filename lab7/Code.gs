@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["malloc","free","sizeof","ptr","for"];
+    var codeKeywords = ["malloc","free","sizeof","sum","scanf","printf"];
     var q1Keywords = ["&","\\*","address","ชี้","ค่า","ตำแหน่ง"];
     var q2Keywords = ["free","leak","หน่วยความจำ","คืน","ram"];
     
