@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["for","scanf","n","\\*","printf"];
+    var codeKeywords = ["for|while","scanf","printf","\\*","\\\\n"];
     var q1Keywords = ["ก่อน","หลัง","do-while","รอบ","อย่างน้อย"];
     var q2Keywords = ["break","continue","ออก","ข้าม"];
     

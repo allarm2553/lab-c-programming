@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["str","len","for","\\0","scanf"];
+    var codeKeywords = ["char","\\\\0","while|for","scanf|fgets","printf|putchar|puts","\\["];
     var q1Keywords = ["1 มิติ","2 มิติ","แถว","คอลัมน์","ตาราง","\\0","null"];
     var q2Keywords = ["\\0","null","จบ","array","character","static"];
     

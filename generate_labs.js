@@ -167,7 +167,7 @@ int main() {
     question2: "2. เพราะเหตุใดเมื่อต้องการรับค่าทศนิยมด้วย scanf() จึงต้องระบุประเภทฟอร์แมตแตกต่างจาก printf()?",
     question2Placeholder: "อธิบายตามหลักการระบุ %f หรือ %lf และความแตกต่างของการอ้างอิงตำแหน่งตัวแปรใน scanf...",
     conclusionPlaceholder: "วิเคราะห์ผลการทำแล็บ 1 อุปสรรค และการเรียนรู้เรื่องฟังก์ชันรับส่งข้อมูลพื้นฐาน...",
-    codeKeywords: ["scanf","printf","radius","area","circumference"],
+    codeKeywords: ["scanf","printf","float|double","\\*","%f|%lf","&"],
     q1Keywords: ["int","float","double","ไบต์","หน่วยความจำ"],
     q2Keywords: ["scanf","printf","&","address","specifier"]
   },
@@ -453,7 +453,7 @@ int main() {
     question2: "2. อธิบายหน้าที่ของคีย์เวิร์ด break ในคำสั่ง switch-case และผลลัพธ์จะเกิดความผิดพลาดอย่างไรหากเราลืมเขียนล้อมรอบ case?",
     question2Placeholder: "break ทำหน้าที่หยุดการทำเงื่อนไขอื่นๆ และออกจาก switch หากลืมเขียน จะทำให้การประมวลผลไหลลงไปประมวลผลคำสั่งในเคสถัดไปต่อจนจบ (Fall-through)...",
     conclusionPlaceholder: "สรุปสิ่งที่ได้ศึกษาในบทนี้ เช่น การเขียนเงื่อนไขควบคุม และความแตกต่างในการจัดโครงสร้างโค้ดแบบเลือกทำ...",
-    codeKeywords: ["if","else","tax","income","0.05","0.1","0.15"],
+    codeKeywords: ["if","else","scanf","printf","<=|>=|<|>","\\*"],
     q1Keywords: ["ประสิทธิภาพ","ข้าม","ตรวจสอบ","เงื่อนไข"],
     q2Keywords: ["break","switch","fall-through","ไหล"]
   },
@@ -585,7 +585,7 @@ int main() {
     question2: "2. อธิบายการทำงานและผลต่างของคำสั่ง break และ continue เมื่อเขียนควบคุมภายในตัวลูป",
     question2Placeholder: "break ใช้สำหรับออกจากลูปทันที แต่ continue จะข้ามคำสั่งที่เหลือในรอบปัจจุบันเพื่อไปเริ่มรอบถัดไป...",
     conclusionPlaceholder: "สรุปผลการศึกษาโครงสร้างลูปซ้อนลูป และปัญหาที่พบบ่อยในการเขียนเงื่อนไขที่ไม่มีวันสิ้นสุด (Infinite Loop)...",
-    codeKeywords: ["for","scanf","n","\\*","printf"],
+    codeKeywords: ["for|while","scanf","printf","\\*","\\\\n"],
     q1Keywords: ["ก่อน","หลัง","do-while","รอบ","อย่างน้อย"],
     q2Keywords: ["break","continue","ออก","ข้าม"]
   },
@@ -735,7 +735,7 @@ int main() {
     question2: "2. เพราะเหตุใดฟังก์ชันแบบเรียกตัวเอง (Recursion) จึงต้องกำหนดกรณีฐาน (Base Case) ไว้ และหากไม่มีจะเกิดอะไรขึ้น?",
     question2Placeholder: "ถ้าไม่มี Base case ลูปจะทำงานซ้ำไม่รู้จบ ส่งผลให้เกิดปัญหาระบบเมมโมรี่ล้นหรือ Stack Overflow และทำให้โปรแกรมแครช...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของการแยกงานเป็นฟังก์ชันและข้อดีข้อเสียของโค้ดแบบ Recursive...",
-    codeKeywords: ["factorialIterative","factorialRecursive","for","scanf","printf"],
+    codeKeywords: ["return","for|while","if","scanf","printf","long|int"],
     q1Keywords: ["value","reference","copy","address","ตัวแปรเดิม"],
     q2Keywords: ["base case","กรณีฐาน","ล้น","infinite","stack overflow"]
   },
@@ -868,7 +868,7 @@ int main() {
     question2: "2. การจองขนาดพื้นที่อาร์เรย์แบบคงที่ (Static Array) เช่น int score[5]; มีข้อดีและข้อจำกัดอย่างไรในการทำงานจริง?",
     question2Placeholder: "ข้อดีคือประมวลผลเร็วและเขียนง่าย ข้อจำกัดคือไม่สามารถปรับยืดหรือขยายขนาดพื้นที่เมื่อต้องการเพิ่มข้อมูลตอนโปรแกรมกำลังทำงานได้...",
     conclusionPlaceholder: "เขียนสรุปความเข้าใจที่ได้รับเกี่ยวกับมิติของอาร์เรย์ และการเข้าถึงข้อมูลตัวชี้อาร์เรย์...",
-    codeKeywords: ["str","len","for","\\0","scanf"],
+    codeKeywords: ["char","\\\\0","while|for","scanf|fgets","printf|putchar|puts","\\["],
     q1Keywords: ["1 มิติ","2 มิติ","แถว","คอลัมน์","ตาราง","\\0","null"],
     q2Keywords: ["\\0","null","จบ","array","character","static"]
   },
@@ -1021,7 +1021,7 @@ int main() {
     question2: "2. อธิบายเหตุผลสำคัญในการต้องเรียกคำสั่ง free() คืนหน่วยความจำหลังสิ้นสุดการใช้งาน และหากลืมจะเกิดความผิดพลาดใด?",
     question2Placeholder: "หากลืมเรียก free() หน่วยความจำจะถูกจองค้างไว้ทำให้เสียพื้นที่ระบบไปเปล่าๆ เกิดปัญหาหน่วยความจำรั่วไหล (Memory Leak)...",
     conclusionPlaceholder: "สรุปสิ่งที่เรียนรู้เกี่ยวกับแนวคิด RAM, Pointer และความสำคัญของการระมัดระวังข้อผิดพลาดของการใช้พอยน์เตอร์...",
-    codeKeywords: ["malloc","free","sizeof","sum","scanf","printf"],
+    codeKeywords: ["malloc","free","sizeof","scanf","printf","\\*"],
     q1Keywords: ["&","\\*","address","ชี้","ค่า","ตำแหน่ง"],
     q2Keywords: ["free","leak","หน่วยความจำ","คืน","ram"]
   },
@@ -1173,7 +1173,7 @@ int main() {
     question2: "2. ในกรณีลักษณะงานใดที่เราควรเลือกนำ union มาเลือกประยุกต์ใช้งานแทนการใช้ struct ในการประมวลผล?",
     question2Placeholder: "ใช้ในงานที่ตัวแปรสมาชิกไม่ได้ถูกเรียกใช้งานพร้อมกัน เช่น ในอุปกรณ์ฝังตัวเพื่อจำกัดการใช้ RAM หรือแชร์แพ็กเกตข้อมูลการส่ง...",
     conclusionPlaceholder: "เขียนสรุปความสำคัญของการใช้ struct จัดการข้อมูลจำลองที่ซับซ้อน และการนำมาพัฒนาเป็นระบบฐานข้อมูลขนาดย่อม...",
-    codeKeywords: ["struct","student","id","name","score","stds"],
+    codeKeywords: ["struct","for|while","\\.","scanf","printf"],
     q1Keywords: ["แชร์","แยก","ขนาด","หน่วยความจำ","ตัวแปรใหญ่สุด"],
     q2Keywords: ["ประหยัด","ram","สลับ","พร้อมกัน","ฝังตัว"]
   },
@@ -1353,7 +1353,7 @@ int main() {
     question2: "2. เพราะเหตุใดเมื่อเขียนชุดคำสั่งภาษา C เพื่อจัดการไฟล์ เราจึงต้องตรวจสอบค่า pointer ของไฟล์ว่าเท่ากับ NULL หรือไม่หลัง fopen()?",
     question2Placeholder: "เพื่อตรวจสอบความปลอดภัยว่าเปิดไฟล์ได้สำเร็จจริงหรือไม่ ป้องกันข้อผิดพลาดหากพาธไฟล์ผิดหรือไม่มีสิทธิ์เขียนเพื่อไม่ให้โปรแกรมแครช...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของการบันทึกไฟล์ในการพัฒนาระบบ และข้อควรระวังในการปิดไฟล์ (fclose) ทุกครั้ง...",
-    codeKeywords: ["fopen","fclose","fprintf","students.txt","fgets","w","r"],
+    codeKeywords: ["fopen","fclose","fprintf|fputs","fgets|fscanf","FILE","\"w\"","\"r\""],
     q1Keywords: ["text","binary","ตัวอักษร","ไบนารี","มนุษย์อ่าน"],
     q2Keywords: ["null","สำเร็จ","แครช","ความปลอดภัย"]
   },
@@ -1666,7 +1666,7 @@ int main() {
     question2: "2. เพราะเหตุใดฟังก์ชัน fgets() จึงต้องมีพารามิเตอร์จำกัดขนาด (size) และเพราะเหตุใดนักพัฒนาจึงต้องจัดการกับอักษรขึ้นบรรทัดใหม่ (\\n) หลังการรับข้อมูล?",
     question2Placeholder: "เนื่องจาก fgets จะจำกัดจำนวนการอ่านข้อมูลจากอินพุตไม่ให้เกินขนาดของบัฟเฟอร์ (ป้องกัน Buffer Overflow) และเมื่อผู้ใช้กด Enter จะมีอักขระ \\n ติดเข้ามาในข้อความด้วย ทำให้ต้องเคลียร์ออกเพื่อให้ข้อมูลไม่ขึ้นบรรทัดใหม่เวลานำไปเชื่อมต่อหรือตรวจสอบ...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของฟังก์ชันสำเร็จรูปใน string.h ในการลดความซับซ้อนและเพิ่มความปลอดภัยของการพัฒนาแอปพลิเคชัน...",
-    codeKeywords: ["fgets","strlen","strncmp","strcpy","strcat","connect","disconnect"],
+    codeKeywords: ["fgets","strlen","strncmp","strcpy|strncpy","strcat|strncat","strcmp"],
     q1Keywords: ["overflow","ความยาว","n","ปลอดภัย","\\0"],
     q2Keywords: ["gets","ปลอดภัย","ขนาด","buffer","\\n","enter"]
   },

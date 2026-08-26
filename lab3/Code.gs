@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["if","else","tax","income","0.05","0.1","0.15"];
+    var codeKeywords = ["if","else","scanf","printf","<=|>=|<|>","\\*"];
     var q1Keywords = ["ประสิทธิภาพ","ข้าม","ตรวจสอบ","เงื่อนไข"];
     var q2Keywords = ["break","switch","fall-through","ไหล"];
     

@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["scanf","printf","radius","area","circumference"];
+    var codeKeywords = ["scanf","printf","float|double","\\*","%f|%lf","&"];
     var q1Keywords = ["int","float","double","ไบต์","หน่วยความจำ"];
     var q2Keywords = ["scanf","printf","&","address","specifier"];
     

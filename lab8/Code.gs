@@ -88,7 +88,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["struct","student","id","name","score","stds"];
+    var codeKeywords = ["struct","for|while","\\.","scanf","printf"];
     var q1Keywords = ["แชร์","แยก","ขนาด","หน่วยความจำ","ตัวแปรใหญ่สุด"];
     var q2Keywords = ["ประหยัด","ram","สลับ","พร้อมกัน","ฝังตัว"];
     
