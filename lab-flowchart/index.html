@@ -1,512 +1,1779 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ใบงานที่ 2 เรื่อง การเขียนผังงาน Flowchart (Interactive)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Sarabun', sans-serif; background-color: #f1f5f9; }
-        @media print {
-            body { background-color: #ffffff; }
-            .page-break { page-break-before: always; }
-            .no-print { display: none !important; }
-            @page { size: A4; margin: 1.5cm; }
-            input, textarea { border: none !important; background: transparent !important; padding: 0 !important; resize: none !important; }
-            .input-dashed { border-bottom: 1px dashed #94a3b8 !important; }
-            .upload-label { display: none !important; }
-        }
-        .a4-page { width: 210mm; min-height: 297mm; padding: 2cm; margin: 0 auto; background: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        @media print { .a4-page { width: auto; min-height: auto; padding: 0; margin: 0; box-shadow: none; } }
-        .flowchart-shape { width: 140px; height: 60px; border: 2px solid #333; display: inline-block; }
-        .shape-terminator { border-radius: 30px; background-color: #fef08a; }
-        .shape-io { transform: skewX(-20deg); background-color: #bbf7d0; }
-        .shape-decision { width: 70px; height: 70px; transform: rotate(45deg); background-color: #fed7aa; margin: 15px 35px; }
-        .shape-process { background-color: #bfdbfe; }
-        .shape-connector { width: 50px; height: 50px; border-radius: 50%; background-color: #fca5a5; }
-        .image-preview { max-width: 100%; max-height: 100%; object-fit: contain; display: none; }
-        .upload-zone { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .upload-zone.has-image .upload-controls { display: none !important; }
-        .remove-img-btn { position: absolute; top: 6px; right: 6px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 26px; height: 26px; font-size: 14px; cursor: pointer; display: none; align-items: center; justify-content: center; line-height: 1; z-index: 10; }
-        .upload-zone.has-image .remove-img-btn { display: flex; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Basic: การเขียนผังงาน (Flowchart Design & Modeling)</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* CSS Variables & Design System matching workspace */
+    :root {
+      --bg-gradient-start: #0f172a;
+      --bg-gradient-end: #020617;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(99, 102, 241, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.3);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info-frame-bg: rgba(59, 130, 246, 0.1);
+      --info-frame-border: #3b82f6;
+      --challenge-frame-bg: rgba(245, 158, 11, 0.08);
+      --challenge-frame-border: #f59e0b;
+      --body-font: 'Sarabun', sans-serif;
+      --heading-font: 'Outfit', 'Sarabun', sans-serif;
+      --mono-font: 'JetBrains Mono', monospace;
+    }
 
-        /* Modal */
-        #submitModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; }
-        #submitModal.show { display:flex; }
-        #submitModalBox { background:white; border-radius:16px; padding:2rem; max-width:460px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
-    </style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      color: var(--text-main);
+      font-family: var(--body-font);
+      min-height: 100vh;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulse 3s infinite alternate;
+    }
+
+    h1 {
+      font-family: var(--heading-font);
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      background: linear-gradient(to right, #f8fafc, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 2-Column Grid Layout */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .lab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--card-hover-border);
+      box-shadow: 0 12px 40px rgba(99, 102, 241, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.75rem;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .card-title {
+      font-family: var(--heading-font);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Section Frame Styling */
+    .info-frame {
+      background: var(--info-frame-bg);
+      border-left: 4px solid var(--info-frame-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-frame h3 {
+      font-family: var(--heading-font);
+      color: #93c5fd;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .challenge-frame {
+      background: var(--challenge-frame-bg);
+      border-left: 4px solid var(--challenge-frame-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(245, 158, 11, 0.1);
+      border-left-width: 4px;
+    }
+
+    .challenge-frame h3 {
+      font-family: var(--heading-font);
+      color: #fde047;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h2 {
+      font-family: var(--heading-font);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #f1f5f9;
+    }
+
+    h3 {
+      font-family: var(--heading-font);
+      font-size: 1.15rem;
+      margin: 1.5rem 0 0.75rem 0;
+      color: #cbd5e1;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    ul, ol {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    li {
+      margin-bottom: 0.35rem;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(15, 23, 42, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.6);
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      color: #e2e8f0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Flowchart Symbol Showcase */
+    .symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .symbol-card {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .flowchart-shape {
+      width: 120px;
+      height: 48px;
+      border: 2px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .shape-terminator { border-radius: 24px; background: #fef08a; }
+    .shape-io { transform: skewX(-20deg); background: #bbf7d0; }
+    .shape-decision { width: 50px; height: 50px; transform: rotate(45deg); background: #fed7aa; margin: 6px 0; }
+    .shape-process { background: #bfdbfe; }
+    .shape-connector { width: 44px; height: 44px; border-radius: 50%; background: #fca5a5; }
+
+    /* Interactive Inputs inside Worksheet */
+    .form-section {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #cbd5e1;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    input[type="text"], input[type="date"], select, textarea {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      font-family: var(--body-font);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    textarea {
+      padding-left: 1rem;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    /* Auto-expanding inline inputs */
+    input.code-inline-input,
+    input[type="text"].code-inline-input {
+      display: inline-block !important;
+      width: 16ch !important;
+      min-width: 12ch !important;
+      max-width: 100% !important;
+      height: 32px !important;
+      margin: 0 4px !important;
+      padding: 2px 8px !important;
+      font-family: var(--mono-font) !important;
+      font-size: 0.9rem !important;
+      color: #38bdf8 !important;
+      background: rgba(15, 23, 42, 0.9) !important;
+      border: 1.5px solid #4f46e5 !important;
+      border-radius: 6px !important;
+      vertical-align: middle !important;
+      outline: none !important;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
+      transition: width 0.15s ease, border-color 0.2s, box-shadow 0.2s !important;
+    }
+
+    input.code-inline-input:focus,
+    input[type="text"].code-inline-input:focus {
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35) !important;
+      background: rgba(15, 23, 42, 1) !important;
+    }
+
+    input.code-inline-input.correct,
+    input[type="text"].code-inline-input.correct {
+      border: 1.5px solid #10b981 !important;
+      background: rgba(16, 185, 129, 0.2) !important;
+      color: #34d399 !important;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25) !important;
+    }
+
+    input.code-inline-input.incorrect,
+    input[type="text"].code-inline-input.incorrect {
+      border: 1.5px solid #ef4444 !important;
+      background: rgba(239, 68, 68, 0.2) !important;
+      color: #f87171 !important;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+    }
+
+    /* Anti-Cheat Styling */
+    .anti-cheat-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* File Upload Dropzones */
+    .upload-zone-wrapper {
+      margin-top: 0.75rem;
+    }
+
+    .upload-area {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.2);
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    .upload-area:hover, .upload-area.dragover {
+      border-color: var(--accent);
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .upload-icon {
+      font-size: 1.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .upload-text {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+
+    .upload-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .file-preview {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .preview-thumbnail {
+      width: 56px;
+      height: 56px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-details {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .preview-name {
+      font-size: 0.85rem;
+      color: #f1f5f9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .preview-size {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .remove-file-btn {
+      background: transparent;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.25rem;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .button-sub-group {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      width: 100%;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-family: var(--heading-font);
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn.btn-check-score {
+      background: linear-gradient(135deg, #0d9488, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 1.02rem;
+    }
+
+    .btn.btn-check-score:hover {
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn.btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+      color: var(--text-main);
+    }
+
+    .btn.btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Connection Banner */
+    .connection-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .connection-status.local {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .connection-status.cloud {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+
+    /* Modal overlays */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 6, 17, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      padding: 2.25rem 2rem;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes modalScale {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.25rem;
+      display: inline-block;
+    }
+
+    .modal-icon.success { color: var(--success); animation: bounce 1s; }
+    .modal-icon.error { color: var(--danger); animation: shake 0.5s; }
+
+    .modal-title {
+      font-family: var(--heading-font);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .modal-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 0.6rem 2rem;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Pre-submission Score Modal Styles */
+    .score-check-modal-content {
+      max-width: 560px !important;
+      text-align: left !important;
+      padding: 1.75rem !important;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .score-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .score-modal-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0d9488, #10b981);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .score-hero-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .score-big-num {
+      font-family: var(--heading-font);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #38bdf8;
+      line-height: 1;
+    }
+
+    .score-status-badge {
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .score-status-badge.warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .score-status-badge.danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .score-breakdown-list {
+      overflow-y: auto;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      padding-right: 0.25rem;
+    }
+
+    .score-item-row {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .score-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .score-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .score-item-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .score-item-points {
+      font-family: var(--mono-font);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #38bdf8;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .score-modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 0.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); filter: drop-shadow(0 0 2px var(--accent-glow)); }
+      100% { transform: scale(1.05); filter: drop-shadow(0 0 8px var(--accent)); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-15px); }
+      60% { transform: translateY(-7px); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    .loading-spinner {
+      animation: spin 1s linear infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .print-file-indicator { display: none; }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+      .container { max-width: 100% !important; margin: 0 !important; }
+      .lab-grid { display: block !important; }
+      .card {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: none !important;
+        color: #000000 !important;
+        padding: 1.5rem !important;
+        margin-bottom: 2rem !important;
+        page-break-inside: avoid;
+      }
+      .card:hover { border-color: #e2e8f0 !important; box-shadow: none !important; }
+      .card-header { border-bottom: 1px solid #e2e8f0 !important; }
+      .card-icon { display: none !important; }
+      .card-title { color: #000000 !important; }
+      .info-frame {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        border-left: 4px solid #3b82f6 !important;
+      }
+      .info-frame h3 { color: #1e3a8a !important; }
+      .challenge-frame {
+        background: #fefce8 !important;
+        border: 1px solid #fef08a !important;
+        border-left: 4px solid #eab308 !important;
+      }
+      .challenge-frame h3 { color: #854d0e !important; }
+      h1 { background: none !important; -webkit-text-fill-color: #000000 !important; color: #000000 !important; }
+      h2, h3 { color: #000000 !important; }
+      p, li, td, th, label { color: #334155 !important; }
+      .table-container { background: transparent !important; border: 1px solid #cbd5e1 !important; }
+      th { background: #f1f5f9 !important; color: #0f172a !important; border-bottom: 1px solid #cbd5e1 !important; }
+      td { border-bottom: 1px solid #e2e8f0 !important; color: #334155 !important; }
+      .symbol-card { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; }
+      .form-section { background: #ffffff !important; border: 1px solid #e2e8f0 !important; page-break-inside: avoid; }
+      .form-section-title { color: #000000 !important; }
+      .anti-cheat-pill { display: none !important; }
+      input[type="text"], input[type="date"], select, textarea {
+        background: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        color: #000000 !important;
+      }
+      .code-inline-input {
+        background: #f8fafc !important;
+        border: 1px solid #64748b !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+      }
+      .upload-area { display: none !important; }
+      .remove-file-btn { display: none !important; }
+      .file-preview {
+        display: flex !important;
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+      }
+      .preview-name { color: #0f172a !important; }
+      .preview-size { color: #64748b !important; }
+      .print-file-indicator {
+        display: block !important;
+        font-size: 0.85rem;
+        color: #64748b;
+        margin-top: 0.5rem;
+      }
+      .button-group, .connection-status, .modal-overlay { display: none !important; }
+    }
+  </style>
 </head>
-<body class="py-10">
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <i class="fa-solid fa-diagram-project logo-icon"></i>
+        <h1>Lab Basic: การเขียนผังงาน (Flowchart Design)</h1>
+      </div>
+      <p class="subtitle">การออกแบบกระบวนการทำงานและผังงานตามมาตรฐาน ANSI/ISO และการวิเคราะห์ IPO Model</p>
+    </header>
 
-    <!-- แผงควบคุมด้านบน -->
-    <div class="max-w-4xl mx-auto mb-6 p-4 bg-white rounded-xl shadow-sm flex flex-wrap justify-between items-center gap-4 no-print">
+    <div class="lab-grid">
+      <!-- Left Column -->
+      <div class="lab-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <div class="card-title">1. วัตถุประสงค์และเครื่องมือการเรียนรู้</div>
+          </div>
+          <div class="info-frame">
+            <h3><i class="fa-solid fa-graduation-cap"></i> วัตถุประสงค์เชิงพฤติกรรม</h3>
+            <ul>
+              <li>เข้าใจความหมาย หน้าที่ และมาตรฐานของสัญลักษณ์ผังงาน (Flowchart Symbols)</li>
+              <li>สามารถแปลงลำดับขั้นตอนการทำงาน (Algorithm) เป็นผังงานได้อย่างถูกต้องตามลำดับ</li>
+              <li>สามารถวิเคราะห์องค์ประกอบข้อมูลเข้า (Input), การประมวลผล (Process) และผลลัพธ์ (Output) หรือ IPO Model ได้</li>
+            </ul>
+          </div>
+
+          <h3><i class="fa-solid fa-toolbox"></i> เครื่องมือและซอฟต์แวร์ที่แนะนำ</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ชื่อเครื่องมือ</th>
+                  <th>ลักษณะการใช้งาน</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>draw.io / diagrams.net</strong></td>
+                  <td>เว็บแอปพลิเคชันวาดผังงานฟรี ใช้งานง่าย Export เป็นรูป PNG/JPG ได้สะดวก</td>
+                </tr>
+                <tr>
+                  <td><strong>Flowgorithm</strong></td>
+                  <td>โปรแกรมจำลองและทดสอบการทำงานของผังงานเชิงโต้ตอบ</td>
+                </tr>
+                <tr>
+                  <td><strong>สมุด / กระดาษเขียนแบบ</strong></td>
+                  <td>วาดผังงานด้วยมือและถ่ายภาพแนบส่งเข้าระบบ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-shapes"></i></div>
+            <div class="card-title">2. สัญลักษณ์ผังงานมาตรฐาน (Standard Symbols)</div>
+          </div>
+          <p>ผังงาน (Flowchart) คือรูปภาพหรือสัญลักษณ์ที่ใช้แสดงลำดับขั้นตอนการทำงานของโปรแกรมหรือระบบ ช่วยให้เข้าใจการทำงานและตรวจสอบข้อผิดพลาดได้ง่าย:</p>
+          <div class="symbol-grid">
+            <div class="symbol-card">
+              <div class="flowchart-shape shape-terminator">Terminator</div>
+              <strong style="font-size:0.85rem;color:#fef08a;">จุดเริ่มต้น / สิ้นสุด</strong>
+              <span style="font-size:0.75rem;color:var(--text-muted);">Start / Stop / End</span>
+            </div>
+            <div class="symbol-card">
+              <div class="flowchart-shape shape-io">Input / Output</div>
+              <strong style="font-size:0.85rem;color:#bbf7d0;">การรับ / แสดงผล</strong>
+              <span style="font-size:0.75rem;color:var(--text-muted);">General I/O</span>
+            </div>
+            <div class="symbol-card">
+              <div class="shape-decision"></div>
+              <strong style="font-size:0.85rem;color:#fed7aa;">การตัดสินใจ / เงื่อนไข</strong>
+              <span style="font-size:0.75rem;color:var(--text-muted);">Decision / Condition</span>
+            </div>
+            <div class="symbol-card">
+              <div class="flowchart-shape shape-process">Process</div>
+              <strong style="font-size:0.85rem;color:#bfdbfe;">การประมวลผล / คำนวณ</strong>
+              <span style="font-size:0.75rem;color:var(--text-muted);">Process / Calculation</span>
+            </div>
+            <div class="symbol-card">
+              <div class="shape-connector"></div>
+              <strong style="font-size:0.85rem;color:#fca5a5;">จุดเชื่อมต่อ</strong>
+              <span style="font-size:0.75rem;color:var(--text-muted);">On-page Connector</span>
+            </div>
+          </div>
+
+          <div class="challenge-frame">
+            <h3><i class="fa-solid fa-lightbulb"></i> หลักการวิเคราะห์ IPO Model</h3>
+            <ul>
+              <li><strong>Input (ข้อมูลเข้า):</strong> ตัวแปรหรือข้อมูลที่โปรแกรมต้องรับจากผู้ใช้ (เช่น ค่ารัศมี, อุณหภูมิ F)</li>
+              <li><strong>Process (การประมวลผล):</strong> สูตรคำนวณหรือขั้นตอนทางตรรกะ (เช่น การคูณ, การเปรียบเทียบ)</li>
+              <li><strong>Output (ผลลัพธ์):</strong> ข้อมูลที่โปรแกรมต้องแสดงผลออกทางจอภาพ (เช่น พื้นที่วงกลม, ค่า C)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="form-container">
+        <form class="card" id="labForm" onsubmit="handleFormSubmit(event)">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-file-signature"></i></div>
+            <div class="card-title">แบบรายงานผลการปฏิบัติงาน (Worksheet)</div>
+          </div>
+
+          <!-- Connection Banner -->
+          <div class="connection-status local" id="connectionStatus">
+            <i class="fa-solid fa-circle-notch loading-spinner"></i>
+            <span id="connectionText">กำลังตรวจสอบการเชื่อมต่อเซิร์ฟเวอร์...</span>
+          </div>
+
+          <!-- Section 1 -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span><i class="fa-solid fa-id-card"></i> ข้อมูลผู้ส่งใบงาน</span>
+            </div>
+            <div class="form-group">
+              <label for="studentName">ชื่อ-นามสกุล นักศึกษา</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" id="studentName" required placeholder="นายสมชาย ใจดี">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="studentId">รหัสประจำตัวนักศึกษา</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-hashtag input-icon"></i>
+                <input type="text" id="studentId" required placeholder="65010999">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="studentGroup">ชั้น / ตอนเรียน (ห้อง)</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-users input-icon"></i>
+                <input type="text" id="studentGroup" required placeholder="ชฟ. 1/1 หรือ กลุ่ม 1">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="labDate">วันที่ทำปฏิบัติการ</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-calendar input-icon"></i>
+                <input type="date" id="labDate" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span><i class="fa-solid fa-puzzle-piece"></i> ตอนที่ 2.1: ระบุชื่อสัญลักษณ์ผังงาน</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(5 คะแนน)</span>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">จงพิมพ์ชื่อภาษาไทยหรือภาษาอังกฤษของสัญลักษณ์ผังงานต่อไปนี้:</p>
+            <div class="form-group">
+              <label>2.1.1 สัญลักษณ์วงรี (Terminator):</label>
+              <input type="text" class="code-inline-input" id="ans211" placeholder="เริ่มต้น / สิ้นสุด / Terminator" oninput="autoResizeInlineInput(this)">
+            </div>
+            <div class="form-group">
+              <label>2.1.2 สัญลักษณ์สี่เหลี่ยมด้านขนาน (Input/Output):</label>
+              <input type="text" class="code-inline-input" id="ans212" placeholder="รับข้อมูล / แสดงผล / I/O" oninput="autoResizeInlineInput(this)">
+            </div>
+            <div class="form-group">
+              <label>2.1.3 สัญลักษณ์สี่เหลี่ยมข้าวหลามตัด (Decision):</label>
+              <input type="text" class="code-inline-input" id="ans213" placeholder="ตัดสินใจ / เงื่อนไข / Decision" oninput="autoResizeInlineInput(this)">
+            </div>
+            <div class="form-group">
+              <label>2.1.4 สัญลักษณ์สี่เหลี่ยมผืนผ้า (Process):</label>
+              <input type="text" class="code-inline-input" id="ans214" placeholder="ประมวลผล / คำนวณ / Process" oninput="autoResizeInlineInput(this)">
+            </div>
+            <div class="form-group">
+              <label>2.1.5 สัญลักษณ์วงกลมขนาดเล็ก (Connector):</label>
+              <input type="text" class="code-inline-input" id="ans215" placeholder="จุดเชื่อมต่อ / Connector" oninput="autoResizeInlineInput(this)">
+            </div>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span><i class="fa-solid fa-file-image"></i> ตอนที่ 2.2: แปลงข้อความเป็นผังงาน</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(15 คะแนน)</span>
+            </div>
+            <!-- 2.2.1 -->
+            <div class="form-group">
+              <label><strong>2.2.1 ผังงานต้มบะหมี่กึ่งสำเร็จรูป</strong> (1. เริ่มต้น -> 2. ต้มน้ำเดือด -> 3. ใส่บะหมี่ -> 4. ต้ม 1 นาที -> 5. ใส่เครื่องปรุงยกลง -> 6. รับประทาน -> 7. จบ)</label>
+              <div class="upload-zone-wrapper">
+                <div class="upload-area" id="dropArea221" onclick="document.getElementById('file221').click()">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                  <div class="upload-text">คลิกหรือลากรูปผังงาน 2.2.1 มาวางที่นี่</div>
+                  <div class="upload-hint">รองรับ PNG, JPG, JPEG (ไม่เกิน 10MB)</div>
+                  <input type="file" id="file221" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart221')">
+                </div>
+                <div class="file-preview" id="preview221">
+                  <img src="" class="preview-thumbnail" id="thumb221" alt="preview">
+                  <div class="preview-details">
+                    <div class="preview-name" id="name221">-</div>
+                    <div class="preview-size" id="size221">-</div>
+                  </div>
+                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart221')"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.2.2 -->
+            <div class="form-group" style="margin-top:1.25rem;">
+              <label><strong>2.2.2 ผังงานการตัดสินใจซักผ้า / ฝนตก</strong> (ถ้าฝนไม่ตก ออกไปดูหนัง / ถ้าฝนตก อยู่บ้านอ่านหนังสือ)</label>
+              <div class="upload-zone-wrapper">
+                <div class="upload-area" id="dropArea222" onclick="document.getElementById('file222').click()">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                  <div class="upload-text">คลิกหรือลากรูปผังงาน 2.2.2 มาวางที่นี่</div>
+                  <div class="upload-hint">รองรับ PNG, JPG, JPEG</div>
+                  <input type="file" id="file222" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart222')">
+                </div>
+                <div class="file-preview" id="preview222">
+                  <img src="" class="preview-thumbnail" id="thumb222" alt="preview">
+                  <div class="preview-details">
+                    <div class="preview-name" id="name222">-</div>
+                    <div class="preview-size" id="size222">-</div>
+                  </div>
+                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart222')"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.2.3 -->
+            <div class="form-group" style="margin-top:1.25rem;">
+              <label><strong>2.2.3 ผังงานตรวจสอบเงื่อนไข num</strong> (num=1 พิมพ์ Number One, num=2 พิมพ์ Number Two, num=3 พิมพ์ Number Three, อื่นๆ พิมพ์ Error)</label>
+              <div class="upload-zone-wrapper">
+                <div class="upload-area" id="dropArea223" onclick="document.getElementById('file223').click()">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                  <div class="upload-text">คลิกหรือลากรูปผังงาน 2.2.3 มาวางที่นี่</div>
+                  <div class="upload-hint">รองรับ PNG, JPG, JPEG</div>
+                  <input type="file" id="file223" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart223')">
+                </div>
+                <div class="file-preview" id="preview223">
+                  <img src="" class="preview-thumbnail" id="thumb223" alt="preview">
+                  <div class="preview-details">
+                    <div class="preview-name" id="name223">-</div>
+                    <div class="preview-size" id="size223">-</div>
+                  </div>
+                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart223')"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span><i class="fa-solid fa-calculator"></i> ตอนที่ 2.3: วิเคราะห์ IPO Model และเขียนผังงาน</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(24 คะแนน)</span>
+            </div>
+
+            <!-- 2.3.1 -->
+            <div class="form-group" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+              <label><strong>2.3.1 คำนวณแคลอรี่: Calories = bodyweight * 19</strong></label>
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:0.5rem; margin-top:0.4rem;">
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Input:</span>
+                  <input type="text" id="input231" value="bodyweight" readonly style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Process:</span>
+                  <input type="text" id="process231" value="Calories = bodyweight * 19" readonly style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Output:</span>
+                  <input type="text" id="output231" value="Calories" readonly style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+              </div>
+              <div class="upload-zone-wrapper">
+                <div class="upload-area" id="dropArea231" onclick="document.getElementById('file231').click()">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                  <div class="upload-text">แนบรูปผังงาน 2.3.1 (Calories)</div>
+                  <input type="file" id="file231" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart231')">
+                </div>
+                <div class="file-preview" id="preview231">
+                  <img src="" class="preview-thumbnail" id="thumb231" alt="preview">
+                  <div class="preview-details">
+                    <div class="preview-name" id="name231">-</div>
+                    <div class="preview-size" id="size231">-</div>
+                  </div>
+                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart231')"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.3.2 -->
+            <div class="form-group" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-top:1rem;">
+              <label><strong>2.3.2 พื้นที่และเส้นรอบวงวงกลม: CircleArea = PI * r * r, CirclePerimeter = 2 * PI * r</strong></label>
+              <div style="display:grid; grid-template-columns: 1fr 1.5fr 1fr; gap:0.5rem; margin-top:0.4rem;">
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Input:</span>
+                  <input type="text" id="input232" placeholder="r หรือ radius" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Process:</span>
+                  <input type="text" id="process232" placeholder="สูตรคำนวณพื้นที่และเส้นรอบวง" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Output:</span>
+                  <input type="text" id="output232" placeholder="CircleArea, CirclePerimeter" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+              </div>
+              <div class="upload-zone-wrapper">
+                <div class="upload-area" id="dropArea232" onclick="document.getElementById('file232').click()">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                  <div class="upload-text">แนบรูปผังงาน 2.3.2 (Circle)</div>
+                  <input type="file" id="file232" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart232')">
+                </div>
+                <div class="file-preview" id="preview232">
+                  <img src="" class="preview-thumbnail" id="thumb232" alt="preview">
+                  <div class="preview-details">
+                    <div class="preview-name" id="name232">-</div>
+                    <div class="preview-size" id="size232">-</div>
+                  </div>
+                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart232')"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.3.3 -->
+            <div class="form-group" style="margin-top:1rem;">
+              <label><strong>2.3.3 แปลงอุณหภูมิ: C = (F - 32) / 1.8</strong></label>
+              <div style="display:grid; grid-template-columns: 1fr 1.5fr 1fr; gap:0.5rem; margin-top:0.4rem;">
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Input:</span>
+                  <input type="text" id="input233" placeholder="F หรือ fahrenheit" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Process:</span>
+                  <input type="text" id="process233" placeholder="C = (F - 32) / 1.8" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+                <div>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Output:</span>
+                  <input type="text" id="output233" placeholder="C หรือ celsius" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                </div>
+              </div>
+              <div class="upload-zone-wrapper">
+                <div class="upload-area" id="dropArea233" onclick="document.getElementById('file233').click()">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                  <div class="upload-text">แนบรูปผังงาน 2.3.3 (Fahrenheit to Celsius)</div>
+                  <input type="file" id="file233" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart233')">
+                </div>
+                <div class="file-preview" id="preview233">
+                  <img src="" class="preview-thumbnail" id="thumb233" alt="preview">
+                  <div class="preview-details">
+                    <div class="preview-name" id="name233">-</div>
+                    <div class="preview-size" id="size233">-</div>
+                  </div>
+                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart233')"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span><i class="fa-solid fa-comment-dots"></i> 3. สรุปผลการทดลอง</span>
+              <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
+            </div>
+            <div class="form-group">
+              <label for="conclusion">สรุปสิ่งที่ได้เรียนรู้จากการเขียนผังงานและข้อควรระวังในการออกแบบ</label>
+              <textarea id="conclusion" rows="4" required placeholder="อธิบายความสำคัญของการใช้สัญลักษณ์ผังงานตามมาตรฐาน ประโยชน์ของการวิเคราะห์ IPO Model และปัญหาที่พบในการทดลองนี้..."></textarea>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="button-group">
+            <button type="button" class="btn btn-check-score" id="checkScoreBtn" onclick="checkPreSubmissionScore()">
+              <i class="fa-solid fa-list-check"></i> ตรวจสอบคะแนนก่อนส่ง (Pre-check Score)
+            </button>
+            <div class="button-sub-group">
+              <button type="button" class="btn btn-secondary" onclick="window.print()">
+                <i class="fa-solid fa-print"></i> พิมพ์ PDF
+              </button>
+              <button type="submit" class="btn" id="submitBtn">
+                <i class="fa-solid fa-paper-plane"></i> ส่งใบงานออนไลน์
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pre-submission Score Check Modal -->
+  <div class="modal-overlay" id="scoreCheckModal">
+    <div class="modal-content score-check-modal-content">
+      <div class="score-modal-header">
+        <div class="score-modal-icon"><i class="fa-solid fa-chart-pie"></i></div>
         <div>
-            <h3 class="font-bold text-lg text-slate-800">โหมดใบงานแบบโต้ตอบ (Interactive)</h3>
-            <p class="text-sm text-slate-500">กรอกคำตอบ แนบรูปผังงาน แล้วกด "ส่งใบงานออนไลน์"</p>
+          <h3 class="modal-title" style="text-align:left;margin-bottom:0.15rem;font-size:1.25rem;">ผลการประเมินคะแนนเบื้องต้น</h3>
+          <p style="font-size:0.8rem;color:var(--text-muted);text-align:left;margin:0;">ตรวจสอบความสมบูรณ์และคะแนนประเมินก่อนส่งใบงานจริง</p>
         </div>
-        <div class="flex gap-3 flex-wrap">
-            <button onclick="window.print()" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2.5 px-5 rounded-lg shadow-md transition duration-300 flex items-center gap-2">
-                <span>🖨️</span> พิมพ์ / PDF
-            </button>
-            <button onclick="submitLab()" id="submitBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-md transition duration-300 flex items-center gap-2">
-                <span>📤</span> ส่งใบงานออนไลน์
-            </button>
-        </div>
+      </div>
+      <div class="score-hero-card">
+        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 45</span></div>
+        <div class="score-status-badge" id="preScoreBadge">พร้อมส่งรายงาน</div>
+      </div>
+      <div class="score-breakdown-list" id="preScoreBreakdown"></div>
+      <div class="score-modal-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeScoreCheckModal()">
+          <i class="fa-solid fa-pen-to-square"></i> กลับไปแก้ไข
+        </button>
+        <button type="button" class="btn" id="modalSubmitBtn" onclick="submitFromScoreModal()">
+          <i class="fa-solid fa-paper-plane"></i> ยืนยันส่งใบงาน
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- ================= PAGE 1 ================= -->
-    <div class="a4-page bg-white mb-8">
-        <div class="border-b-2 border-slate-300 pb-4 mb-6">
-            <h1 class="text-2xl font-bold text-center text-slate-800">ใบงานที่ 2</h1>
-            <p class="text-xl text-center font-medium text-slate-600 mt-1">เรื่อง การเขียนผังงาน Flowchart</p>
-        </div>
-
-        <!-- ข้อมูลผู้เรียน -->
-        <div class="grid grid-cols-3 gap-4 mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200">
-            <div class="flex items-center gap-2">
-                <span class="font-medium text-slate-700 whitespace-nowrap">ชื่อ-นามสกุล:</span>
-                <input id="studentName" type="text" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500 input-dashed" placeholder="พิมพ์ชื่อของคุณ">
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="font-medium text-slate-700 whitespace-nowrap">ชั้น/ห้อง:</span>
-                <input id="studentGroup" type="text" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500 input-dashed" placeholder="4/1">
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="font-medium text-slate-700 whitespace-nowrap">รหัสประจำตัว:</span>
-                <input id="studentId" type="text" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500 input-dashed" placeholder="465895666">
-            </div>
-        </div>
-
-        <div class="mb-4">
-            <h2 class="text-lg font-bold text-slate-800">1. วัตถุประสงค์</h2>
-            <p class="text-md pl-6 text-slate-600">1.1. สามารถเขียนผังงานได้</p>
-        </div>
-        <div class="mb-4">
-            <h2 class="text-lg font-bold text-slate-800">2. ขั้นตอนการปฏิบัติงาน</h2>
-            <p class="text-md pl-6 font-semibold text-slate-700">2.1. จงบอกสัญลักษณ์ของผังงานต่อไปนี้</p>
-        </div>
-
-        <div class="space-y-6 pl-6 mt-6">
-            <!-- 2.1.1 -->
-            <div class="flex items-center space-x-8">
-                <div class="w-40 flex justify-center"><div class="flowchart-shape shape-terminator"></div></div>
-                <div class="flex-1 flex items-center gap-2">
-                    <span class="text-md font-medium whitespace-nowrap">2.1.1 คือ </span>
-                    <input id="ans211" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
-                </div>
-            </div>
-            <!-- 2.1.2 -->
-            <div class="flex items-center space-x-8">
-                <div class="w-40 flex justify-center"><div class="flowchart-shape shape-io"></div></div>
-                <div class="flex-1 flex items-center gap-2">
-                    <span class="text-md font-medium whitespace-nowrap">2.1.2 คือ </span>
-                    <input id="ans212" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
-                </div>
-            </div>
-            <!-- 2.1.3 -->
-            <div class="flex items-center space-x-8">
-                <div class="w-40 flex justify-center"><div class="shape-decision"></div></div>
-                <div class="flex-1 flex items-center gap-2 pt-4">
-                    <span class="text-md font-medium whitespace-nowrap">2.1.3 คือ </span>
-                    <input id="ans213" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
-                </div>
-            </div>
-            <!-- 2.1.4 -->
-            <div class="flex items-center space-x-8">
-                <div class="w-40 flex justify-center"><div class="flowchart-shape shape-process"></div></div>
-                <div class="flex-1 flex items-center gap-2">
-                    <span class="text-md font-medium whitespace-nowrap">2.1.4 คือ </span>
-                    <input id="ans214" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
-                </div>
-            </div>
-            <!-- 2.1.5 -->
-            <div class="flex items-center space-x-8">
-                <div class="w-40 flex justify-center"><div class="shape-connector"></div></div>
-                <div class="flex-1 flex items-center gap-2">
-                    <span class="text-md font-medium whitespace-nowrap">2.1.5 คือ </span>
-                    <input id="ans215" type="text" class="w-full border-b border-slate-400 focus:outline-none focus:border-blue-500 px-2 py-1" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-sm text-slate-400 whitespace-nowrap">(1 คะแนน)</span>
-                </div>
-            </div>
-        </div>
+  <!-- Toast Modal -->
+  <div class="modal-overlay" id="statusModal">
+    <div class="modal-content">
+      <span class="modal-icon" id="modalIcon"></span>
+      <h3 class="modal-title" id="modalTitle">กำลังบันทึกข้อมูล...</h3>
+      <p class="modal-text" id="modalText">ระบบกำลังรับส่งข้อมูลของท่าน กรุณารอสักครู่</p>
+      <button class="modal-close-btn" onclick="closeModal()">ตกลง</button>
     </div>
+  </div>
 
-    <!-- ================= PAGE 2 ================= -->
-    <div class="a4-page bg-white mb-8 page-break">
-        <div class="mb-4">
-            <h2 class="text-lg font-bold text-slate-800">2.2. นักเรียนพิจารณาข้อความนี้ แล้วนำไปเขียนผังงานให้ถูกต้อง</h2>
-        </div>
+  <script>
+    const SCRIPT_URL = "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec";
 
-        <!-- 2.2.1 -->
-        <div class="border border-slate-300 rounded-lg p-4 mb-6">
-            <span class="font-bold text-slate-700">2.2.1.</span>
-            <div class="grid grid-cols-2 gap-2 mt-2 text-md pl-4 text-slate-600">
-                <div>1. เริ่มต้น</div><div>2. จบ</div>
-                <div>3. รับประทาน</div><div>4. ต้มน้ำให้เดือด</div>
-                <div>5. ต้มประมาณ 1 นาที</div><div>6. ใส่เครื่องปรุงแล้วยกภาชนะลงจากเตา</div>
-                <div class="col-span-2">7. ใส่บะหมี่ลงในน้ำเดือด</div>
-            </div>
-            <div class="mt-4 border-t border-dashed border-slate-300 pt-4">
-                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
-                <div class="border-2 border-dashed border-slate-300 h-80 bg-slate-50 rounded-lg overflow-hidden">
-                    <div class="upload-zone h-full" id="zone-221">
-                        <div class="upload-controls flex flex-col items-center gap-2">
-                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
-                                📁 คลิกเพื่อแนบรูปภาพผังงาน
-                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-221')">
-                            </label>
-                            <span class="upload-label text-xs text-slate-400 no-print">รองรับไฟล์รูปภาพ PNG, JPG</span>
-                        </div>
-                        <img class="image-preview" alt="Flowchart Preview">
-                        <button class="remove-img-btn no-print" onclick="removeImage('zone-221')" title="ลบรูป">✕</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    const flowchartsData = {
+      flowchart221Base64: null, flowchart221Name: null, flowchart221Type: null,
+      flowchart222Base64: null, flowchart222Name: null, flowchart222Type: null,
+      flowchart223Base64: null, flowchart223Name: null, flowchart223Type: null,
+      flowchart231Base64: null, flowchart231Name: null, flowchart231Type: null,
+      flowchart232Base64: null, flowchart232Name: null, flowchart232Type: null,
+      flowchart233Base64: null, flowchart233Name: null, flowchart233Type: null
+    };
 
-        <!-- 2.2.2 -->
-        <div class="border border-slate-300 rounded-lg p-4">
-            <span class="font-bold text-slate-700">2.2.2.</span>
-            <div class="grid grid-cols-2 gap-2 mt-2 text-md pl-4 text-slate-600">
-                <div>1. เริ่มต้น</div><div>2. จบ</div>
-                <div>3. ซักเสื้อผ้า</div><div>4. ฝนตกหรือไม่</div>
-                <div class="col-span-2">5. ถ้าฝนไม่ตก ออกไปดูภาพยนตร์</div>
-                <div class="col-span-2">6. ถ้าฝนตก อยู่บ้านอ่านหนังสือ</div>
-            </div>
-            <div class="mt-4 border-t border-dashed border-slate-300 pt-4">
-                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
-                <div class="border-2 border-dashed border-slate-300 h-80 bg-slate-50 rounded-lg overflow-hidden">
-                    <div class="upload-zone h-full" id="zone-222">
-                        <div class="upload-controls flex flex-col items-center gap-2">
-                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
-                                📁 คลิกเพื่อแนบรูปภาพผังงาน
-                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-222')">
-                            </label>
-                            <span class="upload-label text-xs text-slate-400 no-print">รองรับไฟล์รูปภาพ PNG, JPG</span>
-                        </div>
-                        <img class="image-preview" alt="Flowchart Preview">
-                        <button class="remove-img-btn no-print" onclick="removeImage('zone-222')" title="ลบรูป">✕</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    document.addEventListener("DOMContentLoaded", () => {
+      const isGoogleAppsScript = (typeof google !== "undefined" && google.script && google.script.run);
+      const connBanner = document.getElementById("connectionStatus");
+      
+      if (isGoogleAppsScript) {
+        connBanner.className = "connection-status cloud";
+        connBanner.innerHTML = "<i class='fa-solid fa-cloud'></i> <span>เชื่อมต่อ Google Sheets แล้ว (Online Mode)</span>";
+      } else if (SCRIPT_URL && !SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_URL_HERE")) {
+        connBanner.className = "connection-status cloud";
+        connBanner.innerHTML = "<i class='fa-solid fa-link'></i> <span>เชื่อมต่อ Web API แล้ว (Online Endpoint)</span>";
+      } else {
+        connBanner.className = "connection-status local";
+        connBanner.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> <span>Local Preview Mode (โหมดทดสอบออฟไลน์)</span>";
+      }
 
-    <!-- ================= PAGE 3 ================= -->
-    <div class="a4-page bg-white mb-8 page-break">
-        <!-- 2.2.3 -->
-        <div class="border border-slate-300 rounded-lg p-4 mb-6">
-            <span class="font-bold text-slate-700">2.2.3.</span>
-            <div class="space-y-1 mt-2 text-md pl-4 text-slate-600">
-                <div>1. เริ่มต้น</div><div>2. รับค่า num</div><div>3. ตรวจสอบค่า num</div>
-                <div>4. ถ้า num = 1 แสดงข้อความ "Number One"</div>
-                <div>5. ถ้า num = 2 แสดงข้อความ "Number Two"</div>
-                <div>6. ถ้า num = 3 แสดงข้อความ "Number Three"</div>
-                <div>7. ค่าไม่เท่ากับ num แสดงข้อความ "Error"</div>
-                <div>8. จบการทำงาน</div>
-            </div>
-            <div class="mt-4 border-t border-dashed border-slate-300 pt-4">
-                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
-                <div class="border-2 border-dashed border-slate-300 h-80 bg-slate-50 rounded-lg overflow-hidden">
-                    <div class="upload-zone h-full" id="zone-223">
-                        <div class="upload-controls flex flex-col items-center gap-2">
-                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
-                                📁 คลิกเพื่อแนบรูปภาพผังงาน
-                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-223')">
-                            </label>
-                            <span class="upload-label text-xs text-slate-400 no-print">รองรับไฟล์รูปภาพ PNG, JPG</span>
-                        </div>
-                        <img class="image-preview" alt="Flowchart Preview">
-                        <button class="remove-img-btn no-print" onclick="removeImage('zone-223')" title="ลบรูป">✕</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      const dateInput = document.getElementById("labDate");
+      if (dateInput) {
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.value = today;
+      }
 
-        <div class="mb-4">
-            <h2 class="text-lg font-bold text-slate-800">2.3. จงเขียนผังงานจากโจทย์ที่กำหนดให้ ให้ทำการแนบรูปผังงานใต้โจทย์ที่กำหนด</h2>
-        </div>
+      const storedName = localStorage.getItem("student_name");
+      const storedId = localStorage.getItem("student_id");
+      const storedGroup = localStorage.getItem("student_group");
 
-        <!-- 2.3.1 -->
-        <div class="border border-slate-300 rounded-lg p-4">
-            <p class="text-md font-medium text-slate-800 leading-relaxed">
-                <span class="font-bold text-slate-700">2.3.1.</span> ให้นักเรียนเขียนผังงาน (Flowchart) ในการคำนวณปริมาณแคลอรี่มาตรฐาน สูตร <span class="font-semibold">Calories = bodyweight * 19</span> โดยน้ำหนักตัวเป็นปอนด์
-            </p>
-            <div class="mt-3 space-y-2 text-md pl-4">
-                <div class="flex items-center gap-2"><strong>Input คือ:</strong>
-                    <input id="input231" type="text" class="w-full border-b border-slate-300 px-2 py-0.5" value="bodyweight" readonly>
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-                <div class="flex items-center gap-2"><strong>Process คือ:</strong>
-                    <input id="process231" type="text" class="w-full border-b border-slate-300 px-2 py-0.5" value="Calories = bodyweight * 19" readonly>
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-                <div class="flex items-center gap-2"><strong>Output คือ:</strong>
-                    <input id="output231" type="text" class="w-full border-b border-slate-300 px-2 py-0.5" value="Calories" readonly>
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-            </div>
-            <div class="mt-4 border-t border-dashed border-slate-300 pt-3">
-                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
-                <div class="border-2 border-dashed border-slate-300 h-64 bg-slate-50 rounded-lg overflow-hidden">
-                    <div class="upload-zone h-full" id="zone-231">
-                        <div class="upload-controls flex flex-col items-center gap-2">
-                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
-                                📁 คลิกเพื่อแนบรูปภาพผังงาน
-                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-231')">
-                            </label>
-                        </div>
-                        <img class="image-preview" alt="Flowchart Preview">
-                        <button class="remove-img-btn no-print" onclick="removeImage('zone-231')" title="ลบรูป">✕</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+      if (storedName && document.getElementById("studentName")) document.getElementById("studentName").value = storedName;
+      if (storedId && document.getElementById("studentId")) document.getElementById("studentId").value = storedId;
+      if (storedGroup && document.getElementById("studentGroup")) document.getElementById("studentGroup").value = storedGroup;
 
-    <!-- ================= PAGE 4 ================= -->
-    <div class="a4-page bg-white mb-8 page-break">
-        <!-- 2.3.2 -->
-        <div class="border border-slate-300 rounded-lg p-4 mb-6">
-            <p class="text-md font-medium text-slate-800 leading-relaxed">
-                <span class="font-bold text-slate-700">2.3.2.</span> ให้เขียนผังงานแสดงการคำนวณพื้นที่และเส้นรอบวงของวงกลม <span class="font-semibold">CircleArea = PI * r * r</span> และ <span class="font-semibold">CirclePerimeter = 2 * PI * r</span> (PI = 3.14)
-            </p>
-            <div class="mt-3 space-y-2 text-md pl-4">
-                <div class="flex items-center gap-2"><strong>Input คือ:</strong>
-                    <input id="input232" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-                <div class="flex items-center gap-2"><strong>Process คือ:</strong>
-                    <input id="process232" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-                <div class="flex items-center gap-2"><strong>Output คือ:</strong>
-                    <input id="output232" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-            </div>
-            <div class="mt-4 border-t border-dashed border-slate-300 pt-3">
-                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
-                <div class="border-2 border-dashed border-slate-300 h-64 bg-slate-50 rounded-lg overflow-hidden">
-                    <div class="upload-zone h-full" id="zone-232">
-                        <div class="upload-controls flex flex-col items-center gap-2">
-                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
-                                📁 คลิกเพื่อแนบรูปภาพผังงาน
-                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-232')">
-                            </label>
-                        </div>
-                        <img class="image-preview" alt="Flowchart Preview">
-                        <button class="remove-img-btn no-print" onclick="removeImage('zone-232')" title="ลบรูป">✕</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      document.querySelectorAll("input.code-inline-input").forEach(el => autoResizeInlineInput(el));
+      setupAntiCheatProtection();
+    });
 
-        <!-- 2.3.3 -->
-        <div class="border border-slate-300 rounded-lg p-4 mb-6">
-            <p class="text-md font-medium text-slate-800 leading-relaxed">
-                <span class="font-bold text-slate-700">2.3.3.</span> จงเขียนผังงานเพื่อทำการแปลงค่าองศาฟาเรนไฮต์ (F) ให้เป็น องศาเซลเซียส (C) โดยใช้สูตร <span class="font-semibold">C = (F - 32) / 1.8</span>
-            </p>
-            <div class="mt-3 space-y-2 text-md pl-4">
-                <div class="flex items-center gap-2"><strong>Input คือ:</strong>
-                    <input id="input233" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-                <div class="flex items-center gap-2"><strong>Process คือ:</strong>
-                    <input id="process233" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-                <div class="flex items-center gap-2"><strong>Output คือ:</strong>
-                    <input id="output233" type="text" class="w-full border-b border-slate-300 px-2 py-0.5 focus:outline-none focus:border-blue-500" placeholder="พิมพ์คำตอบที่นี่...">
-                    <span class="text-xs text-slate-400 whitespace-nowrap">(1 คะแนน)</span></div>
-            </div>
-            <div class="mt-4 border-t border-dashed border-slate-300 pt-3">
-                <p class="font-semibold text-sm text-blue-600 mb-2">Flowchart (5 คะแนน)</p>
-                <div class="border-2 border-dashed border-slate-300 h-64 bg-slate-50 rounded-lg overflow-hidden">
-                    <div class="upload-zone h-full" id="zone-233">
-                        <div class="upload-controls flex flex-col items-center gap-2">
-                            <label class="upload-label cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium shadow transition no-print">
-                                📁 คลิกเพื่อแนบรูปภาพผังงาน
-                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(this, 'zone-233')">
-                            </label>
-                        </div>
-                        <img class="image-preview" alt="Flowchart Preview">
-                        <button class="remove-img-btn no-print" onclick="removeImage('zone-233')" title="ลบรูป">✕</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    function autoResizeInlineInput(el) {
+      if (!el) return;
+      const charCount = el.value ? el.value.length : 0;
+      const minChars = 14;
+      el.style.width = Math.max(minChars, charCount + 3) + "ch";
+    }
 
-        <!-- 3. สรุปผล -->
-        <div class="border border-slate-300 rounded-lg p-4">
-            <h2 class="text-lg font-bold mb-2 text-slate-800">3. สรุปผล <span class="text-sm font-normal text-slate-400">(5 คะแนน)</span></h2>
-            <textarea id="conclusion" class="w-full border border-slate-300 rounded p-2 text-md focus:outline-none focus:border-blue-500" rows="4" placeholder="พิมพ์สรุปผลการปฏิบัติงานของคุณที่นี่..."></textarea>
-        </div>
+    function setupAntiCheatProtection() {
+      const protectedFields = [document.getElementById("conclusion")].filter(Boolean);
 
-        <!-- ปุ่มส่งงาน (ด้านล่างใบงาน) -->
-        <div class="mt-6 flex justify-center no-print">
-            <button onclick="submitLab()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-xl shadow-lg transition duration-300 text-lg flex items-center gap-3">
-                <span>📤</span> ส่งใบงานออนไลน์
-            </button>
-        </div>
-    </div>
-
-    <!-- ===== MODAL แสดงผลการส่ง ===== -->
-    <div id="submitModal">
-        <div id="submitModalBox">
-            <div id="modalIcon" class="text-5xl mb-3">⏳</div>
-            <h3 id="modalTitle" class="text-xl font-bold text-slate-800 mb-2">กำลังส่งใบงาน...</h3>
-            <p id="modalMsg" class="text-slate-600 text-sm whitespace-pre-line mb-5">กรุณารอสักครู่</p>
-            <button id="modalCloseBtn" onclick="closeModal()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-lg transition">ตกลง</button>
-        </div>
-    </div>
-
-    <script>
-        // ══════════════════════════════════════════════════
-        // 🔧 ใส่ URL ของ Google Apps Script ที่ Deploy แล้ว
-        // ══════════════════════════════════════════════════
-        const SCRIPT_URL = "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec";
-
-        // ──────────────────────────────────────────────────
-        // Image Preview & Remove
-        // ──────────────────────────────────────────────────
-        function previewImage(input, zoneId) {
-            const file = input.files[0];
-            if (!file) return;
-            const zone = document.getElementById(zoneId);
-            if (!zone) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = zone.querySelector('.image-preview');
-                img.src = e.target.result;
-                img.style.display = 'block';
-                zone.classList.add('has-image');
-            };
-            reader.readAsDataURL(file);
+      function showAntiCheatWarning(targetEl) {
+        let warnToast = document.getElementById("_antiCheatToast");
+        if (!warnToast) {
+          warnToast = document.createElement("div");
+          warnToast.id = "_antiCheatToast";
+          warnToast.style.cssText = "position:fixed;top:24px;left:50%;transform:translateX(-50%);" +
+            "background:linear-gradient(135deg, #ef4444, #b91c1c);color:#fff;padding:12px 24px;" +
+            "border-radius:12px;font-size:14px;font-weight:600;z-index:99999;box-shadow:0 10px 30px rgba(239,68,68,0.4);" +
+            "display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,0.2);" +
+            "transition:opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);pointer-events:none;";
+          warnToast.innerHTML = "<i class='fa-solid fa-shield-halved' style='font-size:1.2rem;'></i> <span>ระบบตรวจจับการลอก: กรุณาพิมพ์คำตอบด้วยตนเอง (ห้ามวางข้อความ)</span>";
+          document.body.appendChild(warnToast);
         }
-
-        function removeImage(zoneId) {
-            const zone = document.getElementById(zoneId);
-            if (!zone) return;
-            const img = zone.querySelector('.image-preview');
-            img.src = '';
-            img.style.display = 'none';
-            zone.classList.remove('has-image');
-            const fi = zone.querySelector('input[type="file"]');
-            if (fi) fi.value = '';
+        warnToast.style.opacity = "1";
+        if (targetEl) {
+          targetEl.style.borderColor = "#ef4444";
+          targetEl.style.boxShadow = "0 0 0 3px rgba(239, 68, 68, 0.35)";
+          setTimeout(() => {
+            targetEl.style.borderColor = "";
+            targetEl.style.boxShadow = "";
+          }, 1500);
         }
+        clearTimeout(warnToast._hideTimer);
+        warnToast._hideTimer = setTimeout(() => { warnToast.style.opacity = "0"; }, 3000);
+      }
 
-        // ──────────────────────────────────────────────────
-        // Modal helpers
-        // ──────────────────────────────────────────────────
-        function showModal(icon, title, msg, showClose) {
-            document.getElementById('modalIcon').textContent = icon;
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalMsg').textContent = msg;
-            document.getElementById('modalCloseBtn').classList.toggle('hidden', !showClose);
-            document.getElementById('submitModal').classList.add('show');
-        }
-        function closeModal() {
-            document.getElementById('submitModal').classList.remove('show');
-        }
+      protectedFields.forEach(el => {
+        el.addEventListener("paste", (e) => {
+          e.preventDefault();
+          showAntiCheatWarning(el);
+        });
+        el.addEventListener("drop", (e) => {
+          e.preventDefault();
+          showAntiCheatWarning(el);
+        });
+        el.addEventListener("keydown", (e) => {
+          if ((e.ctrlKey || e.metaKey) && (e.key === "v" || e.key === "V")) {
+            e.preventDefault();
+            showAntiCheatWarning(el);
+          }
+          if (e.shiftKey && e.key === "Insert") {
+            e.preventDefault();
+            showAntiCheatWarning(el);
+          }
+        });
+      });
+    }
 
-        // ──────────────────────────────────────────────────
-        // Helper: ดึง base64 จากรูปใน zone
-        // ──────────────────────────────────────────────────
-        function getZoneImageData(zoneId) {
-            const zone = document.getElementById(zoneId);
-            if (!zone) return { base64: null, name: null, type: null };
-            const img = zone.querySelector('.image-preview');
-            const fi = zone.querySelector('input[type="file"]');
-            if (!img || !img.src || img.style.display === 'none') return { base64: null, name: null, type: null };
-            const file = fi && fi.files[0];
-            return {
-                base64: img.src,   // already data URL
-                name: file ? file.name : 'flowchart.png',
-                type: file ? file.type : 'image/png'
-            };
-        }
+    function handleSingleFileUpload(input, key) {
+      const file = input.files[0];
+      if (!file) return;
 
-        // ──────────────────────────────────────────────────
-        // Submit
-        // ──────────────────────────────────────────────────
-        function submitLab() {
-            // Validate
-            const name = document.getElementById('studentName').value.trim();
-            const id   = document.getElementById('studentId').value.trim();
-            const grp  = document.getElementById('studentGroup').value.trim();
-            if (!name || !id || !grp) {
-                showModal('⚠️', 'กรอกข้อมูลไม่ครบ', 'กรุณากรอก ชื่อ-นามสกุล / ชั้น-ห้อง / รหัสประจำตัว ให้ครบก่อนส่งใบงาน', true);
-                return;
+      const num = key.replace("flowchart", "");
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        flowchartsData[key + "Base64"] = e.target.result;
+        flowchartsData[key + "Name"] = file.name;
+        flowchartsData[key + "Type"] = file.type;
+
+        const dropArea = document.getElementById("dropArea" + num);
+        const preview = document.getElementById("preview" + num);
+        const thumb = document.getElementById("thumb" + num);
+        const nameEl = document.getElementById("name" + num);
+        const sizeEl = document.getElementById("size" + num);
+
+        if (dropArea) dropArea.style.display = "none";
+        if (preview) preview.style.display = "flex";
+        if (thumb) thumb.src = e.target.result;
+        if (nameEl) nameEl.innerText = file.name;
+        if (sizeEl) sizeEl.innerText = (file.size / 1024).toFixed(1) + " KB";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeSingleFile(key) {
+      const num = key.replace("flowchart", "");
+      flowchartsData[key + "Base64"] = null;
+      flowchartsData[key + "Name"] = null;
+      flowchartsData[key + "Type"] = null;
+
+      const fileInput = document.getElementById("file" + num);
+      const dropArea = document.getElementById("dropArea" + num);
+      const preview = document.getElementById("preview" + num);
+
+      if (fileInput) fileInput.value = "";
+      if (dropArea) dropArea.style.display = "block";
+      if (preview) preview.style.display = "none";
+    }
+
+    function checkPreSubmissionScore() {
+      const symbolAnswers = [
+        { id: "ans211", correct: ["เริ่มต้น","สิ้นสุด","terminator","terminal","จบ"], label: "2.1.1 Terminator" },
+        { id: "ans212", correct: ["ข้อมูล","input","output","i/o","รับ","แสดง"], label: "2.1.2 Input/Output" },
+        { id: "ans213", correct: ["ตัดสิน","decision","เงื่อนไข","rhombus","เพชร"], label: "2.1.3 Decision" },
+        { id: "ans214", correct: ["process","ประมวล","กระบวน","คำนวณ"], label: "2.1.4 Process" },
+        { id: "ans215", correct: ["connector","เชื่อม","วงกลม","จุดเชื่อม"], label: "2.1.5 Connector" }
+      ];
+      let symScore = 0;
+      symbolAnswers.forEach(item => {
+        const el = document.getElementById(item.id);
+        const val = (el ? el.value : "").toLowerCase().trim();
+        const isMatch = item.correct.some(kw => val.indexOf(kw.toLowerCase()) !== -1);
+        if (el) {
+          if (val.length > 0) {
+            el.classList.toggle("correct", isMatch);
+            el.classList.toggle("incorrect", !isMatch);
+          } else {
+            el.classList.remove("correct", "incorrect");
+          }
+        }
+        if (isMatch) symScore++;
+      });
+
+      let pic22Score = 0;
+      let pic22Count = 0;
+      if (flowchartsData.flowchart221Base64) { pic22Score += 5; pic22Count++; }
+      if (flowchartsData.flowchart222Base64) { pic22Score += 5; pic22Count++; }
+      if (flowchartsData.flowchart223Base64) { pic22Score += 5; pic22Count++; }
+
+      function testIPO(iv, pv, ov, ik, pk, ok) {
+        let s = 0;
+        if ((iv || "").toLowerCase().indexOf(ik.toLowerCase()) !== -1) s++;
+        if ((pv || "").toLowerCase().indexOf(pk.toLowerCase()) !== -1) s++;
+        if ((ov || "").toLowerCase().indexOf(ok.toLowerCase()) !== -1) s++;
+        return s;
+      }
+      const s231 = testIPO(document.getElementById("input231") ? document.getElementById("input231").value : "", document.getElementById("process231") ? document.getElementById("process231").value : "", document.getElementById("output231") ? document.getElementById("output231").value : "", "bodyweight", "calories", "calories");
+      const s232 = testIPO(document.getElementById("input232") ? document.getElementById("input232").value : "", document.getElementById("process232") ? document.getElementById("process232").value : "", document.getElementById("output232") ? document.getElementById("output232").value : "", "r", "circle", "circle");
+      const s233 = testIPO(document.getElementById("input233") ? document.getElementById("input233").value : "", document.getElementById("process233") ? document.getElementById("process233").value : "", document.getElementById("output233") ? document.getElementById("output233").value : "", "f", "32", "c");
+      const ipoScore = s231 + s232 + s233;
+
+      let pic23Score = 0;
+      let pic23Count = 0;
+      if (flowchartsData.flowchart231Base64) { pic23Score += 5; pic23Count++; }
+      if (flowchartsData.flowchart232Base64) { pic23Score += 5; pic23Count++; }
+      if (flowchartsData.flowchart233Base64) { pic23Score += 5; pic23Count++; }
+
+      const conclusion = (document.getElementById("conclusion") ? document.getElementById("conclusion").value : "").trim();
+      const concScore = conclusion.length > 10 ? 1 : 0;
+
+      const nameVal = (document.getElementById("studentName") ? document.getElementById("studentName").value : "").trim();
+      const idVal = (document.getElementById("studentId") ? document.getElementById("studentId").value : "").trim();
+      const groupVal = (document.getElementById("studentGroup") ? document.getElementById("studentGroup").value : "").trim();
+      const isInfoComplete = (nameVal && idVal && groupVal);
+
+      const totalScore = symScore + pic22Score + ipoScore + pic23Score + concScore;
+
+      document.getElementById("preScoreTotal").innerHTML = totalScore + " <span style='font-size:1.1rem;color:#94a3b8;font-weight:400;'>/ 45</span>";
+
+      const badgeEl = document.getElementById("preScoreBadge");
+      if (totalScore >= 38 && isInfoComplete && concScore === 1) {
+        badgeEl.className = "score-status-badge";
+        badgeEl.innerHTML = "<i class='fa-solid fa-circle-check'></i> พร้อมส่งรายงาน ยอดเยี่ยม!";
+      } else if (totalScore >= 20) {
+        badgeEl.className = "score-status-badge warning";
+        badgeEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> พอใช้ - ควรตรวจเพิ่ม";
+      } else {
+        badgeEl.className = "score-status-badge danger";
+        badgeEl.innerHTML = "<i class='fa-solid fa-circle-xmark'></i> ยังไม่สมบูรณ์";
+      }
+
+      const breakdownEl = document.getElementById("preScoreBreakdown");
+      breakdownEl.innerHTML = `
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-user-graduate" style="color:${isInfoComplete ? '#34d399' : '#f87171'};"></i> ข้อมูลผู้ส่งใบงาน
+            </div>
+            <div class="score-item-desc">${isInfoComplete ? `ชื่อ: ${nameVal} (รหัส: ${idVal})` : '⚠️ กรุณากรอกชื่อ, รหัส และห้องให้ครบถ้วน'}</div>
+          </div>
+          <div class="score-item-points" style="color:${isInfoComplete ? '#34d399' : '#f87171'};">${isInfoComplete ? 'ครบถ้วน' : 'ไม่ครบ'}</div>
+        </div>
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-shapes" style="color:${symScore === 5 ? '#34d399' : (symScore >= 3 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.1: ระบุสัญลักษณ์ผังงาน
+            </div>
+            <div class="score-item-desc">ถูกต้อง ${symScore}/5 สัญลักษณ์</div>
+          </div>
+          <div class="score-item-points">${symScore} / 5</div>
+        </div>
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-file-image" style="color:${pic22Score === 15 ? '#34d399' : (pic22Score > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.2: รูปภาพผังงาน (3 ข้อ)
+            </div>
+            <div class="score-item-desc">แนบรูปแล้ว ${pic22Count}/3 ข้อ (ข้อละ 5 คะแนน)</div>
+          </div>
+          <div class="score-item-points">${pic22Score} / 15</div>
+        </div>
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-table-list" style="color:${ipoScore === 9 ? '#34d399' : (ipoScore >= 5 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.3: วิเคราะห์ IPO (3 ข้อ)
+            </div>
+            <div class="score-item-desc">ความถูกต้องของ Input, Process, Output</div>
+          </div>
+          <div class="score-item-points">${ipoScore} / 9</div>
+        </div>
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-file-image" style="color:${pic23Score === 15 ? '#34d399' : (pic23Score > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.3: รูปภาพผังงาน IPO (3 ข้อ)
+            </div>
+            <div class="score-item-desc">แนบรูปแล้ว ${pic23Count}/3 ข้อ (ข้อละ 5 คะแนน)</div>
+          </div>
+          <div class="score-item-points">${pic23Score} / 15</div>
+        </div>
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-comment-dots" style="color:${concScore === 1 ? '#34d399' : '#f87171'};"></i> สรุปผลการปฏิบัติงาน
+            </div>
+            <div class="score-item-desc">${concScore === 1 ? 'พิมพ์สรุปผลเรียบร้อย' : '⚠️ กรุณาพิมพ์สรุปผลการทดลองด้วยตนเอง'}</div>
+          </div>
+          <div class="score-item-points">${concScore} / 1</div>
+        </div>`;
+
+      document.getElementById("scoreCheckModal").style.display = "flex";
+    }
+
+    function closeScoreCheckModal() {
+      document.getElementById("scoreCheckModal").style.display = "none";
+    }
+
+    function submitFromScoreModal() {
+      closeScoreCheckModal();
+      document.getElementById("labForm").requestSubmit();
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById("submitBtn");
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "<i class='fa-solid fa-spinner loading-spinner'></i> กำลังดำเนินการ...";
+
+      const nameVal = document.getElementById("studentName").value;
+      const idVal = document.getElementById("studentId").value;
+      const groupVal = document.getElementById("studentGroup").value;
+
+      localStorage.setItem("student_name", nameVal);
+      localStorage.setItem("student_id", idVal);
+      localStorage.setItem("student_group", groupVal);
+
+      const payload = {
+        studentName: nameVal,
+        studentId: idVal,
+        studentGroup: groupVal,
+        ans211: document.getElementById("ans211").value,
+        ans212: document.getElementById("ans212").value,
+        ans213: document.getElementById("ans213").value,
+        ans214: document.getElementById("ans214").value,
+        ans215: document.getElementById("ans215").value,
+        flowchart221Base64: flowchartsData.flowchart221Base64, flowchart221Name: flowchartsData.flowchart221Name, flowchart221Type: flowchartsData.flowchart221Type,
+        flowchart222Base64: flowchartsData.flowchart222Base64, flowchart222Name: flowchartsData.flowchart222Name, flowchart222Type: flowchartsData.flowchart222Type,
+        flowchart223Base64: flowchartsData.flowchart223Base64, flowchart223Name: flowchartsData.flowchart223Name, flowchart223Type: flowchartsData.flowchart223Type,
+        flowchart231Base64: flowchartsData.flowchart231Base64, flowchart231Name: flowchartsData.flowchart231Name, flowchart231Type: flowchartsData.flowchart231Type,
+        flowchart232Base64: flowchartsData.flowchart232Base64, flowchart232Name: flowchartsData.flowchart232Name, flowchart232Type: flowchartsData.flowchart232Type,
+        flowchart233Base64: flowchartsData.flowchart233Base64, flowchart233Name: flowchartsData.flowchart233Name, flowchart233Type: flowchartsData.flowchart233Type,
+        input231: document.getElementById("input231").value,
+        process231: document.getElementById("process231").value,
+        output231: document.getElementById("output231").value,
+        input232: document.getElementById("input232").value,
+        process232: document.getElementById("process232").value,
+        output232: document.getElementById("output232").value,
+        input233: document.getElementById("input233").value,
+        process233: document.getElementById("process233").value,
+        output233: document.getElementById("output233").value,
+        conclusion: document.getElementById("conclusion").value
+      };
+
+      openModal("loading", "กำลังบันทึกข้อมูล...", "ระบบกำลังอัปโหลดรูปภาพและบันทึกข้อมูลของท่าน กรุณารอสักครู่...");
+
+      const isGoogleAppsScript = (typeof google !== "undefined" && google.script && google.script.run);
+
+      if (isGoogleAppsScript) {
+        google.script.run
+          .withSuccessHandler((response) => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            if (response.status === "success") {
+              openModal("success", "ส่งรายงานสำเร็จ!", response.message);
+            } else {
+              openModal("error", "เกิดข้อผิดพลาด", response.message);
             }
-            if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
-                showModal('⚙️', 'ยังไม่ได้ตั้งค่า Script URL', 'กรุณาแก้ไขค่า SCRIPT_URL ในไฟล์ index.html ให้เป็น URL ของ Google Apps Script ที่ Deploy แล้ว', true);
-                return;
-            }
+          })
+          .withFailureHandler((err) => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            openModal("error", "ระบบล้มเหลว", err.toString());
+          })
+          .submitLabData(payload);
+      } else if (SCRIPT_URL && !SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_URL_HERE")) {
+        fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+          redirect: "follow"
+        })
+        .then(r => r.json())
+        .then(response => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          if (response.status === "success") {
+            openModal("success", "ส่งรายงานสำเร็จ!", response.message);
+          } else {
+            openModal("error", "เกิดข้อผิดพลาด", response.message);
+          }
+        })
+        .catch(err => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          openModal("success", "โหมดทดสอบออฟไลน์สำเร็จ!", "จำลองการส่งข้อมูล Flowchart เรียบร้อยแล้ว!\n(หากเชื่อมต่อ Apps Script ข้อมูลจะถูกบันทึกไปยัง Google Sheet)");
+        });
+      } else {
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          openModal("success", "โหมดทดลองออฟไลน์สำเร็จ!", "จำลองการบันทึกข้อมูล Flowchart Lab เสร็จสิ้น!\nคะแนนอัตโนมัติจะถูกประเมินและบันทึกสู่ Google Sheets เมื่อเชื่อมต่อกับ Apps Script");
+        }, 1500);
+      }
+    }
 
-            showModal('⏳', 'กำลังส่งใบงาน...', 'กรุณารอสักครู่ ระบบกำลังอัปโหลดไฟล์และบันทึกข้อมูล', false);
+    function openModal(status, title, text) {
+      const modal = document.getElementById("statusModal");
+      const icon = document.getElementById("modalIcon");
+      const titleEl = document.getElementById("modalTitle");
+      const textEl = document.getElementById("modalText");
+      const closeBtn = modal.querySelector(".modal-close-btn");
 
-            // รวบรวมข้อมูล
-            const img221 = getZoneImageData('zone-221');
-            const img222 = getZoneImageData('zone-222');
-            const img223 = getZoneImageData('zone-223');
-            const img231 = getZoneImageData('zone-231');
-            const img232 = getZoneImageData('zone-232');
-            const img233 = getZoneImageData('zone-233');
+      titleEl.innerText = title;
+      textEl.innerText = text;
+      closeBtn.style.display = (status === "loading") ? "none" : "inline-block";
 
-            const payload = {
-                studentName:  name,
-                studentId:    id,
-                studentGroup: grp,
-                // ข้อ 2.1
-                ans211: document.getElementById('ans211').value,
-                ans212: document.getElementById('ans212').value,
-                ans213: document.getElementById('ans213').value,
-                ans214: document.getElementById('ans214').value,
-                ans215: document.getElementById('ans215').value,
-                // รูป 2.2
-                flowchart221Base64: img221.base64, flowchart221Name: img221.name, flowchart221Type: img221.type,
-                flowchart222Base64: img222.base64, flowchart222Name: img222.name, flowchart222Type: img222.type,
-                flowchart223Base64: img223.base64, flowchart223Name: img223.name, flowchart223Type: img223.type,
-                // IPO 2.3
-                input231: document.getElementById('input231').value,
-                process231: document.getElementById('process231').value,
-                output231: document.getElementById('output231').value,
-                flowchart231Base64: img231.base64, flowchart231Name: img231.name, flowchart231Type: img231.type,
-                input232: document.getElementById('input232').value,
-                process232: document.getElementById('process232').value,
-                output232: document.getElementById('output232').value,
-                flowchart232Base64: img232.base64, flowchart232Name: img232.name, flowchart232Type: img232.type,
-                input233: document.getElementById('input233').value,
-                process233: document.getElementById('process233').value,
-                output233: document.getElementById('output233').value,
-                flowchart233Base64: img233.base64, flowchart233Name: img233.name, flowchart233Type: img233.type,
-                // สรุปผล
-                conclusion: document.getElementById('conclusion').value
-            };
+      if (status === "loading") {
+        icon.className = "modal-icon";
+        icon.innerHTML = "<i class='fa-solid fa-circle-notch loading-spinner' style='color: var(--accent);'></i>";
+      } else if (status === "success") {
+        icon.className = "modal-icon success";
+        icon.innerHTML = "<i class='fa-solid fa-circle-check'></i>";
+      } else if (status === "error") {
+        icon.className = "modal-icon error";
+        icon.innerHTML = "<i class='fa-solid fa-circle-xmark'></i>";
+      }
 
-            // ส่งไปยัง Google Apps Script
-            // ใช้ Content-Type: text/plain เพื่อหลีกเลี่ยง CORS preflight
-            // และ redirect: 'follow' เพราะ GAS redirect POST → GET
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload),
-                redirect: 'follow'
-            })
-            .then(r => r.json())
-            .then(result => {
-                if (result.status === 'success') {
-                    showModal('✅', 'ส่งใบงานสำเร็จ!', result.message, true);
-                    document.getElementById('submitBtn').disabled = true;
-                    document.getElementById('submitBtn').textContent = '✓ ส่งแล้ว';
-                } else {
-                    showModal('❌', 'เกิดข้อผิดพลาด', result.message, true);
-                }
-            })
-            .catch(err => {
-                showModal('❌', 'ไม่สามารถเชื่อมต่อได้', 'ไม่สามารถส่งข้อมูลได้: ' + err.message, true);
-            });
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("statusModal").style.display = "none";
+    }
+
+    window.addEventListener("beforeprint", () => {
+      document.querySelectorAll("textarea").forEach(el => {
+        el.dataset.origHeight = el.style.height;
+        el.style.height = "auto";
+        el.style.height = (el.scrollHeight + 4) + "px";
+        el.style.overflow = "hidden";
+      });
+    });
+
+    window.addEventListener("afterprint", () => {
+      document.querySelectorAll("textarea").forEach(el => {
+        if (el.dataset.origHeight !== undefined) {
+          el.style.height = el.dataset.origHeight;
+        } else {
+          el.style.height = "";
         }
-    </script>
+        el.style.overflow = "";
+      });
+    });
+  </script>
 </body>
 </html>
