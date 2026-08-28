@@ -1433,6 +1433,38 @@ int main() {
     </div>
   </div>
 
+  <!-- Submission Confirmation Modal (One-Time Final Submission) -->
+  <div class="modal-overlay" id="confirmSubmitModal">
+    <div class="modal-content" style="max-width: 500px; text-align: left; padding: 1.75rem;">
+      <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.75rem;">
+        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg, #f59e0b, #d97706);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <h3 class="modal-title" style="margin:0;font-size:1.2rem;text-align:left;">ยืนยันการส่งใบงานขั้นสุดท้าย</h3>
+          <p style="margin:0;font-size:0.8rem;color:var(--text-muted);">กรุณาตรวจสอบความถูกต้องก่อนยืนยัน</p>
+        </div>
+      </div>
+      
+      <div style="background:rgba(245, 158, 11, 0.1);border:1px solid rgba(245, 158, 11, 0.25);border-radius:8px;padding:0.85rem 1rem;color:#fde047;font-size:0.88rem;line-height:1.5;margin-bottom:1.25rem;">
+        <i class="fa-solid fa-circle-exclamation"></i> <strong>คำเตือน:</strong> ใบงานนี้สามารถส่งได้ <u>เพียง 1 ครั้งเท่านั้น</u> และจะไม่สามารถแก้ไขได้อีกหลังจากกดยืนยัน (สามารถกด "ตรวจสอบคะแนนก่อนส่ง" เพื่อประเมินก่อนได้)
+      </div>
+      
+      <p style="font-size:0.9rem;color:#cbd5e1;margin-bottom:1.5rem;line-height:1.6;">
+        คุณต้องการยืนยันการส่งใบงานของ <strong><span id="confirmStudentName">-</span></strong> (รหัส <strong><span id="confirmStudentId">-</span></strong>) ใช่หรือไม่?
+      </p>
+      
+      <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:0.75rem;">
+        <button type="button" class="btn btn-secondary" onclick="closeSubmitConfirmModal()">
+          <i class="fa-solid fa-pen-to-square"></i> กลับไปตรวจอีกครั้ง
+        </button>
+        <button type="button" class="btn" style="background:linear-gradient(135deg, #10b981, #059669);" onclick="executeFinalSubmit()">
+          <i class="fa-solid fa-paper-plane"></i> ยืนยันส่งงาน
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Modal for Success/Error feedback -->
   <div class="modal-overlay" id="statusModal">
     <div class="modal-content">
@@ -1494,6 +1526,26 @@ int main() {
       document.querySelectorAll('input.code-inline-input').forEach(input => {
         autoResizeInlineInput(input);
         input.addEventListener('input', () => autoResizeInlineInput(input));
+      });
+
+      // 7. Check if student already submitted this lab
+      if (storedId) {
+        const labStorageKey = 'submitted_lab2_' + storedId;
+        const prevSubmitTime = localStorage.getItem(labStorageKey);
+        if (prevSubmitTime) {
+          lockFormAsSubmitted(prevSubmitTime);
+        }
+      }
+
+      document.getElementById('studentId')?.addEventListener('change', (e) => {
+        const sId = (e.target.value || '').trim();
+        if (sId) {
+          const labStorageKey = 'submitted_lab2_' + sId;
+          const prevSubmitTime = localStorage.getItem(labStorageKey);
+          if (prevSubmitTime) {
+            lockFormAsSubmitted(prevSubmitTime);
+          }
+        }
       });
     });
 
@@ -1845,17 +1897,50 @@ int main() {
 
     // Handle Form submission
     function handleFormSubmit(e) {
-      e.preventDefault();
-      
+      if (e) e.preventDefault();
+      openSubmitConfirmModal();
+    }
+
+    function openSubmitConfirmModal() {
+      const nameVal = (document.getElementById('studentName')?.value || '').trim();
+      const idVal = (document.getElementById('studentId')?.value || '').trim();
+      const groupVal = (document.getElementById('studentGroup')?.value || '').trim();
+
+      if (!nameVal || !idVal || !groupVal) {
+        openModal('error', 'กรุณากรอกข้อมูลให้ครบ', 'กรุณากรอกชื่อ-นามสกุล, รหัสนักศึกษา และกลุ่ม/ห้อง ให้ครบถ้วนก่อนส่งใบงาน');
+        return;
+      }
+
+      const storageKey = 'submitted_lab2_' + idVal;
+      const prevSubmitTime = localStorage.getItem(storageKey);
+      if (prevSubmitTime) {
+        openModal('error', 'ไม่อนุญาตให้ส่งซ้ำ', 'รหัสนักศึกษา ' + idVal + ' ได้ส่งใบงานนี้ไปแล้วเมื่อ ' + prevSubmitTime + '\nระบบอนุญาตให้ส่งได้เพียง 1 ครั้งเท่านั้น');
+        lockFormAsSubmitted(prevSubmitTime);
+        return;
+      }
+
+      document.getElementById('confirmStudentName').innerText = nameVal;
+      document.getElementById('confirmStudentId').innerText = idVal;
+      document.getElementById('confirmSubmitModal').style.display = 'flex';
+    }
+
+    function closeSubmitConfirmModal() {
+      document.getElementById('confirmSubmitModal').style.display = 'none';
+    }
+
+    // Final Submit execution
+    function executeFinalSubmit() {
+      closeSubmitConfirmModal();
+
       const submitBtn = document.getElementById('submitBtn');
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fa-solid fa-spinner loading-spinner"></i> กำลังดำเนินการ...';
 
       // Save Student Details to localStorage
-      const nameVal = document.getElementById('studentName').value;
-      const idVal = document.getElementById('studentId').value;
-      const groupVal = document.getElementById('studentGroup').value;
+      const nameVal = document.getElementById('studentName').value.trim();
+      const idVal = document.getElementById('studentId').value.trim();
+      const groupVal = document.getElementById('studentGroup').value.trim();
 
       localStorage.setItem('student_name', nameVal);
       localStorage.setItem('student_id', idVal);
@@ -1889,7 +1974,7 @@ int main() {
       };
 
       // Open Modal Loader
-      openModal('loading', 'กำลังบันทึกข้อมูล...', 'ระบบกำลังรับส่งข้อมูลของท่านไปยังเซิร์ฟเวอร์ กรุณารอจนกว่ากระบวนการจะเสร็จสิ้น');
+      openModal('loading', 'กำลังบันทึกข้อมูล...', 'ระบบกำลังส่งข้อมูลใบงานของท่านไปยังเซิร์ฟเวอร์ กรุณารอสักครู่...');
 
       const isGoogleAppsScript = (typeof google !== 'undefined' && google.script && google.script.run);
       
@@ -1899,22 +1984,13 @@ int main() {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
             if (response.status === 'success') {
+              const nowFormatted = new Date().toLocaleString('th-TH');
+              localStorage.setItem('submitted_lab2_' + idVal, nowFormatted);
+              lockFormAsSubmitted(nowFormatted);
               openModal('success', 'ส่งรายงานสำเร็จ!', response.message);
-              // Clear fields
-              ['blank1', 'blank2'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                  el.value = '';
-                  el.classList.remove('correct', 'incorrect');
-                  autoResizeInlineInput(el);
-                }
-              });
-              if (document.getElementById('challengeCode')) document.getElementById('challengeCode').value = '';
-              document.getElementById('question1').value = '';
-              document.getElementById('question2').value = '';
-              document.getElementById('conclusion').value = '';
-              removeFile('screenshot');
-              removeFile('code');
+            } else if (response.status === 'duplicate') {
+              openModal('error', 'ไม่อนุญาตให้ส่งซ้ำ', response.message);
+              lockFormAsSubmitted('ก่อนหน้านี้');
             } else {
               openModal('error', 'เกิดข้อผิดพลาด', response.message);
             }
@@ -1930,6 +2006,10 @@ int main() {
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
+          
+          const nowFormatted = new Date().toLocaleString('th-TH');
+          localStorage.setItem('submitted_lab2_' + idVal, nowFormatted);
+          lockFormAsSubmitted(nowFormatted);
           
           const codeKeywords = ["&","\\|","\\^","<<","scanf","printf"];
           const q1Keywords = ["เลื่อนบิต","คูณ","หาร","2"];
@@ -1987,6 +2067,39 @@ int main() {
           openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', localMessage);
         }, 1500);
       }
+    }
+
+    function lockFormAsSubmitted(submittedTime) {
+      const form = document.getElementById('labForm');
+      if (!form) return;
+
+      form.querySelectorAll('input, textarea, select, button[type="submit"], .upload-area, .remove-file-btn').forEach(el => {
+        if (el.id !== 'printBtn' && !el.classList.contains('btn-secondary') && el.id !== 'checkScoreBtn') {
+          el.disabled = true;
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.readOnly = true;
+          }
+        }
+      });
+
+      const submitBtn = document.getElementById('submitBtn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+        submitBtn.style.boxShadow = '0 4px 14px rgba(5, 150, 105, 0.4)';
+        submitBtn.style.cursor = 'default';
+        submitBtn.innerHTML = `<i class="fa-solid fa-circle-check"></i> ส่งงานเรียบร้อยแล้ว (${submittedTime})`;
+      }
+
+      let notice = document.getElementById('submittedNoticeBanner');
+      if (!notice) {
+        notice = document.createElement('div');
+        notice.id = 'submittedNoticeBanner';
+        notice.style.cssText = 'background: rgba(16, 185, 129, 0.15); border: 1.5px solid rgba(16, 185, 129, 0.4); color: #34d399; padding: 0.85rem 1rem; border-radius: 10px; margin-bottom: 1.25rem; font-size: 0.9rem; display: flex; align-items: center; gap: 0.6rem; font-weight: 500;';
+        const formSection0 = form.querySelector('.form-section');
+        if (formSection0) form.insertBefore(notice, formSection0);
+      }
+      notice.innerHTML = `<i class="fa-solid fa-lock" style="font-size:1.1rem;"></i> <span>ใบงานนี้ถูกส่งเรียบร้อยแล้วเมื่อ <strong>${submittedTime}</strong> (โหมดดูอย่างเดียว / View-Only) สามารถกดปุ่มพิมพ์ PDF เพื่อบันทึกเป็นหลักฐานได้</span>`;
     }
 
     // Modal helpers
@@ -2189,7 +2302,7 @@ int main() {
 
     function submitFromScoreModal() {
       closeScoreCheckModal();
-      document.getElementById('labForm').requestSubmit();
+      openSubmitConfirmModal();
     }
 
     // Auto-expand textareas when printing

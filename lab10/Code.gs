@@ -37,6 +37,25 @@ function submitLabData(data) {
       sheet.setFrozenRows(1);
     }
     
+    // Duplicate check: Check if this studentId has already submitted
+    var lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      var idValues = sheet.getRange(2, 3, lastRow - 1, 1).getValues();
+      var timestampValues = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
+      for (var i = 0; i < idValues.length; i++) {
+        if (idValues[i][0] && idValues[i][0].toString().trim() === data.studentId.toString().trim()) {
+          var prevTime = timestampValues[i][0] ? Utilities.formatDate(new Date(timestampValues[i][0]), "Asia/Bangkok", "dd/MM/yyyy HH:mm") : "ก่อนหน้านี้";
+          return {
+            status: "duplicate",
+            score: 0,
+            feedback: "เคยส่งงานแล้ว",
+            message: "⚠️ รหัสนักศึกษา " + data.studentId + " ได้ส่งใบงานนี้ไปแล้วเมื่อ " + prevTime + "
+ระบบอนุญาตให้ส่งได้เพียง 1 ครั้งเท่านั้น (หากต้องการส่งใหม่ กรุณาติดต่ออาจารย์ผู้สอน)"
+          };
+        }
+      }
+    }
+    
     // 2. Handle File Uploads (Drive Storage)
     var screenshotUrl = "ไม่ได้แนบไฟล์";
     var codeFileUrl = "ไม่ได้แนบไฟล์";
