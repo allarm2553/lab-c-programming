@@ -3540,6 +3540,8 @@ function generateIndexHtml(lab) {
     </div>
   </div>
 
+
+
   <!-- Pre-submission Score Check Modal -->
   <div class="modal-overlay" id="scoreCheckModal">
     <div class="modal-content score-check-modal-content">
@@ -4559,37 +4561,104 @@ function generateIndexHtml(lab) {
 }
 
 function generateSolutionReadme(lab) {
-  const blanksList = (lab.blanks || []).map((b, idx) => `  ${idx+1}. **${b.label}:** \`${b.answers[0]}\``).join('\n');
-  const chBlanksList = (lab.challengeBlanks || []).map((b, idx) => `  ${idx+1}. **${b.label}:** \`${b.answers[0]}\``).join('\n');
+  const blanksList = (lab.blanks || []).map((b, idx) => {
+    return '### 1.' + (idx + 1) + ' ' + b.label + '\n' +
+      '- **คำตอบที่ถูกต้อง:** `' + b.answers[0] + '`\n' +
+      '- **คำตอบที่เป็นไปได้:** ' + b.answers.map(a => '`' + a + '`').join(', ');
+  }).join('\n\n');
 
-  return `# เฉลยกิจกรรม ${lab.titleTh} (Solutions)
+  const chBlanksList = (lab.challengeBlanks || []).map((b, idx) => {
+    return '### 2.' + (idx + 1) + ' ' + b.label + '\n' +
+      '- **คำตอบที่ถูกต้อง:** `' + b.answers[0] + '`\n' +
+      '- **คำตอบที่ระบบยอมรับ:** ' + b.answers.map(a => '`' + a + '`').join(', ');
+  }).join('\n\n');
 
-โฟลเดอร์นี้รวบรวมโค้ดเฉลยสำหรับ **${lab.titleTh}** (${lab.titleEn})
+  const purposeList = (lab.purpose || []).map((p, i) => `${i+1}. ${p}`).join('\n');
+
+  return `# คู่มือเฉลยปฏิบัติการ ${lab.titleTh}
+## (${lab.titleEn} - Laboratory Solution & Grading Key)
+
+โฟลเดอร์นี้รวบรวมไฟล์ซอร์สโค้ดเฉลยภาษา C (\`.c\`), แนวทางการตอบคำถาม และเกณฑ์การประเมินผลสำหรับ **${lab.titleTh}** ระดับประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)
 
 ---
 
-## รายการไฟล์เฉลย
-
-### 1. \`challenge_solution.c\`
-โค้ดเฉลยสำหรับ **กิจกรรมท้าทาย (Lab Challenge)**
-${lab.challengeBlanks ? `- **คำตอบที่เติมลงในช่องว่างกิจกรรมท้าทาย:**\n${chBlanksList}\n` : ''}
-- **คำสั่งคอมไพล์และรัน:**
-  \`\`\`bash
-  gcc -o challenge_solution.exe challenge_solution.c
-  ./challenge_solution.exe
-  \`\`\`
+## 🎯 วัตถุประสงค์เชิงสมรรถนะของใบงาน
+${purposeList}
 
 ---
 
-### 2. \`example2_solution.c\`
-โค้ดเฉลยสำหรับ **โปรแกรมตัวอย่างที่ 2 (Fill in the Blanks)**
-- **คำตอบที่เติมลงในช่องว่าง:**
+## 📁 รายการไฟล์ในโฟลเดอร์ \`solution/\`
+
+| ชื่อไฟล์ | คำอธิบาย |
+| :--- | :--- |
+| **\`challenge_solution.c\`** | ซอร์สโค้ดเฉลยกิจกรรมท้าทายเชิงอุตสาหกรรม/ระบบสมองกล (Lab Challenge) |
+| **\`example2_solution.c\`** | ซอร์สโค้ดเฉลยโปรแกรมตัวอย่างที่ 2 (Fill in the Blanks) |
+| **\`README.md\`** | เอกสารเฉลยละเอียดและเกณฑ์การตรวจให้คะแนน |
+
+---
+
+## 📝 1. เฉลยโปรแกรมตัวอย่างที่ 2 (Fill in the Blanks) - คะแนนเต็ม 2.0 คะแนน
+
 ${blanksList}
-- **คำสั่งคอมไพล์และรัน:**
+
+### ซอร์สโค้ดตัวอย่างที่ 2 ฉบับสมบูรณ์ (\`example2_solution.c\`):
+\`\`\`c
+${lab.example2SolutionCode}
+\`\`\`
+
+- **คำสั่งคอมไพล์และทดสอบรัน:**
   \`\`\`bash
-  gcc -o example2_solution.exe example2_solution.c
-  ./example2_solution.exe
+  gcc -Wall -Wextra -o example2_solution example2_solution.c
+  ./example2_solution
   \`\`\`
+
+---
+
+## 🚀 2. เฉลยกิจกรรมท้าทาย (Lab Challenge Solution) - คะแนนเต็ม 4.0 คะแนน
+
+### 2.1 บริบทโจทย์ท้าทายเชิงประยุกต์:
+> ${lab.challengeDesc}
+
+${lab.challengeBlanks ? `### 2.2 เฉลยช่องว่างกิจกรรมท้าทาย:
+${chBlanksList}
+` : ''}
+### 2.2 ซอร์สโค้ดเฉลยกิจกรรมท้าทาย (\`challenge_solution.c\`):
+\`\`\`c
+${lab.challengeSolutionCode}
+\`\`\`
+
+### 2.3 คำสั่งคอมไพล์และทดสอบรันบน Terminal:
+\`\`\`bash
+gcc -Wall -Wextra -o challenge_solution challenge_solution.c
+./challenge_solution
+\`\`\`
+
+---
+
+## 💡 3. เฉลยคำถามท้ายการทดลอง (Post-Lab Questions) - คะแนนเต็ม 3.0 คะแนน
+
+### ข้อที่ 1: ${lab.question1} (1.5 คะแนน)
+- **แนวทางการตอบที่ถูกต้อง:**
+  - อธิบายหลักการ ความหมาย หรือกลไกการทำงานตามหัวข้ออย่างถูกต้องตรงประเด็น
+  - มีการยกตัวอย่างประกอบ หรือระบุคีย์เวิร์ดสำคัญ เช่น \`${(lab.q1Keywords || []).join(', ')}\`
+- **เกณฑ์การให้คะแนน:**
+  - อธิบายได้ถูกต้องสมบูรณ์และยกตัวอย่างชัดเจน: **1.5 คะแนน**
+  - ตอบถูกแต่ขาดรายละเอียดเชิงลึก: **0.8 - 1.0 คะแนน**
+  - ไม่ตรงประเด็นหรือไม่ตอบ: **0.0 คะแนน**
+
+### ข้อที่ 2: ${lab.question2} (1.5 คะแนน)
+- **แนวทางการตอบที่ถูกต้อง:**
+  - วิเคราะห์ข้อดี-ข้อจำกัด สาเหตุ หรือข้อควรระวังในการเขียนโปรแกรมจริง
+  - มีคีย์เวิร์ดสำคัญ เช่น \`${(lab.q2Keywords || []).join(', ')}\`
+- **เกณฑ์การให้คะแนน:**
+  - วิเคราะห์ได้ถูกต้อง ครอบคลุมบริบททางเทคนิค: **1.5 คะแนน**
+  - ตอบได้บางส่วน: **0.8 - 1.0 คะแนน**
+  - ตอบไม่ตรงประเด็น: **0.0 คะแนน**
+
+---
+
+## 📊 4. สรุปผลและการสะท้อนคิด (Conclusion & Reflection)
+- นักศึกษาควรสรุปองค์ความรู้ที่ได้รับจากใบงานนี้ ปัญหาที่พบในการทดลอง (เช่น ข้อผิดพลาดทางไวยากรณ์, ชนิดข้อมูล หรือหน่วยความจำ) และแนวทางแก้ไขเพื่อประยุกต์ใช้งานในระบบสมองกลหรืองานช่างจริง
 `;
 }
 
