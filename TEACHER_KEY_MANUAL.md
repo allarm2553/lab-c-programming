@@ -476,7 +476,69 @@ int main() {
 
 ---
 
-### 13. Lab Flowchart: การออกแบบผังงานและการไล่รหัสตรรกะโปรแกรม
+### 13. Lab 11: การเชื่อมโยงภาษา C สู่ไมโครคอนโทรลเลอร์ (C to Microcontroller & Embedded Bridge)
+* **โฟลเดอร์ปฏิบัติการ:** `lab11/`
+* **หัวข้อการเรียนรู้:** Super-Loop Architecture (`setup()` & `loop()`), UART Serial Communication, Non-blocking Multi-tasking (`millis()`), Safety Override
+* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
+  * ช่องที่ 1: `currentMillis` หรือ `millis()` | ช่องที่ 2: `interval` หรือ `500`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบ Smart IoT Node Controller (Dual-Task Non-blocking Scheduler)
+  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `millis|currentMs|time`, `setup|loop|task|Task`, `if|else`, `printf|Serial`, `struct|float|bool`
+  * **โค้ดเฉลย (`challenge_solution.c`):**
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+struct SystemState {
+    float temperature;
+    bool ledBeacon;
+    bool coolingFan;
+};
+
+void runTaskSensor(unsigned long currentMs, unsigned long *prevMs, struct SystemState *sys) {
+    if (currentMs - *prevMs >= 500) {
+        *prevMs = currentMs;
+        sys->temperature = 41.5f; 
+        
+        if (sys->temperature > 40.0f) {
+            sys->coolingFan = true;
+        } else {
+            sys->coolingFan = false;
+        }
+        
+        printf("[Task 1 @ %4lums] Sensor Temp: %.1f C -> Fan: %s\n", 
+               currentMs, sys->temperature, sys->coolingFan ? "ACTIVATED [ON]" : "STANDBY [OFF]");
+    }
+}
+
+void runTaskBeacon(unsigned long currentMs, unsigned long *prevMs, struct SystemState *sys) {
+    if (currentMs - *prevMs >= 100) {
+        *prevMs = currentMs;
+        sys->ledBeacon = !sys->ledBeacon;
+        printf("[Task 2 @ %4lums] Heartbeat LED: %s\n", 
+               currentMs, sys->ledBeacon ? "BLINK (1)" : "DARK  (0)");
+    }
+}
+
+int main() {
+    struct SystemState myNode = {25.0f, false, false};
+    unsigned long prevSensorMs = 0;
+    unsigned long prevBeaconMs = 0;
+    
+    printf("=== SMART IOT CONTROLLER NON-BLOCKING SCHEDULER ===\n");
+    
+    for (unsigned long simTime = 100; simTime <= 1000; simTime += 100) {
+        runTaskBeacon(simTime, &prevBeaconMs, &myNode);
+        runTaskSensor(simTime, &prevSensorMs, &myNode);
+    }
+    
+    printf("===================================================\n");
+    return 0;
+}
+```
+
+---
+
+### 14. Lab Flowchart: การออกแบบผังงานและการไล่รหัสตรรกะโปรแกรม
 * **โฟลเดอร์ปฏิบัติการ:** `lab-flowchart/`
 * **หัวข้อการเรียนรู้:** ANSI/ISO Flowchart Standards, Trace Table / Dry Run, Debugging, Flowchart to C Code Bridge
 * **สัดส่วนคะแนน 5 ตอน (10.0 คะแนนเต็ม):**

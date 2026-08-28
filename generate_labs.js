@@ -1666,6 +1666,212 @@ int main() {
     q2Keywords: ["gets","ปลอดภัย","ขนาด","buffer","\\n","enter"]
   },
   {
+    num: "11",
+    idName: "lab11",
+    titleTh: "Lab 11: การเชื่อมโยงภาษา C สู่ไมโครคอนโทรลเลอร์ (C to Microcontroller & Embedded Bridge)",
+    titleEn: "Lab 11: C to Microcontroller & Embedded Systems Bridge",
+    sheetName: "Lab C 11 Submissions",
+    folderName: "Lab C 11 Attachments",
+    introTitle: "จากภาษา C บนคอมพิวเตอร์ สู่การพัฒนาเฟิร์มแวร์ไมโครคอนโทรลเลอร์ (ESP32/Arduino)",
+    introDesc: "ศึกษาการแปลงโครงสร้างภาษา C จากคอนโซลสู่ระบบสมองกลฝังตัว การทำงานแบบ Super-Loop (setup และ loop), การสื่อสารแบบอนุกรม (Serial Communication), และการเขียนโปรแกรมแบบ Non-blocking Multi-tasking ด้วย millis()",
+    purpose: [
+      "เข้าใจความแตกต่างของวงจรชีวิตโปรแกรมระหว่าง main() บนคอมพิวเตอร์ และ setup() / loop() บนไมโครคอนโทรลเลอร์",
+      "สามารถแปลงคำสั่งรับ-แสดงผลข้อมูลมาตรฐาน (printf/scanf) สู่การสื่อสารแบบอนุกรม (Serial Communication)",
+      "เข้าใจและประยุกต์ใช้แนวคิด Non-blocking Multi-tasking โดยใช้ฟังก์ชันจับเวลา millis() แทนการหน่วงเวลาด้วย delay()",
+      "สามารถบูรณาการความรู้ภาษา C เข้ากับการควบคุมขาพอร์ต I/O และเซนเซอร์ในงานไมโครคอนโทรลเลอร์และ IoT"
+    ],
+    equipments: [
+      { name: "เครื่องคอมพิวเตอร์และโปรแกรม GCC / Arduino IDE", desc: "ใช้สำหรับเขียน คอมไพล์ และทดสอบเฟิร์มแวร์ C/C++" },
+      { name: "บอร์ดไมโครคอนโทรลเลอร์ ESP32 หรือ Arduino Uno", desc: "บอร์ดพัฒนาสมองกลฝังตัวสำหรับทดลองรันโค้ดจริง" },
+      { name: "เซนเซอร์อุณหภูมิ, หลอด LED, ตัวต้านทาน และ Breadboard", desc: "อุปกรณ์อินพุตและเอาต์พุตสำหรับทดสอบระบบควบคุม" }
+    ],
+    theoryHtml: `<p>ในการเขียนโปรแกรมภาษา C บนระบบปฏิบัติการคอมพิวเตอร์ทั่วไป ฟังก์ชัน <code>main()</code> จะเริ่มทำงานและจบการทำงานเมื่อคืนค่า <code>return 0;</code> แต่ในโลกของ <strong>ระบบสมองกลฝังตัว (Embedded Systems)</strong> และ <strong>ไมโครคอนโทรลเลอร์ (Microcontrollers)</strong> เช่น บอร์ด Arduino หรือ ESP32 สถาปัตยกรรมซอฟต์แวร์จะทำงานในรูปแบบ <strong>Super-Loop Architecture</strong></p>
+
+<div class="code-container">
+  <pre><code>// เปรียบเทียบสถาปัตยกรรมโปรแกรม
+┌─────────────────────────────────┐       ┌─────────────────────────────────┐
+│   Standard C (PC Application)   │       │   Embedded C (Arduino / ESP32)  │
+├─────────────────────────────────┤       ├─────────────────────────────────┤
+│ int main() {                    │       │ void setup() {                  │
+│     // Initializations          │       │     // ทำงานเพียงครั้งเดียวตอนเริ่มระบบ│
+│     // Business Logic           │       │ }                               │
+│     return 0; // จบโปรแกรมทันที │       │ void loop() {                   │
+│ }                               │       │     // วนซ้ำต่อเนื่องตลอดเวลาไม่รู้จบ│
+│                                 │       │ }                               │
+└─────────────────────────────────┘       └─────────────────────────────────┘</code></pre>
+</div>
+
+<h4 style="color:#38bdf8;margin-top:1.5rem;margin-bottom:0.5rem;"><i class="fa-solid fa-table-list"></i> 1. ตารางเทียบฟังก์ชัน C Standard vs Arduino / ESP32 API</h4>
+<table style="width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:0.9rem;">
+  <thead>
+    <tr style="border-bottom:2px solid rgba(255,255,255,0.1);text-align:left;color:#38bdf8;">
+      <th style="padding:0.6rem;">การทำงาน (Operation)</th>
+      <th style="padding:0.6rem;">ภาษา C มาตรฐาน (PC)</th>
+      <th style="padding:0.6rem;">ไมโครคอนโทรลเลอร์ (Arduino / ESP32)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+      <td style="padding:0.6rem;">แสดงผลข้อความ</td>
+      <td style="padding:0.6rem;"><code>printf("Temp: %.2f\n", temp);</code></td>
+      <td style="padding:0.6rem;"><code>Serial.printf("Temp: %.2f\n", temp);</code></td>
+    </tr>
+    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+      <td style="padding:0.6rem;">การรับข้อมูล</td>
+      <td style="padding:0.6rem;"><code>scanf("%d", &val);</code></td>
+      <td style="padding:0.6rem;"><code>analogRead(PIN_ADC)</code> หรือ <code>Serial.read()</code></td>
+    </tr>
+    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+      <td style="padding:0.6rem;">กำหนดทิศทางขาพอร์ต</td>
+      <td style="padding:0.6rem;">- (จัดการผ่าน OS Driver)</td>
+      <td style="padding:0.6rem;"><code>pinMode(PIN_LED, OUTPUT);</code></td>
+    </tr>
+    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+      <td style="padding:0.6rem;">ควบคุมระดับแรงดันดิจิทัล</td>
+      <td style="padding:0.6rem;">Bit Masking Register</td>
+      <td style="padding:0.6rem;"><code>digitalWrite(PIN_RELAY, HIGH);</code></td>
+    </tr>
+    <tr>
+      <td style="padding:0.6rem;">การจับเวลาแบบ Non-blocking</td>
+      <td style="padding:0.6rem;"><code>clock()</code> หรือ <code>gettimeofday()</code></td>
+      <td style="padding:0.6rem;"><code>millis()</code> (อ่านเวลามิลลิวินาทีนับแต่เปิดบอร์ด)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 style="color:#38bdf8;margin-top:1.5rem;margin-bottom:0.5rem;"><i class="fa-solid fa-stopwatch"></i> 2. ทำไมต้องใช้ Non-blocking <code>millis()</code> แทน <code>delay()</code>?</h4>
+<p>คำสั่ง <code>delay(1000)</code> จะทำให้ซีพียูหยุดทำงานทุกอย่างชั่วคราว (CPU Blocking) ทำให้ระบบไม่สามารถรับคำสั่งผ่าน WiFi, Bluetooth หรือ MQTT ได้ และไม่สามารถตรวจจับปุ่มกดฉุกเฉินได้ทันท่วงที ในระบบ IoT มืออาชีพจึงต้องใช้เทคนิค <strong>State & Time Interval Checking</strong> ด้วย <code>millis()</code> เพื่อให้ระบบทำงานหลายงานพร้อมกัน (Multi-tasking) ได้อย่างราบรื่น</p>`,
+    example1Title: "โปรแกรมตัวอย่างที่ 1: การเขียนโปรแกรมโครงสร้าง Super-Loop และ Serial Output",
+    example1Code: `#include <stdio.h>
+#include <stdbool.h>
+
+// ฟังก์ชัน setup() ทำงานรอบเดียวตอนบูตระบบ
+void setup() {
+    printf("[SYSTEM BOOT] Initializing Microcontroller Hardware...\\n");
+    printf("[SERIAL] UART Baud Rate: 115200 bps\\n");
+    printf("[GPIO] Pin 2 (Status LED) configured as OUTPUT\\n");
+    printf("--------------------------------------------------\\n");
+}
+
+// ฟังก์ชัน loop() ทำงานวนรอบต่อเนื่อง
+void loop(int loopCounter) {
+    printf("[Loop #%d] Reading Sensor -> Processing Telemetry -> Status OK\\n", loopCounter);
+}
+
+int main() {
+    setup();
+    // จำลอง Super-loop วนทำงาน 3 รอบ
+    for (int cycle = 1; cycle <= 3; cycle++) {
+        loop(cycle);
+    }
+    printf("[INFO] In physical microcontrollers, loop() executes infinitely until powered off.\\n");
+    return 0;
+}`,
+    example2Title: "โปรแกรมตัวอย่างที่ 2: การทำงานแบบ Non-blocking ด้วยการจับเวลา (millis() Pattern)",
+    example2RawCode: `#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    unsigned long currentMillis = 1500;  // จำลองเวลาปัจจุบัน (ms)
+    unsigned long previousMillis = 1000; // เวลาที่บันทึกไว้ล่าสุด (ms)
+    const long interval = 500;           // คาบเวลาที่ต้องการตรวจสอบ (500 ms)
+    bool ledState = false;
+
+    // ตรวจสอบเงื่อนไขว่าผ่านไปครบช่วงเวลา interval หรือยัง
+    if ([BLANK1] - previousMillis >= [BLANK2]) {
+        previousMillis = currentMillis;
+        ledState = !ledState; // สลับสถานะ LED (Toggle)
+        printf("Interval Elapsed! LED Toggled to: %s\\n", ledState ? "ON (HIGH)" : "OFF (LOW)");
+    }
+    return 0;
+}`,
+    example2SolutionCode: `#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    unsigned long currentMillis = 1500;
+    unsigned long previousMillis = 1000;
+    const long interval = 500;
+    bool ledState = false;
+
+    if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;
+        ledState = !ledState;
+        printf("Interval Elapsed! LED Toggled to: %s\\n", ledState ? "ON (HIGH)" : "OFF (LOW)");
+    }
+    return 0;
+}`,
+    blanks: [
+      { id: "blank1", label: "ตัวแปรเวลาปัจจุบันที่อ่านได้", answers: ["currentMillis", "millis()"] },
+      { id: "blank2", label: "ตัวแปรกำหนดคาบเวลาตรวจสอบ", answers: ["interval", "500"] }
+    ],
+    challengeDesc: "พัฒนาโปรแกรมจำลองการทำงานของ Smart IoT Controller แบบ Non-blocking Multi-tasking โดยจำลอง 2 งานทำงานร่วมกัน: 1) Task 1 (Sensor Polling): ทุกๆ 500 ms อ่านค่าอุณหภูมิเซนเซอร์และพิมพ์ออกทาง Serial, 2) Task 2 (Heartbeat Beacon): ทุกๆ 100 ms กระพริบไฟ LED แจ้งสถานะระบบ และมี Safety Override หากอุณหภูมิเกิน 40.0 C ให้สั่งเปิดพัดลมทันที",
+    challengePlaceholder: `#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    // พัฒนาระบบ Smart IoT Node Controller (Dual-Task Non-blocking) ที่นี่
+    return 0;
+}`,
+    challengeSolutionCode: `#include <stdio.h>
+#include <stdbool.h>
+
+struct SystemState {
+    float temperature;
+    bool ledBeacon;
+    bool coolingFan;
+};
+
+void runTaskSensor(unsigned long currentMs, unsigned long *prevMs, struct SystemState *sys) {
+    if (currentMs - *prevMs >= 500) {
+        *prevMs = currentMs;
+        sys->temperature = 41.5f; 
+        
+        if (sys->temperature > 40.0f) {
+            sys->coolingFan = true;
+        } else {
+            sys->coolingFan = false;
+        }
+        
+        printf("[Task 1 @ %4lums] Sensor Temp: %.1f C -> Fan: %s\\n", 
+               currentMs, sys->temperature, sys->coolingFan ? "ACTIVATED [ON]" : "STANDBY [OFF]");
+    }
+}
+
+void runTaskBeacon(unsigned long currentMs, unsigned long *prevMs, struct SystemState *sys) {
+    if (currentMs - *prevMs >= 100) {
+        *prevMs = currentMs;
+        sys->ledBeacon = !sys->ledBeacon;
+        printf("[Task 2 @ %4lums] Heartbeat LED: %s\\n", 
+               currentMs, sys->ledBeacon ? "BLINK (1)" : "DARK  (0)");
+    }
+}
+
+int main() {
+    struct SystemState myNode = {25.0f, false, false};
+    unsigned long prevSensorMs = 0;
+    unsigned long prevBeaconMs = 0;
+    
+    printf("=== SMART IOT CONTROLLER NON-BLOCKING SCHEDULER ===\\n");
+    
+    for (unsigned long simTime = 100; simTime <= 1000; simTime += 100) {
+        runTaskBeacon(simTime, &prevBeaconMs, &myNode);
+        runTaskSensor(simTime, &prevSensorMs, &myNode);
+    }
+    
+    printf("===================================================\\n");
+    return 0;
+}`,
+    question1: "1. เพราะเหตุใดในระบบสมองกลฝังตัวแบบเรียลไทม์ (Real-Time Embedded Systems / IoT) จึงควรหลีกเลี่ยงการใช้คำสั่ง delay() และหันมาใช้ฟังก์ชัน millis() แทน?",
+    question1Placeholder: "อธิบายข้อเสียของการบล็อกซีพียู (CPU Blocking) และข้อดีของ Non-blocking Multitasking...",
+    question2: "2. อธิบายความแตกต่างของฟังก์ชัน setup() และ loop() ในสถาปัตยกรรม Super-loop ของ Arduino/ESP32 เมื่อเทียบกับฟังก์ชัน int main() ของภาษา C มาตรฐาน",
+    question2Placeholder: "เปรียบเทียบวงจรชีวิตการทำงาน (Lifecycle) การกำหนดค่าเริ่มต้นรอบเดียว และการวนซ้ำต่อเนื่อง...",
+    conclusionPlaceholder: "สรุปสิ่งที่ได้รับจากการเรียนรู้เรื่องการแปลงภาษา C สู่ไมโครคอนโทรลเลอร์ และการเตรียมความพร้อมสู่วิชา IoT...",
+    codeKeywords: ["millis|currentMs|time","setup|loop|task|Task","if|else","printf|Serial","struct|float|bool"],
+    q1Keywords: ["delay","millis","blocking","ค้าง","เรียลไทม์|multitask|task"],
+    q2Keywords: ["setup","loop","main","เริ่มต้น","วนซ้ำ|ตลอดเวลา|super-loop"]
+  },
+  {
     num: "basic-structure",
     idName: "lab-structure",
     titleTh: "Lab Basic: โครงสร้างและการทำงานของโปรแกรมภาษา C",
