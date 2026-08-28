@@ -1238,7 +1238,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>พัฒนาโปรแกรมภาษา C คำนวณภาษีเงินได้บุคคลธรรมดาเบื้องต้น โดยรับรายได้สุทธิต่อปี (เลขทศนิยม) จากนั้นคำนวณและแสดงยอดภาษีที่ต้องชำระตามอัตราก้าวหน้าดังนี้: ไม่เกิน 150,000 ยกเว้นภาษี (0%), 150,001 - 300,000 คิดภาษี 5%, 300,001 - 500,000 คิดภาษี 10%, ส่วนที่เกิน 500,000 คิดภาษี 15%</p>
+          <p>พัฒนาโปรแกรมควบคุมปั๊มน้ำในถังพักอุตสาหกรรม โดยรับค่าระดับน้ำ (0.0 - 100.0%) และรหัสโหมดการทำงาน (1: Auto, 2: Manual Drain, 3: Emergency Stop) โดยใช้ switch-case ตรวจสอบโหมด และใช้ if-else if ตรวจสอบระดับน้ำ: ถ้าน้อยกว่า 20% สั่ง Pump High, 20-80% สั่ง Pump Normal, มากกว่า 80% สั่ง Stop Pump</p>
           
         </div>
       </div>
@@ -1306,9 +1306,10 @@ int main() {
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
 int main() {
-    float income, tax = 0.0;
-    printf(&quot;Enter net annual income: &quot;);
-    // คำนวณภาษีตามขั้นบันได และแสดงผลลัพธ์
+    float waterLevel;
+    int mode;
+    printf(&quot;Enter Water Level (0.0 - 100.0%%): &quot;);
+    // รับค่าระดับน้ำและโหมดการทำงาน จากนั้นควบคุมระบบปั๊มที่นี่
     return 0;
 }"></textarea>
             </div>
@@ -2028,7 +2029,7 @@ int main() {
           localStorage.setItem('submitted_lab3_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
           
-          const codeKeywords = ["if","else","scanf","printf","<=|>=|<|>","\\*"];
+          const codeKeywords = ["if","else","switch","case","break","scanf","printf"];
           const q1Keywords = ["ประสิทธิภาพ","ข้าม","ตรวจสอบ","เงื่อนไข"];
           const q2Keywords = ["break","switch","fall-through","ไหล"];
           
@@ -2161,7 +2162,7 @@ int main() {
       let chDesc = "";
       
       const assembledCode = document.getElementById('challengeCode')?.value || '';
-      const codeKeywords = ["if","else","scanf","printf","<=|>=|<|>","\\*"];
+      const codeKeywords = ["if","else","switch","case","break","scanf","printf"];
       let codeMatches = 0;
       codeKeywords.forEach(kw => {
         if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;

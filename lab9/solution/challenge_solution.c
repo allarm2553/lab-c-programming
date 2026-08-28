@@ -1,29 +1,21 @@
 #include <stdio.h>
 
 int main() {
-    FILE *fp = fopen("students.txt", "w");
+    FILE *fp = fopen("datalog.csv", "w");
     if (fp == NULL) {
-        printf("Cannot create file!\n");
+        printf("Error creating datalog.csv!\n");
         return 1;
     }
     
-    fprintf(fp, "Name: Somchai Deejai, Grade: 4.00\n");
+    // Write CSV Header
+    fprintf(fp, "Sample,Time,Voltage_V,Temperature_C\n");
+    
+    // Write Sample Industrial Records
+    fprintf(fp, "1,09:00,380.2,42.5\n");
+    fprintf(fp, "2,09:05,379.8,43.1\n");
+    fprintf(fp, "3,09:10,381.0,44.0\n");
+    
     fclose(fp);
-    printf("File written successfully.\n");
-    
-    // อ่านไฟล์กลับมาแสดงผล
-    fp = fopen("students.txt", "r");
-    if (fp == NULL) {
-        printf("Cannot open file for reading!\n");
-        return 1;
-    }
-    
-    char buffer[100];
-    printf("\nReading from file:\n");
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        printf("%s", buffer);
-    }
-    fclose(fp);
-    
+    printf("Successfully logged industrial telemetry data to 'datalog.csv'!\n");
     return 0;
 }

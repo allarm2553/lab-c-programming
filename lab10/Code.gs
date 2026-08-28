@@ -107,7 +107,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["fgets","strlen","strncmp","strcpy|strncpy","strcat|strncat","strcmp"];
+    var codeKeywords = ["string\\.h","fgets","strlen","strstr|strcmp|strncpy","printf"];
     var q1Keywords = ["overflow","ความยาว","n","ปลอดภัย","\\0"];
     var q2Keywords = ["gets","ปลอดภัย","ขนาด","buffer","\\n","enter"];
     

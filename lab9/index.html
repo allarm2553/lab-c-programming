@@ -1256,7 +1256,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>พัฒนาโปรแกรมภาษา C เพื่อสร้างไฟล์เขียนข้อความชื่อ students.txt จากนั้นพิมพ์ข้อมูลชื่อและเกรดของตัวคุณเองลงไปในไฟล์ เมื่อทำการเขียนไฟล์เสร็จแล้ว ให้โปรแกรมเปิดอ่านดึงข้อมูลจากไฟล์ตัวหนังสือดังกล่าวขึ้นมาแสดงผลลัพธ์ย้อนกลับมาบนจอคอนโซลอีกครั้งให้สำเร็จ</p>
+          <p>พัฒนาโปรแกรมภาษา C จำลองระบบบันทึกประวัติเครื่องจักรลงไฟล์ CSV (Industrial Data Logger to 'datalog.csv') โดยใช้ fopen() โหมดเขียนไฟล์ บันทึกหัวคอลัมน์และข้อมูล 3 แซมเปิล (Sample, Time, Voltage_V, Temperature_C) ตรวจสอบตัวชี้ไฟล์ NULL และปิดไฟล์ด้วย fclose()</p>
           
         </div>
       </div>
@@ -1324,8 +1324,7 @@ int main() {
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
 int main() {
-    FILE *fp;
-    // เขียนโปรแกรมสร้างไฟล์ เขียนข้อมูล ปิดไฟล์ แล้วทำการเปิดขึ้นมาอ่านแสดงผลอีกรอบ
+    // เขียนโค้ดสร้างไฟล์ datalog.csv บันทึกหัวตารางและข้อมูลโทรมาตรโรงงาน
     return 0;
 }"></textarea>
             </div>
@@ -2044,7 +2043,7 @@ int main() {
           localStorage.setItem('submitted_lab9_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
           
-          const codeKeywords = ["fopen","fclose","fprintf|fputs","fgets|fscanf","FILE","\"w\"","\"r\""];
+          const codeKeywords = ["fopen","fclose","fprintf|fputs|fwrite","FILE","\\.csv"];
           const q1Keywords = ["text","binary","ตัวอักษร","ไบนารี","มนุษย์อ่าน"];
           const q2Keywords = ["null","สำเร็จ","แครช","ความปลอดภัย"];
           
@@ -2177,7 +2176,7 @@ int main() {
       let chDesc = "";
       
       const assembledCode = document.getElementById('challengeCode')?.value || '';
-      const codeKeywords = ["fopen","fclose","fprintf|fputs","fgets|fscanf","FILE","\"w\"","\"r\""];
+      const codeKeywords = ["fopen","fclose","fprintf|fputs|fwrite","FILE","\\.csv"];
       let codeMatches = 0;
       codeKeywords.forEach(kw => {
         if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;

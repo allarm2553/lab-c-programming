@@ -132,34 +132,38 @@ int main() {
     printf("Value = %d, Score = %.1f\\n", num, score);
     return 0;
 }`,
-    challengeDesc: "พัฒนาโปรแกรมภาษา C เพื่อรับข้อมูลรัศมีของวงกลม (รัศมีเป็นเลขทศนิยม) จากแป้นพิมพ์ จากนั้นคำนวณและแสดงผลลัพธ์พื้นที่วงกลม (Area) และความยาวเส้นรอบวง (Circumference) โดยแสดงผลลัพธ์ทศนิยม 2 ตำแหน่ง",
+    challengeDesc: "พัฒนาโปรแกรมภาษา C สำหรับระบบวัดค่าทางไฟฟ้า โดยรับค่าสัญญาณดิจิทัลจากพอร์ต Analog ADC ขนาด 10 บิต (เลขจำนวนเต็ม 0 - 1023) และค่ากระแสไฟฟ้าในวงจร (เลขทศนิยม float หน่วยแอมแปร์) จากนั้นคำนวณ: 1) แรงดันไฟฟ้า Voltage = (ADC / 1023.0) * 5.0 (โวลต์) และ 2) กำลังไฟฟ้า Power = Voltage * Current (วัตต์) แสดงผลทศนิยม 2 ตำแหน่ง",
     challengePlaceholder: `#include <stdio.h>
-#define PI 3.14159265
 
 int main() {
-    float radius, area, circumference;
+    int adcValue;
+    float current, voltage, power;
     
-    printf("Enter radius: ");
-    // เขียนโค้ดรับค่า รันผลการคำนวณ และแสดงผลลัพธ์ที่นี่
+    printf("Enter 10-bit ADC Raw Value (0-1023): ");
+    // รับค่า ADC, กระแสไฟฟ้า คำนวณ Voltage และ Power แล้วแสดงผลที่นี่
     
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
-#define PI 3.14159265
 
 int main() {
-    float radius, area, circumference;
+    int adcValue;
+    float current, voltage, power;
     
-    printf("Enter radius: ");
-    if (scanf("%f", &radius) == 1) {
-        area = PI * radius * radius;
-        circumference = 2 * PI * radius;
-        
-        printf("Radius = %.2f\\n", radius);
-        printf("Area = %.2f\\n", area);
-        printf("Circumference = %.2f\\n", circumference);
+    printf("Enter 10-bit ADC Raw Value (0-1023): ");
+    if (scanf("%d", &adcValue) == 1) {
+        printf("Enter Circuit Current (Amp): ");
+        if (scanf("%f", &current) == 1) {
+            voltage = (adcValue / 1023.0f) * 5.0f;
+            power = voltage * current;
+            
+            printf("\\n--- Electrical Measurement Results ---\\n");
+            printf("ADC Raw Value: %d\\n", adcValue);
+            printf("Measured Voltage: %.2f V\\n", voltage);
+            printf("Circuit Current:  %.2f A\\n", current);
+            printf("Calculated Power: %.2f W\\n", power);
+        }
     }
-    
     return 0;
 }`,
     question1: "1. อธิบายความแตกต่างระหว่างชนิดข้อมูล int, float และ double ในการเขียนโปรแกรมและการจองหน่วยความจำ",
@@ -270,25 +274,31 @@ int main() {
     printf("Bitwise OR result: %d\\n", or_res);
     return 0;
 }`,
-    challengeDesc: "พัฒนาโปรแกรมรับเลขจำนวนเต็ม 2 ตัว จากนั้นหาและแสดงผลลัพธ์ของตัวดำเนินการระดับบิตเหล่านี้: AND (&), OR (|), XOR (^), และการเลื่อนบิตไปทางซ้าย 2 ตำแหน่ง (Left Shift 2) ของตัวเลขแรก",
+    challengeDesc: "พัฒนาโปรแกรมจำลองการควบคุมพอร์ต I/O (PORTB) ขนาด 8 บิต ของไมโครคอนโทรลเลอร์ โดยรับค่าสถานะเริ่มต้น (0-255) จากนั้นใช้ Bitwise Operators: 1) เปิด Relay 3 (Set Bit 3) ด้วย OR (|), 2) ปิด Valve 5 (Clear Bit 5) ด้วย AND (&) ร่วมกับ NOT (~), และ 3) สลับสถานะ LED 7 (Toggle Bit 7) ด้วย XOR (^) แสดงผลลัพธ์ฐาน 10 และฐาน 16 (0x%02X)",
     challengePlaceholder: `#include <stdio.h>
 
 int main() {
-    int a, b;
-    printf("Enter two integers: ");
-    // เขียนโค้ดรับข้อมูลและทำการวิเคราะห์ตัวดำเนินการระดับบิต (Bitwise Operators)
+    unsigned char portb;
+    printf("Enter initial PORTB state (0-255): ");
+    // เขียนโค้ด Bit Masking เพื่อควบคุม Bit 3, Bit 5 และ Bit 7 ที่นี่
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 
 int main() {
-    int a, b;
-    printf("Enter two integers: ");
-    if (scanf("%d %d", &a, &b) == 2) {
-        printf("a & b  = %d\\n", a & b);
-        printf("a | b  = %d\\n", a | b);
-        printf("a ^ b  = %d\\n", a ^ b);
-        printf("a << 2 = %d\\n", a << 2);
+    unsigned char portb;
+    printf("Enter initial PORTB state (0-255): ");
+    if (scanf("%hhu", &portb) == 1) {
+        portb = portb | (1 << 3);     // Set Bit 3 (Relay ON)
+        portb = portb & ~(1 << 5);    // Clear Bit 5 (Valve OFF)
+        portb = portb ^ (1 << 7);     // Toggle Bit 7 (LED Toggle)
+        
+        printf("\\n--- Updated PORTB Register Output ---\\n");
+        printf("PORTB Decimal: %d\\n", portb);
+        printf("PORTB Hex:     0x%02X\\n", portb);
+        printf("Bit 3 (Relay): %s\\n", (portb & (1 << 3)) ? "ON" : "OFF");
+        printf("Bit 5 (Valve): %s\\n", (portb & (1 << 5)) ? "ON" : "OFF");
+        printf("Bit 7 (LED):   %s\\n", (portb & (1 << 7)) ? "ON" : "OFF");
     }
     return 0;
 }`,
@@ -418,33 +428,48 @@ int main() {
     }
     return 0;
 }`,
-    challengeDesc: "พัฒนาโปรแกรมภาษา C คำนวณภาษีเงินได้บุคคลธรรมดาเบื้องต้น โดยรับรายได้สุทธิต่อปี (เลขทศนิยม) จากนั้นคำนวณและแสดงยอดภาษีที่ต้องชำระตามอัตราก้าวหน้าดังนี้: ไม่เกิน 150,000 ยกเว้นภาษี (0%), 150,001 - 300,000 คิดภาษี 5%, 300,001 - 500,000 คิดภาษี 10%, ส่วนที่เกิน 500,000 คิดภาษี 15%",
+    challengeDesc: "พัฒนาโปรแกรมควบคุมปั๊มน้ำในถังพักอุตสาหกรรม โดยรับค่าระดับน้ำ (0.0 - 100.0%) และรหัสโหมดการทำงาน (1: Auto, 2: Manual Drain, 3: Emergency Stop) โดยใช้ switch-case ตรวจสอบโหมด และใช้ if-else if ตรวจสอบระดับน้ำ: ถ้าน้อยกว่า 20% สั่ง Pump High, 20-80% สั่ง Pump Normal, มากกว่า 80% สั่ง Stop Pump",
     challengePlaceholder: `#include <stdio.h>
 
 int main() {
-    float income, tax = 0.0;
-    printf("Enter net annual income: ");
-    // คำนวณภาษีตามขั้นบันได และแสดงผลลัพธ์
+    float waterLevel;
+    int mode;
+    printf("Enter Water Level (0.0 - 100.0%%): ");
+    // รับค่าระดับน้ำและโหมดการทำงาน จากนั้นควบคุมระบบปั๊มที่นี่
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 
 int main() {
-    float income, tax = 0.0;
-    printf("Enter net annual income: ");
-    if (scanf("%f", &income) == 1) {
-        if (income <= 150000) {
-            tax = 0.0;
-        } else if (income <= 300000) {
-            tax = (income - 150000) * 0.05;
-        } else if (income <= 500000) {
-            tax = (150000 * 0.05) + ((income - 300000) * 0.10);
-        } else {
-            tax = (150000 * 0.05) + (200000 * 0.10) + ((income - 500000) * 0.15);
+    float waterLevel;
+    int mode;
+    
+    printf("Enter Water Level (0.0 - 100.0%%): ");
+    if (scanf("%f", &waterLevel) == 1) {
+        printf("Enter Mode (1: AUTO, 2: MANUAL DRAIN, 3: EMERGENCY STOP): ");
+        if (scanf("%d", &mode) == 1) {
+            printf("\\n--- System Control Status ---\\n");
+            switch (mode) {
+                case 1:
+                    printf("Mode: AUTOMATIC CONTROL\\n");
+                    if (waterLevel < 20.0f) {
+                        printf("Water Status: LOW (%.1f%%) -> Pump Action: RUN HIGH SPEED\\n", waterLevel);
+                    } else if (waterLevel <= 80.0f) {
+                        printf("Water Status: OPTIMAL (%.1f%%) -> Pump Action: RUN NORMAL SPEED\\n", waterLevel);
+                    } else {
+                        printf("Water Status: FULL (%.1f%%) -> Pump Action: STOP PUMP\\n", waterLevel);
+                    }
+                    break;
+                case 2:
+                    printf("Mode: MANUAL DRAIN -> Drain Valve: OPEN\\n");
+                    break;
+                case 3:
+                    printf("Mode: EMERGENCY STOP -> ALL PUMPS & VALVES SHUTDOWN!\\n");
+                    break;
+                default:
+                    printf("Invalid Mode Selected!\\n");
+            }
         }
-        
-        printf("Income: %.2f Baht\\n", income);
-        printf("Calculated Tax: %.2f Baht\\n", tax);
     }
     return 0;
 }`,
@@ -453,7 +478,7 @@ int main() {
     question2: "2. อธิบายหน้าที่ของคีย์เวิร์ด break ในคำสั่ง switch-case และผลลัพธ์จะเกิดความผิดพลาดอย่างไรหากเราลืมเขียนล้อมรอบ case?",
     question2Placeholder: "อธิบายบทบาทของคำสั่ง break และพฤติกรรมของโปรแกรม (Fall-through) หากไม่ใส่ break...",
     conclusionPlaceholder: "สรุปสิ่งที่ได้ศึกษาในบทนี้ เช่น การเขียนเงื่อนไขควบคุม และความแตกต่างในการจัดโครงสร้างโค้ดแบบเลือกทำ...",
-    codeKeywords: ["if","else","scanf","printf","<=|>=|<|>","\\*"],
+    codeKeywords: ["if","else","switch","case","break","scanf","printf"],
     q1Keywords: ["ประสิทธิภาพ","ข้าม","ตรวจสอบ","เงื่อนไข"],
     q2Keywords: ["break","switch","fall-through","ไหล"]
   },
@@ -556,26 +581,37 @@ int main() {
     }
     return 0;
 }`,
-    challengeDesc: "เขียนโปรแกรมภาษา C รับตัวเลขจำนวนเต็มบวก N จากผู้ใช้งาน จากนั้นใช้ลูปซ้อนลูป (Nested Loops) พิมพ์รูปสามเหลี่ยมมุมฉากด้วยตัวอักษรดาว (*) จำนวน N แถว โดยแถวที่ 1 มีดาว 1 ตัว แถวที่ 2 มีดาว 2 ตัว ไล่ไปจนถึงแถวที่ N",
+    challengeDesc: "พัฒนาโปรแกรมจำลองการสร้างสัญญาณ PWM ควบคุมมอเตอร์ โดยรับค่า Duty Cycle (0 - 100%) และจำนวนคาบเวลา N คาบ จากนั้นใช้ลูปซ้อนลูป (Nested Loops) พิมพ์กราฟิกรูปคลื่นสัญญาณพัลส์ดิจิทัล 1 และ 0 ในแต่ละคาบเวลาตามสัดส่วน Duty Cycle พร้อมคำนวณแรงดันไฟฟ้าเฉลี่ย",
     challengePlaceholder: `#include <stdio.h>
 
 int main() {
-    int n, i, j;
-    printf("Enter number of rows (N): ");
-    // รับค่า N และใช้ลูป 2 ชั้นเพื่อวาดรูปสามเหลี่ยมดาว
+    int dutyCycle, periods;
+    printf("Enter PWM Duty Cycle (0 - 100%%): ");
+    // รับค่า Duty Cycle และจำนวนคาบเวลา จากนั้นใช้ Nested Loop วาดสัญญาณ PWM ที่นี่
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 
 int main() {
-    int n, i, j;
-    printf("Enter number of rows (N): ");
-    if (scanf("%d", &n) == 1) {
-        for (i = 1; i <= n; i++) {
-            for (j = 1; j <= i; j++) {
-                printf("*");
+    int dutyCycle, periods;
+    printf("Enter PWM Duty Cycle (0 - 100%%): ");
+    if (scanf("%d", &dutyCycle) == 1) {
+        printf("Enter Number of Periods to generate (e.g. 5): ");
+        if (scanf("%d", &periods) == 1) {
+            int onUnits = dutyCycle / 10;
+            int offUnits = 10 - onUnits;
+            
+            printf("\\n--- Generated PWM Signal Waves (%d%% Duty Cycle) ---\\n", dutyCycle);
+            for (int p = 1; p <= periods; p++) {
+                printf("Period %2d: [", p);
+                for (int i = 0; i < onUnits; i++) {
+                    printf("1");
+                }
+                for (int j = 0; j < offUnits; j++) {
+                    printf("0");
+                }
+                printf("] Output Voltage ~ %.1f V\\n", (dutyCycle / 100.0f) * 5.0f);
             }
-            printf("\\n");
         }
     }
     return 0;
@@ -694,39 +730,52 @@ int main() {
     printf("2^3 = %d\\n", power(2, 3));
     return 0;
 }`,
-    challengeDesc: "พัฒนาโปรแกรมภาษา C เพื่อคำนวณหาค่าแฟกทอเรียล (Factorial) ของตัวเลขจำนวนเต็มบวก N โดยเปรียบเทียบการเขียน 2 ฟังก์ชันย่อยในซอร์สโค้ดเดียวกัน: ฟังก์ชันแรกใช้วิธีวนซ้ำด้วยลูป (Iterative) และฟังก์ชันที่สองใช้วิธีเรียกซ้อนตัวเอง (Recursive)",
+    challengeDesc: "พัฒนาโปรแกรมภาษา C สำหรับระบบวัดค่าเซนเซอร์ โดยสร้าง 2 ฟังก์ชัน: 1) calibrateTemperature(int rawADC) คำนวณแปลงค่า ADC เป็นอุณหภูมิองศาเซลเซียส และ 2) updateMinMax(float temp, float *minTemp, float *maxTemp) อัปเดตค่าอุณหภูมิต่ำสุด-สูงสุดผ่าน Call-by-Reference",
     challengePlaceholder: `#include <stdio.h>
 
-long long factorialIterative(int n);
-long long factorialRecursive(int n);
+float calibrateTemperature(int rawADC) {
+    // แปลงค่า rawADC เป็น Celsius แล้ว return
+}
+
+void updateMinMax(float temp, float *minTemp, float *maxTemp) {
+    // อัปเดตค่า minTemp และ maxTemp ผ่าน Pointer
+}
 
 int main() {
-    int num;
-    printf("Enter an integer: ");
-    // รับข้อมูลและแสดงผลลัพธ์การเรียกใช้งานเปรียบเทียบฟังก์ชันทั้งสองแบบ
+    // รับค่า ADC 3 แซมเปิล เรียกใช้ฟังก์ชัน และแสดงผลลัพธ์
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 
-long long factorialIterative(int n) {
-    long long res = 1;
-    for (int i = 1; i <= n; i++) {
-        res *= i;
-    }
-    return res;
+float calibrateTemperature(int rawADC) {
+    return (rawADC * 0.0977f) - 10.0f;
 }
 
-long long factorialRecursive(int n) {
-    if (n <= 1) return 1;
-    return n * factorialRecursive(n - 1);
+void updateMinMax(float temp, float *minTemp, float *maxTemp) {
+    if (temp < *minTemp) *minTemp = temp;
+    if (temp > *maxTemp) *maxTemp = temp;
 }
 
 int main() {
-    int num;
-    printf("Enter an integer: ");
-    if (scanf("%d", &num) == 1 && num >= 0) {
-        printf("Iterative: %d! = %lld\\n", num, factorialIterative(num));
-        printf("Recursive: %d! = %lld\\n", num, factorialRecursive(num));
+    int adc1, adc2, adc3;
+    printf("Enter 3 Raw ADC Samples: ");
+    if (scanf("%d %d %d", &adc1, &adc2, &adc3) == 3) {
+        float t1 = calibrateTemperature(adc1);
+        float t2 = calibrateTemperature(adc2);
+        float t3 = calibrateTemperature(adc3);
+        
+        float minT = t1, maxT = t1;
+        updateMinMax(t2, &minT, &maxT);
+        updateMinMax(t3, &minT, &maxT);
+        
+        float avgT = (t1 + t2 + t3) / 3.0f;
+        
+        printf("\\n--- Sensor Calibration Results ---\\n");
+        printf("Sample 1: %.2f C\\n", t1);
+        printf("Sample 2: %.2f C\\n", t2);
+        printf("Sample 3: %.2f C\\n", t3);
+        printf("Average Temp: %.2f C\\n", avgT);
+        printf("Min Temp: %.2f C, Max Temp: %.2f C\\n", minT, maxT);
     }
     return 0;
 }`,
@@ -735,7 +784,7 @@ int main() {
     question2: "2. เพราะเหตุใดฟังก์ชันแบบเรียกตัวเอง (Recursion) จึงต้องกำหนดกรณีฐาน (Base Case) ไว้ และหากไม่มีจะเกิดอะไรขึ้น?",
     question2Placeholder: "อธิบายหน้าที่ของ Base Case ในการหยุดการทำงาน และผลกระทบต่อหน่วยความจำ Stack หากโปรแกรมเรียกตัวเองไม่สิ้นสุด...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของการแยกงานเป็นฟังก์ชันและข้อดีข้อเสียของโค้ดแบบ Recursive...",
-    codeKeywords: ["return","for|while","if","scanf","printf","long|int"],
+    codeKeywords: ["float|void|double","return","scanf","printf","&|\\*"],
     q1Keywords: ["value","reference","copy","address","ตัวแปรเดิม"],
     q2Keywords: ["base case","กรณีฐาน","ล้น","infinite","stack overflow"]
   },
@@ -833,34 +882,41 @@ int main() {
     printf("Hello, %s!\\n", name);
     return 0;
 }`,
-    challengeDesc: "เขียนโปรแกรมรับคำสตริง 1 คำ (ไม่เกิน 50 ตัวอักษร) จากนักศึกษา จากนั้นเขียนอัลกอริทึมสลับด้านสตริงดังกล่าว (Reverse String) และนับความยาวของตัวอักษรนั้นแสดงทางคอนโซล โดยห้ามเรียกใช้ฟังก์ชัน strlen() ที่มาจากไฟล์ไลบรารี <string.h>",
+    challengeDesc: "พัฒนาโปรแกรมภาษา C บันทึกประวัติกระแสไฟฟ้ามอเตอร์ 5 ค่าลงในอาร์เรย์ float currentLog[5] จากนั้นคำนวณ: 1) กระแสไฟฟ้าเฉลี่ย (Average Current), 2) กระแสไฟฟ้าสูงสุด (Peak Current) และ 3) ตรวจสอบเงื่อนไขแจ้งเตือน [OVERLOAD WARNING!] หากค่า Peak เกิน 15.0 A",
     challengePlaceholder: `#include <stdio.h>
 
 int main() {
-    char str[100];
-    printf("Enter string: ");
-    // รับค่า ย้อนกลับสตริง และหาความยาวสตริงด้วยการวนลูปเช็คตัวอักขระ '\\0'
+    float currentLog[5];
+    // รับค่ากระแสไฟฟ้า 5 ค่าลงในอาร์เรย์ คำนวณค่าเฉลี่ย หาค่า Peak และตรวจสอบ Overload
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 
 int main() {
-    char str[100];
-    int len = 0;
+    float currentLog[5];
+    float sum = 0.0f, maxCurrent = 0.0f;
     
-    printf("Enter string: ");
-    if (scanf("%99s", str) == 1) {
-        while (str[len] != '\\0') {
-            len++;
+    printf("Enter 5 Motor Current Samples (Amp):\\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Sample [%d]: ", i + 1);
+        if (scanf("%f", &currentLog[i]) != 1) return 1;
+        sum += currentLog[i];
+        if (currentLog[i] > maxCurrent) {
+            maxCurrent = currentLog[i];
         }
-        
-        printf("Length: %d\\n", len);
-        printf("Reversed: ");
-        for (int i = len - 1; i >= 0; i--) {
-            putchar(str[i]);
-        }
-        printf("\\n");
     }
+    
+    float avgCurrent = sum / 5.0f;
+    printf("\\n--- Motor Current Analysis ---\\n");
+    printf("Average Current: %.2f A\\n", avgCurrent);
+    printf("Peak Current:    %.2f A\\n", maxCurrent);
+    
+    if (maxCurrent > 15.0f) {
+        printf("Status: [OVERLOAD WARNING] Current exceeded 15.0A safe threshold!\\n");
+    } else {
+        printf("Status: [NORMAL] Motor operating within safe current limits.\\n");
+    }
+    
     return 0;
 }`,
     question1: "1. สตริงในภาษา C แตกต่างจากอาร์เรย์ชนิด char ทั่วไปอย่างไร และตัวอักษร '\\0' (Null character) มีความสำคัญอย่างไร?",
@@ -868,7 +924,7 @@ int main() {
     question2: "2. การจองขนาดพื้นที่อาร์เรย์แบบคงที่ (Static Array) เช่น int score[5]; มีข้อดีและข้อจำกัดอย่างไรในการทำงานจริง?",
     question2Placeholder: "วิเคราะห์ข้อดีด้านการเข้าถึงข้อมูลผ่านดัชนี (Index) และข้อจำกัดด้านขนาดหน่วยความจำคงที่ (Fixed size)...",
     conclusionPlaceholder: "เขียนสรุปความเข้าใจที่ได้รับเกี่ยวกับมิติของอาร์เรย์ และการเข้าถึงข้อมูลตัวชี้อาร์เรย์...",
-    codeKeywords: ["char","\\\\0","while|for","scanf|fgets","printf|putchar|puts","\\["],
+    codeKeywords: ["\\[\\]","for|while","scanf","printf","float|int"],
     q1Keywords: ["1 มิติ","2 มิติ","แถว","คอลัมน์","ตาราง","\\0","null"],
     q2Keywords: ["\\0","null","จบ","array","character","static"]
   },
@@ -980,39 +1036,45 @@ int main() {
     free(p);
     return 0;
 }`,
-    challengeDesc: "เขียนโปรแกรมภาษา C เพื่อรับขนาดจำนวนเต็ม N จากผู้ใช้ จากนั้นจองหน่วยความจำแบบพลวัตสำหรับเก็บอาร์เรย์จำนวนเต็มขนาด N ตัวด้วย malloc() จากนั้นรับข้อมูลตัวเลข N ตัว คำนวณหาค่าเฉลี่ยของข้อมูลทั้งหมด แล้วแสดงผลลัพธ์ออกทางจอภาพ สุดท้ายให้คืนหน่วยความจำที่จองไว้ด้วย free()",
+    challengeDesc: "พัฒนาโปรแกรมจัดสรรบัฟเฟอร์หน่วยความจำพลวัต (Dynamic Sensor Buffer) โดยรับจำนวนขนาดบัฟเฟอร์ N ตัวอย่าง ใช้ malloc() จองพื้นที่ใน Heap สำหรับ float N ตัว รับค่าและคำนวณค่าเฉลี่ยผ่านพอยน์เตอร์ จากนั้นคืนหน่วยความจำด้วย free() เพื่อป้องกัน Memory Leak",
     challengePlaceholder: `#include <stdio.h>
 #include <stdlib.h>
 
 int main() {
-    int n, *arr;
-    printf("Enter number of elements (N): ");
-    // รับค่า N, ทำการ malloc(), ตรวจเช็คค่า NULL, รับข้อมูลและหาเฉลี่ย และปิดท้ายด้วย free()
+    int n;
+    printf("Enter number of sensor samples to record (N): ");
+    // ใช้ malloc() จองพื้นที่ Heap, รับค่าผ่าน Pointer, คำนวณค่าเฉลี่ย และ free()
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 #include <stdlib.h>
 
 int main() {
-    int n, *arr;
-    float sum = 0.0;
-    
-    printf("Enter number of elements (N): ");
+    int n;
+    printf("Enter number of sensor samples to record (N): ");
     if (scanf("%d", &n) == 1 && n > 0) {
-        arr = (int *)malloc(n * sizeof(int));
-        if (arr == NULL) {
+        float *buffer = (float *)malloc(n * sizeof(float));
+        if (buffer == NULL) {
             printf("Memory allocation failed!\\n");
             return 1;
         }
         
-        printf("Enter %d integers:\\n", n);
+        printf("Enter %d sensor readings:\\n", n);
+        float sum = 0.0f;
         for (int i = 0; i < n; i++) {
-            scanf("%d", &arr[i]);
-            sum += arr[i];
+            printf("Reading #%d: ", i + 1);
+            if (scanf("%f", buffer + i) == 1) {
+                sum += *(buffer + i);
+            }
         }
         
-        printf("Average = %.2f\\n", sum / n);
-        free(arr);
+        printf("\\n--- Dynamic Buffer Processing ---\\n");
+        printf("Allocated Memory: %zu Bytes\\n", n * sizeof(float));
+        printf("Processed Average: %.2f\\n", sum / n);
+        
+        free(buffer);
+        buffer = NULL;
+        printf("Memory successfully released (Heap freed).\\n");
     }
     return 0;
 }`,
@@ -1021,7 +1083,7 @@ int main() {
     question2: "2. อธิบายเหตุผลสำคัญในการต้องเรียกคำสั่ง free() คืนหน่วยความจำหลังสิ้นสุดการใช้งาน และหากลืมจะเกิดความผิดพลาดใด?",
     question2Placeholder: "อธิบายการคืนพื้นที่หน่วยความจำ Heap ให้กับระบบ และผลกระทบที่เรียกว่า Memory Leak...",
     conclusionPlaceholder: "สรุปสิ่งที่เรียนรู้เกี่ยวกับแนวคิด RAM, Pointer และความสำคัญของการระมัดระวังข้อผิดพลาดของการใช้พอยน์เตอร์...",
-    codeKeywords: ["malloc","free","sizeof","scanf","printf","\\*"],
+    codeKeywords: ["\\*","&","malloc","free","scanf|printf"],
     q1Keywords: ["&","\\*","address","ชี้","ค่า","ตำแหน่ง"],
     q2Keywords: ["free","leak","หน่วยความจำ","คืน","ram"]
   },
@@ -1120,52 +1182,54 @@ int main() {
     printf("User ID: %d, Name: %s\\n", user1.id, user1.username);
     return 0;
 }`,
-    challengeDesc: "สร้างโครงสร้างข้อมูล struct Student เพื่อบันทึกข้อมูลนักเรียน ได้แก่ รหัสนักศึกษา (สตริง), ชื่อ-นามสกุล (สตริง) และคะแนนเก็บ (ทศนิยม) จากนั้นเขียนโปรแกรมรับข้อมูลนักศึกษา 3 คน บันทึกค่าลงตัวแปร แสดงผลลัพธ์เป็นตารางให้เรียบร้อย และหาคะแนนเฉลี่ยรวมของนักศึกษาทุกคน",
+    challengeDesc: "พัฒนาโครงสร้างข้อมูลโหนดเซนเซอร์ IoT struct SensorNode ประกอบด้วย: int nodeID, float temperature, float humidity, int relayActive จากนั้นสร้างฟังก์ชัน displayTelemetry รับพอยน์เตอร์โครงสร้าง (struct SensorNode *node) เพื่อแสดงผลค่าโทรมาตรผ่านตัวดำเนินการ ->",
     challengePlaceholder: `#include <stdio.h>
 
-struct Student {
-    char id[15];
-    char name[50];
-    float score;
+struct SensorNode {
+    // ประกาศสมาชิกโหนดเซนเซอร์ที่นี่
 };
 
+void displayTelemetry(const struct SensorNode *node) {
+    // แสดงผลข้อมูลผ่านตัวดำเนินการ ->
+}
+
 int main() {
-    struct Student stds[3];
-    // เขียนคำสั่งวนซ้ำรับข้อมูล 3 คน แสดงผลลัพธ์ตารางและค่าเฉลี่ย
+    // รับค่าโหนดเซนเซอร์ เรียกใช้ displayTelemetry
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 
-struct Student {
-    char id[15];
-    char name[50];
-    float score;
+struct SensorNode {
+    int nodeID;
+    float temperature;
+    float humidity;
+    int relayActive;
 };
 
+void displayTelemetry(const struct SensorNode *node) {
+    printf("\\n--- IoT Telemetry Packet Report ---\\n");
+    printf("Sensor Node ID:  #%04d\\n", node->nodeID);
+    printf("Ambient Temp:    %.2f C\\n", node->temperature);
+    printf("Relative Humid:  %.2f %%\\n", node->humidity);
+    printf("Relay Status:    %s\\n", node->relayActive ? "ACTIVATED [ON]" : "STANDBY [OFF]");
+    printf("Total Struct Size: %zu Bytes\\n", sizeof(struct SensorNode));
+}
+
 int main() {
-    struct Student stds[3];
-    float total = 0.0;
-    
-    printf("--- Input 3 Students ---\\n");
-    for (int i = 0; i < 3; i++) {
-        printf("Student #%d ID: ", i + 1);
-        scanf("%14s", stds[i].id);
-        printf("Student #%d Name: ", i + 1);
-        scanf("%49s", stds[i].name);
-        printf("Student #%d Score: ", i + 1);
-        scanf("%f", &stds[i].score);
-        total += stds[i].score;
+    struct SensorNode node1;
+    printf("Enter Node ID (e.g. 101): ");
+    if (scanf("%d", &node1.nodeID) == 1) {
+        printf("Enter Temperature (C): ");
+        if (scanf("%f", &node1.temperature) == 1) {
+            printf("Enter Humidity (%%): ");
+            if (scanf("%f", &node1.humidity) == 1) {
+                printf("Enter Relay State (1 for ON, 0 for OFF): ");
+                if (scanf("%d", &node1.relayActive) == 1) {
+                    displayTelemetry(&node1);
+                }
+            }
+        }
     }
-    
-    printf("\\n--- Student Records ---\\n");
-    printf("%-15s %-20s %s\\n", "ID", "Name", "Score");
-    printf("---------------------------------------------\\n");
-    for (int i = 0; i < 3; i++) {
-        printf("%-15s %-20s %.2f\\n", stds[i].id, stds[i].name, stds[i].score);
-    }
-    printf("---------------------------------------------\\n");
-    printf("Average Score: %.2f\\n", total / 3.0);
-    
     return 0;
 }`,
     question1: "1. อธิบายความแตกต่างที่สำคัญของการทำงานและการจองตำแหน่งหน่วยความจำระหว่าง struct และ union",
@@ -1173,7 +1237,7 @@ int main() {
     question2: "2. ในกรณีลักษณะงานใดที่เราควรเลือกนำ union มาเลือกประยุกต์ใช้งานแทนการใช้ struct ในการประมวลผล?",
     question2Placeholder: "ยกตัวอย่างสถานการณ์หรือระบบที่ต้องการประหยัดพื้นที่หน่วยความจำและใช้งานสมาชิกทีละหนึ่งรายการ...",
     conclusionPlaceholder: "เขียนสรุปความสำคัญของการใช้ struct จัดการข้อมูลจำลองที่ซับซ้อน และการนำมาพัฒนาเป็นระบบฐานข้อมูลขนาดย่อม...",
-    codeKeywords: ["struct","for|while","\\.","scanf","printf"],
+    codeKeywords: ["struct","\\.|\\->","scanf","printf","float|int"],
     q1Keywords: ["แชร์","แยก","ขนาด","หน่วยความจำ","ตัวแปรใหญ่สุด"],
     q2Keywords: ["ประหยัด","ram","สลับ","พร้อมกัน","ฝังตัว"]
   },
@@ -1311,41 +1375,32 @@ int main() {
     fclose(fp);
     return 0;
 }`,
-    challengeDesc: "พัฒนาโปรแกรมภาษา C เพื่อสร้างไฟล์เขียนข้อความชื่อ students.txt จากนั้นพิมพ์ข้อมูลชื่อและเกรดของตัวคุณเองลงไปในไฟล์ เมื่อทำการเขียนไฟล์เสร็จแล้ว ให้โปรแกรมเปิดอ่านดึงข้อมูลจากไฟล์ตัวหนังสือดังกล่าวขึ้นมาแสดงผลลัพธ์ย้อนกลับมาบนจอคอนโซลอีกครั้งให้สำเร็จ",
+    challengeDesc: "พัฒนาโปรแกรมภาษา C จำลองระบบบันทึกประวัติเครื่องจักรลงไฟล์ CSV (Industrial Data Logger to 'datalog.csv') โดยใช้ fopen() โหมดเขียนไฟล์ บันทึกหัวคอลัมน์และข้อมูล 3 แซมเปิล (Sample, Time, Voltage_V, Temperature_C) ตรวจสอบตัวชี้ไฟล์ NULL และปิดไฟล์ด้วย fclose()",
     challengePlaceholder: `#include <stdio.h>
 
 int main() {
-    FILE *fp;
-    // เขียนโปรแกรมสร้างไฟล์ เขียนข้อมูล ปิดไฟล์ แล้วทำการเปิดขึ้นมาอ่านแสดงผลอีกรอบ
+    // เขียนโค้ดสร้างไฟล์ datalog.csv บันทึกหัวตารางและข้อมูลโทรมาตรโรงงาน
     return 0;
 }`,
     challengeSolutionCode: `#include <stdio.h>
 
 int main() {
-    FILE *fp = fopen("students.txt", "w");
+    FILE *fp = fopen("datalog.csv", "w");
     if (fp == NULL) {
-        printf("Cannot create file!\\n");
+        printf("Error creating datalog.csv!\\n");
         return 1;
     }
     
-    fprintf(fp, "Name: Somchai Deejai, Grade: 4.00\\n");
+    // Write CSV Header
+    fprintf(fp, "Sample,Time,Voltage_V,Temperature_C\\n");
+    
+    // Write Sample Industrial Records
+    fprintf(fp, "1,09:00,380.2,42.5\\n");
+    fprintf(fp, "2,09:05,379.8,43.1\\n");
+    fprintf(fp, "3,09:10,381.0,44.0\\n");
+    
     fclose(fp);
-    printf("File written successfully.\\n");
-    
-    // อ่านไฟล์กลับมาแสดงผล
-    fp = fopen("students.txt", "r");
-    if (fp == NULL) {
-        printf("Cannot open file for reading!\\n");
-        return 1;
-    }
-    
-    char buffer[100];
-    printf("\\nReading from file:\\n");
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        printf("%s", buffer);
-    }
-    fclose(fp);
-    
+    printf("Successfully logged industrial telemetry data to 'datalog.csv'!\\n");
     return 0;
 }`,
     question1: "1. การจัดการไฟล์ข้อมูลในรูปแบบ Text Mode และ Binary Mode แตกต่างกันอย่างไรในแง่ลักษณะไฟล์และขนาด?",
@@ -1353,7 +1408,7 @@ int main() {
     question2: "2. เพราะเหตุใดเมื่อเขียนชุดคำสั่งภาษา C เพื่อจัดการไฟล์ เราจึงต้องตรวจสอบค่า pointer ของไฟล์ว่าเท่ากับ NULL หรือไม่หลัง fopen()?",
     question2Placeholder: "อธิบายความสำคัญในการตรวจสอบความพร้อมของไฟล์ ปัญหาพาธหรือสิทธิ์การเข้าถึง และการป้องกันโปรแกรมหยุดทำงานกะทันหัน...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของการบันทึกไฟล์ในการพัฒนาระบบ และข้อควรระวังในการปิดไฟล์ (fclose) ทุกครั้ง...",
-    codeKeywords: ["fopen","fclose","fprintf|fputs","fgets|fscanf","FILE","\"w\"","\"r\""],
+    codeKeywords: ["fopen","fclose","fprintf|fputs|fwrite","FILE","\\.csv"],
     q1Keywords: ["text","binary","ตัวอักษร","ไบนารี","มนุษย์อ่าน"],
     q2Keywords: ["null","สำเร็จ","แครช","ความปลอดภัย"]
   },
@@ -1567,98 +1622,38 @@ int main() {
 
     return 0;
 }`,
-    challengeDesc: "พัฒนาโปรแกรมภาษา C เพื่อแก้ไขโจทย์ด้านล่างนี้ในโปรแกรมเดียว:<br>1. <b>ตรวจสอบ Serial Number</b>: รับเลขประจำเครื่อง (สูงสุด 20 ตัวอักษร) แสดงความยาว และตรวจว่าขึ้นต้นด้วย 'SN-' หรือไม่ (ใช้ fgets, strlen, strncmp)<br>2. <b>สร้างชื่อไฟล์รายงาน</b>: รับชื่ออุปกรณ์จากผู้ใช้ แล้วนำมาเชื่อมเข้ากับข้อความ '_Report.txt' เพื่อสร้างชื่อไฟล์ปลายทาง (ใช้ strcpy, strcat)<br>3. <b>จำลองเปลี่ยนสถานะอุปกรณ์</b>: เริ่มต้นสถานะเป็น 'Offline' รับคำสั่งจากผู้ใช้ หากเป็น 'connect' ให้เปลี่ยนสถานะเป็น 'Online' หากเป็น 'disconnect' ให้เปลี่ยนสถานะเป็น 'Offline' หากเป็นคำสั่งอื่นให้พิมพ์ 'คำสั่งไม่ถูกต้อง' และรักษาสถานะเดิมไว้ (ใช้ strcmp, strcpy)",
+    challengeDesc: "พัฒนาโปรแกรมถอดรหัสคำสั่ง Serial/IoT AT Command (เช่น $SET,RELAY,ON# หรือ $READ,TEMP#) โดยใช้ fgets() รับคำสั่งเข้าบัฟเฟอร์อย่างปลอดภัย และใช้ฟังก์ชันใน <string.h> (strstr, strcmp, strlen) ตรวจสอบและสั่งการจำลองการทำงานของอุปกรณ์",
     challengePlaceholder: `#include <stdio.h>
 #include <string.h>
 
-void testSerialNumber();
-void generateReportFilename();
-void deviceStatusSimulator();
-
 int main() {
-    printf("=== กิจกรรมท้าทาย: String Functions ===\\n");
-    testSerialNumber();
-    printf("\\n");
-    generateReportFilename();
-    printf("\\n");
-    deviceStatusSimulator();
+    char cmdBuffer[64];
+    printf("Enter Serial Command (e.g. $SET,RELAY,ON# or $READ,TEMP#): ");
+    // รับคำสั่งและใช้ฟังก์ชัน string.h ตรวจสอบถอดรหัสคำสั่ง
     return 0;
-}
-
-void testSerialNumber() {
-    char sn[30];
-    printf("กรุณาป้อน Serial Number (สูงสุด 20 ตัวอักษร): ");
-    // เขียนคำสั่งรับค่าและตรวจสอบรูปแบบขึ้นต้นด้วย SN- ที่นี่
-}
-
-void generateReportFilename() {
-    char deviceName[50];
-    char filename[100];
-    printf("กรุณาป้อนชื่ออุปกรณ์: ");
-    // เขียนคำสั่งรับค่าและต่อคำท้ายด้วย _Report.txt ที่นี่
-}
-
-void deviceStatusSimulator() {
-    char status[20] = "Offline";
-    char command[30];
-    printf("สถานะอุปกรณ์ปัจจุบัน: %s\\n", status);
-    printf("ป้อนคำสั่ง (connect/disconnect): ");
-    // เขียนคำสั่งรับค่า เปรียบเทียบเพื่อสลับสถานะ และแสดงผลสถานะที่นี่
 }`,
     challengeSolutionCode: `#include <stdio.h>
 #include <string.h>
 
-void testSerialNumber() {
-    char sn[30];
-    printf("กรุณาป้อน Serial Number (สูงสุด 20 ตัวอักษร): ");
-    if (fgets(sn, sizeof(sn), stdin) != NULL) {
-        sn[strcspn(sn, "\\n")] = 0;
-        printf("Length: %zu\\n", strlen(sn));
-        if (strncmp(sn, "SN-", 3) == 0) {
-            printf("Valid Serial Number!\\n");
-        } else {
-            printf("Invalid Serial Number (must start with SN-)\\n");
-        }
-    }
-}
-
-void generateReportFilename() {
-    char deviceName[50];
-    char filename[100];
-    printf("กรุณาป้อนชื่ออุปกรณ์: ");
-    if (fgets(deviceName, sizeof(deviceName), stdin) != NULL) {
-        deviceName[strcspn(deviceName, "\\n")] = 0;
-        strcpy(filename, deviceName);
-        strcat(filename, "_Report.txt");
-        printf("Generated Filename: %s\\n", filename);
-    }
-}
-
-void deviceStatusSimulator() {
-    char status[20] = "Offline";
-    char command[30];
-    printf("สถานะอุปกรณ์ปัจจุบัน: %s\\n", status);
-    printf("ป้อนคำสั่ง (connect/disconnect): ");
-    if (fgets(command, sizeof(command), stdin) != NULL) {
-        command[strcspn(command, "\\n")] = 0;
-        if (strcmp(command, "connect") == 0) {
-            strcpy(status, "Online");
-        } else if (strcmp(command, "disconnect") == 0) {
-            strcpy(status, "Offline");
-        } else {
-            printf("คำสั่งไม่ถูกต้อง\\n");
-        }
-        printf("สถานะอุปกรณ์หลังประมวลผล: %s\\n", status);
-    }
-}
-
 int main() {
-    printf("=== กิจกรรมท้าทาย: String Functions ===\\n");
-    testSerialNumber();
-    printf("\\n");
-    generateReportFilename();
-    printf("\\n");
-    deviceStatusSimulator();
+    char cmdBuffer[64];
+    printf("Enter Serial Command (e.g. $SET,RELAY,ON# or $READ,TEMP#): ");
+    if (fgets(cmdBuffer, sizeof(cmdBuffer), stdin) != NULL) {
+        cmdBuffer[strcspn(cmdBuffer, "\\r\\n")] = '\\0';
+        
+        printf("\\n--- Command Packet Parser Analysis ---\\n");
+        printf("Raw Packet:    %s (Length: %zu chars)\\n", cmdBuffer, strlen(cmdBuffer));
+        
+        if (strstr(cmdBuffer, "$SET,RELAY,ON#") != NULL) {
+            printf("Action: Executing -> RELAY SWITCH ENERGIZED [ON]\\n");
+        } else if (strstr(cmdBuffer, "$SET,RELAY,OFF#") != NULL) {
+            printf("Action: Executing -> RELAY SWITCH DE-ENERGIZED [OFF]\\n");
+        } else if (strstr(cmdBuffer, "$READ,TEMP#") != NULL) {
+            printf("Action: Telemetry -> Reading Sensor Temp: 28.50 C\\n");
+        } else {
+            printf("Action: [UNKNOWN COMMAND] Syntax error or invalid header.\\n");
+        }
+    }
     return 0;
 }`,
     question1: "1. อธิบายความแตกต่างและเหตุผลด้านความปลอดภัยในการเลือกใช้งานระหว่างฟังก์ชัน strcpy() และ strncpy()",
@@ -1666,7 +1661,7 @@ int main() {
     question2: "2. เพราะเหตุใดฟังก์ชัน fgets() จึงต้องมีพารามิเตอร์จำกัดขนาด (size) และเพราะเหตุใดนักพัฒนาจึงต้องจัดการกับอักษรขึ้นบรรทัดใหม่ (\\n) หลังการรับข้อมูล?",
     question2Placeholder: "อธิบายการป้องกันปัญหา Buffer Overflow ของ fgets และเหตุผลที่ต้องจัดการอักขระขึ้นบรรทัดใหม่...",
     conclusionPlaceholder: "วิเคราะห์ประโยชน์ของฟังก์ชันสำเร็จรูปใน string.h ในการลดความซับซ้อนและเพิ่มความปลอดภัยของการพัฒนาแอปพลิเคชัน...",
-    codeKeywords: ["fgets","strlen","strncmp","strcpy|strncpy","strcat|strncat","strcmp"],
+    codeKeywords: ["string\\.h","fgets","strlen","strstr|strcmp|strncpy","printf"],
     q1Keywords: ["overflow","ความยาว","n","ปลอดภัย","\\0"],
     q2Keywords: ["gets","ปลอดภัย","ขนาด","buffer","\\n","enter"]
   },

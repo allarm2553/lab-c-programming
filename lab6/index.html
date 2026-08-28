@@ -1223,7 +1223,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>เขียนโปรแกรมรับคำสตริง 1 คำ (ไม่เกิน 50 ตัวอักษร) จากนักศึกษา จากนั้นเขียนอัลกอริทึมสลับด้านสตริงดังกล่าว (Reverse String) และนับความยาวของตัวอักษรนั้นแสดงทางคอนโซล โดยห้ามเรียกใช้ฟังก์ชัน strlen() ที่มาจากไฟล์ไลบรารี <string.h></p>
+          <p>พัฒนาโปรแกรมภาษา C บันทึกประวัติกระแสไฟฟ้ามอเตอร์ 5 ค่าลงในอาร์เรย์ float currentLog[5] จากนั้นคำนวณ: 1) กระแสไฟฟ้าเฉลี่ย (Average Current), 2) กระแสไฟฟ้าสูงสุด (Peak Current) และ 3) ตรวจสอบเงื่อนไขแจ้งเตือน [OVERLOAD WARNING!] หากค่า Peak เกิน 15.0 A</p>
           
         </div>
       </div>
@@ -1291,9 +1291,8 @@ int main() {
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
 int main() {
-    char str[100];
-    printf(&quot;Enter string: &quot;);
-    // รับค่า ย้อนกลับสตริง และหาความยาวสตริงด้วยการวนลูปเช็คตัวอักขระ '\0'
+    float currentLog[5];
+    // รับค่ากระแสไฟฟ้า 5 ค่าลงในอาร์เรย์ คำนวณค่าเฉลี่ย หาค่า Peak และตรวจสอบ Overload
     return 0;
 }"></textarea>
             </div>
@@ -2005,7 +2004,7 @@ int main() {
           localStorage.setItem('submitted_lab6_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
           
-          const codeKeywords = ["char","\\\\0","while|for","scanf|fgets","printf|putchar|puts","\\["];
+          const codeKeywords = ["\\[\\]","for|while","scanf","printf","float|int"];
           const q1Keywords = ["1 มิติ","2 มิติ","แถว","คอลัมน์","ตาราง","\\0","null"];
           const q2Keywords = ["\\0","null","จบ","array","character","static"];
           
@@ -2138,7 +2137,7 @@ int main() {
       let chDesc = "";
       
       const assembledCode = document.getElementById('challengeCode')?.value || '';
-      const codeKeywords = ["char","\\\\0","while|for","scanf|fgets","printf|putchar|puts","\\["];
+      const codeKeywords = ["\\[\\]","for|while","scanf","printf","float|int"];
       let codeMatches = 0;
       codeKeywords.forEach(kw => {
         if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;

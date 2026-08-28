@@ -1226,7 +1226,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>พัฒนาโปรแกรมรับเลขจำนวนเต็ม 2 ตัว จากนั้นหาและแสดงผลลัพธ์ของตัวดำเนินการระดับบิตเหล่านี้: AND (&), OR (|), XOR (^), และการเลื่อนบิตไปทางซ้าย 2 ตำแหน่ง (Left Shift 2) ของตัวเลขแรก</p>
+          <p>พัฒนาโปรแกรมจำลองการควบคุมพอร์ต I/O (PORTB) ขนาด 8 บิต ของไมโครคอนโทรลเลอร์ โดยรับค่าสถานะเริ่มต้น (0-255) จากนั้นใช้ Bitwise Operators: 1) เปิด Relay 3 (Set Bit 3) ด้วย OR (|), 2) ปิด Valve 5 (Clear Bit 5) ด้วย AND (&) ร่วมกับ NOT (~), และ 3) สลับสถานะ LED 7 (Toggle Bit 7) ด้วย XOR (^) แสดงผลลัพธ์ฐาน 10 และฐาน 16 (0x%02X)</p>
           
         </div>
       </div>
@@ -1294,9 +1294,9 @@ int main() {
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
 int main() {
-    int a, b;
-    printf(&quot;Enter two integers: &quot;);
-    // เขียนโค้ดรับข้อมูลและทำการวิเคราะห์ตัวดำเนินการระดับบิต (Bitwise Operators)
+    unsigned char portb;
+    printf(&quot;Enter initial PORTB state (0-255): &quot;);
+    // เขียนโค้ด Bit Masking เพื่อควบคุม Bit 3, Bit 5 และ Bit 7 ที่นี่
     return 0;
 }"></textarea>
             </div>

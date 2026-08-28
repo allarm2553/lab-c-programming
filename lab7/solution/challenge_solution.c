@@ -2,25 +2,31 @@
 #include <stdlib.h>
 
 int main() {
-    int n, *arr;
-    float sum = 0.0;
-    
-    printf("Enter number of elements (N): ");
+    int n;
+    printf("Enter number of sensor samples to record (N): ");
     if (scanf("%d", &n) == 1 && n > 0) {
-        arr = (int *)malloc(n * sizeof(int));
-        if (arr == NULL) {
+        float *buffer = (float *)malloc(n * sizeof(float));
+        if (buffer == NULL) {
             printf("Memory allocation failed!\n");
             return 1;
         }
         
-        printf("Enter %d integers:\n", n);
+        printf("Enter %d sensor readings:\n", n);
+        float sum = 0.0f;
         for (int i = 0; i < n; i++) {
-            scanf("%d", &arr[i]);
-            sum += arr[i];
+            printf("Reading #%d: ", i + 1);
+            if (scanf("%f", buffer + i) == 1) {
+                sum += *(buffer + i);
+            }
         }
         
-        printf("Average = %.2f\n", sum / n);
-        free(arr);
+        printf("\n--- Dynamic Buffer Processing ---\n");
+        printf("Allocated Memory: %zu Bytes\n", n * sizeof(float));
+        printf("Processed Average: %.2f\n", sum / n);
+        
+        free(buffer);
+        buffer = NULL;
+        printf("Memory successfully released (Heap freed).\n");
     }
     return 0;
 }

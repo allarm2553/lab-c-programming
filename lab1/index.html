@@ -1255,7 +1255,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>พัฒนาโปรแกรมภาษา C เพื่อรับข้อมูลรัศมีของวงกลม (รัศมีเป็นเลขทศนิยม) จากแป้นพิมพ์ จากนั้นคำนวณและแสดงผลลัพธ์พื้นที่วงกลม (Area) และความยาวเส้นรอบวง (Circumference) โดยแสดงผลลัพธ์ทศนิยม 2 ตำแหน่ง</p>
+          <p>พัฒนาโปรแกรมภาษา C สำหรับระบบวัดค่าทางไฟฟ้า โดยรับค่าสัญญาณดิจิทัลจากพอร์ต Analog ADC ขนาด 10 บิต (เลขจำนวนเต็ม 0 - 1023) และค่ากระแสไฟฟ้าในวงจร (เลขทศนิยม float หน่วยแอมแปร์) จากนั้นคำนวณ: 1) แรงดันไฟฟ้า Voltage = (ADC / 1023.0) * 5.0 (โวลต์) และ 2) กำลังไฟฟ้า Power = Voltage * Current (วัตต์) แสดงผลทศนิยม 2 ตำแหน่ง</p>
           
         </div>
       </div>
@@ -1321,13 +1321,13 @@ int main() {
             <div class="form-group">
               <label for="challengeCode">พิมพ์โค้ดภาษา C ของคุณที่นี่</label>
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
-#define PI 3.14159265
 
 int main() {
-    float radius, area, circumference;
+    int adcValue;
+    float current, voltage, power;
     
-    printf(&quot;Enter radius: &quot;);
-    // เขียนโค้ดรับค่า รันผลการคำนวณ และแสดงผลลัพธ์ที่นี่
+    printf(&quot;Enter 10-bit ADC Raw Value (0-1023): &quot;);
+    // รับค่า ADC, กระแสไฟฟ้า คำนวณ Voltage และ Power แล้วแสดงผลที่นี่
     
     return 0;
 }"></textarea>

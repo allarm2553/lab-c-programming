@@ -1229,7 +1229,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>เขียนโปรแกรมภาษา C เพื่อรับขนาดจำนวนเต็ม N จากผู้ใช้ จากนั้นจองหน่วยความจำแบบพลวัตสำหรับเก็บอาร์เรย์จำนวนเต็มขนาด N ตัวด้วย malloc() จากนั้นรับข้อมูลตัวเลข N ตัว คำนวณหาค่าเฉลี่ยของข้อมูลทั้งหมด แล้วแสดงผลลัพธ์ออกทางจอภาพ สุดท้ายให้คืนหน่วยความจำที่จองไว้ด้วย free()</p>
+          <p>พัฒนาโปรแกรมจัดสรรบัฟเฟอร์หน่วยความจำพลวัต (Dynamic Sensor Buffer) โดยรับจำนวนขนาดบัฟเฟอร์ N ตัวอย่าง ใช้ malloc() จองพื้นที่ใน Heap สำหรับ float N ตัว รับค่าและคำนวณค่าเฉลี่ยผ่านพอยน์เตอร์ จากนั้นคืนหน่วยความจำด้วย free() เพื่อป้องกัน Memory Leak</p>
           
         </div>
       </div>
@@ -1298,9 +1298,9 @@ int main() {
 #include <stdlib.h>
 
 int main() {
-    int n, *arr;
-    printf(&quot;Enter number of elements (N): &quot;);
-    // รับค่า N, ทำการ malloc(), ตรวจเช็คค่า NULL, รับข้อมูลและหาเฉลี่ย และปิดท้ายด้วย free()
+    int n;
+    printf(&quot;Enter number of sensor samples to record (N): &quot;);
+    // ใช้ malloc() จองพื้นที่ Heap, รับค่าผ่าน Pointer, คำนวณค่าเฉลี่ย และ free()
     return 0;
 }"></textarea>
             </div>
@@ -2020,7 +2020,7 @@ int main() {
           localStorage.setItem('submitted_lab7_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
           
-          const codeKeywords = ["malloc","free","sizeof","scanf","printf","\\*"];
+          const codeKeywords = ["\\*","&","malloc","free","scanf|printf"];
           const q1Keywords = ["&","\\*","address","ชี้","ค่า","ตำแหน่ง"];
           const q2Keywords = ["free","leak","หน่วยความจำ","คืน","ram"];
           
@@ -2153,7 +2153,7 @@ int main() {
       let chDesc = "";
       
       const assembledCode = document.getElementById('challengeCode')?.value || '';
-      const codeKeywords = ["malloc","free","sizeof","scanf","printf","\\*"];
+      const codeKeywords = ["\\*","&","malloc","free","scanf|printf"];
       let codeMatches = 0;
       codeKeywords.forEach(kw => {
         if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;

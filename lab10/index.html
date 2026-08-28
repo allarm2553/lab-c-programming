@@ -1331,7 +1331,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>พัฒนาโปรแกรมภาษา C เพื่อแก้ไขโจทย์ด้านล่างนี้ในโปรแกรมเดียว:<br>1. <b>ตรวจสอบ Serial Number</b>: รับเลขประจำเครื่อง (สูงสุด 20 ตัวอักษร) แสดงความยาว และตรวจว่าขึ้นต้นด้วย 'SN-' หรือไม่ (ใช้ fgets, strlen, strncmp)<br>2. <b>สร้างชื่อไฟล์รายงาน</b>: รับชื่ออุปกรณ์จากผู้ใช้ แล้วนำมาเชื่อมเข้ากับข้อความ '_Report.txt' เพื่อสร้างชื่อไฟล์ปลายทาง (ใช้ strcpy, strcat)<br>3. <b>จำลองเปลี่ยนสถานะอุปกรณ์</b>: เริ่มต้นสถานะเป็น 'Offline' รับคำสั่งจากผู้ใช้ หากเป็น 'connect' ให้เปลี่ยนสถานะเป็น 'Online' หากเป็น 'disconnect' ให้เปลี่ยนสถานะเป็น 'Offline' หากเป็นคำสั่งอื่นให้พิมพ์ 'คำสั่งไม่ถูกต้อง' และรักษาสถานะเดิมไว้ (ใช้ strcmp, strcpy)</p>
+          <p>พัฒนาโปรแกรมถอดรหัสคำสั่ง Serial/IoT AT Command (เช่น $SET,RELAY,ON# หรือ $READ,TEMP#) โดยใช้ fgets() รับคำสั่งเข้าบัฟเฟอร์อย่างปลอดภัย และใช้ฟังก์ชันใน <string.h> (strstr, strcmp, strlen) ตรวจสอบและสั่งการจำลองการทำงานของอุปกรณ์</p>
           
         </div>
       </div>
@@ -1399,39 +1399,11 @@ int main() {
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 #include <string.h>
 
-void testSerialNumber();
-void generateReportFilename();
-void deviceStatusSimulator();
-
 int main() {
-    printf(&quot;=== กิจกรรมท้าทาย: String Functions ===\n&quot;);
-    testSerialNumber();
-    printf(&quot;\n&quot;);
-    generateReportFilename();
-    printf(&quot;\n&quot;);
-    deviceStatusSimulator();
+    char cmdBuffer[64];
+    printf(&quot;Enter Serial Command (e.g. $SET,RELAY,ON# or $READ,TEMP#): &quot;);
+    // รับคำสั่งและใช้ฟังก์ชัน string.h ตรวจสอบถอดรหัสคำสั่ง
     return 0;
-}
-
-void testSerialNumber() {
-    char sn[30];
-    printf(&quot;กรุณาป้อน Serial Number (สูงสุด 20 ตัวอักษร): &quot;);
-    // เขียนคำสั่งรับค่าและตรวจสอบรูปแบบขึ้นต้นด้วย SN- ที่นี่
-}
-
-void generateReportFilename() {
-    char deviceName[50];
-    char filename[100];
-    printf(&quot;กรุณาป้อนชื่ออุปกรณ์: &quot;);
-    // เขียนคำสั่งรับค่าและต่อคำท้ายด้วย _Report.txt ที่นี่
-}
-
-void deviceStatusSimulator() {
-    char status[20] = &quot;Offline&quot;;
-    char command[30];
-    printf(&quot;สถานะอุปกรณ์ปัจจุบัน: %s\n&quot;, status);
-    printf(&quot;ป้อนคำสั่ง (connect/disconnect): &quot;);
-    // เขียนคำสั่งรับค่า เปรียบเทียบเพื่อสลับสถานะ และแสดงผลสถานะที่นี่
 }"></textarea>
             </div>
             
@@ -2150,7 +2122,7 @@ int main() {
           localStorage.setItem('submitted_lab10_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
           
-          const codeKeywords = ["fgets","strlen","strncmp","strcpy|strncpy","strcat|strncat","strcmp"];
+          const codeKeywords = ["string\\.h","fgets","strlen","strstr|strcmp|strncpy","printf"];
           const q1Keywords = ["overflow","ความยาว","n","ปลอดภัย","\\0"];
           const q2Keywords = ["gets","ปลอดภัย","ขนาด","buffer","\\n","enter"];
           
@@ -2283,7 +2255,7 @@ int main() {
       let chDesc = "";
       
       const assembledCode = document.getElementById('challengeCode')?.value || '';
-      const codeKeywords = ["fgets","strlen","strncmp","strcpy|strncpy","strcat|strncat","strcmp"];
+      const codeKeywords = ["string\\.h","fgets","strlen","strstr|strcmp|strncpy","printf"];
       let codeMatches = 0;
       codeKeywords.forEach(kw => {
         if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;

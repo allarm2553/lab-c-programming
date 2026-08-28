@@ -1,18 +1,22 @@
 #include <stdio.h>
-#define PI 3.14159265
 
 int main() {
-    float radius, area, circumference;
+    int adcValue;
+    float current, voltage, power;
     
-    printf("Enter radius: ");
-    if (scanf("%f", &radius) == 1) {
-        area = PI * radius * radius;
-        circumference = 2 * PI * radius;
-        
-        printf("Radius = %.2f\n", radius);
-        printf("Area = %.2f\n", area);
-        printf("Circumference = %.2f\n", circumference);
+    printf("Enter 10-bit ADC Raw Value (0-1023): ");
+    if (scanf("%d", &adcValue) == 1) {
+        printf("Enter Circuit Current (Amp): ");
+        if (scanf("%f", &current) == 1) {
+            voltage = (adcValue / 1023.0f) * 5.0f;
+            power = voltage * current;
+            
+            printf("\n--- Electrical Measurement Results ---\n");
+            printf("ADC Raw Value: %d\n", adcValue);
+            printf("Measured Voltage: %.2f V\n", voltage);
+            printf("Circuit Current:  %.2f A\n", current);
+            printf("Calculated Power: %.2f W\n", power);
+        }
     }
-    
     return 0;
 }

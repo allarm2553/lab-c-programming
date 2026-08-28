@@ -1228,7 +1228,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>เขียนโปรแกรมภาษา C รับตัวเลขจำนวนเต็มบวก N จากผู้ใช้งาน จากนั้นใช้ลูปซ้อนลูป (Nested Loops) พิมพ์รูปสามเหลี่ยมมุมฉากด้วยตัวอักษรดาว (*) จำนวน N แถว โดยแถวที่ 1 มีดาว 1 ตัว แถวที่ 2 มีดาว 2 ตัว ไล่ไปจนถึงแถวที่ N</p>
+          <p>พัฒนาโปรแกรมจำลองการสร้างสัญญาณ PWM ควบคุมมอเตอร์ โดยรับค่า Duty Cycle (0 - 100%) และจำนวนคาบเวลา N คาบ จากนั้นใช้ลูปซ้อนลูป (Nested Loops) พิมพ์กราฟิกรูปคลื่นสัญญาณพัลส์ดิจิทัล 1 และ 0 ในแต่ละคาบเวลาตามสัดส่วน Duty Cycle พร้อมคำนวณแรงดันไฟฟ้าเฉลี่ย</p>
           
         </div>
       </div>
@@ -1296,9 +1296,9 @@ int main() {
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
 int main() {
-    int n, i, j;
-    printf(&quot;Enter number of rows (N): &quot;);
-    // รับค่า N และใช้ลูป 2 ชั้นเพื่อวาดรูปสามเหลี่ยมดาว
+    int dutyCycle, periods;
+    printf(&quot;Enter PWM Duty Cycle (0 - 100%%): &quot;);
+    // รับค่า Duty Cycle และจำนวนคาบเวลา จากนั้นใช้ Nested Loop วาดสัญญาณ PWM ที่นี่
     return 0;
 }"></textarea>
             </div>

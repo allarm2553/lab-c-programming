@@ -1,34 +1,35 @@
 #include <stdio.h>
 
-struct Student {
-    char id[15];
-    char name[50];
-    float score;
+struct SensorNode {
+    int nodeID;
+    float temperature;
+    float humidity;
+    int relayActive;
 };
 
+void displayTelemetry(const struct SensorNode *node) {
+    printf("\n--- IoT Telemetry Packet Report ---\n");
+    printf("Sensor Node ID:  #%04d\n", node->nodeID);
+    printf("Ambient Temp:    %.2f C\n", node->temperature);
+    printf("Relative Humid:  %.2f %%\n", node->humidity);
+    printf("Relay Status:    %s\n", node->relayActive ? "ACTIVATED [ON]" : "STANDBY [OFF]");
+    printf("Total Struct Size: %zu Bytes\n", sizeof(struct SensorNode));
+}
+
 int main() {
-    struct Student stds[3];
-    float total = 0.0;
-    
-    printf("--- Input 3 Students ---\n");
-    for (int i = 0; i < 3; i++) {
-        printf("Student #%d ID: ", i + 1);
-        scanf("%14s", stds[i].id);
-        printf("Student #%d Name: ", i + 1);
-        scanf("%49s", stds[i].name);
-        printf("Student #%d Score: ", i + 1);
-        scanf("%f", &stds[i].score);
-        total += stds[i].score;
+    struct SensorNode node1;
+    printf("Enter Node ID (e.g. 101): ");
+    if (scanf("%d", &node1.nodeID) == 1) {
+        printf("Enter Temperature (C): ");
+        if (scanf("%f", &node1.temperature) == 1) {
+            printf("Enter Humidity (%%): ");
+            if (scanf("%f", &node1.humidity) == 1) {
+                printf("Enter Relay State (1 for ON, 0 for OFF): ");
+                if (scanf("%d", &node1.relayActive) == 1) {
+                    displayTelemetry(&node1);
+                }
+            }
+        }
     }
-    
-    printf("\n--- Student Records ---\n");
-    printf("%-15s %-20s %s\n", "ID", "Name", "Score");
-    printf("---------------------------------------------\n");
-    for (int i = 0; i < 3; i++) {
-        printf("%-15s %-20s %.2f\n", stds[i].id, stds[i].name, stds[i].score);
-    }
-    printf("---------------------------------------------\n");
-    printf("Average Score: %.2f\n", total / 3.0);
-    
     return 0;
 }

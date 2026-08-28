@@ -107,7 +107,7 @@ function submitLabData(data) {
     }
     
     // 2.5 Run Auto-grading
-    var codeKeywords = ["return","for|while","if","scanf","printf","long|int"];
+    var codeKeywords = ["float|void|double","return","scanf","printf","&|\\*"];
     var q1Keywords = ["value","reference","copy","address","ตัวแปรเดิม"];
     var q2Keywords = ["base case","กรณีฐาน","ล้น","infinite","stack overflow"];
     

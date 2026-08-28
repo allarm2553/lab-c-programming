@@ -1223,7 +1223,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>สร้างโครงสร้างข้อมูล struct Student เพื่อบันทึกข้อมูลนักเรียน ได้แก่ รหัสนักศึกษา (สตริง), ชื่อ-นามสกุล (สตริง) และคะแนนเก็บ (ทศนิยม) จากนั้นเขียนโปรแกรมรับข้อมูลนักศึกษา 3 คน บันทึกค่าลงตัวแปร แสดงผลลัพธ์เป็นตารางให้เรียบร้อย และหาคะแนนเฉลี่ยรวมของนักศึกษาทุกคน</p>
+          <p>พัฒนาโครงสร้างข้อมูลโหนดเซนเซอร์ IoT struct SensorNode ประกอบด้วย: int nodeID, float temperature, float humidity, int relayActive จากนั้นสร้างฟังก์ชัน displayTelemetry รับพอยน์เตอร์โครงสร้าง (struct SensorNode *node) เพื่อแสดงผลค่าโทรมาตรผ่านตัวดำเนินการ -></p>
           
         </div>
       </div>
@@ -1290,15 +1290,16 @@ int main() {
               <label for="challengeCode">พิมพ์โค้ดภาษา C ของคุณที่นี่</label>
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
-struct Student {
-    char id[15];
-    char name[50];
-    float score;
+struct SensorNode {
+    // ประกาศสมาชิกโหนดเซนเซอร์ที่นี่
 };
 
+void displayTelemetry(const struct SensorNode *node) {
+    // แสดงผลข้อมูลผ่านตัวดำเนินการ ->
+}
+
 int main() {
-    struct Student stds[3];
-    // เขียนคำสั่งวนซ้ำรับข้อมูล 3 คน แสดงผลลัพธ์ตารางและค่าเฉลี่ย
+    // รับค่าโหนดเซนเซอร์ เรียกใช้ displayTelemetry
     return 0;
 }"></textarea>
             </div>
@@ -2013,7 +2014,7 @@ int main() {
           localStorage.setItem('submitted_lab8_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
           
-          const codeKeywords = ["struct","for|while","\\.","scanf","printf"];
+          const codeKeywords = ["struct","\\.|\\->","scanf","printf","float|int"];
           const q1Keywords = ["แชร์","แยก","ขนาด","หน่วยความจำ","ตัวแปรใหญ่สุด"];
           const q2Keywords = ["ประหยัด","ram","สลับ","พร้อมกัน","ฝังตัว"];
           
@@ -2146,7 +2147,7 @@ int main() {
       let chDesc = "";
       
       const assembledCode = document.getElementById('challengeCode')?.value || '';
-      const codeKeywords = ["struct","for|while","\\.","scanf","printf"];
+      const codeKeywords = ["struct","\\.|\\->","scanf","printf","float|int"];
       let codeMatches = 0;
       codeKeywords.forEach(kw => {
         if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;

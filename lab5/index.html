@@ -1232,7 +1232,7 @@ int main() {
 
         <div class="challenge-frame">
           <h3><i class="fa-solid fa-trophy"></i> กิจกรรมท้าทาย (Lab Challenge)</h3>
-          <p>พัฒนาโปรแกรมภาษา C เพื่อคำนวณหาค่าแฟกทอเรียล (Factorial) ของตัวเลขจำนวนเต็มบวก N โดยเปรียบเทียบการเขียน 2 ฟังก์ชันย่อยในซอร์สโค้ดเดียวกัน: ฟังก์ชันแรกใช้วิธีวนซ้ำด้วยลูป (Iterative) และฟังก์ชันที่สองใช้วิธีเรียกซ้อนตัวเอง (Recursive)</p>
+          <p>พัฒนาโปรแกรมภาษา C สำหรับระบบวัดค่าเซนเซอร์ โดยสร้าง 2 ฟังก์ชัน: 1) calibrateTemperature(int rawADC) คำนวณแปลงค่า ADC เป็นอุณหภูมิองศาเซลเซียส และ 2) updateMinMax(float temp, float *minTemp, float *maxTemp) อัปเดตค่าอุณหภูมิต่ำสุด-สูงสุดผ่าน Call-by-Reference</p>
           
         </div>
       </div>
@@ -1299,13 +1299,16 @@ int main() {
               <label for="challengeCode">พิมพ์โค้ดภาษา C ของคุณที่นี่</label>
               <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
 
-long long factorialIterative(int n);
-long long factorialRecursive(int n);
+float calibrateTemperature(int rawADC) {
+    // แปลงค่า rawADC เป็น Celsius แล้ว return
+}
+
+void updateMinMax(float temp, float *minTemp, float *maxTemp) {
+    // อัปเดตค่า minTemp และ maxTemp ผ่าน Pointer
+}
 
 int main() {
-    int num;
-    printf(&quot;Enter an integer: &quot;);
-    // รับข้อมูลและแสดงผลลัพธ์การเรียกใช้งานเปรียบเทียบฟังก์ชันทั้งสองแบบ
+    // รับค่า ADC 3 แซมเปิล เรียกใช้ฟังก์ชัน และแสดงผลลัพธ์
     return 0;
 }"></textarea>
             </div>
@@ -2020,7 +2023,7 @@ int main() {
           localStorage.setItem('submitted_lab5_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
           
-          const codeKeywords = ["return","for|while","if","scanf","printf","long|int"];
+          const codeKeywords = ["float|void|double","return","scanf","printf","&|\\*"];
           const q1Keywords = ["value","reference","copy","address","ตัวแปรเดิม"];
           const q2Keywords = ["base case","กรณีฐาน","ล้น","infinite","stack overflow"];
           
@@ -2153,7 +2156,7 @@ int main() {
       let chDesc = "";
       
       const assembledCode = document.getElementById('challengeCode')?.value || '';
-      const codeKeywords = ["return","for|while","if","scanf","printf","long|int"];
+      const codeKeywords = ["float|void|double","return","scanf","printf","&|\\*"];
       let codeMatches = 0;
       codeKeywords.forEach(kw => {
         if (new RegExp(kw, 'i').test(assembledCode)) codeMatches++;
