@@ -650,10 +650,16 @@
 
     /* Buttons */
     .button-group {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
       margin-top: 1.5rem;
+    }
+
+    .button-sub-group {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 0.75rem;
     }
 
     .btn {
@@ -673,6 +679,20 @@
       gap: 0.5rem;
       box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
       transition: all 0.2s;
+    }
+
+    .btn.btn-check-score {
+      background: linear-gradient(135deg, #0d9488, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 1.02rem;
+    }
+
+    .btn.btn-check-score:hover {
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+      filter: brightness(1.08);
+      transform: translateY(-1px);
     }
 
     .btn.btn-secondary {
@@ -790,6 +810,144 @@
       cursor: pointer;
       font-weight: 500;
       font-size: 0.95rem;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Pre-submission Score Modal Styles */
+    .score-check-modal-content {
+      max-width: 560px !important;
+      text-align: left !important;
+      padding: 1.75rem !important;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .score-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .score-modal-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0d9488, #10b981);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .score-hero-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .score-big-num {
+      font-family: var(--heading-font);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #38bdf8;
+      line-height: 1;
+    }
+
+    .score-status-badge {
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .score-status-badge.warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .score-status-badge.danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .score-breakdown-list {
+      overflow-y: auto;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      padding-right: 0.25rem;
+    }
+
+    .score-item-row {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .score-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .score-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .score-item-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .score-item-points {
+      font-family: var(--mono-font);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #38bdf8;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .score-modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 0.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     @keyframes pulse {
@@ -1256,14 +1414,53 @@ int main() {
 
           <!-- Actions -->
           <div class="button-group">
-            <button type="button" class="btn btn-secondary" onclick="window.print()">
-              <i class="fa-solid fa-print"></i> พิมพ์ PDF
+            <button type="button" class="btn btn-check-score" id="checkScoreBtn" onclick="checkPreSubmissionScore()">
+              <i class="fa-solid fa-list-check"></i> ตรวจสอบคะแนนก่อนส่ง (Pre-check Score)
             </button>
-            <button type="submit" class="btn" id="submitBtn">
-              <i class="fa-solid fa-paper-plane"></i> ส่งใบงานออนไลน์
-            </button>
+            <div class="button-sub-group">
+              <button type="button" class="btn btn-secondary" onclick="window.print()">
+                <i class="fa-solid fa-print"></i> พิมพ์ PDF
+              </button>
+              <button type="submit" class="btn" id="submitBtn">
+                <i class="fa-solid fa-paper-plane"></i> ส่งใบงานออนไลน์
+              </button>
+            </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pre-submission Score Check Modal -->
+  <div class="modal-overlay" id="scoreCheckModal">
+    <div class="modal-content score-check-modal-content">
+      <div class="score-modal-header">
+        <div class="score-modal-icon"><i class="fa-solid fa-chart-pie"></i></div>
+        <div>
+          <h3 class="modal-title" style="text-align:left;margin-bottom:0.15rem;font-size:1.25rem;">ผลการประเมินคะแนนเบื้องต้น</h3>
+          <p style="font-size:0.8rem;color:var(--text-muted);text-align:left;margin:0;">ตรวจสอบความสมบูรณ์และคะแนนประเมินก่อนส่งใบงานจริง</p>
+        </div>
+      </div>
+
+      <!-- Score Hero Banner -->
+      <div class="score-hero-card">
+        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 10</span></div>
+        <div class="score-status-badge" id="preScoreBadge">พร้อมส่งรายงาน</div>
+      </div>
+
+      <!-- Breakdown Table / Cards -->
+      <div class="score-breakdown-list" id="preScoreBreakdown">
+        <!-- Dynamic content rendered by checkPreSubmissionScore() -->
+      </div>
+
+      <!-- Modal Footer Action Buttons -->
+      <div class="score-modal-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeScoreCheckModal()">
+          <i class="fa-solid fa-pen-to-square"></i> กลับไปแก้ไข
+        </button>
+        <button type="button" class="btn" id="modalSubmitBtn" onclick="submitFromScoreModal()">
+          <i class="fa-solid fa-paper-plane"></i> ยืนยันส่งใบงาน
+        </button>
       </div>
     </div>
   </div>
@@ -1884,6 +2081,174 @@ int main() {
 
     function closeModal() {
       document.getElementById('statusModal').style.display = 'none';
+    }
+
+    // Pre-submission Score Check System
+    function checkPreSubmissionScore() {
+      // 1. Run blank checks with visual feedback
+      const blankResult = checkBlanks(false);
+      const blankScore = blankResult.blankScore;
+
+      // 2. Challenge Score
+      const code = (document.getElementById('challengeCode')?.value || '').trim();
+      const codeKeywords = ["printf", "\\\\n", "\\\\t"];
+      let codeMatches = 0;
+      codeKeywords.forEach(kw => {
+        if (new RegExp(kw, 'i').test(code)) codeMatches++;
+      });
+      const finalChScore = codeKeywords.length > 0 ? Number(((codeMatches / codeKeywords.length) * 4).toFixed(1)) : 4.0;
+      const chDesc = `พบ ${codeMatches}/${codeKeywords.length} คำสั่ง/ไวยากรณ์สำคัญ`;
+
+      // 3. Question 1
+      const q1 = (document.getElementById('question1')?.value || '').trim();
+      const q1Keywords = ["แปล", "คอมไพล์", "ภาษาเครื่อง", "compiler", "แปลภาษา"];
+      let q1Matches = 0;
+      q1Keywords.forEach(kw => {
+        if (new RegExp(kw, 'i').test(q1)) q1Matches++;
+      });
+      const q1Score = q1Keywords.length > 0 ? (q1Matches >= 1 ? 1.5 : 0) : 1.5;
+
+      // 4. Question 2
+      const q2 = (document.getElementById('question2')?.value || '').trim();
+      const q2Keywords = ["เริ่มต้น", "หลัก", "main", "จุดแรก", "จุดเริ่มต้น"];
+      let q2Matches = 0;
+      q2Keywords.forEach(kw => {
+        if (new RegExp(kw, 'i').test(q2)) q2Matches++;
+      });
+      const q2Score = q2Keywords.length > 0 ? (q2Matches >= 1 ? 1.5 : 0) : 1.5;
+
+      // 5. Attachments
+      let attachScore = 0;
+      if (filesData.screenshotBase64) attachScore += 0.5;
+      if (filesData.codeBase64) attachScore += 0.5;
+
+      // 6. Conclusion check
+      const conclusion = (document.getElementById('conclusion')?.value || '').trim();
+      const hasConclusion = conclusion.length > 5;
+
+      // 7. Student info check
+      const nameVal = (document.getElementById('studentName')?.value || '').trim();
+      const idVal = (document.getElementById('studentId')?.value || '').trim();
+      const groupVal = (document.getElementById('studentGroup')?.value || '').trim();
+      const isInfoComplete = (nameVal && idVal && groupVal);
+
+      // Total score
+      const totalScore = Number((blankScore + finalChScore + q1Score + q2Score + attachScore).toFixed(1));
+
+      // Render Modal Elements
+      document.getElementById('preScoreTotal').innerHTML = `${totalScore.toFixed(1)} <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 10</span>`;
+
+      const badgeEl = document.getElementById('preScoreBadge');
+      if (totalScore >= 8.5 && isInfoComplete && hasConclusion) {
+        badgeEl.className = 'score-status-badge';
+        badgeEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> พร้อมส่งรายงาน ยอดเยี่ยม!';
+      } else if (totalScore >= 5.0) {
+        badgeEl.className = 'score-status-badge warning';
+        badgeEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> พอใช้ - ควรตรวจเพิ่ม';
+      } else {
+        badgeEl.className = 'score-status-badge danger';
+        badgeEl.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ยังไม่สมบูรณ์';
+      }
+
+      // Breakdown Items
+      const breakdownEl = document.getElementById('preScoreBreakdown');
+      breakdownEl.innerHTML = `
+        <!-- Student Info -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-user-graduate" style="color:${isInfoComplete ? '#34d399' : '#f87171'};"></i>
+              ข้อมูลผู้ส่งใบงาน
+            </div>
+            <div class="score-item-desc">${isInfoComplete ? `ชื่อ: ${nameVal} (รหัส: ${idVal})` : '⚠️ กรุณากรอกชื่อ, รหัสนักศึกษา และกลุ่มให้ครบถ้วน'}</div>
+          </div>
+          <div class="score-item-points" style="color:${isInfoComplete ? '#34d399' : '#f87171'};">${isInfoComplete ? 'ครบถ้วน' : 'ไม่ครบ'}</div>
+        </div>
+
+        <!-- Part 1: Blanks -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-puzzle-piece" style="color:${blankScore === 2 ? '#34d399' : (blankScore > 0 ? '#fbbf24' : '#f87171')};"></i>
+              เติมคำตอบโปรแกรมตัวอย่างที่ 2
+            </div>
+            <div class="score-item-desc">ถูกต้อง ${blankResult.correctCount}/${blankResult.totalBlanks} ช่องคำตอบ</div>
+          </div>
+          <div class="score-item-points">${blankScore.toFixed(1)} / 2.0</div>
+        </div>
+
+        <!-- Part 2: Challenge -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-code" style="color:${finalChScore === 4 ? '#34d399' : (finalChScore >= 2 ? '#fbbf24' : '#f87171')};"></i>
+              กิจกรรมท้าทาย (Challenge Code)
+            </div>
+            <div class="score-item-desc">${chDesc}</div>
+          </div>
+          <div class="score-item-points">${finalChScore.toFixed(1)} / 4.0</div>
+        </div>
+
+        <!-- Part 3: Q1 -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-circle-question" style="color:${q1Score > 0 ? '#34d399' : '#f87171'};"></i>
+              คำถามท้ายการทดลอง ข้อที่ 1
+            </div>
+            <div class="score-item-desc">${q1Score > 0 ? 'พบแนวคิดสำคัญในคำตอบ' : '⚠️ ยังไม่พบคำสำคัญทางเทคนิค กรุณาอธิบายเพิ่มเติม'}</div>
+          </div>
+          <div class="score-item-points">${q1Score.toFixed(1)} / 1.5</div>
+        </div>
+
+        <!-- Part 4: Q2 -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-circle-question" style="color:${q2Score > 0 ? '#34d399' : '#f87171'};"></i>
+              คำถามท้ายการทดลอง ข้อที่ 2
+            </div>
+            <div class="score-item-desc">${q2Score > 0 ? 'พบแนวคิดสำคัญในคำตอบ' : '⚠️ ยังไม่พบคำสำคัญทางเทคนิค กรุณาอธิบายเพิ่มเติม'}</div>
+          </div>
+          <div class="score-item-points">${q2Score.toFixed(1)} / 1.5</div>
+        </div>
+
+        <!-- Part 5: Attachments -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-paperclip" style="color:${attachScore === 1 ? '#34d399' : (attachScore > 0 ? '#fbbf24' : '#f87171')};"></i>
+              ไฟล์แนบหลักฐานการทดลอง
+            </div>
+            <div class="score-item-desc">${filesData.screenshotBase64 ? '✓ แนบภาพผลรัน (0.5)' : '✗ ยังไม่แนบภาพผลรัน'}, ${filesData.codeBase64 ? '✓ แนบไฟล์โค้ด (0.5)' : '✗ ยังไม่แนบไฟล์โค้ด'}</div>
+          </div>
+          <div class="score-item-points">${attachScore.toFixed(1)} / 1.0</div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-comment-dots" style="color:${hasConclusion ? '#34d399' : '#f87171'};"></i>
+              สรุปผลการทดลอง
+            </div>
+            <div class="score-item-desc">${hasConclusion ? 'บันทึกสรุปผลเรียบร้อย' : '⚠️ กรุณาพิมพ์สรุปผลการทดลองด้วยตนเอง'}</div>
+          </div>
+          <div class="score-item-points" style="color:${hasConclusion ? '#34d399' : '#f87171'};">${hasConclusion ? 'เรียบร้อย' : 'ยังไม่ระบุ'}</div>
+        </div>
+      `;
+
+      // Open Score Modal
+      document.getElementById('scoreCheckModal').style.display = 'flex';
+    }
+
+    function closeScoreCheckModal() {
+      document.getElementById('scoreCheckModal').style.display = 'none';
+    }
+
+    function submitFromScoreModal() {
+      closeScoreCheckModal();
+      document.getElementById('labForm').requestSubmit();
     }
   </script>
 </body>
