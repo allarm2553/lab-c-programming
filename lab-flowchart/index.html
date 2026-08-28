@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab Basic: การเขียนผังงาน (Flowchart Design & Modeling)</title>
+  <title>Lab Basic: การออกแบบผังงานและการจำลองการทำงาน (Flowchart Design & Logic Tracing)</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* CSS Variables & Design System matching workspace */
+    /* CSS Variables & Design System */
     :root {
       --bg-gradient-start: #0f172a;
       --bg-gradient-end: #020617;
@@ -92,14 +92,14 @@
       color: var(--text-muted);
       font-size: 1.05rem;
       font-weight: 400;
-      max-width: 600px;
+      max-width: 750px;
       margin: 0 auto;
     }
 
     /* 2-Column Grid Layout */
     .lab-grid {
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: 1.1fr 1fr;
       gap: 2rem;
       align-items: start;
     }
@@ -156,7 +156,7 @@
       color: var(--text-main);
     }
 
-    /* Section Frame Styling */
+    /* Section Frames */
     .info-frame {
       background: var(--info-frame-bg);
       border-left: 4px solid var(--info-frame-border);
@@ -197,7 +197,7 @@
 
     h2 {
       font-family: var(--heading-font);
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       margin-bottom: 1rem;
       color: #f1f5f9;
     }
@@ -226,44 +226,10 @@
       margin-bottom: 0.35rem;
     }
 
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      background: rgba(15, 23, 42, 0.3);
-      margin-bottom: 1.5rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.9rem;
-    }
-
-    th {
-      background: rgba(15, 23, 42, 0.6);
-      padding: 0.75rem 1rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    td {
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-      color: #e2e8f0;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    /* Flowchart Symbol Showcase */
+    /* Symbol Grid */
     .symbol-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
@@ -277,12 +243,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
     }
 
     .flowchart-shape {
-      width: 120px;
-      height: 48px;
+      width: 110px;
+      height: 44px;
       border: 2px solid #cbd5e1;
       display: flex;
       align-items: center;
@@ -292,11 +258,63 @@
       color: #0f172a;
     }
 
-    .shape-terminator { border-radius: 24px; background: #fef08a; }
+    .shape-terminator { border-radius: 22px; background: #fef08a; }
     .shape-io { transform: skewX(-20deg); background: #bbf7d0; }
-    .shape-decision { width: 50px; height: 50px; transform: rotate(45deg); background: #fed7aa; margin: 6px 0; }
+    .shape-decision { width: 46px; height: 46px; transform: rotate(45deg); background: #fed7aa; margin: 4px 0; }
     .shape-process { background: #bfdbfe; }
-    .shape-connector { width: 44px; height: 44px; border-radius: 50%; background: #fca5a5; }
+    .shape-connector { width: 40px; height: 40px; border-radius: 50%; background: #fca5a5; }
+
+    /* Flowchart Visual Box */
+    .diagram-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .diagram-box svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Trace Table Styling */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.4);
+      margin-bottom: 1.25rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.8);
+      padding: 0.75rem 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
 
     /* Interactive Inputs inside Worksheet */
     .form-section {
@@ -364,6 +382,13 @@
     textarea {
       padding-left: 1rem;
       resize: vertical;
+      font-family: var(--body-font);
+    }
+
+    textarea.code-textarea {
+      font-family: var(--mono-font);
+      font-size: 0.9rem;
+      tab-size: 2;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -375,8 +400,8 @@
     input.code-inline-input,
     input[type="text"].code-inline-input {
       display: inline-block !important;
-      width: 16ch !important;
-      min-width: 12ch !important;
+      width: 14ch !important;
+      min-width: 10ch !important;
       max-width: 100% !important;
       height: 32px !important;
       margin: 0 4px !important;
@@ -686,7 +711,7 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Pre-submission Score Modal Styles */
+    /* Pre-submission Score Modal */
     .score-check-modal-content {
       max-width: 560px !important;
       text-align: left !important;
@@ -847,6 +872,7 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* Print Styles */
     .print-file-indicator { display: none; }
 
     @media print {
@@ -924,106 +950,218 @@
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <header>
       <div class="logo-container">
         <i class="fa-solid fa-diagram-project logo-icon"></i>
-        <h1>Lab Basic: การเขียนผังงาน (Flowchart Design)</h1>
+        <h1>Lab Basic: การออกแบบผังงานและการจำลองตรรกะ (Flowchart & Logic Tracing)</h1>
       </div>
-      <p class="subtitle">การออกแบบกระบวนการทำงานและผังงานตามมาตรฐาน ANSI/ISO และการวิเคราะห์ IPO Model</p>
+      <p class="subtitle">การวิเคราะห์อัลกอริทึม มาตรฐานสัญลักษณ์ ANSI/ISO การแกะรอยตรรกะด้วย Trace Table และการแปลงผังงานสู่โค้ดภาษา C</p>
     </header>
 
+    <!-- Main Grid Layout -->
     <div class="lab-grid">
-      <!-- Left Column -->
+      
+      <!-- Left Column: Lab Theory, Diagrams & Guided Steps -->
       <div class="lab-content">
+        
+        <!-- Objectives Card -->
         <div class="card">
           <div class="card-header">
             <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
-            <div class="card-title">1. วัตถุประสงค์และเครื่องมือการเรียนรู้</div>
+            <div class="card-title">1. วัตถุประสงค์เชิงพฤติกรรม</div>
           </div>
+          
           <div class="info-frame">
-            <h3><i class="fa-solid fa-graduation-cap"></i> วัตถุประสงค์เชิงพฤติกรรม</h3>
+            <h3><i class="fa-solid fa-graduation-cap"></i> ทักษะที่ผู้เรียนจะได้รับ (Core Competencies)</h3>
             <ul>
-              <li>เข้าใจความหมาย หน้าที่ และมาตรฐานของสัญลักษณ์ผังงาน (Flowchart Symbols)</li>
-              <li>สามารถแปลงลำดับขั้นตอนการทำงาน (Algorithm) เป็นผังงานได้อย่างถูกต้องตามลำดับ</li>
-              <li>สามารถวิเคราะห์องค์ประกอบข้อมูลเข้า (Input), การประมวลผล (Process) และผลลัพธ์ (Output) หรือ IPO Model ได้</li>
+              <li><strong>มาตรฐานผังงาน:</strong> เข้าใจความหมายและกฎเกณฑ์การเชื่อมต่อเส้นทางไหลของสัญลักษณ์ตามมาตรฐาน ANSI/ISO</li>
+              <li><strong>การแกะรอยตรรกะ (Logic Tracing):</strong> สามารถจำลองการทำงานของผังงานทีละขั้นตอนด้วยตาราง <em>Trace Table (Dry Run)</em> เพื่อหาค่าตัวแปรและ Output ได้ถูกต้อง</li>
+              <li><strong>การตรวจสอบข้อผิดพลาด (Debugging):</strong> สามารถวิเคราะห์และชี้จุดผิดพลาดทางตรรกะและโครงสร้างในผังงานได้</li>
+              <li><strong>การแปลงสู่โค้ด (Bridge to Code):</strong> สามารถแปลงกระบวนการในผังงานเป็นโปรแกรมภาษา C ได้อย่างถูกต้องสมบูรณ์</li>
             </ul>
-          </div>
-
-          <h3><i class="fa-solid fa-toolbox"></i> เครื่องมือและซอฟต์แวร์ที่แนะนำ</h3>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>ชื่อเครื่องมือ</th>
-                  <th>ลักษณะการใช้งาน</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>draw.io / diagrams.net</strong></td>
-                  <td>เว็บแอปพลิเคชันวาดผังงานฟรี ใช้งานง่าย Export เป็นรูป PNG/JPG ได้สะดวก</td>
-                </tr>
-                <tr>
-                  <td><strong>Flowgorithm</strong></td>
-                  <td>โปรแกรมจำลองและทดสอบการทำงานของผังงานเชิงโต้ตอบ</td>
-                </tr>
-                <tr>
-                  <td><strong>สมุด / กระดาษเขียนแบบ</strong></td>
-                  <td>วาดผังงานด้วยมือและถ่ายภาพแนบส่งเข้าระบบ</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
 
+        <!-- Flowchart Symbols & Flow Rules -->
         <div class="card">
           <div class="card-header">
             <div class="card-icon"><i class="fa-solid fa-shapes"></i></div>
-            <div class="card-title">2. สัญลักษณ์ผังงานมาตรฐาน (Standard Symbols)</div>
+            <div class="card-title">2. สัญลักษณ์มาตรฐานและกฎการไหล (Flow Rules)</div>
           </div>
-          <p>ผังงาน (Flowchart) คือรูปภาพหรือสัญลักษณ์ที่ใช้แสดงลำดับขั้นตอนการทำงานของโปรแกรมหรือระบบ ช่วยให้เข้าใจการทำงานและตรวจสอบข้อผิดพลาดได้ง่าย:</p>
+
           <div class="symbol-grid">
             <div class="symbol-card">
               <div class="flowchart-shape shape-terminator">Terminator</div>
               <strong style="font-size:0.85rem;color:#fef08a;">จุดเริ่มต้น / สิ้นสุด</strong>
-              <span style="font-size:0.75rem;color:var(--text-muted);">Start / Stop / End</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Start / Stop / End (มีเส้นออก/เข้า 1 เส้น)</span>
             </div>
+
             <div class="symbol-card">
               <div class="flowchart-shape shape-io">Input / Output</div>
               <strong style="font-size:0.85rem;color:#bbf7d0;">การรับ / แสดงผล</strong>
-              <span style="font-size:0.75rem;color:var(--text-muted);">General I/O</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">General I/O (รับ/แสดงข้อมูลทั่วไป)</span>
             </div>
+
             <div class="symbol-card">
               <div class="shape-decision"></div>
-              <strong style="font-size:0.85rem;color:#fed7aa;">การตัดสินใจ / เงื่อนไข</strong>
-              <span style="font-size:0.75rem;color:var(--text-muted);">Decision / Condition</span>
+              <strong style="font-size:0.85rem;color:#fed7aa;">การตัดสินใจ</strong>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Decision (มีเส้นออก 2 ทาง: True/False)</span>
             </div>
+
             <div class="symbol-card">
               <div class="flowchart-shape shape-process">Process</div>
-              <strong style="font-size:0.85rem;color:#bfdbfe;">การประมวลผล / คำนวณ</strong>
-              <span style="font-size:0.75rem;color:var(--text-muted);">Process / Calculation</span>
+              <strong style="font-size:0.85rem;color:#bfdbfe;">การประมวลผล</strong>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Process (คำนวณ/กำหนดค่าข้อมูล)</span>
             </div>
+
             <div class="symbol-card">
               <div class="shape-connector"></div>
               <strong style="font-size:0.85rem;color:#fca5a5;">จุดเชื่อมต่อ</strong>
-              <span style="font-size:0.75rem;color:var(--text-muted);">On-page Connector</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">On-page Connector (รวมเส้นทาง)</span>
             </div>
           </div>
 
           <div class="challenge-frame">
-            <h3><i class="fa-solid fa-lightbulb"></i> หลักการวิเคราะห์ IPO Model</h3>
-            <ul>
-              <li><strong>Input (ข้อมูลเข้า):</strong> ตัวแปรหรือข้อมูลที่โปรแกรมต้องรับจากผู้ใช้ (เช่น ค่ารัศมี, อุณหภูมิ F)</li>
-              <li><strong>Process (การประมวลผล):</strong> สูตรคำนวณหรือขั้นตอนทางตรรกะ (เช่น การคูณ, การเปรียบเทียบ)</li>
-              <li><strong>Output (ผลลัพธ์):</strong> ข้อมูลที่โปรแกรมต้องแสดงผลออกทางจอภาพ (เช่น พื้นที่วงกลม, ค่า C)</li>
-            </ul>
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> กฎเหล็กสำคัญของการเขียนผังงาน</h3>
+            <ol>
+              <li>ทิศทางการไหลมาตรฐานคือ **จากบนลงล่าง (Top to Bottom)** หรือ **จากซ้ายไปขวา (Left to Right)** เท่านั้น</li>
+              <li>สัญลักษณ์ **Decision** ต้องมีเส้นลูกศรพุ่งออกอย่างน้อย 2 ทาง และต้องมีข้อความกำกับ (เช่น `True/False` หรือ `Yes/No`) เสมอ</li>
+              <li>ห้ามมีเส้น Flow Line ลอยโดยไม่มีหัวลูกศรหรือไม่มีจุดเชื่อมต่อ</li>
+            </ol>
           </div>
         </div>
+
+        <!-- Theory: Trace Table Diagram (ตอนที่ 2) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-list-ol"></i></div>
+            <div class="card-title">3. แผนภาพประกอบตอนที่ 2 (Loop Tracing Diagram)</div>
+          </div>
+          
+          <p>พิจารณาผังงานการสะสมผลรวมตัวเลข $1$ ถึง $4$ ด้านล่างนี้ เพื่อนำไปกรอกตาราง Trace Table ในแบบรายงานผล:</p>
+          
+          <div class="diagram-box">
+            <!-- SVG Flowchart Loop Diagram -->
+            <svg viewBox="0 0 400 390" width="100%" height="340" xmlns="http://www.w3.org/2000/svg">
+              <!-- Start -->
+              <rect x="130" y="10" width="140" height="36" rx="18" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+              <text x="200" y="33" font-family="Outfit, Sarabun" font-size="14" font-weight="bold" fill="#713f12" text-anchor="middle">Start</text>
+              <line x1="200" y1="46" x2="200" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- Init Process -->
+              <rect x="110" y="70" width="180" height="42" fill="#bfdbfe" stroke="#2563eb" stroke-width="2" rx="4"/>
+              <text x="200" y="96" font-family="JetBrains Mono" font-size="13" font-weight="600" fill="#1e3a8a" text-anchor="middle">count = 1, sum = 0</text>
+              <line x1="200" y1="112" x2="200" y2="135" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- Connector C1 -->
+              <circle cx="200" cy="142" r="7" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5"/>
+              <line x1="200" y1="149" x2="200" y2="170" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- Decision -->
+              <polygon points="200,170 275,205 200,240 125,205" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+              <text x="200" y="210" font-family="JetBrains Mono" font-size="13" font-weight="bold" fill="#7c2d12" text-anchor="middle">count &lt;= 4 ?</text>
+              
+              <!-- True Branch (Down) -->
+              <line x1="200" y1="240" x2="200" y2="265" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+              <text x="215" y="255" font-family="Outfit" font-size="12" font-weight="bold" fill="#10b981">True</text>
+              
+              <!-- Loop Process -->
+              <rect x="90" y="265" width="220" height="46" fill="#bfdbfe" stroke="#2563eb" stroke-width="2" rx="4"/>
+              <text x="200" y="284" font-family="JetBrains Mono" font-size="12" fill="#1e3a8a" text-anchor="middle">sum = sum + count</text>
+              <text x="200" y="302" font-family="JetBrains Mono" font-size="12" fill="#1e3a8a" text-anchor="middle">count = count + 1</text>
+              
+              <!-- Loop back line -->
+              <polyline points="90,288 40,288 40,142 193,142" fill="none" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- False Branch (Right) -->
+              <line x1="275" y1="205" x2="330" y2="205" stroke="#ef4444" stroke-width="2"/>
+              <line x1="330" y1="205" x2="330" y2="330" stroke="#ef4444" stroke-width="2"/>
+              <line x1="330" y1="330" x2="275" y2="330" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow)"/>
+              <text x="285" y="198" font-family="Outfit" font-size="12" font-weight="bold" fill="#ef4444">False</text>
+              
+              <!-- Output -->
+              <polygon points="135,348 265,348 245,315 115,315" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+              <text x="190" y="337" font-family="JetBrains Mono" font-size="13" font-weight="600" fill="#14532d" text-anchor="middle">Display sum</text>
+              <line x1="190" y1="348" x2="190" y2="365" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- End -->
+              <rect x="120" y="365" width="140" height="24" rx="12" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+              <text x="190" y="381" font-family="Outfit, Sarabun" font-size="12" font-weight="bold" fill="#713f12" text-anchor="middle">End</text>
+              
+              <!-- Arrow Marker Definition -->
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Theory: Debugging Case (ตอนที่ 3) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-bug"></i></div>
+            <div class="card-title">4. แผนภาพประกอบตอนที่ 3 (Bug Hunting Case)</div>
+          </div>
+
+          <p>พิจารณาผังงานโปรแกรมรับคะแนนและตรวจสอบผลสอบด้านล่าง ซึ่งมี **ข้อผิดพลาดทางตรรกะและสัญลักษณ์ 2 จุด**:</p>
+
+          <div class="diagram-box">
+            <svg viewBox="0 0 400 320" width="100%" height="280" xmlns="http://www.w3.org/2000/svg">
+              <!-- Start -->
+              <rect x="140" y="10" width="120" height="32" rx="16" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+              <text x="200" y="31" font-family="Outfit" font-size="13" font-weight="bold" fill="#713f12" text-anchor="middle">Start</text>
+              <line x1="200" y1="42" x2="200" y2="65" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- Point 1 (Bug: Used Process shape for user input) -->
+              <rect x="100" y="65" width="200" height="40" fill="#bfdbfe" stroke="#dc2626" stroke-width="2" stroke-dasharray="4" rx="4"/>
+              <text x="200" y="89" font-family="JetBrains Mono" font-size="12" font-weight="600" fill="#1e3a8a" text-anchor="middle">Input score (คะแนน)</text>
+              <circle cx="85" cy="85" r="12" fill="#ef4444"/>
+              <text x="85" y="90" font-family="Outfit" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">1</text>
+              
+              <line x1="200" y1="105" x2="200" y2="135" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- Decision -->
+              <polygon points="200,135 270,170 200,205 130,170" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+              <text x="200" y="174" font-family="JetBrains Mono" font-size="12" font-weight="bold" fill="#7c2d12" text-anchor="middle">score &gt;= 50 ?</text>
+              
+              <!-- Point 2 (Bug: Inverted branch labels) -->
+              <line x1="130" y1="170" x2="70" y2="170" stroke="#dc2626" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow)"/>
+              <text x="95" y="162" font-family="Outfit" font-size="12" font-weight="bold" fill="#ef4444">True</text>
+              
+              <line x1="270" y1="170" x2="330" y2="170" stroke="#dc2626" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow)"/>
+              <text x="300" y="162" font-family="Outfit" font-size="12" font-weight="bold" fill="#ef4444">False</text>
+              <circle cx="280" cy="145" r="12" fill="#ef4444"/>
+              <text x="280" y="150" font-family="Outfit" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">2</text>
+              
+              <!-- Left Output (Fail) -->
+              <polygon points="20,240 120,240 100,205 0,205" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="60" y="227" font-family="JetBrains Mono" font-size="11" font-weight="bold" fill="#14532d" text-anchor="middle">Print "FAIL"</text>
+              
+              <!-- Right Output (Pass) -->
+              <polygon points="280,240 380,240 360,205 260,205" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="320" y="227" font-family="JetBrains Mono" font-size="11" font-weight="bold" fill="#14532d" text-anchor="middle">Print "PASS"</text>
+              
+              <line x1="60" y1="240" x2="60" y2="275" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="320" y1="240" x2="320" y2="275" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="60" y1="275" x2="320" y2="275" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="190" y1="275" x2="190" y2="295" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+              
+              <!-- End -->
+              <rect x="135" y="295" width="110" height="24" rx="12" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+              <text x="190" y="311" font-family="Outfit" font-size="11" font-weight="bold" fill="#713f12" text-anchor="middle">End</text>
+            </svg>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Right Column -->
+      <!-- Right Column: Interactive Worksheet Form -->
       <div class="form-container">
         <form class="card" id="labForm" onsubmit="handleFormSubmit(event)">
+          
           <div class="card-header">
             <div class="card-icon"><i class="fa-solid fa-file-signature"></i></div>
             <div class="card-title">แบบรายงานผลการปฏิบัติงาน (Worksheet)</div>
@@ -1035,11 +1173,12 @@
             <span id="connectionText">กำลังตรวจสอบการเชื่อมต่อเซิร์ฟเวอร์...</span>
           </div>
 
-          <!-- Section 1 -->
+          <!-- Section 0: Student Info -->
           <div class="form-section">
             <div class="form-section-title">
               <span><i class="fa-solid fa-id-card"></i> ข้อมูลผู้ส่งใบงาน</span>
             </div>
+            
             <div class="form-group">
               <label for="studentName">ชื่อ-นามสกุล นักศึกษา</label>
               <div class="input-wrapper">
@@ -1047,6 +1186,7 @@
                 <input type="text" id="studentName" required placeholder="นายสมชาย ใจดี">
               </div>
             </div>
+
             <div class="form-group">
               <label for="studentId">รหัสประจำตัวนักศึกษา</label>
               <div class="input-wrapper">
@@ -1054,6 +1194,7 @@
                 <input type="text" id="studentId" required placeholder="65010999">
               </div>
             </div>
+
             <div class="form-group">
               <label for="studentGroup">ชั้น / ตอนเรียน (ห้อง)</label>
               <div class="input-wrapper">
@@ -1061,6 +1202,7 @@
                 <input type="text" id="studentGroup" required placeholder="ชฟ. 1/1 หรือ กลุ่ม 1">
               </div>
             </div>
+
             <div class="form-group">
               <label for="labDate">วันที่ทำปฏิบัติการ</label>
               <div class="input-wrapper">
@@ -1070,224 +1212,193 @@
             </div>
           </div>
 
-          <!-- Section 2 -->
+          <!-- Section 1: Standard & Flow Rules (1.5 pts) -->
           <div class="form-section">
             <div class="form-section-title">
-              <span><i class="fa-solid fa-puzzle-piece"></i> ตอนที่ 2.1: ระบุชื่อสัญลักษณ์ผังงาน</span>
-              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(5 คะแนน)</span>
+              <span><i class="fa-solid fa-puzzle-piece"></i> ตอนที่ 1: มาตรฐานและกฎของผังงาน</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(1.5 คะแนน)</span>
             </div>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">จงพิมพ์ชื่อภาษาไทยหรือภาษาอังกฤษของสัญลักษณ์ผังงานต่อไปนี้:</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">เติมคำตอบที่ถูกต้องลงในช่องว่างตามมาตรฐาน ANSI/ISO:</p>
+            
             <div class="form-group">
-              <label>2.1.1 สัญลักษณ์วงรี (Terminator):</label>
-              <input type="text" class="code-inline-input" id="ans211" placeholder="เริ่มต้น / สิ้นสุด / Terminator" oninput="autoResizeInlineInput(this)">
-            </div>
-            <div class="form-group">
-              <label>2.1.2 สัญลักษณ์สี่เหลี่ยมด้านขนาน (Input/Output):</label>
-              <input type="text" class="code-inline-input" id="ans212" placeholder="รับข้อมูล / แสดงผล / I/O" oninput="autoResizeInlineInput(this)">
+              <label>1.1 สัญลักษณ์รูปสี่เหลี่ยมด้านขนาน (Parallelogram) ใช้สำหรับ:</label>
+              <input type="text" class="code-inline-input" id="ans11" placeholder="การรับข้อมูลหรือแสดงผล / Input-Output" oninput="autoResizeInlineInput(this)">
             </div>
             <div class="form-group">
-              <label>2.1.3 สัญลักษณ์สี่เหลี่ยมข้าวหลามตัด (Decision):</label>
-              <input type="text" class="code-inline-input" id="ans213" placeholder="ตัดสินใจ / เงื่อนไข / Decision" oninput="autoResizeInlineInput(this)">
+              <label>1.2 สัญลักษณ์การตัดสินใจ (Decision) ต้องมีเส้นทางเลือกพุ่งออกอย่างน้อย 2 เส้น และต้องมีข้อความใดกำกับเสมอ:</label>
+              <input type="text" class="code-inline-input" id="ans12" placeholder="True/False หรือ Yes/No" oninput="autoResizeInlineInput(this)">
             </div>
             <div class="form-group">
-              <label>2.1.4 สัญลักษณ์สี่เหลี่ยมผืนผ้า (Process):</label>
-              <input type="text" class="code-inline-input" id="ans214" placeholder="ประมวลผล / คำนวณ / Process" oninput="autoResizeInlineInput(this)">
-            </div>
-            <div class="form-group">
-              <label>2.1.5 สัญลักษณ์วงกลมขนาดเล็ก (Connector):</label>
-              <input type="text" class="code-inline-input" id="ans215" placeholder="จุดเชื่อมต่อ / Connector" oninput="autoResizeInlineInput(this)">
+              <label>1.3 ทิศทางการไหลมาตรฐานของ Flow Line ควรเรียงลำดับจาก:</label>
+              <input type="text" class="code-inline-input" id="ans13" placeholder="บนลงล่าง หรือ ซ้ายไปขวา" oninput="autoResizeInlineInput(this)">
             </div>
           </div>
 
-          <!-- Section 3 -->
+          <!-- Section 2: Trace Table / Dry Run (2.5 pts) -->
           <div class="form-section">
             <div class="form-section-title">
-              <span><i class="fa-solid fa-file-image"></i> ตอนที่ 2.2: แปลงข้อความเป็นผังงาน</span>
-              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(15 คะแนน)</span>
+              <span><i class="fa-solid fa-table-list"></i> ตอนที่ 2: การแกะรอยตรรกะ (Trace Table)</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(2.5 คะแนน)</span>
             </div>
-            <!-- 2.2.1 -->
-            <div class="form-group">
-              <label><strong>2.2.1 ผังงานต้มบะหมี่กึ่งสำเร็จรูป</strong> (1. เริ่มต้น -> 2. ต้มน้ำเดือด -> 3. ใส่บะหมี่ -> 4. ต้ม 1 นาที -> 5. ใส่เครื่องปรุงยกลง -> 6. รับประทาน -> 7. จบ)</label>
-              <div class="upload-zone-wrapper">
-                <div class="upload-area" id="dropArea221" onclick="document.getElementById('file221').click()">
-                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                  <div class="upload-text">คลิกหรือลากรูปผังงาน 2.2.1 มาวางที่นี่</div>
-                  <div class="upload-hint">รองรับ PNG, JPG, JPEG (ไม่เกิน 10MB)</div>
-                  <input type="file" id="file221" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart221')">
-                </div>
-                <div class="file-preview" id="preview221">
-                  <img src="" class="preview-thumbnail" id="thumb221" alt="preview">
-                  <div class="preview-details">
-                    <div class="preview-name" id="name221">-</div>
-                    <div class="preview-size" id="size221">-</div>
-                  </div>
-                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart221')"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-              </div>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
+              จากผังงานในหัวข้อที่ 3 (แผนภาพสะสมผลรวมตัวเลข) ให้นักเรียนจำลองการรันทีละรอบ แล้วเติมค่าลงในตาราง Trace Table:
+            </p>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>รอบที่</th>
+                    <th>เงื่อนไข count &lt;= 4</th>
+                    <th>ค่า count</th>
+                    <th>ค่า sum หลังบวก</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>รอบที่ 1</strong></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c1" placeholder="True" style="width:9ch!important;"></td>
+                    <td>1</td>
+                    <td><input type="text" class="code-inline-input" id="tr_s1" placeholder="1" style="width:7ch!important;"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>รอบที่ 2</strong></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c2" placeholder="True" style="width:9ch!important;"></td>
+                    <td>2</td>
+                    <td><input type="text" class="code-inline-input" id="tr_s2" placeholder="3" style="width:7ch!important;"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>รอบที่ 3</strong></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c3" placeholder="True" style="width:9ch!important;"></td>
+                    <td>3</td>
+                    <td><input type="text" class="code-inline-input" id="tr_s3" placeholder="6" style="width:7ch!important;"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>รอบที่ 4</strong></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c4" placeholder="True" style="width:9ch!important;"></td>
+                    <td>4</td>
+                    <td><input type="text" class="code-inline-input" id="tr_s4" placeholder="10" style="width:7ch!important;"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>รอบที่ 5 (จบ)</strong></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c5" placeholder="False" style="width:9ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_count5" placeholder="5" style="width:7ch!important;"></td>
+                    <td><strong>10</strong></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <!-- 2.2.2 -->
-            <div class="form-group" style="margin-top:1.25rem;">
-              <label><strong>2.2.2 ผังงานการตัดสินใจซักผ้า / ฝนตก</strong> (ถ้าฝนไม่ตก ออกไปดูหนัง / ถ้าฝนตก อยู่บ้านอ่านหนังสือ)</label>
-              <div class="upload-zone-wrapper">
-                <div class="upload-area" id="dropArea222" onclick="document.getElementById('file222').click()">
-                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                  <div class="upload-text">คลิกหรือลากรูปผังงาน 2.2.2 มาวางที่นี่</div>
-                  <div class="upload-hint">รองรับ PNG, JPG, JPEG</div>
-                  <input type="file" id="file222" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart222')">
-                </div>
-                <div class="file-preview" id="preview222">
-                  <img src="" class="preview-thumbnail" id="thumb222" alt="preview">
-                  <div class="preview-details">
-                    <div class="preview-name" id="name222">-</div>
-                    <div class="preview-size" id="size222">-</div>
-                  </div>
-                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart222')"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- 2.2.3 -->
-            <div class="form-group" style="margin-top:1.25rem;">
-              <label><strong>2.2.3 ผังงานตรวจสอบเงื่อนไข num</strong> (num=1 พิมพ์ Number One, num=2 พิมพ์ Number Two, num=3 พิมพ์ Number Three, อื่นๆ พิมพ์ Error)</label>
-              <div class="upload-zone-wrapper">
-                <div class="upload-area" id="dropArea223" onclick="document.getElementById('file223').click()">
-                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                  <div class="upload-text">คลิกหรือลากรูปผังงาน 2.2.3 มาวางที่นี่</div>
-                  <div class="upload-hint">รองรับ PNG, JPG, JPEG</div>
-                  <input type="file" id="file223" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart223')">
-                </div>
-                <div class="file-preview" id="preview223">
-                  <img src="" class="preview-thumbnail" id="thumb223" alt="preview">
-                  <div class="preview-details">
-                    <div class="preview-name" id="name223">-</div>
-                    <div class="preview-size" id="size223">-</div>
-                  </div>
-                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart223')"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-              </div>
+            <div class="form-group" style="margin-top:0.75rem;">
+              <label for="traceOutput"><strong>ค่าที่แสดงผลออกทางจอภาพ (Output) สุดท้ายคือ:</strong></label>
+              <input type="text" class="code-inline-input" id="traceOutput" placeholder="10" style="width:12ch!important;">
             </div>
           </div>
 
-          <!-- Section 4 -->
+          <!-- Section 3: Flowchart Debugging (2.0 pts) -->
           <div class="form-section">
             <div class="form-section-title">
-              <span><i class="fa-solid fa-calculator"></i> ตอนที่ 2.3: วิเคราะห์ IPO Model และเขียนผังงาน</span>
-              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(24 คะแนน)</span>
+              <span><i class="fa-solid fa-bug"></i> ตอนที่ 3: การค้นหาและแก้จุดผิด (Debugging)</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(2.0 คะแนน)</span>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
+              จากผังงานในหัวข้อที่ 4 (Bug Hunting Case) จงวิเคราะห์ข้อผิดพลาดและเสนอวิธีแก้ไข:
+            </p>
+
+            <div class="form-group">
+              <label for="bug1Desc">3.1 จุดผิดหมายเลข 1 ผิดพลาดอย่างไร และต้องแก้ไขเป็นสัญลักษณ์ใด?</label>
+              <textarea id="bug1Desc" rows="2" required placeholder="อธิบายข้อผิดพลาดของสัญลักษณ์หมายเลข 1 และระบุสัญลักษณ์ที่ถูกต้อง..."></textarea>
             </div>
 
-            <!-- 2.3.1 -->
-            <div class="form-group" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
-              <label><strong>2.3.1 คำนวณแคลอรี่: Calories = bodyweight * 19</strong></label>
-              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:0.5rem; margin-top:0.4rem;">
+            <div class="form-group" style="margin-top:0.75rem;">
+              <label for="bug2Desc">3.2 จุดผิดหมายเลข 2 ส่งผลให้โปรแกรมทำงานผิดพลาดอย่างไร และต้องแก้ไขอย่างไร?</label>
+              <textarea id="bug2Desc" rows="2" required placeholder="อธิบายผลกระทบของเส้นทาง True/False ที่สลับกัน และวิธีแก้ไข..."></textarea>
+            </div>
+          </div>
+
+          <!-- Section 4: Challenge: Flowchart to C Code Bridge (3.0 pts) -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span><i class="fa-solid fa-code"></i> ตอนที่ 4: กิจกรรมท้าทาย (Flowchart to C Code)</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(3.0 คะแนน)</span>
+            </div>
+            
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
+              <strong>โจทย์:</strong> ออกแบบโปรแกรมคำนวณดัชนีมวลกาย (BMI) สูตร <code>BMI = weight / (height * height)</code> โดยรับค่าน้ำหนัก (kg) และส่วนสูง (m) ถ้า BMI &gt;= 25.0 ให้แสดง "Overweight" ถ้าไม่ใช่ให้แสดง "Normal"
+            </p>
+
+            <!-- 4.1 IPO Analysis -->
+            <div class="form-group">
+              <label><strong>4.1 วิเคราะห์ IPO Model:</strong></label>
+              <div style="display:grid; grid-template-columns: 1fr 1.2fr 1fr; gap:0.5rem; margin-top:0.4rem;">
                 <div>
                   <span style="font-size:0.75rem;color:var(--text-muted);">Input:</span>
-                  <input type="text" id="input231" value="bodyweight" readonly style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                  <input type="text" id="ipoInput" placeholder="weight, height" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
                 </div>
                 <div>
                   <span style="font-size:0.75rem;color:var(--text-muted);">Process:</span>
-                  <input type="text" id="process231" value="Calories = bodyweight * 19" readonly style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                  <input type="text" id="ipoProcess" placeholder="BMI = weight / (height*height)" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
                 </div>
                 <div>
                   <span style="font-size:0.75rem;color:var(--text-muted);">Output:</span>
-                  <input type="text" id="output231" value="Calories" readonly style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
-                </div>
-              </div>
-              <div class="upload-zone-wrapper">
-                <div class="upload-area" id="dropArea231" onclick="document.getElementById('file231').click()">
-                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                  <div class="upload-text">แนบรูปผังงาน 2.3.1 (Calories)</div>
-                  <input type="file" id="file231" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart231')">
-                </div>
-                <div class="file-preview" id="preview231">
-                  <img src="" class="preview-thumbnail" id="thumb231" alt="preview">
-                  <div class="preview-details">
-                    <div class="preview-name" id="name231">-</div>
-                    <div class="preview-size" id="size231">-</div>
-                  </div>
-                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart231')"><i class="fa-solid fa-xmark"></i></button>
+                  <input type="text" id="ipoOutput" placeholder="BMI, ข้อความ Overweight/Normal" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
                 </div>
               </div>
             </div>
 
-            <!-- 2.3.2 -->
-            <div class="form-group" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-top:1rem;">
-              <label><strong>2.3.2 พื้นที่และเส้นรอบวงวงกลม: CircleArea = PI * r * r, CirclePerimeter = 2 * PI * r</strong></label>
-              <div style="display:grid; grid-template-columns: 1fr 1.5fr 1fr; gap:0.5rem; margin-top:0.4rem;">
-                <div>
-                  <span style="font-size:0.75rem;color:var(--text-muted);">Input:</span>
-                  <input type="text" id="input232" placeholder="r หรือ radius" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
-                </div>
-                <div>
-                  <span style="font-size:0.75rem;color:var(--text-muted);">Process:</span>
-                  <input type="text" id="process232" placeholder="สูตรคำนวณพื้นที่และเส้นรอบวง" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
-                </div>
-                <div>
-                  <span style="font-size:0.75rem;color:var(--text-muted);">Output:</span>
-                  <input type="text" id="output232" placeholder="CircleArea, CirclePerimeter" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
-                </div>
-              </div>
-              <div class="upload-zone-wrapper">
-                <div class="upload-area" id="dropArea232" onclick="document.getElementById('file232').click()">
-                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                  <div class="upload-text">แนบรูปผังงาน 2.3.2 (Circle)</div>
-                  <input type="file" id="file232" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart232')">
-                </div>
-                <div class="file-preview" id="preview232">
-                  <img src="" class="preview-thumbnail" id="thumb232" alt="preview">
-                  <div class="preview-details">
-                    <div class="preview-name" id="name232">-</div>
-                    <div class="preview-size" id="size232">-</div>
-                  </div>
-                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart232')"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- 2.3.3 -->
+            <!-- 4.2 Upload Flowchart Image -->
             <div class="form-group" style="margin-top:1rem;">
-              <label><strong>2.3.3 แปลงอุณหภูมิ: C = (F - 32) / 1.8</strong></label>
-              <div style="display:grid; grid-template-columns: 1fr 1.5fr 1fr; gap:0.5rem; margin-top:0.4rem;">
-                <div>
-                  <span style="font-size:0.75rem;color:var(--text-muted);">Input:</span>
-                  <input type="text" id="input233" placeholder="F หรือ fahrenheit" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
-                </div>
-                <div>
-                  <span style="font-size:0.75rem;color:var(--text-muted);">Process:</span>
-                  <input type="text" id="process233" placeholder="C = (F - 32) / 1.8" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
-                </div>
-                <div>
-                  <span style="font-size:0.75rem;color:var(--text-muted);">Output:</span>
-                  <input type="text" id="output233" placeholder="C หรือ celsius" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
-                </div>
-              </div>
+              <label><strong>4.2 แนบรูปภาพผังงาน (Flowchart) ที่วาดสมบูรณ์แล้ว:</strong></label>
               <div class="upload-zone-wrapper">
-                <div class="upload-area" id="dropArea233" onclick="document.getElementById('file233').click()">
+                <div class="upload-area" id="dropAreaBmi" onclick="document.getElementById('fileBmi').click()">
                   <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                  <div class="upload-text">แนบรูปผังงาน 2.3.3 (Fahrenheit to Celsius)</div>
-                  <input type="file" id="file233" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchart233')">
+                  <div class="upload-text">คลิกหรือลากรูปผังงาน BMI มาวางที่นี่</div>
+                  <div class="upload-hint">รองรับ PNG, JPG, JPEG (ไม่เกิน 10MB)</div>
+                  <input type="file" id="fileBmi" class="file-input" accept="image/*" onchange="handleSingleFileUpload(this, 'flowchartBmi')">
                 </div>
-                <div class="file-preview" id="preview233">
-                  <img src="" class="preview-thumbnail" id="thumb233" alt="preview">
+                <div class="file-preview" id="previewBmi">
+                  <img src="" class="preview-thumbnail" id="thumbBmi" alt="preview">
                   <div class="preview-details">
-                    <div class="preview-name" id="name233">-</div>
-                    <div class="preview-size" id="size233">-</div>
+                    <div class="preview-name" id="nameBmi">-</div>
+                    <div class="preview-size" id="sizeBmi">-</div>
                   </div>
-                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchart233')"><i class="fa-solid fa-xmark"></i></button>
+                  <button type="button" class="remove-file-btn" onclick="removeSingleFile('flowchartBmi')"><i class="fa-solid fa-xmark"></i></button>
                 </div>
               </div>
             </div>
+
+            <!-- 4.3 C Code Implementation -->
+            <div class="form-group" style="margin-top:1rem;">
+              <label for="cCodeArea"><strong>4.3 โค้ดภาษา C ที่แปลงจากผังงานข้างต้น:</strong></label>
+              <textarea id="cCodeArea" class="code-textarea" rows="8" required placeholder='#include <stdio.h>
+
+int main() {
+    float weight, height, bmi;
+    printf("Enter weight(kg) and height(m): ");
+    scanf("%f %f", &weight, &height);
+    
+    bmi = weight / (height * height);
+    printf("BMI = %.2f\n", bmi);
+    
+    if (bmi >= 25.0) {
+        printf("Overweight\n");
+    } else {
+        printf("Normal\n");
+    }
+    return 0;
+}'></textarea>
+            </div>
           </div>
 
-          <!-- Section 5 -->
+          <!-- Section 5: Conclusion & Reflection (1.0 pt) -->
           <div class="form-section">
             <div class="form-section-title">
-              <span><i class="fa-solid fa-comment-dots"></i> 3. สรุปผลการทดลอง</span>
+              <span><i class="fa-solid fa-comment-dots"></i> 5. สรุปผลการทดลองและการสะท้อนคิด</span>
               <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
             <div class="form-group">
-              <label for="conclusion">สรุปสิ่งที่ได้เรียนรู้จากการเขียนผังงานและข้อควรระวังในการออกแบบ</label>
-              <textarea id="conclusion" rows="4" required placeholder="อธิบายความสำคัญของการใช้สัญลักษณ์ผังงานตามมาตรฐาน ประโยชน์ของการวิเคราะห์ IPO Model และปัญหาที่พบในการทดลองนี้..."></textarea>
+              <label for="conclusion">สรุปประโยชน์ของการออกแบบผังงานและการทำ Trace Table ก่อนลงมือเขียนโค้ดจริง</label>
+              <textarea id="conclusion" rows="4" required placeholder="อธิบายความสำคัญของการวางแผนตรรกะด้วยผังงาน ประโยชน์ของการทำ Trace Table ในการไล่ค่าตัวแปร และข้อผิดพลาดที่ควรระวังในการออกแบบ Flowchart..."></textarea>
             </div>
           </div>
 
@@ -1321,7 +1432,7 @@
         </div>
       </div>
       <div class="score-hero-card">
-        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 45</span></div>
+        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 10.0</span></div>
         <div class="score-status-badge" id="preScoreBadge">พร้อมส่งรายงาน</div>
       </div>
       <div class="score-breakdown-list" id="preScoreBreakdown"></div>
@@ -1350,12 +1461,7 @@
     const SCRIPT_URL = "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec";
 
     const flowchartsData = {
-      flowchart221Base64: null, flowchart221Name: null, flowchart221Type: null,
-      flowchart222Base64: null, flowchart222Name: null, flowchart222Type: null,
-      flowchart223Base64: null, flowchart223Name: null, flowchart223Type: null,
-      flowchart231Base64: null, flowchart231Name: null, flowchart231Type: null,
-      flowchart232Base64: null, flowchart232Name: null, flowchart232Type: null,
-      flowchart233Base64: null, flowchart233Name: null, flowchart233Type: null
+      flowchartBmiBase64: null, flowchartBmiName: null, flowchartBmiType: null
     };
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -1394,12 +1500,12 @@
     function autoResizeInlineInput(el) {
       if (!el) return;
       const charCount = el.value ? el.value.length : 0;
-      const minChars = 14;
-      el.style.width = Math.max(minChars, charCount + 3) + "ch";
+      const minChars = 10;
+      el.style.width = Math.max(minChars, charCount + 2) + "ch";
     }
 
     function setupAntiCheatProtection() {
-      const protectedFields = [document.getElementById("conclusion")].filter(Boolean);
+      const protectedFields = [document.getElementById("conclusion"), document.getElementById("bug1Desc"), document.getElementById("bug2Desc")].filter(Boolean);
 
       function showAntiCheatWarning(targetEl) {
         let warnToast = document.getElementById("_antiCheatToast");
@@ -1453,18 +1559,17 @@
       const file = input.files[0];
       if (!file) return;
 
-      const num = key.replace("flowchart", "");
       const reader = new FileReader();
       reader.onload = (e) => {
-        flowchartsData[key + "Base64"] = e.target.result;
-        flowchartsData[key + "Name"] = file.name;
-        flowchartsData[key + "Type"] = file.type;
+        flowchartsData.flowchartBmiBase64 = e.target.result;
+        flowchartsData.flowchartBmiName = file.name;
+        flowchartsData.flowchartBmiType = file.type;
 
-        const dropArea = document.getElementById("dropArea" + num);
-        const preview = document.getElementById("preview" + num);
-        const thumb = document.getElementById("thumb" + num);
-        const nameEl = document.getElementById("name" + num);
-        const sizeEl = document.getElementById("size" + num);
+        const dropArea = document.getElementById("dropAreaBmi");
+        const preview = document.getElementById("previewBmi");
+        const thumb = document.getElementById("thumbBmi");
+        const nameEl = document.getElementById("nameBmi");
+        const sizeEl = document.getElementById("sizeBmi");
 
         if (dropArea) dropArea.style.display = "none";
         if (preview) preview.style.display = "flex";
@@ -1476,14 +1581,13 @@
     }
 
     function removeSingleFile(key) {
-      const num = key.replace("flowchart", "");
-      flowchartsData[key + "Base64"] = null;
-      flowchartsData[key + "Name"] = null;
-      flowchartsData[key + "Type"] = null;
+      flowchartsData.flowchartBmiBase64 = null;
+      flowchartsData.flowchartBmiName = null;
+      flowchartsData.flowchartBmiType = null;
 
-      const fileInput = document.getElementById("file" + num);
-      const dropArea = document.getElementById("dropArea" + num);
-      const preview = document.getElementById("preview" + num);
+      const fileInput = document.getElementById("fileBmi");
+      const dropArea = document.getElementById("dropAreaBmi");
+      const preview = document.getElementById("previewBmi");
 
       if (fileInput) fileInput.value = "";
       if (dropArea) dropArea.style.display = "block";
@@ -1491,18 +1595,17 @@
     }
 
     function checkPreSubmissionScore() {
-      const symbolAnswers = [
-        { id: "ans211", correct: ["เริ่มต้น","สิ้นสุด","terminator","terminal","จบ"], label: "2.1.1 Terminator" },
-        { id: "ans212", correct: ["ข้อมูล","input","output","i/o","รับ","แสดง"], label: "2.1.2 Input/Output" },
-        { id: "ans213", correct: ["ตัดสิน","decision","เงื่อนไข","rhombus","เพชร"], label: "2.1.3 Decision" },
-        { id: "ans214", correct: ["process","ประมวล","กระบวน","คำนวณ"], label: "2.1.4 Process" },
-        { id: "ans215", correct: ["connector","เชื่อม","วงกลม","จุดเชื่อม"], label: "2.1.5 Connector" }
+      // 1. Part 1: Standards (1.5 pts = 3 items * 0.5)
+      const part1Answers = [
+        { id: "ans11", keywords: ["input", "output", "รับ", "แสดง", "ข้อมูล", "i/o"] },
+        { id: "ans12", keywords: ["true", "false", "yes", "no", "จริง", "เท็จ", "ใช่", "ไม่ใช่"] },
+        { id: "ans13", keywords: ["บน", "ล่าง", "ซ้าย", "ขวา", "top", "bottom", "left", "right"] }
       ];
-      let symScore = 0;
-      symbolAnswers.forEach(item => {
+      let p1Score = 0;
+      part1Answers.forEach(item => {
         const el = document.getElementById(item.id);
         const val = (el ? el.value : "").toLowerCase().trim();
-        const isMatch = item.correct.some(kw => val.indexOf(kw.toLowerCase()) !== -1);
+        const isMatch = item.keywords.some(kw => val.indexOf(kw.toLowerCase()) !== -1);
         if (el) {
           if (val.length > 0) {
             el.classList.toggle("correct", isMatch);
@@ -1511,50 +1614,91 @@
             el.classList.remove("correct", "incorrect");
           }
         }
-        if (isMatch) symScore++;
+        if (isMatch) p1Score += 0.5;
       });
 
-      let pic22Score = 0;
-      let pic22Count = 0;
-      if (flowchartsData.flowchart221Base64) { pic22Score += 5; pic22Count++; }
-      if (flowchartsData.flowchart222Base64) { pic22Score += 5; pic22Count++; }
-      if (flowchartsData.flowchart223Base64) { pic22Score += 5; pic22Count++; }
+      // 2. Part 2: Trace Table (2.5 pts = 10 blanks * 0.25)
+      const traceAnswers = [
+        { id: "tr_c1", val: ["t", "true", "จริง", "yes"] },
+        { id: "tr_s1", val: ["1"] },
+        { id: "tr_c2", val: ["t", "true", "จริง", "yes"] },
+        { id: "tr_s2", val: ["3"] },
+        { id: "tr_c3", val: ["t", "true", "จริง", "yes"] },
+        { id: "tr_s3", val: ["6"] },
+        { id: "tr_c4", val: ["t", "true", "จริง", "yes"] },
+        { id: "tr_s4", val: ["10"] },
+        { id: "tr_c5", val: ["f", "false", "เท็จ", "no"] },
+        { id: "tr_count5", val: ["5"] },
+        { id: "traceOutput", val: ["10"] }
+      ];
+      let p2Correct = 0;
+      traceAnswers.forEach(item => {
+        const el = document.getElementById(item.id);
+        const userVal = (el ? el.value : "").toLowerCase().trim();
+        const isOk = item.val.some(v => userVal === v || userVal.indexOf(v) !== -1);
+        if (el) {
+          if (userVal.length > 0) {
+            el.classList.toggle("correct", isOk);
+            el.classList.toggle("incorrect", !isOk);
+          } else {
+            el.classList.remove("correct", "incorrect");
+          }
+        }
+        if (isOk) p2Correct++;
+      });
+      const p2Score = Number(((p2Correct / traceAnswers.length) * 2.5).toFixed(1));
 
-      function testIPO(iv, pv, ov, ik, pk, ok) {
-        let s = 0;
-        if ((iv || "").toLowerCase().indexOf(ik.toLowerCase()) !== -1) s++;
-        if ((pv || "").toLowerCase().indexOf(pk.toLowerCase()) !== -1) s++;
-        if ((ov || "").toLowerCase().indexOf(ok.toLowerCase()) !== -1) s++;
-        return s;
-      }
-      const s231 = testIPO(document.getElementById("input231") ? document.getElementById("input231").value : "", document.getElementById("process231") ? document.getElementById("process231").value : "", document.getElementById("output231") ? document.getElementById("output231").value : "", "bodyweight", "calories", "calories");
-      const s232 = testIPO(document.getElementById("input232") ? document.getElementById("input232").value : "", document.getElementById("process232") ? document.getElementById("process232").value : "", document.getElementById("output232") ? document.getElementById("output232").value : "", "r", "circle", "circle");
-      const s233 = testIPO(document.getElementById("input233") ? document.getElementById("input233").value : "", document.getElementById("process233") ? document.getElementById("process233").value : "", document.getElementById("output233") ? document.getElementById("output233").value : "", "f", "32", "c");
-      const ipoScore = s231 + s232 + s233;
+      // 3. Part 3: Debugging (2.0 pts: 1.0 each)
+      const b1 = (document.getElementById("bug1Desc")?.value || "").toLowerCase().trim();
+      const b2 = (document.getElementById("bug2Desc")?.value || "").toLowerCase().trim();
+      const b1Match = ["process", "input", "สี่เหลี่ยม", "ด้านขนาน", "ผืนผ้า", "รับค่า"].some(kw => b1.includes(kw));
+      const b2Match = ["true", "false", "สลับ", "yes", "no", "pass", "fail", "ตรงข้าม"].some(kw => b2.includes(kw));
+      let p3Score = 0;
+      if (b1Match && b1.length > 5) p3Score += 1.0;
+      if (b2Match && b2.length > 5) p3Score += 1.0;
 
-      let pic23Score = 0;
-      let pic23Count = 0;
-      if (flowchartsData.flowchart231Base64) { pic23Score += 5; pic23Count++; }
-      if (flowchartsData.flowchart232Base64) { pic23Score += 5; pic23Count++; }
-      if (flowchartsData.flowchart233Base64) { pic23Score += 5; pic23Count++; }
+      // 4. Part 4: Challenge (3.0 pts: IPO 0.5 + Image 1.0 + Code 1.5)
+      const ipoIn = (document.getElementById("ipoInput")?.value || "").toLowerCase();
+      const ipoP = (document.getElementById("ipoProcess")?.value || "").toLowerCase();
+      const ipoOut = (document.getElementById("ipoOutput")?.value || "").toLowerCase();
+      let ipoScore = 0;
+      if (ipoIn.includes("weight") || ipoIn.includes("height") || ipoIn.includes("น้ำหนัก")) ipoScore += 0.2;
+      if (ipoP.includes("bmi") || ipoP.includes("/") || ipoP.includes("*")) ipoScore += 0.2;
+      if (ipoOut.includes("bmi") || ipoOut.includes("overweight") || ipoOut.includes("normal")) ipoScore += 0.1;
+      ipoScore = Number(ipoScore.toFixed(1));
 
-      const conclusion = (document.getElementById("conclusion") ? document.getElementById("conclusion").value : "").trim();
-      const concScore = conclusion.length > 10 ? 1 : 0;
+      const hasFlowchartImg = flowchartsData.flowchartBmiBase64 ? 1.0 : 0.0;
 
-      const nameVal = (document.getElementById("studentName") ? document.getElementById("studentName").value : "").trim();
-      const idVal = (document.getElementById("studentId") ? document.getElementById("studentId").value : "").trim();
-      const groupVal = (document.getElementById("studentGroup") ? document.getElementById("studentGroup").value : "").trim();
+      const cCode = (document.getElementById("cCodeArea")?.value || "").trim();
+      const cKeywords = ["printf", "scanf", "if", "else", "bmi"];
+      let cMatches = 0;
+      cKeywords.forEach(kw => {
+        if (new RegExp(kw, 'i').test(cCode)) cMatches++;
+      });
+      const cCodeScore = cKeywords.length > 0 ? Number(((cMatches / cKeywords.length) * 1.5).toFixed(1)) : 1.5;
+
+      const p4Total = Number((ipoScore + hasFlowchartImg + cCodeScore).toFixed(1));
+
+      // 5. Part 5: Conclusion (1.0 pt)
+      const conclusion = (document.getElementById("conclusion")?.value || "").trim();
+      const p5Score = conclusion.length > 10 ? 1.0 : 0.0;
+
+      // Student info
+      const nameVal = (document.getElementById("studentName")?.value || "").trim();
+      const idVal = (document.getElementById("studentId")?.value || "").trim();
+      const groupVal = (document.getElementById("studentGroup")?.value || "").trim();
       const isInfoComplete = (nameVal && idVal && groupVal);
 
-      const totalScore = symScore + pic22Score + ipoScore + pic23Score + concScore;
+      // Total Score (10.0 pts)
+      const totalScore = Number((p1Score + p2Score + p3Score + p4Total + p5Score).toFixed(1));
 
-      document.getElementById("preScoreTotal").innerHTML = totalScore + " <span style='font-size:1.1rem;color:#94a3b8;font-weight:400;'>/ 45</span>";
+      document.getElementById("preScoreTotal").innerHTML = `${totalScore.toFixed(1)} <span style='font-size:1.1rem;color:#94a3b8;font-weight:400;'>/ 10.0</span>`;
 
       const badgeEl = document.getElementById("preScoreBadge");
-      if (totalScore >= 38 && isInfoComplete && concScore === 1) {
+      if (totalScore >= 8.5 && isInfoComplete && p5Score === 1.0) {
         badgeEl.className = "score-status-badge";
         badgeEl.innerHTML = "<i class='fa-solid fa-circle-check'></i> พร้อมส่งรายงาน ยอดเยี่ยม!";
-      } else if (totalScore >= 20) {
+      } else if (totalScore >= 5.0) {
         badgeEl.className = "score-status-badge warning";
         badgeEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> พอใช้ - ควรตรวจเพิ่ม";
       } else {
@@ -1573,50 +1717,55 @@
           </div>
           <div class="score-item-points" style="color:${isInfoComplete ? '#34d399' : '#f87171'};">${isInfoComplete ? 'ครบถ้วน' : 'ไม่ครบ'}</div>
         </div>
+
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
-              <i class="fa-solid fa-shapes" style="color:${symScore === 5 ? '#34d399' : (symScore >= 3 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.1: ระบุสัญลักษณ์ผังงาน
+              <i class="fa-solid fa-shapes" style="color:${p1Score === 1.5 ? '#34d399' : (p1Score > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 1: มาตรฐานและกฎของผังงาน
             </div>
-            <div class="score-item-desc">ถูกต้อง ${symScore}/5 สัญลักษณ์</div>
+            <div class="score-item-desc">ถูกต้อง ${(p1Score/0.5).toFixed(0)}/3 ข้อ</div>
           </div>
-          <div class="score-item-points">${symScore} / 5</div>
+          <div class="score-item-points">${p1Score.toFixed(1)} / 1.5</div>
         </div>
+
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
-              <i class="fa-solid fa-file-image" style="color:${pic22Score === 15 ? '#34d399' : (pic22Score > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.2: รูปภาพผังงาน (3 ข้อ)
+              <i class="fa-solid fa-table-list" style="color:${p2Score >= 2.0 ? '#34d399' : (p2Score > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2: แกะรอยตรรกะ (Trace Table)
             </div>
-            <div class="score-item-desc">แนบรูปแล้ว ${pic22Count}/3 ข้อ (ข้อละ 5 คะแนน)</div>
+            <div class="score-item-desc">ความถูกต้องของตารางรอบ Loop และ Output (${p2Correct}/${traceAnswers.length} ช่อง)</div>
           </div>
-          <div class="score-item-points">${pic22Score} / 15</div>
+          <div class="score-item-points">${p2Score.toFixed(1)} / 2.5</div>
         </div>
+
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
-              <i class="fa-solid fa-table-list" style="color:${ipoScore === 9 ? '#34d399' : (ipoScore >= 5 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.3: วิเคราะห์ IPO (3 ข้อ)
+              <i class="fa-solid fa-bug" style="color:${p3Score === 2.0 ? '#34d399' : (p3Score > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 3: ตรวจสอบและแก้จุดผิด (Debugging)
             </div>
-            <div class="score-item-desc">ความถูกต้องของ Input, Process, Output</div>
+            <div class="score-item-desc">ชี้จุดผิดสัญลักษณ์ (1.0) + วิเคราะห์ทางเลือกเงื่อนไข (1.0)</div>
           </div>
-          <div class="score-item-points">${ipoScore} / 9</div>
+          <div class="score-item-points">${p3Score.toFixed(1)} / 2.0</div>
         </div>
+
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
-              <i class="fa-solid fa-file-image" style="color:${pic23Score === 15 ? '#34d399' : (pic23Score > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 2.3: รูปภาพผังงาน IPO (3 ข้อ)
+              <i class="fa-solid fa-code" style="color:${p4Total >= 2.5 ? '#34d399' : (p4Total > 0 ? '#fbbf24' : '#f87171')};"></i> ตอนที่ 4: กิจกรรมท้าทาย (Flowchart to C Code)
             </div>
-            <div class="score-item-desc">แนบรูปแล้ว ${pic23Count}/3 ข้อ (ข้อละ 5 คะแนน)</div>
+            <div class="score-item-desc">IPO (${ipoScore.toFixed(1)}/0.5) + รูปผังงาน (${hasFlowchartImg.toFixed(1)}/1.0) + โค้ด C (${cCodeScore.toFixed(1)}/1.5)</div>
           </div>
-          <div class="score-item-points">${pic23Score} / 15</div>
+          <div class="score-item-points">${p4Total.toFixed(1)} / 3.0</div>
         </div>
+
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
-              <i class="fa-solid fa-comment-dots" style="color:${concScore === 1 ? '#34d399' : '#f87171'};"></i> สรุปผลการปฏิบัติงาน
+              <i class="fa-solid fa-comment-dots" style="color:${p5Score === 1.0 ? '#34d399' : '#f87171'};"></i> ตอนที่ 5: สรุปผลและการสะท้อนคิด
             </div>
-            <div class="score-item-desc">${concScore === 1 ? 'พิมพ์สรุปผลเรียบร้อย' : '⚠️ กรุณาพิมพ์สรุปผลการทดลองด้วยตนเอง'}</div>
+            <div class="score-item-desc">${p5Score === 1.0 ? 'บันทึกสรุปผลเรียบร้อย' : '⚠️ กรุณาพิมพ์สรุปผลการทดลองด้วยตนเอง'}</div>
           </div>
-          <div class="score-item-points">${concScore} / 1</div>
+          <div class="score-item-points">${p5Score.toFixed(1)} / 1.0</div>
         </div>`;
 
       document.getElementById("scoreCheckModal").style.display = "flex";
@@ -1651,30 +1800,33 @@
         studentName: nameVal,
         studentId: idVal,
         studentGroup: groupVal,
-        ans211: document.getElementById("ans211").value,
-        ans212: document.getElementById("ans212").value,
-        ans213: document.getElementById("ans213").value,
-        ans214: document.getElementById("ans214").value,
-        ans215: document.getElementById("ans215").value,
-        flowchart221Base64: flowchartsData.flowchart221Base64, flowchart221Name: flowchartsData.flowchart221Name, flowchart221Type: flowchartsData.flowchart221Type,
-        flowchart222Base64: flowchartsData.flowchart222Base64, flowchart222Name: flowchartsData.flowchart222Name, flowchart222Type: flowchartsData.flowchart222Type,
-        flowchart223Base64: flowchartsData.flowchart223Base64, flowchart223Name: flowchartsData.flowchart223Name, flowchart223Type: flowchartsData.flowchart223Type,
-        flowchart231Base64: flowchartsData.flowchart231Base64, flowchart231Name: flowchartsData.flowchart231Name, flowchart231Type: flowchartsData.flowchart231Type,
-        flowchart232Base64: flowchartsData.flowchart232Base64, flowchart232Name: flowchartsData.flowchart232Name, flowchart232Type: flowchartsData.flowchart232Type,
-        flowchart233Base64: flowchartsData.flowchart233Base64, flowchart233Name: flowchartsData.flowchart233Name, flowchart233Type: flowchartsData.flowchart233Type,
-        input231: document.getElementById("input231").value,
-        process231: document.getElementById("process231").value,
-        output231: document.getElementById("output231").value,
-        input232: document.getElementById("input232").value,
-        process232: document.getElementById("process232").value,
-        output232: document.getElementById("output232").value,
-        input233: document.getElementById("input233").value,
-        process233: document.getElementById("process233").value,
-        output233: document.getElementById("output233").value,
+        ans11: document.getElementById("ans11").value,
+        ans12: document.getElementById("ans12").value,
+        ans13: document.getElementById("ans13").value,
+        tr_c1: document.getElementById("tr_c1").value,
+        tr_s1: document.getElementById("tr_s1").value,
+        tr_c2: document.getElementById("tr_c2").value,
+        tr_s2: document.getElementById("tr_s2").value,
+        tr_c3: document.getElementById("tr_c3").value,
+        tr_s3: document.getElementById("tr_s3").value,
+        tr_c4: document.getElementById("tr_c4").value,
+        tr_s4: document.getElementById("tr_s4").value,
+        tr_c5: document.getElementById("tr_c5").value,
+        tr_count5: document.getElementById("tr_count5").value,
+        traceOutput: document.getElementById("traceOutput").value,
+        bug1Desc: document.getElementById("bug1Desc").value,
+        bug2Desc: document.getElementById("bug2Desc").value,
+        ipoInput: document.getElementById("ipoInput").value,
+        ipoProcess: document.getElementById("ipoProcess").value,
+        ipoOutput: document.getElementById("ipoOutput").value,
+        flowchartBmiBase64: flowchartsData.flowchartBmiBase64,
+        flowchartBmiName: flowchartsData.flowchartBmiName,
+        flowchartBmiType: flowchartsData.flowchartBmiType,
+        cCodeArea: document.getElementById("cCodeArea").value,
         conclusion: document.getElementById("conclusion").value
       };
 
-      openModal("loading", "กำลังบันทึกข้อมูล...", "ระบบกำลังอัปโหลดรูปภาพและบันทึกข้อมูลของท่าน กรุณารอสักครู่...");
+      openModal("loading", "กำลังบันทึกข้อมูล...", "ระบบกำลังบันทึกและประเมินผลการทดลอง กรุณารอสักครู่...");
 
       const isGoogleAppsScript = (typeof google !== "undefined" && google.script && google.script.run);
 
@@ -1715,13 +1867,13 @@
         .catch(err => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
-          openModal("success", "โหมดทดสอบออฟไลน์สำเร็จ!", "จำลองการส่งข้อมูล Flowchart เรียบร้อยแล้ว!\n(หากเชื่อมต่อ Apps Script ข้อมูลจะถูกบันทึกไปยัง Google Sheet)");
+          openModal("success", "โหมดทดสอบออฟไลน์สำเร็จ!", "จำลองการส่งข้อมูล Flowchart Lab เรียบร้อยแล้ว!\n(หากเชื่อมต่อ Apps Script ข้อมูลจะถูกบันทึกไปยัง Google Sheet)");
         });
       } else {
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
-          openModal("success", "โหมดทดลองออฟไลน์สำเร็จ!", "จำลองการบันทึกข้อมูล Flowchart Lab เสร็จสิ้น!\nคะแนนอัตโนมัติจะถูกประเมินและบันทึกสู่ Google Sheets เมื่อเชื่อมต่อกับ Apps Script");
+          openModal("success", "โหมดทดลองออฟไลน์สำเร็จ!", "จำลองการบันทึกข้อมูล Flowchart Lab เสร็จสิ้น!\nคะแนนประเมินจะถูกบันทึกสู่ Google Sheets เมื่อเชื่อมต่อกับ Apps Script");
         }, 1500);
       }
     }

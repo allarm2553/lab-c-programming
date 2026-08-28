@@ -620,4 +620,59 @@ int main() {
 
 ---
 
+### 13. Lab Flowchart: การออกแบบผังงานและการจำลองตรรกะ (Flowchart & Logic Tracing)
+* **โฟลเดอร์ปฏิบัติการ:** `lab-flowchart/`
+* **หัวข้อการเรียนรู้:** มาตรฐานสัญลักษณ์ ANSI/ISO, กฎของ Flow Line, การทำ Trace Table (Dry Run) สำหรับ Loop Accumulator, การ Debug ผังงาน, การวิเคราะห์ IPO Model และการแปลงผังงานเป็นโปรแกรมภาษา C
+
+#### 13.1 เฉลยตอนที่ 1: มาตรฐานและกฎของผังงาน (1.5 คะแนน)
+* **1.1 สัญลักษณ์สี่เหลี่ยมด้านขนาน:** การรับข้อมูลหรือแสดงผล / General Input-Output (`input`, `output`, `รับ`, `แสดง`)
+* **1.2 ข้อความกำกับเส้นทางออกจาก Decision:** `True / False` หรือ `Yes / No` (จริง / เท็จ)
+* **1.3 ทิศทางการไหลมาตรฐาน:** บนลงล่าง (Top to Bottom) หรือ ซ้ายไปขวา (Left to Right)
+
+#### 13.2 เฉลยตอนที่ 2: การแกะรอยตรรกะ (Trace Table - 2.5 คะแนน)
+* **รอบที่ 1:** เงื่อนไข `count <= 4` = `True`, `count` = 1, `sum` หลังบวก = `1`
+* **รอบที่ 2:** เงื่อนไข `count <= 4` = `True`, `count` = 2, `sum` หลังบวก = `3`
+* **รอบที่ 3:** เงื่อนไข `count <= 4` = `True`, `count` = 3, `sum` หลังบวก = `6`
+* **รอบที่ 4:** เงื่อนไข `count <= 4` = `True`, `count` = 4, `sum` หลังบวก = `10`
+* **รอบที่ 5 (จบ):** เงื่อนไข `count <= 4` = `False`, `count` = `5`, `sum` = `10`
+* **ค่า Output ที่แสดงผลออกทางจอภาพ:** `10`
+
+#### 13.3 เฉลยตอนที่ 3: ตรวจสอบและแก้จุดผิด (Debugging - 2.0 คะแนน)
+* **จุดผิดที่ 1 (1.0 คะแนน):** สัญลักษณ์รับค่า Input score ใช้รูปสี่เหลี่ยมผืนผ้า (Process) ซึ่งผิดมาตรฐาน ต้องแก้ไขเป็นรูปสี่เหลี่ยมด้านขนาน (Parallelogram)
+* **จุดผิดที่ 2 (1.0 คะแนน):** เส้นทางเลือก True/False สลับกัน ทำให้เมื่อได้คะแนน >= 50 กลับไปพิมพ์ "FAIL" และคะแนน < 50 กลับไปพิมพ์ "PASS" วิธีแก้คือสลับป้ายกำกับ True/False ให้ถูกต้อง
+
+#### 13.4 เฉลยตอนที่ 4: กิจกรรมท้าทาย Flowchart to C Code (3.0 คะแนน)
+* **4.1 วิเคราะห์ IPO Model (0.5 คะแนน):**
+  * Input: `weight`, `height` (น้ำหนัก, ส่วนสูง)
+  * Process: `BMI = weight / (height * height)`
+  * Output: `BMI`, ข้อความ `Overweight` หรือ `Normal`
+* **4.2 แนบรูปภาพผังงาน (1.0 คะแนน):** ผังงานโปรแกรมคำนวณ BMI ตามมาตรฐาน
+* **4.3 โค้ดภาษา C (1.5 คะแนน - `codeKeywords: printf, scanf, if, else, bmi`):**
+```c
+#include <stdio.h>
+
+int main() {
+    float weight, height, bmi;
+    printf("Enter weight (kg) and height (m): ");
+    scanf("%f %f", &weight, &height);
+
+    bmi = weight / (height * height);
+    printf("BMI = %.2f\n", bmi);
+
+    if (bmi >= 25.0) {
+        printf("Overweight\n");
+    } else {
+        printf("Normal\n");
+    }
+
+    return 0;
+}
+```
+
+#### 13.5 ตอนที่ 5: สรุปผลการทดลองและการสะท้อนคิด (1.0 คะแนน)
+* อธิบายประโยชน์ของการทำ Flowchart และ Trace Table ก่อนลงมือเขียนโค้ด เพื่อป้องกันข้อผิดพลาดเชิงตรรกะ (Logic Error) และ Infinite Loop (Anti-Cheat Protection: ห้าม Paste)
+
+---
+
 *เอกสารคู่มือนี้ซิงก์ตรงกับระบบตรวจคำตอบใน `Code.gs` และ `index.html` ทุกใบงาน*
+
