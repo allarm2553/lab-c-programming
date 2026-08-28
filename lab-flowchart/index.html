@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab Basic: การออกแบบผังงานและการจำลองการทำงาน (Flowchart Design & Logic Tracing)</title>
+  <title>Lab Basic: การออกแบบผังงานและการจำลองตรรกะ (Flowchart Design & Logic Tracing)</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -400,8 +400,8 @@
     input.code-inline-input,
     input[type="text"].code-inline-input {
       display: inline-block !important;
-      width: 14ch !important;
-      min-width: 10ch !important;
+      width: 15ch !important;
+      min-width: 11ch !important;
       max-width: 100% !important;
       height: 32px !important;
       margin: 0 4px !important;
@@ -954,7 +954,7 @@
     <header>
       <div class="logo-container">
         <i class="fa-solid fa-diagram-project logo-icon"></i>
-        <h1>Lab Basic: การออกแบบผังงานและการจำลองตรรกะ (Flowchart & Logic Tracing)</h1>
+        <h1>Lab Basic: การออกแบบผังงานและการจำลองตรรกะ (Flowchart Design & Logic Tracing)</h1>
       </div>
       <p class="subtitle">การวิเคราะห์อัลกอริทึม มาตรฐานสัญลักษณ์ ANSI/ISO การแกะรอยตรรกะด้วย Trace Table และการแปลงผังงานสู่โค้ดภาษา C</p>
     </header>
@@ -1039,7 +1039,7 @@
             <div class="card-title">3. แผนภาพประกอบตอนที่ 2 (Loop Tracing Diagram)</div>
           </div>
           
-          <p>พิจารณาผังงานการสะสมผลรวมตัวเลข $1$ ถึง $4$ ด้านล่างนี้ เพื่อนำไปกรอกตาราง Trace Table ในแบบรายงานผล:</p>
+          <p>พิจารณาผังงานการสะสมผลรวมตัวเลข 1 ถึง 4 ด้านล่างนี้ เพื่อนำไปกรอกตาราง Trace Table ในแบบรายงานผล:</p>
           
           <div class="diagram-box">
             <!-- SVG Flowchart Loop Diagram -->
@@ -1221,16 +1221,16 @@
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">เติมคำตอบที่ถูกต้องลงในช่องว่างตามมาตรฐาน ANSI/ISO:</p>
             
             <div class="form-group">
-              <label>1.1 สัญลักษณ์รูปสี่เหลี่ยมด้านขนาน (Parallelogram) ใช้สำหรับ:</label>
-              <input type="text" class="code-inline-input" id="ans11" placeholder="การรับข้อมูลหรือแสดงผล / Input-Output" oninput="autoResizeInlineInput(this)">
+              <label>1.1 สัญลักษณ์รูปสี่เหลี่ยมด้านขนาน (Parallelogram) ใช้สำหรับหน้าที่ใด:</label>
+              <input type="text" class="code-inline-input" id="ans11" placeholder="เช่น รับข้อมูล / แสดงผล / คำนวณ" oninput="autoResizeInlineInput(this)">
             </div>
             <div class="form-group">
               <label>1.2 สัญลักษณ์การตัดสินใจ (Decision) ต้องมีเส้นทางเลือกพุ่งออกอย่างน้อย 2 เส้น และต้องมีข้อความใดกำกับเสมอ:</label>
-              <input type="text" class="code-inline-input" id="ans12" placeholder="True/False หรือ Yes/No" oninput="autoResizeInlineInput(this)">
+              <input type="text" class="code-inline-input" id="ans12" placeholder="เช่น True/False หรือ Yes/No" oninput="autoResizeInlineInput(this)">
             </div>
             <div class="form-group">
               <label>1.3 ทิศทางการไหลมาตรฐานของ Flow Line ควรเรียงลำดับจาก:</label>
-              <input type="text" class="code-inline-input" id="ans13" placeholder="บนลงล่าง หรือ ซ้ายไปขวา" oninput="autoResizeInlineInput(this)">
+              <input type="text" class="code-inline-input" id="ans13" placeholder="เช่น บนลงล่าง / ซ้ายไปขวา" oninput="autoResizeInlineInput(this)">
             </div>
           </div>
 
@@ -1241,7 +1241,7 @@
               <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(2.5 คะแนน)</span>
             </div>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
-              จากผังงานในหัวข้อที่ 3 (แผนภาพสะสมผลรวมตัวเลข) ให้นักเรียนจำลองการรันทีละรอบ แล้วเติมค่าลงในตาราง Trace Table:
+              จากผังงานในหัวข้อที่ 3 (แผนภาพสะสมผลรวมตัวเลข 1 ถึง 4) ให้นักเรียนจำลองการรันทีละรอบ แล้วเติมค่าลงในตาราง Trace Table:
             </p>
 
             <div class="table-container">
@@ -1257,32 +1257,32 @@
                 <tbody>
                   <tr>
                     <td><strong>รอบที่ 1</strong></td>
-                    <td><input type="text" class="code-inline-input" id="tr_c1" placeholder="True" style="width:9ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c1" placeholder="True / False" style="width:13ch!important;"></td>
                     <td>1</td>
-                    <td><input type="text" class="code-inline-input" id="tr_s1" placeholder="1" style="width:7ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_s1" placeholder="คำนวณ sum" style="width:11ch!important;"></td>
                   </tr>
                   <tr>
                     <td><strong>รอบที่ 2</strong></td>
-                    <td><input type="text" class="code-inline-input" id="tr_c2" placeholder="True" style="width:9ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c2" placeholder="True / False" style="width:13ch!important;"></td>
                     <td>2</td>
-                    <td><input type="text" class="code-inline-input" id="tr_s2" placeholder="3" style="width:7ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_s2" placeholder="คำนวณ sum" style="width:11ch!important;"></td>
                   </tr>
                   <tr>
                     <td><strong>รอบที่ 3</strong></td>
-                    <td><input type="text" class="code-inline-input" id="tr_c3" placeholder="True" style="width:9ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c3" placeholder="True / False" style="width:13ch!important;"></td>
                     <td>3</td>
-                    <td><input type="text" class="code-inline-input" id="tr_s3" placeholder="6" style="width:7ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_s3" placeholder="คำนวณ sum" style="width:11ch!important;"></td>
                   </tr>
                   <tr>
                     <td><strong>รอบที่ 4</strong></td>
-                    <td><input type="text" class="code-inline-input" id="tr_c4" placeholder="True" style="width:9ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c4" placeholder="True / False" style="width:13ch!important;"></td>
                     <td>4</td>
-                    <td><input type="text" class="code-inline-input" id="tr_s4" placeholder="10" style="width:7ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_s4" placeholder="คำนวณ sum" style="width:11ch!important;"></td>
                   </tr>
                   <tr>
                     <td><strong>รอบที่ 5 (จบ)</strong></td>
-                    <td><input type="text" class="code-inline-input" id="tr_c5" placeholder="False" style="width:9ch!important;"></td>
-                    <td><input type="text" class="code-inline-input" id="tr_count5" placeholder="5" style="width:7ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_c5" placeholder="True / False" style="width:13ch!important;"></td>
+                    <td><input type="text" class="code-inline-input" id="tr_count5" placeholder="ค่า count" style="width:10ch!important;"></td>
                     <td><strong>10</strong></td>
                   </tr>
                 </tbody>
@@ -1291,7 +1291,7 @@
 
             <div class="form-group" style="margin-top:0.75rem;">
               <label for="traceOutput"><strong>ค่าที่แสดงผลออกทางจอภาพ (Output) สุดท้ายคือ:</strong></label>
-              <input type="text" class="code-inline-input" id="traceOutput" placeholder="10" style="width:12ch!important;">
+              <input type="text" class="code-inline-input" id="traceOutput" placeholder="ระบุตัวเลข Output" style="width:16ch!important;">
             </div>
           </div>
 
@@ -1306,13 +1306,13 @@
             </p>
 
             <div class="form-group">
-              <label for="bug1Desc">3.1 จุดผิดหมายเลข 1 ผิดพลาดอย่างไร และต้องแก้ไขเป็นสัญลักษณ์ใด?</label>
-              <textarea id="bug1Desc" rows="2" required placeholder="อธิบายข้อผิดพลาดของสัญลักษณ์หมายเลข 1 และระบุสัญลักษณ์ที่ถูกต้อง..."></textarea>
+              <label for="bug1Desc">3.1 จุดผิดหมายเลข 1 ผิดพลาดอย่างไร และต้องแก้ไขเป็นสัญลักษณ์ใดตามมาตรฐาน ANSI?</label>
+              <textarea id="bug1Desc" rows="2" required placeholder="อธิบายว่าสัญลักษณ์หมายเลข 1 เดิมคืออะไร ผิดอย่างไร และต้องแก้เป็นสัญลักษณ์ใด..."></textarea>
             </div>
 
             <div class="form-group" style="margin-top:0.75rem;">
-              <label for="bug2Desc">3.2 จุดผิดหมายเลข 2 ส่งผลให้โปรแกรมทำงานผิดพลาดอย่างไร และต้องแก้ไขอย่างไร?</label>
-              <textarea id="bug2Desc" rows="2" required placeholder="อธิบายผลกระทบของเส้นทาง True/False ที่สลับกัน และวิธีแก้ไข..."></textarea>
+              <label for="bug2Desc">3.2 จุดผิดหมายเลข 2 ส่งผลให้การพิมพ์ผลสอบ PASS/FAIL ผิดพลาดอย่างไร และต้องแก้ไขอย่างไร?</label>
+              <textarea id="bug2Desc" rows="2" required placeholder="อธิบายผลกระทบของเส้นทาง True/False ที่สลับกัน และแนวทางการแก้ไข..."></textarea>
             </div>
           </div>
 
@@ -1333,15 +1333,15 @@
               <div style="display:grid; grid-template-columns: 1fr 1.2fr 1fr; gap:0.5rem; margin-top:0.4rem;">
                 <div>
                   <span style="font-size:0.75rem;color:var(--text-muted);">Input:</span>
-                  <input type="text" id="ipoInput" placeholder="weight, height" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                  <input type="text" id="ipoInput" placeholder="ระบุตัวแปรที่รับค่า..." style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
                 </div>
                 <div>
                   <span style="font-size:0.75rem;color:var(--text-muted);">Process:</span>
-                  <input type="text" id="ipoProcess" placeholder="BMI = weight / (height*height)" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                  <input type="text" id="ipoProcess" placeholder="ระบุสูตรหรือเงื่อนไข..." style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
                 </div>
                 <div>
                   <span style="font-size:0.75rem;color:var(--text-muted);">Output:</span>
-                  <input type="text" id="ipoOutput" placeholder="BMI, ข้อความ Overweight/Normal" style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
+                  <input type="text" id="ipoOutput" placeholder="ระบุผลลัพธ์ที่แสดง..." style="font-family:var(--mono-font);font-size:0.85rem;padding:0.4rem 0.6rem;">
                 </div>
               </div>
             </div>
@@ -1370,23 +1370,13 @@
             <!-- 4.3 C Code Implementation -->
             <div class="form-group" style="margin-top:1rem;">
               <label for="cCodeArea"><strong>4.3 โค้ดภาษา C ที่แปลงจากผังงานข้างต้น:</strong></label>
-              <textarea id="cCodeArea" class="code-textarea" rows="8" required placeholder='#include <stdio.h>
+              <textarea id="cCodeArea" class="code-textarea" rows="8" required placeholder="// เขียนโค้ดภาษา C โครงสร้าง if-else ตามผังงาน BMI ที่ออกแบบไว้ที่นี่...
+#include <stdio.h>
 
 int main() {
-    float weight, height, bmi;
-    printf("Enter weight(kg) and height(m): ");
-    scanf("%f %f", &weight, &height);
-    
-    bmi = weight / (height * height);
-    printf("BMI = %.2f\n", bmi);
-    
-    if (bmi >= 25.0) {
-        printf("Overweight\n");
-    } else {
-        printf("Normal\n");
-    }
+    // กำหนดตัวแปร รับค่า คำนวณ BMI และตรวจสอบเงื่อนไข
     return 0;
-}'></textarea>
+}"></textarea>
             </div>
           </div>
 
@@ -1499,8 +1489,8 @@ int main() {
 
     function autoResizeInlineInput(el) {
       if (!el) return;
-      const charCount = el.value ? el.value.length : 0;
-      const minChars = 10;
+      const charCount = el.value ? el.value.length : (el.placeholder ? el.placeholder.length : 0);
+      const minChars = 11;
       el.style.width = Math.max(minChars, charCount + 2) + "ch";
     }
 
