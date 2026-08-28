@@ -1446,12 +1446,12 @@ void deviceStatusSimulator() {
 
             <div class="form-group">
               <label for="question1">1. อธิบายความแตกต่างและเหตุผลด้านความปลอดภัยในการเลือกใช้งานระหว่างฟังก์ชัน strcpy() และ strncpy()</label>
-              <textarea id="question1" rows="3" required placeholder="strcpy มีความเสี่ยงที่จะทำให้เกิด Buffer Overflow หากสตริงต้นทางมีความยาวมากกว่าอาเรย์ปลายทาง ขณะที่ strncpy จะกำหนดขนาดสูงสุดที่จะก๊อปปี้ทำให้ปลอดภัยกว่า แต่มีข้อควรระวังคือต้องใส่ \0 ตัวปิดท้ายเองหากต้นทางยาวเกินกำหนด..."></textarea>
+              <textarea id="question1" rows="3" required placeholder="อธิบายความปลอดภัยในการจำกัดขนาดการคัดลอกข้อมูล และข้อควรระวังเกี่ยวกับตัวปิดท้ายสตริง..."></textarea>
             </div>
 
             <div class="form-group">
               <label for="question2">2. เพราะเหตุใดฟังก์ชัน fgets() จึงต้องมีพารามิเตอร์จำกัดขนาด (size) และเพราะเหตุใดนักพัฒนาจึงต้องจัดการกับอักษรขึ้นบรรทัดใหม่ (\n) หลังการรับข้อมูล?</label>
-              <textarea id="question2" rows="3" required placeholder="เนื่องจาก fgets จะจำกัดจำนวนการอ่านข้อมูลจากอินพุตไม่ให้เกินขนาดของบัฟเฟอร์ (ป้องกัน Buffer Overflow) และเมื่อผู้ใช้กด Enter จะมีอักขระ \n ติดเข้ามาในข้อความด้วย ทำให้ต้องเคลียร์ออกเพื่อให้ข้อมูลไม่ขึ้นบรรทัดใหม่เวลานำไปเชื่อมต่อหรือตรวจสอบ..."></textarea>
+              <textarea id="question2" rows="3" required placeholder="อธิบายการป้องกันปัญหา Buffer Overflow ของ fgets และเหตุผลที่ต้องจัดการอักขระขึ้นบรรทัดใหม่..."></textarea>
             </div>
           </div>
 
