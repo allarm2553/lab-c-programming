@@ -2572,7 +2572,7 @@ void showInfo() {
 
   const stdinTokens = (stdinRaw || '')
     .trim()
-    .split(/\s+/)
+    .split(/\r?\n|\s+/)
     .filter(t => t.length > 0);
   let stdinIndex = 0;
 
@@ -2683,7 +2683,10 @@ void showInfo() {
       if (stdinIndex < stdinTokens.length) {
         return stdinTokens[stdinIndex++];
       }
-      return 'admin';
+      if (stdinRaw && stdinRaw.trim()) {
+        return stdinRaw.trim();
+      }
+      return '$SET,RELAY,ON#';
     }
     const remaining = fp.content.substring(fp.pos);
     if (!remaining) return null;
@@ -2735,7 +2738,7 @@ void showInfo() {
     return idx !== -1 ? s.substring(idx) : null;
   }
   function puts(s) { stdout += String(s) + '\n'; return 0; }
-  function sizeof(x) { return 4; }
+  function sizeof(x) { return 64; }
   function malloc(size) { return []; }
   function free(ptr) { return 0; }
 
@@ -2829,7 +2832,7 @@ void showInfo() {
   cleanCode = cleanCode.replace(/sizeof\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(double|long\s+long)\s*\)/g, '8');
   cleanCode = cleanCode.replace(/sizeof\s*\(\s*([a-zA-Z0-9_]+)\s*\)/g, (match, varName) => {
     if (structDefs[varName]) return String(structDefs[varName].length * 4);
-    return '4';
+    return '64';
   });
 
   // 4.2 Transform Arrow operator: node->temperature -> node.temperature
@@ -2888,6 +2891,12 @@ void showInfo() {
   // 7. Strip C numeric literal suffixes
   cleanCode = cleanCode.replace(/\b(\d+(?:\.\d+)?)[fF]\b/g, '$1');
   cleanCode = cleanCode.replace(/\b(\d+)[uUlL]{1,3}\b/g, '$1');
+
+  // 7.5 Transform fgets(target, size, stream)
+  cleanCode = cleanCode.replace(/\bfgets\s*\(\s*([a-zA-Z0-9_$]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '($1 = fgets($1, $2, $3))');
+
+  // 7.6 Transform target[strcspn(target, ...)] = ... -> target = String(target).replace(/[\r\n]+$/, '')
+  cleanCode = cleanCode.replace(/([a-zA-Z0-9_$]+)\s*\[\s*strcspn\s*\(\s*\1\s*,\s*[^\]]+\s*\)\s*\]\s*=\s*[^;]+;/g, '$1 = String($1).replace(/[\\r\\n]+$/, "");');
 
   // 8. Transform scanf calls FIRST
   cleanCode = cleanCode.replace(/scanf\s*\(\s*([^)]+)\s*\)/g, (m, argsStr) => {
