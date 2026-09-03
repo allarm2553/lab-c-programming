@@ -1415,6 +1415,69 @@ int main() {
   {
     num: "10",
     idName: "lab10",
+
+    quiz: [
+      {
+        id: "quiz_q1",
+        question: "1. สตริงในภาษา C สิ้นสุดด้วยอักขระพิเศษใด และหากไม่มีอักขระดังกล่าวจะส่งผลอย่างไรต่อการประมวลผล?",
+        options: [
+          { id: "A", text: "สิ้นสุดด้วย \\n หากไม่มีจะไม่สามารถสั่งขึ้นบรรทัดใหม่ได้" },
+          { id: "B", text: "สิ้นสุดด้วย \\0 (Null Character) หากไม่มีจะเกิดข้อผิดพลาดอ่านหน่วยความจำเกินขอบเขต (Buffer Overrun)" },
+          { id: "C", text: "สิ้นสุดด้วย EOF หากไม่มีคอมไพเลอร์จะไม่รันโปรแกรม" },
+          { id: "D", text: "สิ้นสุดด้วยช่องว่าง ' ' หากไม่มีจะไม่สามารถแยกคำได้" }
+        ],
+        answer: "B",
+        explanation: "สตริงในภาษา C คือ Character Array ที่ต้องปิดท้ายด้วย Null Character (\\0) เสมอ เพื่อบอกฟังก์ชันต่างๆ เช่น printf, strlen ว่าสิ้นสุดข้อความที่จุดใด"
+      },
+      {
+        id: "quiz_q2",
+        question: "2. กำหนดโค้ด char str[20] = \"Hello\"; ค่าของ strlen(str) และ sizeof(str) มีค่าเท่ากับเท่าใดตามลำดับ?",
+        options: [
+          { id: "A", text: "5 และ 5" },
+          { id: "B", text: "6 และ 20" },
+          { id: "C", text: "5 และ 20" },
+          { id: "D", text: "6 และ 6" }
+        ],
+        answer: "C",
+        explanation: "strlen(str) นับจำนวนตัวอักษรจริงที่มีข้อมูล (ไม่นับ \\0) ได้ 5 ส่วน sizeof(str) ส่งคืนขนาดหน่วยความจำทั้งหมดที่ถูกจัดสรรให้กับ Array ได้ 20 Bytes"
+      },
+      {
+        id: "quiz_q3",
+        question: "3. เหตุใดมาตรฐานความปลอดภัยในการเขียนโปรแกรมจึงแนะนำให้ใช้ strncpy() แทน strcpy()?",
+        options: [
+          { id: "A", text: "เพราะ strncpy() ทำงานเร็วกว่า strcpy() 2 เท่า" },
+          { id: "B", text: "เพราะ strncpy() จำกัดจำนวนตัวอักษรที่คัดลอกสูงสุด ช่วยป้องกันปัญหา Buffer Overflow" },
+          { id: "C", text: "เพราะ strncpy() เติม \\0 ให้อัตโนมัติในทุกกรณีเสมอ" },
+          { id: "D", text: "เพราะ strncpy() สามารถคัดลอกตัวเลข float และ int ได้ด้วย" }
+        ],
+        answer: "B",
+        explanation: "strncpy มีพารามิเตอร์ n เพื่อจำกัดจำนวนตัวอักษรที่คัดลอกไม่ให้เกินขนาดของบัฟเฟอร์ปลายทาง จึงป้องกันช่องโหว่ความปลอดภัยแบบ Buffer Overflow ได้"
+      },
+      {
+        id: "quiz_q4",
+        question: "4. การเปรียบเทียบสตริงด้วยคำสั่ง if (strcmp(str1, str2) == 0) มีความหมายว่าอย่างไร?",
+        options: [
+          { id: "A", text: "สตริงทั้งสองมีความยาวตัวอักษรเท่ากัน" },
+          { id: "B", text: "สตริง str1 มีค่าน้อยกว่าสตริง str2 ในตาราง ASCII" },
+          { id: "C", text: "สตริงทั้งสองมีข้อความและตัวอักษรเหมือนกันทุกตำแหน่ง" },
+          { id: "D", text: "สตริงทั้งสองเป็นค่าว่าง (Empty String)" }
+        ],
+        answer: "C",
+        explanation: "ฟังก์ชัน strcmp() จะเปรียบเทียบรหัส ASCII ของตัวอักษรทีละตำแหน่ง หากสตริงทั้งสองเหมือนกันทุกตัวอักษรจะส่งคืนค่า 0"
+      },
+      {
+        id: "quiz_q5",
+        question: "5. ข้อใดกล่าวถูกต้องเกี่ยวกับการใช้งาน fgets(cmdBuffer, sizeof(cmdBuffer), stdin) เพื่อรับข้อความจากผู้ใช้?",
+        options: [
+          { id: "A", text: "fgets() จะตัดอักขระขึ้นบรรทัดใหม่ \\n ออกให้โดยอัตโนมัติเสมอ" },
+          { id: "B", text: "fgets() ปลอดภัยเพราะจำกัดขนาดการอ่านไม่เกินขนาดของ buffer และอ่านข้อความที่มีช่องว่างได้" },
+          { id: "C", text: "fgets() สามารถรับได้เฉพาะตัวเลขเท่านั้น ไม่สามารถรับตัวอักษรภาษาอังกฤษได้" },
+          { id: "D", text: "fgets() ต้องใช้งานร่วมกับ malloc() เสมอจึงจะทำงานได้" }
+        ],
+        answer: "B",
+        explanation: "fgets() มีพารามิเตอร์ขนาด (size) ป้องกันการป้อนข้อมูลล้นหน่วยความจำ และสามารถรับสตริงที่มี Spacebar คั่นกลางได้อย่างปลอดภัย"
+      }
+    ],
     titleTh: "Lab 10: การใช้งานฟังก์ชันจัดการสตริง (String Functions)",
     titleEn: "Lab 10: String Functions",
     sheetName: "Lab C 10 Submissions",
@@ -2853,6 +2916,83 @@ function generateIndexHtml(lab) {
       40%, 80% { transform: translateX(6px); border-color: var(--danger); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35); }
     }
 
+    
+    /* Quiz Section Styling */
+    .quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0.85rem;
+    }
+
+    .quiz-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      transition: all 0.2s ease;
+    }
+
+    .quiz-card:hover {
+      border-color: rgba(99, 102, 241, 0.35);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .quiz-question-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 0.75rem;
+      line-height: 1.45;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+
+    .quiz-option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      background: rgba(30, 41, 59, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+    }
+
+    .quiz-option-label:hover {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #ffffff;
+    }
+
+    .quiz-option-label input[type="radio"] {
+      margin-top: 0.15rem;
+      accent-color: #6366f1;
+    }
+
+    .quiz-badge {
+      display: inline-block;
+      font-weight: 700;
+      color: #818cf8;
+      min-width: 1.25rem;
+    }
+
+    .quiz-feedback {
+      margin-top: 0.65rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      display: none;
+      line-height: 1.4;
+    }
+
     .anti-cheat-alert {
       animation: antiCheatShake 0.5s ease-in-out !important;
       border-color: var(--danger) !important;
@@ -3688,6 +3828,35 @@ function generateIndexHtml(lab) {
             </div>
           </div>
 
+          
+          ${lab.quiz && lab.quiz.length > 0 ? `
+          <!-- Section: Multiple-Choice Post-Test Quiz -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <i class="fa-solid fa-list-check"></i> 3. แบบทดสอบวัดความรู้ท้ายการทดลอง (Post-Test Quiz)
+              <span class="anti-cheat-pill" title="แบบทดสอบ 5 ข้อ (2.5 คะแนน)"><i class="fa-solid fa-award"></i> ข้อละ 0.5 คะแนน</span>
+            </div>
+
+            <div class="quiz-container">
+              ${lab.quiz.map((q, idx) => `
+              <div class="quiz-card" id="${q.id}_card">
+                <div class="quiz-question-title">${q.question}</div>
+                <div class="quiz-options">
+                  ${q.options.map(opt => `
+                  <label class="quiz-option-label" id="${q.id}_${opt.id}_label">
+                    <input type="radio" name="${q.id}" value="${opt.id}" required onchange="handleQuizSelection('${q.id}', '${opt.id}')">
+                    <span class="quiz-badge">(${opt.id})</span>
+                    <span>${opt.text}</span>
+                  </label>
+                  `).join('')}
+                </div>
+                <div class="quiz-feedback" id="${q.id}_feedback"></div>
+              </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+
           <!-- Section 3: Questions -->
           <div class="form-section">
             <div class="form-section-title">
@@ -3709,7 +3878,7 @@ function generateIndexHtml(lab) {
           <!-- Section 4: File Uploads -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-paperclip"></i> 4. ไฟล์แนบ (Attachments)
+              <i class="fa-solid fa-paperclip"></i> ${lab.quiz ? "5" : "4"}. ไฟล์แนบ (Attachments)
             </div>
 
             <!-- Screenshot upload -->
@@ -4314,6 +4483,45 @@ function generateIndexHtml(lab) {
     }
 
     // Handle File upload, convert to base64
+    
+    const quizData = ${JSON.stringify(lab.quiz || [])};
+
+    function handleQuizSelection(qId, optId) {
+      const card = document.getElementById(qId + '_card');
+      if (card) {
+        card.style.borderColor = 'rgba(99, 102, 241, 0.45)';
+      }
+    }
+
+    function checkQuizAnswers(showFeedback) {
+      if (!quizData || quizData.length === 0) return { quizScore: 0, totalQuestions: 0, correctCount: 0 };
+      let correctCount = 0;
+      quizData.forEach(q => {
+        const selected = document.querySelector('input[name="' + q.id + '"]:checked')?.value;
+        const fbEl = document.getElementById(q.id + '_feedback');
+        if (selected === q.answer) {
+          correctCount++;
+          if (showFeedback && fbEl) {
+            fbEl.style.display = 'block';
+            fbEl.style.background = 'rgba(34, 197, 94, 0.15)';
+            fbEl.style.border = '1px solid rgba(34, 197, 94, 0.3)';
+            fbEl.style.color = '#4ade80';
+            fbEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> ถูกต้อง! ' + q.explanation;
+          }
+        } else {
+          if (showFeedback && fbEl) {
+            fbEl.style.display = 'block';
+            fbEl.style.background = 'rgba(239, 68, 68, 0.15)';
+            fbEl.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+            fbEl.style.color = '#f87171';
+            fbEl.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ตัวเลือกที่ถูกต้องคือ (' + q.answer + ') — ' + q.explanation;
+          }
+        }
+      });
+      const quizScore = parseFloat(((correctCount / quizData.length) * 2.5).toFixed(2));
+      return { quizScore, totalQuestions: quizData.length, correctCount };
+    }
+
     function handleFileSelect(input, type) {
       const file = input.files[0];
       if (!file) return;
@@ -4428,6 +4636,7 @@ function generateIndexHtml(lab) {
 
       // Check Blanks (Example 2)
       const blankResult = checkBlanks(true);
+      const quizResult = checkQuizAnswers(true);
 
       // Check Challenge Code / Blanks
       let assembledCode = '';
@@ -4454,6 +4663,8 @@ function generateIndexHtml(lab) {
         ${jsBlankPayload},
         ${challengeBlanks ? jsChallengePayload + ',' : ''}
         blankScore: blankResult.blankScore,
+        quizScore: quizResult.quizScore,
+        quizCorrectCount: quizResult.correctCount,
         challengeCode: assembledCode,
         question1: document.getElementById('question1').value,
         question2: document.getElementById('question2').value,
@@ -5198,6 +5409,7 @@ function generateIndexHtml(lab) {
     function checkPreSubmissionScore() {
       // 1. Run blank checks with visual feedback
       const blankResult = checkBlanks(false);
+      const quizResult = checkQuizAnswers(false);
       const blankScore = blankResult.blankScore;
 
       // 2. Challenge Score
