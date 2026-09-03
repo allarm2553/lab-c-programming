@@ -60,6 +60,7 @@ function submitLabData(data) {
         "Timestamp", "ชื่อ-นามสกุล", "รหัสประจำตัว", "ชั้น/ห้อง",
         // ตอนที่ 1: มาตรฐาน (1.5 คะแนน)
         "1.1 I/O สี่เหลี่ยมด้านขนาน", "1.2 ข้อความกำกับ Decision", "1.3 ทิศทาง Flow Line",
+        "แบบทดสอบ 5 ข้อ (Quiz)",
         // ตอนที่ 2: Trace Table (2.5 คะแนน)
         "2.1 Loop R1 (T/sum1)", "2.2 Loop R2 (T/sum3)", "2.3 Loop R3 (T/sum6)", "2.4 Loop R4 (T/sum10)", "2.5 Loop R5 (F/count5)", "2.6 Trace Output",
         // ตอนที่ 3: Debugging (2.0 คะแนน)
@@ -69,7 +70,8 @@ function submitLabData(data) {
         // ตอนที่ 5: สรุปผล (1.0 คะแนน)
         "สรุปผลการทดลอง",
         // สรุปคะแนนอัตโนมัติ (10.0 คะแนน)
-        "คะแนนอัตโนมัติ (เต็ม 10.0)", "รายละเอียดคะแนน",
+        "คะแนนแบบทดสอบ (เต็ม 5.0)",
+        "คะแนนอัตโนมัติ (เต็ม 15.0)", "รายละเอียดคะแนน",
         // ═══ คอลัมน์ครูตรวจ ═══
         "★ คะแนนครู ตอนที่ 3 (เต็ม 2.0)", "★ คะแนนครู ตอนที่ 4 ผังงาน (เต็ม 1.0)", "★ คะแนนครู ตอนที่ 4 โค้ด C (เต็ม 1.5)",
         "★ หมายเหตุครู", "★ คะแนนรวมสุดท้าย", "★ ตรวจแล้วโดย", "★ วันที่ตรวจ"
@@ -80,14 +82,33 @@ function submitLabData(data) {
       sheet.setFrozenRows(1);
     }
 
-    // 1. อัปโหลดรูปภาพผังงาน BMI ขึ้น Google Drive
-    var folderName = "Flowchart Lab Attachments";
-    var folders = DriveApp.getFoldersByName(folderName);
-    var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
+    // Auto-create/get a single shared folder inside the active spreadsheet's parent folder
+    var folder;
+    var sharedFolderName = "C_Programming_Lab_Attachments";
+    try {
+      var ssFile = DriveApp.getFileById(ss.getId());
+      var parents = ssFile.getParents();
+      var parentFolder = parents.hasNext() ? parents.next() : DriveApp.getRootFolder();
+      
+      var folders = parentFolder.getFoldersByName(sharedFolderName);
+      if (folders.hasNext()) {
+        folder = folders.next();
+      } else {
+        folder = parentFolder.createFolder(sharedFolderName);
+      }
+    } catch (err) {
+      // Fallback to Google Drive root if parent access is restricted
+      var folders = DriveApp.getFoldersByName(sharedFolderName);
+      if (folders.hasNext()) {
+        folder = folders.next();
+      } else {
+        folder = DriveApp.createFolder(sharedFolderName);
+      }
+    }
 
     function uploadImage(base64, fileName, mimeType, label) {
       if (!base64 || !fileName) return "ไม่ได้แนบรูป";
-      var prefix = data.studentId + "_" + (data.studentName || "").replace(/\s+/g, '_') + "_" + label + "_";
+      var prefix = "lab-flowchart_" + data.studentId + "_" + (data.studentName || "").replace(/\s+/g, '_') + "_" + label + "_";
       var blob = Utilities.newBlob(
         Utilities.base64Decode(base64.split(",")[1]), mimeType, prefix + fileName
       );
@@ -208,6 +229,8 @@ function submitLabData(data) {
       data.cCodeArea,
       // 5
       data.conclusion,
+      quizScore,
+      quizScore,
       // Total & feedback
       totalScore,
       feedbackLines.join(" | ")

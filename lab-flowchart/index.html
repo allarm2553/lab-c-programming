@@ -890,6 +890,41 @@
     .print-file-indicator { display: none; }
 
     @media print {
+
+      .quiz-question-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        page-break-inside: avoid;
+      }
+      .quiz-question-title {
+        color: #0f172a !important;
+      }
+      .quiz-q-num {
+        background: #3b82f6 !important;
+        color: #ffffff !important;
+      }
+      .quiz-option-label {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #1e293b !important;
+      }
+      .quiz-option-label:has(input[type="radio"]:checked) {
+        background: #eff6ff !important;
+        border-color: #3b82f6 !important;
+      }
+      .quiz-opt-circle {
+        border-color: #64748b !important;
+        color: #475569 !important;
+      }
+      .quiz-option-label:has(input[type="radio"]:checked) .quiz-opt-circle {
+        background: #3b82f6 !important;
+        border-color: #3b82f6 !important;
+        color: #ffffff !important;
+      }
+      .quiz-option-text {
+        color: #0f172a !important;
+      }
+
       body {
         background: #ffffff !important;
         color: #000000 !important;
@@ -1309,10 +1344,214 @@
             </div>
           </div>
 
+          
+          <!-- Section 3: Multiple Choice Quiz (5.0 pts) -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span><i class="fa-solid fa-list-check"></i> ตอนที่ 3: แบบทดสอบความรู้ผังงาน (5 ข้อ)</span>
+              <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(5.0 คะแนน)</span>
+            </div>
+            
+          <!-- Question 1 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">1</span>
+              <span>ในผังงานโปรแกรม (Program Flowchart) สัญลักษณ์สี่เหลี่ยมผืนผ้า (Rectangle) ใช้แทนความหมายของสิ่งใด?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">จุดเริ่มต้นหรือสิ้นสุดโปรแกรม (Terminal)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">การประมวลผล การคำนวณ หรือการกำหนดค่า (Process)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">การตัดสินใจหรือเปรียบเทียบเงื่อนไข (Decision)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">การรับข้อมูลหรือแสดงผลข้อมูล (Input/Output)</span>
+                </label>
+    
+            </div>
+          </div>
+  
+
+          <!-- Question 2 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">2</span>
+              <span>สัญลักษณ์สี่เหลี่ยมรูปข้าวหลามตัดหรือสี่เหลี่ยมเพชร (Diamond) ใช้แทนความหมายใดในผังงาน?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">การตัดสินใจ / ตรวจสอบเงื่อนไข (Decision) ซึ่งมีทิศทางผลลัพธ์เป็นจริง (True) หรือเท็จ (False)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">การแสดงผลออกทางจอภาพโดยเฉพาะ</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">จุดเชื่อมต่อหน้าผังงาน</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">การจองหน่วยความจำในระบบ</span>
+                </label>
+    
+            </div>
+          </div>
+  
+
+          <!-- Question 3 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">3</span>
+              <span>สัญลักษณ์รูปทรงวงรีหรือแคปซูล (Oval / Rounded Rectangle) ในผังงาน มีหน้าที่เพื่อสิ่งใด?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">แสดงการวนซ้ำ (Loop)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">จุดเริ่มต้น (Start) หรือ จุดสิ้นสุด (End/Stop) ของกระบวนการทำงาน</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">การรับค่าจากแป้นพิมพ์</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">การเรียกใช้ฟังก์ชันย่อย</span>
+                </label>
+    
+            </div>
+          </div>
+  
+
+          <!-- Question 4 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">4</span>
+              <span>สัญลักษณ์สี่เหลี่ยมด้านขนาน (Parallelogram) ในผังงาน ใช้แทนขั้นตอนการทำงานใด?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">การประมวลผลทางคณิตศาสตร์</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">การรับเข้าหรือแสดงผลข้อมูลทั่วไป (General Input/Output)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">การเชื่อมต่อผังงานข้ามหน้า</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">การหยุดการทำงานชั่วคราว</span>
+                </label>
+    
+            </div>
+          </div>
+  
+
+          <!-- Question 5 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">5</span>
+              <span>สัญลักษณ์วงกลมขนาดเล็ก (Small Circle) ในผังงานถูกนำมาใช้เพื่อวัตถุประสงค์ใด?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">จุดเชื่อมต่อเส้นทางการไหลภายในหน้าเดียวกัน (On-Page Connector)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">แสดงการเกิดข้อผิดพลาด (Error Handler)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">การรับข้อมูลจากดิสก์ (Disk Input)</span>
+                </label>
+    
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">การเชื่อมต่อข้ามไฟล์โปรแกรม</span>
+                </label>
+    
+            </div>
+          </div>
+  
+          </div>
+
           <!-- Section 3: Flowchart Debugging (2.0 pts) -->
           <div class="form-section">
             <div class="form-section-title">
-              <span><i class="fa-solid fa-bug"></i> ตอนที่ 3: การค้นหาและแก้จุดผิด (Debugging)</span>
+              <span><i class="fa-solid fa-bug"></i> ตอนที่ 4: การค้นหาและแก้จุดผิด (Debugging)</span>
               <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(2.0 คะแนน)</span>
             </div>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
@@ -1333,7 +1572,7 @@
           <!-- Section 4: Challenge: Flowchart to C Code Bridge (3.0 pts) -->
           <div class="form-section">
             <div class="form-section-title">
-              <span><i class="fa-solid fa-code"></i> ตอนที่ 4: กิจกรรมท้าทาย (Flowchart to C Code)</span>
+              <span><i class="fa-solid fa-code"></i> ตอนที่ 5: กิจกรรมท้าทาย (Flowchart to C Code)</span>
               <span style="font-size:0.8rem;color:#38bdf8;font-weight:600;">(3.0 คะแนน)</span>
             </div>
             
@@ -1397,7 +1636,7 @@ int main() {
           <!-- Section 5: Conclusion & Reflection (1.0 pt) -->
           <div class="form-section">
             <div class="form-section-title">
-              <span><i class="fa-solid fa-comment-dots"></i> 5. สรุปผลการทดลองและการสะท้อนคิด</span>
+              <span><i class="fa-solid fa-comment-dots"></i> 6. สรุปผลการทดลองและการสะท้อนคิด</span>
               <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
             <div class="form-group">
@@ -1459,7 +1698,7 @@ int main() {
         </div>
       </div>
       <div class="score-hero-card">
-        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 10.0</span></div>
+        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 15.0</span></div>
         <div class="score-status-badge" id="preScoreBadge">พร้อมส่งรายงาน</div>
       </div>
       <div class="score-breakdown-list" id="preScoreBreakdown"></div>
@@ -1602,7 +1841,7 @@ int main() {
         if (preview) preview.style.display = "flex";
         if (thumb) thumb.src = e.target.result;
         if (nameEl) nameEl.innerText = file.name;
-        if (sizeEl) sizeEl.innerText = (file.size / 1024).toFixed(1) + " KB";
+        if (sizeEl) sizeEl.innerText = (file.size / 1524).toFixed(1) + " KB";
       };
       reader.readAsDataURL(file);
     }
@@ -1621,7 +1860,41 @@ int main() {
       if (preview) preview.style.display = "none";
     }
 
+    
+    // Multiple-Choice Quiz Checking (5 Questions)
+    function checkQuizScore() {
+      const answerKey = {"quiz_q1":"B","quiz_q2":"A","quiz_q3":"B","quiz_q4":"B","quiz_q5":"A"};
+      let correctCount = 0;
+      let answeredCount = 0;
+      const userAnswers = {};
+
+      for (let i = 1; i <= 5; i++) {
+        const qName = "quiz_q" + i;
+        const selected = document.querySelector('input[name="' + qName + '"]:checked');
+        if (selected) {
+          answeredCount++;
+          userAnswers[qName] = selected.value;
+          if (selected.value === answerKey[qName]) {
+            correctCount++;
+          }
+        } else {
+          userAnswers[qName] = "";
+        }
+      }
+
+      const quizScore = Number(correctCount.toFixed(1));
+      return {
+        correctCount: correctCount,
+        answeredCount: answeredCount,
+        totalQuestions: 5,
+        quizScore: quizScore,
+        userAnswers: userAnswers
+      };
+    }
+
     function checkPreSubmissionScore() {
+      const quizResult = checkQuizScore();
+      const quizScore = quizResult.quizScore;
       // 1. Part 1: Standards (1.5 pts = 3 items * 0.5)
       const part1Answers = [
         { id: "ans11", keywords: ["input", "output", "รับ", "แสดง", "ข้อมูล", "i/o"] },
@@ -1717,15 +1990,15 @@ int main() {
       const isInfoComplete = (nameVal && idVal && groupVal);
 
       // Total Score (10.0 pts)
-      const totalScore = Number((p1Score + p2Score + p3Score + p4Total + p5Score).toFixed(1));
+      const totalScore = Number((p1Score + p2Score + quizScore + p3Score + p4Total + p5Score).toFixed(1));
 
-      document.getElementById("preScoreTotal").innerHTML = `${totalScore.toFixed(1)} <span style='font-size:1.1rem;color:#94a3b8;font-weight:400;'>/ 10.0</span>`;
+      document.getElementById("preScoreTotal").innerHTML = `${totalScore.toFixed(1)} <span style='font-size:1.1rem;color:#94a3b8;font-weight:400;'>/ 15.0</span>`;
 
       const badgeEl = document.getElementById("preScoreBadge");
-      if (totalScore >= 8.5 && isInfoComplete && p5Score === 1.0) {
+      if (totalScore >= 12.5 && isInfoComplete && p5Score === 1.0 && quizResult.answeredCount === 5) {
         badgeEl.className = "score-status-badge";
         badgeEl.innerHTML = "<i class='fa-solid fa-circle-check'></i> พร้อมส่งรายงาน ยอดเยี่ยม!";
-      } else if (totalScore >= 5.0) {
+      } else if (totalScore >= 7.5) {
         badgeEl.className = "score-status-badge warning";
         badgeEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> พอใช้ - ควรตรวจเพิ่ม";
       } else {

@@ -1,7 +1,7 @@
 # คู่มือเฉลยปฏิบัติการ Lab Flowchart: การออกแบบผังงานและการไล่รหัสตรรกะโปรแกรม
 ## (Lab Flowchart: ANSI/ISO Flowchart Design, Trace Table & Debugging - Solution Manual)
 
-โฟลเดอร์นี้รวบรวมเฉลยแบบฝึกหัดทั้ง 5 ตอนสำหรับ **Lab Flowchart**
+โฟลเดอร์นี้รวบรวมเฉลยแบบฝึกหัดและแบบทดสอบสำหรับ **Lab Flowchart**
 
 ---
 
@@ -15,7 +15,19 @@
 
 ---
 
-## 🔍 2. เฉลยตอนที่ 2: การแกะรอยตรรกะ Loop ด้วย Trace Table (2.5 คะแนน)
+## 🎯 2. เฉลยแบบทดสอบความรู้ (Multiple Choice Quiz 4 ตัวเลือก 5 ข้อ) - คะแนนเต็ม 5.0 คะแนน (ข้อละ 1.0 คะแนน)
+
+| ข้อที่ | คำถาม | ตัวเลือกเฉลย | คำตอบที่ถูกต้อง | คำอธิบายเชิงวิชาการ |
+| :---: | :--- | :---: | :--- | :--- |
+| **1** | ในผังงานโปรแกรม (Program Flowchart) สัญลักษณ์สี่เหลี่ยมผืนผ้า (Rectangle) ใช้แทนความหมายของสิ่งใด? | **ข (B)** | **การประมวลผล การคำนวณ หรือการกำหนดค่า (Process)** | สี่เหลี่ยมผืนผ้าแทนกระบวนการประมวลผล (Process) เช่น การคำนวณ หรือการกำหนดค่าตัวแปร |
+| **2** | สัญลักษณ์สี่เหลี่ยมรูปข้าวหลามตัดหรือสี่เหลี่ยมเพชร (Diamond) ใช้แทนความหมายใดในผังงาน? | **ก (A)** | **การตัดสินใจ / ตรวจสอบเงื่อนไข (Decision) ซึ่งมีทิศทางผลลัพธ์เป็นจริง (True) หรือเท็จ (False)** | Diamond ใช้สำหรับการตรวจสอบเงื่อนไข (Decision) ที่มีเส้นทางแยก เช่น True/False |
+| **3** | สัญลักษณ์รูปทรงวงรีหรือแคปซูล (Oval / Rounded Rectangle) ในผังงาน มีหน้าที่เพื่อสิ่งใด? | **ข (B)** | **จุดเริ่มต้น (Start) หรือ จุดสิ้นสุด (End/Stop) ของกระบวนการทำงาน** | Oval/Capsule คือ Terminal Symbol ใช้ระบุจุดเริ่มต้นและสิ้นสุดของ Flowchart |
+| **4** | สัญลักษณ์สี่เหลี่ยมด้านขนาน (Parallelogram) ในผังงาน ใช้แทนขั้นตอนการทำงานใด? | **ข (B)** | **การรับเข้าหรือแสดงผลข้อมูลทั่วไป (General Input/Output)** | Parallelogram คือสัญลักษณ์สำหรับ Input/Output ทั่วไป (เช่น รับค่าตัวแปร หรือแสดงผลลัพธ์) |
+| **5** | สัญลักษณ์วงกลมขนาดเล็ก (Small Circle) ในผังงานถูกนำมาใช้เพื่อวัตถุประสงค์ใด? | **ก (A)** | **จุดเชื่อมต่อเส้นทางการไหลภายในหน้าเดียวกัน (On-Page Connector)** | วงกลมเล็กคือ On-Page Connector สำหรับรวมหรือแยกเส้นทางผังงานในหน้าเดียวกันเพื่อความเรียบร้อย |
+
+---
+
+## 🔍 3. เฉลยตอนที่ 2: การแกะรอยตรรกะ Loop ด้วย Trace Table (2.5 คะแนน)
 
 จากโจทย์โปรแกรมคำนวณผลรวม `sum` ของเลขคู่จาก 2 ถึง 6:
 ```c
@@ -37,7 +49,7 @@ for (int i = 2; i <= 6; i += 2) {
 
 ---
 
-## 🐞 3. เฉลยตอนที่ 3: Flowchart Debugging & Bug Hunting (2.0 คะแนน)
+## 🐞 4. เฉลยตอนที่ 3: Flowchart Debugging & Bug Hunting (2.0 คะแนน)
 
 - **จุดผิดพลาดที่พบ (Bug):**
   1. ลืมกำหนดค่าเริ่มต้นให้กับตัวแปรนับ (`count = 0`) หรือตัวสะสมค่า (`total = 0`)
@@ -46,9 +58,9 @@ for (int i = 2; i <= 6; i += 2) {
 
 ---
 
-## 🚀 4. เฉลยตอนที่ 4: กิจกรรมท้าทาย (Auto Fan Temperature Controller) (3.0 คะแนน)
+## 🚀 5. เฉลยตอนที่ 4: กิจกรรมท้าทาย (Auto Fan Temperature Controller) (3.0 คะแนน)
 
-### 4.1 การวิเคราะห์ IPO Model:
+### 5.1 การวิเคราะห์ IPO Model:
 - **Input (ข้อมูลเข้า):** `temp` (อุณหภูมิเครื่องจักร ทศนิยมองศาเซลเซียส)
 - **Process (การประมวลผล):**
   - ถ้า `temp >= 35.0` -> `fanSpeed = "HIGH"`
@@ -56,30 +68,39 @@ for (int i = 2; i <= 6; i += 2) {
   - มิฉะนั้น (`temp < 28.0`) -> `fanSpeed = "OFF"`
 - **Output (ข้อมูลออก):** `fanSpeed` (ระดับความเร็วพัดลมและสถานะแจ้งเตือน)
 
-### 4.2 ซอร์สโค้ดเฉลยภาษา C (`challenge_solution.c`):
+### 5.2 ซอร์สโค้ดเฉลยภาษา C (`challenge_solution.c`):
 ```c
 #include <stdio.h>
 
 int main() {
     float temp;
-    printf("Enter Machine Temperature (C): ");
+    printf("=== Automatic Fan Speed Controller ===\n");
+    printf("Enter Measured Temperature (°C): ");
+    
     if (scanf("%f", &temp) == 1) {
-        printf("\n--- Auto Fan Controller Status ---\n");
-        printf("Temperature: %.2f C\n", temp);
+        printf("\n--- System Status ---\n");
+        printf("Sensor Reading: %.1f °C\n", temp);
+        
         if (temp >= 35.0f) {
-            printf("Fan Status: HIGH SPEED [MAX COOLING]\n");
+            printf("Fan Status: RUNNING AT HIGH SPEED [100%% PWM]\n");
+            printf("Alert: High Heat Detected! Cooling active.\n");
         } else if (temp >= 28.0f) {
-            printf("Fan Status: MEDIUM SPEED [NORMAL COOLING]\n");
+            printf("Fan Status: RUNNING AT MEDIUM SPEED [60%% PWM]\n");
+            printf("Alert: Normal operating temperature.\n");
         } else {
-            printf("Fan Status: OFF [STANDBY MODE]\n");
+            printf("Fan Status: OFF / STANDBY MODE [0%% PWM]\n");
+            printf("Alert: Temperature is cool. Energy saving mode.\n");
         }
+    } else {
+        printf("Error: Invalid sensor input.\n");
     }
+    
     return 0;
 }
 ```
 
-- **คำสั่งคอมไพล์และทดสอบรัน:**
-  ```bash
-  gcc -Wall -Wextra -o challenge_solution challenge_solution.c
-  ./challenge_solution
-  ```
+---
+
+## 📊 6. สรุปผลการทดลองและการสะท้อนคิด (Conclusion & Reflection)
+- นักศึกษาเข้าใจประโยชน์ของการออกแบบผังงาน (Flowchart) ตามมาตรฐาน ANSI เพื่อให้เห็นภาพรวมของตรรกะและเส้นทางการทำงานของโปรแกรมก่อนลงมือโค้ดจริง
+- สามารถใช้ Trace Table ในการตรวจสอบค่าของตัวแปรในแต่ละรอบการทำงาน เพื่อค้นหาจุดบกพร่อง (Bug) ได้อย่างเป็นระบบ

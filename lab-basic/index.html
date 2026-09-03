@@ -473,6 +473,120 @@
       border-color: var(--danger) !important;
     }
 
+    
+    /* Multiple-Choice Quiz Cards & Radios */
+    .quiz-question-card {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .quiz-question-card:hover {
+      border-color: rgba(99, 102, 241, 0.35);
+    }
+
+    .quiz-question-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .quiz-q-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .quiz-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    @media (max-width: 640px) {
+      .quiz-options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-option-label {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.85rem;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .quiz-option-label:hover {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #f8fafc;
+    }
+
+    .quiz-option-label input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .quiz-opt-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .quiz-option-label:has(input[type="radio"]:checked) {
+      background: rgba(99, 102, 241, 0.22);
+      border-color: #818cf8;
+      color: #ffffff;
+      box-shadow: 0 0 0 1.5px rgba(99, 102, 241, 0.3);
+    }
+
+    .quiz-option-label:has(input[type="radio"]:checked) .quiz-opt-circle {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: #ffffff;
+    }
+
+    .quiz-option-text {
+      flex-grow: 1;
+      font-family: var(--mono-font);
+      font-size: 0.85rem;
+    }
+  
     /* Forms */
     .form-section {
       margin-bottom: 1.5rem;
@@ -1354,10 +1468,219 @@ int main() {
             </div>
           </div>
 
-          <!-- Section 3: Questions -->
+          
+        <!-- Section 3: Multiple Choice Quiz -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="fa-solid fa-list-check"></i> 3. แบบทดสอบความรู้ (Multiple Choice Quiz - 5 ข้อ)
+            <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted);margin-left:auto;">ข้อละ 1.0 คะแนน (รวม 5.0 คะแนน)</span>
+          </div>
+
+          
+          <!-- Question 1 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">1</span>
+              <span>โปรแกรมประเภทคอมไพเลอร์ (Compiler) เช่น GCC ในการพัฒนาภาษา C ทำหน้าที่อะไร?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">พิมพ์เอกสารรายงานและจัดหน้าโค้ด</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">แปลซอร์สโค้ดภาษา C ให้อยู่ในรูปของภาษาเครื่อง (Machine Code) ที่คอมพิวเตอร์ทำงานได้</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">เชื่อมต่ออินเทอร์เน็ตเพื่อดาวน์โหลดไลบรารีอัตโนมัติ</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q1" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">วาดผังงานจำลองขั้นตอนการทำงาน</span>
+                </label>
+      
+            </div>
+          </div>
+    
+
+          <!-- Question 2 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">2</span>
+              <span>สัญลักษณ์ใดในภาษา C ที่ต้องใช้ปิดท้ายคำสั่งประมวลผล (Statement Terminator) เสมอ?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">: (Colon)</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">; (Semicolon)</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">. (Dot)</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q2" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">, (Comma)</span>
+                </label>
+      
+            </div>
+          </div>
+    
+
+          <!-- Question 3 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">3</span>
+              <span>ฟังก์ชันมาตรฐานใดในภาษา C ที่ใช้สำหรับแสดงผลข้อความออกทางหน้าจอคอนโซล (Console Output)?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">scanf()</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">input()</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">printf()</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q3" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">print_line()</span>
+                </label>
+      
+            </div>
+          </div>
+    
+
+          <!-- Question 4 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">4</span>
+              <span>รหัสควบคุมการแสดงผล (Escape Sequence) ใดที่ใช้สำหรับสั่งให้ขึ้นบรรทัดใหม่ในฟังก์ชัน printf()?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">\t</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">\n</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">\r</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q4" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">\b</span>
+                </label>
+      
+            </div>
+          </div>
+    
+
+          <!-- Question 5 -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-title">
+              <span class="quiz-q-num">5</span>
+              <span>ไฟล์ซอร์สโค้ดของภาษา C มาตรฐานจะต้องบันทึกด้วยนามสกุลไฟล์ใด?</span>
+            </div>
+            <div class="quiz-options-grid">
+              
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="A">
+                  <span class="quiz-opt-circle">ก</span>
+                  <span class="quiz-option-text">.cpp</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="B">
+                  <span class="quiz-opt-circle">ข</span>
+                  <span class="quiz-option-text">.h</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="C">
+                  <span class="quiz-opt-circle">ค</span>
+                  <span class="quiz-option-text">.c</span>
+                </label>
+      
+
+                <label class="quiz-option-label">
+                  <input type="radio" name="quiz_q5" value="D">
+                  <span class="quiz-opt-circle">ง</span>
+                  <span class="quiz-option-text">.exe</span>
+                </label>
+      
+            </div>
+          </div>
+    
+        </div>
+  
+
+          <!-- Section 4: Questions -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-circle-question"></i> 3. คำถามท้ายการทดลอง
+              <i class="fa-solid fa-circle-question"></i> 4.
+          <div class="form-section">
+            <div class="form-section-title">
+              <i class="fa-solid fa-circle-question"></i> 4. คำถามท้ายการทดลอง
               <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
 
@@ -1375,7 +1698,7 @@ int main() {
           <!-- Section 4: File Uploads -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-paperclip"></i> 4. ไฟล์แนบ (Attachments)
+              <i class="fa-solid fa-paperclip"></i> 5. ไฟล์แนบ (Attachments)
             </div>
 
             <!-- Screenshot upload -->
@@ -1422,7 +1745,7 @@ int main() {
           <!-- Section 5: Conclusion -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-comment-dots"></i> 5. สรุปผลการทดลอง
+              <i class="fa-solid fa-comment-dots"></i> 6. สรุปผลการทดลอง
               <span class="anti-cheat-pill" title="ระบบตรวจจับการลอก: ห้ามวางข้อความ (Paste)"><i class="fa-solid fa-shield-halved"></i> ห้ามวางข้อความ (No Paste)</span>
             </div>
             <div class="form-group">
@@ -1486,7 +1809,7 @@ int main() {
 
       <!-- Score Hero Banner -->
       <div class="score-hero-card">
-        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 10</span></div>
+        <div class="score-big-num" id="preScoreTotal">0.0 <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 15</span></div>
         <div class="score-status-badge" id="preScoreBadge">พร้อมส่งรายงาน</div>
       </div>
 
@@ -1832,7 +2155,7 @@ int main() {
 
           document.getElementById('screenshotThumb').src = e.target.result;
           document.getElementById('screenshotName').innerText = file.name;
-          document.getElementById('screenshotSize').innerText = (file.size / 1024).toFixed(1) + ' KB';
+          document.getElementById('screenshotSize').innerText = (file.size / 1524).toFixed(1) + ' KB';
           document.getElementById('screenshotArea').style.display = 'none';
           document.getElementById('screenshotPreview').style.display = 'flex';
           document.getElementById('printScreenshotText').innerText = `ไฟล์ภาพแนบ: ${file.name}`;
@@ -1842,7 +2165,7 @@ int main() {
           filesData.codeFileType = file.type;
 
           document.getElementById('codeFileName').innerText = file.name;
-          document.getElementById('codeFileSize').innerText = (file.size / 1024).toFixed(1) + ' KB';
+          document.getElementById('codeFileSize').innerText = (file.size / 1524).toFixed(1) + ' KB';
           document.getElementById('codeArea').style.display = 'none';
           document.getElementById('codePreview').style.display = 'flex';
           document.getElementById('printCodeText').innerText = `ไฟล์โค้ดแนบ: ${file.name}`;
@@ -2031,6 +2354,9 @@ int main() {
       // Evaluate Blanks
       const blankResult = checkBlanks(true);
 
+      // Check Quiz
+      const quizResult = checkQuizScore();
+
       // Collect data
       const payload = {
         studentName: nameVal,
@@ -2042,6 +2368,12 @@ int main() {
         blank3: blankResult.b3,
         blank4: blankResult.b4,
         blankScore: blankResult.blankScore,
+        quiz1: quizResult.userAnswers.quiz_q1,
+        quiz2: quizResult.userAnswers.quiz_q2,
+        quiz3: quizResult.userAnswers.quiz_q3,
+        quiz4: quizResult.userAnswers.quiz_q4,
+        quiz5: quizResult.userAnswers.quiz_q5,
+        quizScore: quizResult.quizScore,
         challengeCode: document.getElementById('challengeCode').value,
         question1: document.getElementById('question1').value,
         question2: document.getElementById('question2').value,
@@ -2103,6 +2435,7 @@ int main() {
           
           // 1. Blank score (Max 2 pts)
           const blankScore = blankResult.blankScore;
+          const quizScore = quizResult.quizScore;
 
           // 2. Challenge Code (Max 4 pts)
           let codeMatches = 0;
@@ -2130,7 +2463,7 @@ int main() {
           if (filesData.screenshotBase64) attachScore += 0.5;
           if (filesData.codeBase64) attachScore += 0.5;
           
-          const score = Number((blankScore + codeScore + q1Score + q2Score + attachScore).toFixed(1));
+          const score = Number((blankScore + quizScore + codeScore + q1Score + q2Score + attachScore).toFixed(1));
           
           const feedback = [
             `เติมคำตอบ Escape Characters (Example 2): ${blankScore}/2 (${blankResult.correctCount}/4 ช่อง)`,
@@ -2144,7 +2477,7 @@ int main() {
           localStorage.setItem('submitted_lab-basic_' + idVal, nowFormatted);
           lockFormAsSubmitted(nowFormatted);
 
-          const localMessage = `จำลองการส่งข้อมูลเสร็จสิ้น! (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)\n\nคะแนนรวมประเมินออโต้: ${score}/10\n\nรายละเอียดคะแนน:\n- ` + feedback.join('\n- ');
+          const localMessage = `จำลองการส่งข้อมูลเสร็จสิ้น! (หากเปิดใช้งานบน Google Script จริง ข้อมูลนี้จะถูกบันทึกไปยัง Google Sheet)\n\nคะแนนรวมประเมินออโต้: ${score}/15\n\nรายละเอียดคะแนน:\n- ` + feedback.join('\n- ');
           
           openModal('success', 'โหมดทดลองออฟไลน์สำเร็จ!', localMessage);
         }, 1500);
@@ -2338,16 +2671,16 @@ int main() {
       const isInfoComplete = (nameVal && idVal && groupVal);
 
       // Total score
-      const totalScore = Number((blankScore + finalChScore + q1Score + q2Score + attachScore).toFixed(1));
+      const totalScore = Number((blankScore + quizScore + finalChScore + q1Score + q2Score + attachScore).toFixed(1));
 
       // Render Modal Elements
-      document.getElementById('preScoreTotal').innerHTML = `${totalScore.toFixed(1)} <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 10</span>`;
+      document.getElementById('preScoreTotal').innerHTML = `${totalScore.toFixed(1)} <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 15</span>`;
 
       const badgeEl = document.getElementById('preScoreBadge');
-      if (totalScore >= 8.5 && isInfoComplete && hasConclusion) {
+      if (totalScore >= 12.5 && isInfoComplete && hasConclusion && quizResult.answeredCount === 5) {
         badgeEl.className = 'score-status-badge';
         badgeEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> พร้อมส่งรายงาน ยอดเยี่ยม!';
-      } else if (totalScore >= 5.0) {
+      } else if (totalScore >= 7.5) {
         badgeEl.className = 'score-status-badge warning';
         badgeEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> พอใช้ - ควรตรวจเพิ่ม';
       } else {

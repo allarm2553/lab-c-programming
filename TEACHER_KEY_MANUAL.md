@@ -1,22 +1,23 @@
 # คู่มือเฉลยและเกณฑ์การตรวจประเมินคะแนนใบงานปฏิบัติการภาษา C (ระดับ ปวส. อาชีวศึกษา)
 ## (C Programming Laboratory - Vocational & Industrial Answer Keys & Grading Manual)
 
-เอกสารนี้จัดทำขึ้นสำหรับผู้สอนและผู้ตรวจประเมิน เพื่อใช้เป็นคู่มืออ้างอิงเฉลยคำตอบ (Answer Keys), โค้ดเฉลยกิจกรรมท้าทายเชิงอุตสาหกรรม (Industrial & Embedded Challenge Solutions), คำตอบคำถามท้ายการทดลอง และชุดคีย์เวิร์ด (Keywords) ที่ระบบนำไปใช้ในการประเมินและคิดคะแนนอัตโนมัติ (Auto-grading System)
+เอกสารนี้จัดทำขึ้นสำหรับผู้สอนและผู้ตรวจประเมิน เพื่อใช้เป็นคู่มืออ้างอิงเฉลยคำตอบ (Answer Keys), เฉลยแบบทดสอบปรนัย 4 ตัวเลือก (Multiple Choice Quiz), โค้ดเฉลยกิจกรรมท้าทายเชิงอุตสาหกรรม (Industrial & Embedded Challenge Solutions), คำตอบคำถามท้ายการทดลอง และชุดคีย์เวิร์ด (Keywords) ที่ระบบนำไปใช้ในการประเมินและคิดคะแนนอัตโนมัติ (Auto-grading System)
 
 ---
 
-## 📊 โครงสร้างและเกณฑ์การคิดคะแนน (คะแนนเต็ม 10 คะแนนต่อใบงาน)
+## 📊 โครงสร้างและเกณฑ์การคิดคะแนน (คะแนนเต็ม 15 คะแนนต่อใบงาน)
 
 ทุกใบงานในระบบมีสัดส่วนคะแนนมาตรฐานเท่ากันทั้งหมด ดังนี้:
 
 | ลำดับ | รายการประเมิน | คะแนนเต็ม | วิธีการประเมิน |
 | :---: | :--- | :---: | :--- |
 | **1** | **เติมคำตอบโปรแกรมตัวอย่างที่ 2 (Fill-in-the-Blanks)** | **2.0** | ตรวจสอบคำตอบตรงช่อง (Exact Match / Multi-pattern) |
-| **2** | **ผลการทำกิจกรรมท้าทาย (Challenge Problem)** | **4.0** | ตรวจสอบคำสั่ง/ฟังก์ชัน/ไวยากรณ์ (`codeKeywords`) หรือตรวจกล่องข้อความ 5 ช่อง (`challengeBlanks`) |
-| **3** | **คำถามท้ายการทดลอง ข้อที่ 1** | **1.5** | ตรวจสอบแนวคิดสำคัญและคำสำคัญทางเทคนิค (`q1Keywords`) |
-| **4** | **คำถามท้ายการทดลอง ข้อที่ 2** | **1.5** | ตรวจสอบแนวคิดสำคัญและคำสำคัญทางเทคนิค (`q2Keywords`) |
-| **5** | **การแนบไฟล์หลักฐาน (Attachments)** | **1.0** | แนบภาพบันทึกหน้าจอผลการรัน (0.5 คะแนน) + แนบไฟล์ซอร์สโค้ด `.c` (0.5 คะแนน) |
-| **รวม** | **คะแนนรวมสุทธิต่อ 1 ใบงาน** | **10.0** | บันทึกลง Google Sheets และส่งผลลัพธ์แก่นักศึกษา |
+| **2** | **แบบทดสอบความรู้ 4 ตัวเลือก (Multiple Choice Quiz 5 ข้อ)** | **5.0** | ตรวจคำตอบอัตโนมัติ (ข้อละ 1.0 คะแนน รวม 5 ข้อ) |
+| **3** | **ผลการทำกิจกรรมท้าทาย (Challenge Problem)** | **4.0** | ตรวจสอบคำสั่ง/ฟังก์ชัน/ไวยากรณ์ (`codeKeywords`) หรือตรวจกล่องข้อความ 5 ช่อง (`challengeBlanks`) |
+| **4** | **คำถามท้ายการทดลอง ข้อที่ 1** | **1.5** | ตรวจสอบแนวคิดสำคัญและคำสำคัญทางเทคนิค (`q1Keywords`) |
+| **5** | **คำถามท้ายการทดลอง ข้อที่ 2** | **1.5** | ตรวจสอบแนวคิดสำคัญและคำสำคัญทางเทคนิค (`q2Keywords`) |
+| **6** | **การแนบไฟล์หลักฐาน (Attachments)** | **1.0** | แนบภาพบันทึกหน้าจอผลการรัน (0.5 คะแนน) + แนบไฟล์ซอร์สโค้ด `.c` (0.5 คะแนน) |
+| **รวม** | **คะแนนรวมสุทธิต่อ 1 ใบงาน** | **15.0** | บันทึกลง Google Sheets และส่งผลลัพธ์แก่นักศึกษา |
 
 ---
 
@@ -24,11 +25,32 @@
 - **ห้ามคัดลอกและวางข้อความ (Block Copy-Paste & Drop):** กล่องข้อความในส่วนคำถามท้ายการทดลองและสรุปผลการทดลองจะไม่อนุญาตให้กด `Ctrl+V`, `Cmd+V`, `Shift+Insert` หรือลากวาง เพื่อให้นักศึกษาต้องพิมพ์อธิบายด้วยความเข้าใจของตนเอง
 - **Input Anomaly Detection:** มีระบบตรวจจับความผิดปกติหากมีการ Paste ผ่านเครื่องมือภายนอกหรือ Script อัตโนมัติ (ข้อยกเว้น: การใช้ Undo `Ctrl+Z`)
 - **การส่งงานได้เพียงครั้งเดียว (One-Time Submission):** เมื่อนักศึกษากดยืนยันส่งงาน ระบบจะล็อกหน้าเว็บเป็นโหมดดูอย่างเดียว (View-Only) และบันทึกประวัติการส่งลงใน Google Sheet
-- **การปลดล็อกส่งใหม่ (Resubmission Unlock):** อาจารย์สามารถเปิดสิทธิ์ให้นักศึกษาส่งใหม่ได้ง่ายๆ เพียงลบแถวเดิมใน Google Sheet (ดูคู่มือฉบับเต็มที่ [`TEACHER_ADMIN_MANUAL.md`](file:///Users/allarmmac/myjob_folder/MyLaB/Cprogramming/TEACHER_ADMIN_MANUAL.md))
+- **ระบบประเมินคะแนนก่อนส่ง (Pre-check Score Breakdown):** นักศึกษาสามารถกดปุ่มตรวจสอบคะแนนเพื่อดูรายละเอียดคะแนน /15 ก่อนส่งจริงได้
 
 ---
 
-# 📚 รายละเอียดเฉลยและเกณฑ์ตรวจรายใบงาน (ทั้ง 13 บทปฏิบัติการ)
+## 📋 ตารางสรุปเฉลยแบบทดสอบปรนัย (Quiz Answer Keys) ครบทั้ง 14 ใบงาน
+
+| รหัสใบงาน | ชื่อใบงาน | ข้อ 1 | ข้อ 2 | ข้อ 3 | ข้อ 4 | ข้อ 5 | รูปแบบคีย์ |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **lab-basic** | Hello World & GCC Tools | **ข (B)** | **ข (B)** | **ค (C)** | **ข (B)** | **ค (C)** | `B, B, C, B, C` |
+| **lab-flowchart** | Program Flowchart Design | **ข (B)** | **ก (A)** | **ข (B)** | **ข (B)** | **ก (A)** | `B, A, B, B, A` |
+| **lab-structure** | C Structure & Compilation | **ก (A)** | **ข (B)** | **ค (C)** | **ค (C)** | **ข (B)** | `A, B, C, C, B` |
+| **lab1** | Variables, Data Types & Basic I/O | **ง (D)** | **ก (A)** | **ข (B)** | **ค (C)** | **ง (D)** | `D, A, B, C, D` |
+| **lab2** | Operators & Expressions | **ข (B)** | **ค (C)** | **ข (B)** | **ข (B)** | **ข (B)** | `B, C, B, B, B` |
+| **lab3** | Control Structures (if-else, switch) | **ข (B)** | **ค (C)** | **ข (B)** | **ข (B)** | **ข (B)** | `B, C, B, B, B` |
+| **lab4** | Loops & Iteration (for, while, do-while) | **ค (C)** | **ข (B)** | **ก (A)** | **ก (A)** | **ค (C)** | `C, B, A, A, C` |
+| **lab5** | Functions & Modular Programming | **ค (C)** | **ข (B)** | **ก (A)** | **ข (B)** | **ค (C)** | `C, B, A, B, C` |
+| **lab6** | Arrays (1D & 2D Arrays) | **ข (B)** | **ข (B)** | **ค (C)** | **ข (B)** | **ข (B)** | `B, B, C, B, B` |
+| **lab7** | Pointers & Memory Management | **ข (B)** | **ก (A)** | **ค (C)** | **ก (A)** | **ค (C)** | `B, A, C, A, C` |
+| **lab8** | Structures & Unions | **ข (B)** | **ก (A)** | **ข (B)** | **ค (C)** | **ข (B)** | `B, A, B, C, B` |
+| **lab9** | File Handling (I/O Streams) | **ข (B)** | **ค (C)** | **ค (C)** | **ก (A)** | **ค (C)** | `B, C, C, A, C` |
+| **lab10** | String Handling & Operations | **ข (B)** | **ข (B)** | **ก (A)** | **ข (B)** | **ค (C)** | `B, B, A, B, C` |
+| **lab11** | Dynamic Memory & Linked Lists | **ข (B)** | **ข (B)** | **ข (B)** | **ก (A)** | **ข (B)** | `B, B, B, A, B` |
+
+---
+
+# 📚 รายละเอียดเฉลยและเกณฑ์ตรวจรายใบงาน (ทั้ง 14 บทปฏิบัติการ)
 
 ---
 
@@ -37,534 +59,185 @@
 * **หัวข้อการเรียนรู้:** โครงสร้างโปรแกรมพื้นฐาน, ฟังก์ชัน `printf()` และ Escape Sequences (`\n`, `\t`)
 * **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
   * ช่องที่ 1: `\n` | ช่องที่ 2: `\n` | ช่องที่ 3: `\t` | ช่องที่ 4: `\t`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** โปรแกรมแสดงป้ายสถานะเครื่องจักรในสายการผลิต (Industrial Machine Status Display)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `printf`, `\n`, `\t`, `Machine|CNC|Voltage|Current|RPM|Status`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    printf("=== CNC MACHINE MONITORING SYSTEM ===\n");
-    printf("Parameter\tValue\t\tUnit\n");
-    printf("-------------------------------------\n");
-    printf("Machine ID:\tCNC-01\n");
-    printf("Line Voltage:\t380.5\t\tVAC\n");
-    printf("Motor Current:\t14.8\t\tAmp\n");
-    printf("Spindle Speed:\t2400\t\tRPM\n");
-    printf("System Status:\tRUNNING [NORMAL]\n");
-    printf("=====================================\n");
-    return 0;
-}
-```
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (หน้าที่ Compiler):** ตอบ **ข (B)** แปลซอร์สโค้ดเป็นภาษาเครื่อง
+  * **ข้อ 2 (Statement Terminator):** ตอบ **ข (B)** `; (Semicolon)`
+  * **ข้อ 3 (ฟังก์ชันแสดงผลข้อความ):** ตอบ **ค (C)** `printf()`
+  * **ข้อ 4 (ขึ้นบรรทัดใหม่):** ตอบ **ข (B)** `\n`
+  * **ข้อ 5 (นามสกุลไฟล์ C):** ตอบ **ค (C)** `.c`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ป้ายสถานะเครื่องจักรในสายการผลิต (Industrial Machine Status Display)
 
 ---
 
-### 2. Lab Structure: โครงสร้างโปรแกรมภาษา C และกระบวนการคอมไพล์
+### 2. Lab Flowchart: การออกแบบอัลกอริทึมและผังงานโปรแกรม
+* **โฟลเดอร์ปฏิบัติการ:** `lab-flowchart/`
+* **หัวข้อการเรียนรู้:** สัญลักษณ์ผังงานมาตรฐาน ANSI/ISO, Sequence, Selection, Iteration
+* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
+  * ช่องที่ 1: `int` | ช่องที่ 2: `scanf` | ช่องที่ 3: `if` | ช่องที่ 4: `else`
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (สี่เหลี่ยมผืนผ้า Rectangle):** ตอบ **ข (B)** การประมวลผล / การคำนวณ (Process)
+  * **ข้อ 2 (สี่เหลี่ยมข้าวหลามตัด Diamond):** ตอบ **ก (A)** การตัดสินใจ / ตรวจสอบเงื่อนไข (Decision)
+  * **ข้อ 3 (รูปทรงวงรี/แคปซูล Oval):** ตอบ **ข (B)** จุดเริ่มต้นหรือสิ้นสุดโปรแกรม (Terminal)
+  * **ข้อ 4 (สี่เหลี่ยมด้านขนาน Parallelogram):** ตอบ **ข (B)** การรับเข้าหรือแสดงผลข้อมูล (I/O)
+  * **ข้อ 5 (วงกลมเล็ก Small Circle):** ตอบ **ก (A)** จุดเชื่อมต่อในหน้าเดียวกัน (On-Page Connector)
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ผังงานระบบตรวจสอบระดับน้ำในถังพักน้ำอุตสาหกรรม (Industrial Water Tank Controller)
+
+---
+
+### 3. Lab Structure: โครงสร้างโปรแกรมภาษา C และกระบวนการคอมไพล์
 * **โฟลเดอร์ปฏิบัติการ:** `lab-structure/`
 * **หัวข้อการเรียนรู้:** Preprocessor Directives, ฟังก์ชันหลัก `main()`, Comment, และ Compile Lifecycle
 * **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
   * ช่องที่ 1: `#include <stdio.h>` | ช่องที่ 2: `int main()` | ช่องที่ 3: `;` | ช่องที่ 4: `return 0;`
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (ขั้นตอนการคอมไพล์):** ตอบ **ก (A)** Preprocessing -> Compilation -> Assembly -> Linking
+  * **ข้อ 2 (คำสั่งนำเข้า Header):** ตอบ **ข (B)** `#include`
+  * **ข้อ 3 (จุดเริ่มต้นประมวลผล):** ตอบ **ค (C)** `main()`
+  * **ข้อ 4 (คอมเมนต์หลายบรรทัด):** ตอบ **ค (C)** `/* ... */`
+  * **ข้อ 5 (return 0;):** ตอบ **ข (B)** โปรแกรมทำงานเสร็จสิ้นสมบูรณ์โดยไม่มีข้อผิดพลาด
 * **กิจกรรมท้าทาย (4.0 คะแนน):** โครงสร้างโปรแกรมควบคุมสัญญาณไฟกระพริบเตือนภัยโรงงาน (Alarm Beacon System)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `#include`, `#define`, `main`, `return`
 
 ---
 
-### 3. Lab 1: ชนิดข้อมูล ตัวแปร และฟังก์ชันรับ-แสดงผลข้อมูลพื้นฐาน
+### 4. Lab 1: ชนิดข้อมูล ตัวแปร และฟังก์ชันรับ-แสดงผลข้อมูลพื้นฐาน
 * **โฟลเดอร์ปฏิบัติการ:** `lab1/`
 * **หัวข้อการเรียนรู้:** `int`, `float`, `double`, `char`, `printf()`, `scanf()`, และ Format Specifiers
 * **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `%d` | ช่องที่ 2: `%f`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** การแปลงสัญญาณ Analog ADC (0-1023) เป็นระดับแรงดันไฟฟ้า (0.0-5.0V) และคำนวณกำลังไฟฟ้า $P=VI$
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `scanf`, `printf`, `float|double`, `\*`, `%f|%lf`, `&`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    int adcValue;
-    float current, voltage, power;
-    
-    printf("Enter 10-bit ADC Raw Value (0-1023): ");
-    if (scanf("%d", &adcValue) == 1) {
-        printf("Enter Circuit Current (Amp): ");
-        if (scanf("%f", &current) == 1) {
-            voltage = (adcValue / 1023.0f) * 5.0f;
-            power = voltage * current;
-            
-            printf("\n--- Electrical Measurement Results ---\n");
-            printf("ADC Raw Value: %d\n", adcValue);
-            printf("Measured Voltage: %.2f V\n", voltage);
-            printf("Circuit Current:  %.2f A\n", current);
-            printf("Calculated Power: %.2f W\n", power);
-        }
-    }
-    return 0;
-}
-```
+  * ช่องที่ 1: `&num` | ช่องที่ 2: `%f`
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (ขนาด double):** ตอบ **ง (D)** 8 ไบต์
+  * **ข้อ 2 (printf ทศนิยม 2 ตำแหน่ง):** ตอบ **ก (A)** `printf("%.2f\n", gpa);`
+  * **ข้อ 3 (scanf ตัวแปร int num):** ตอบ **ข (B)** `scanf("%d", &num);`
+  * **ข้อ 4 (ชนิดข้อมูลตัวอักษรเดี่ยว):** ตอบ **ค (C)** `char`
+  * **ข้อ 5 (scanf สำหรับ double):** ตอบ **ง (D)** `%lf`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** แปลงสัญญาณ Analog ADC (0-1023) เป็นแรงดันไฟฟ้า (0.0-5.0V) และคำนวณกำลังไฟฟ้า $P=VI$
 
 ---
 
-### 4. Lab 2: ตัวดำเนินการและการประเมินนิพจน์ (Operators & Bitwise)
+### 5. Lab 2: ตัวดำเนินการและนิพจน์ในการคำนวณ (Operators & Expressions)
 * **โฟลเดอร์ปฏิบัติการ:** `lab2/`
-* **หัวข้อการเรียนรู้:** Arithmetic, Relational, Logical, และ Bitwise Operators (`&`, `|`, `^`, `~`, `<<`, `>>`)
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `&` | ช่องที่ 2: `|`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** การควบคุมและอ่านค่ารีจิสเตอร์พอร์ต I/O 8 บิต (PORTB Bit Manipulation)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `&`, `\|`, `\^`, `<<|>>`, `scanf`, `printf`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    unsigned char portb;
-    printf("Enter initial PORTB state (0-255): ");
-    if (scanf("%hhu", &portb) == 1) {
-        portb = portb | (1 << 3);     // Set Bit 3 (Relay ON)
-        portb = portb & ~(1 << 5);    // Clear Bit 5 (Valve OFF)
-        portb = portb ^ (1 << 7);     // Toggle Bit 7 (LED Toggle)
-        
-        printf("\n--- Updated PORTB Register Output ---\n");
-        printf("PORTB Decimal: %d\n", portb);
-        printf("PORTB Hex:     0x%02X\n", portb);
-        printf("Bit 3 (Relay): %s\n", (portb & (1 << 3)) ? "ON" : "OFF");
-        printf("Bit 5 (Valve): %s\n", (portb & (1 << 5)) ? "ON" : "OFF");
-        printf("Bit 7 (LED):   %s\n", (portb & (1 << 7)) ? "ON" : "OFF");
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** Arithmetic, Relational, Logical, Bitwise, Compound Assignment, Type Casting
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (Integer division 7/2):** ตอบ **ข (B)** `3`
+  * **ข้อ 2 (ตัวดำเนินการ Modulo):** ตอบ **ค (C)** `%`
+  * **ข้อ 3 (Bitwise AND):** ตอบ **ข (B)** `&`
+  * **ข้อ 4 (ความหมาย x += 3):** ตอบ **ข (B)** `x = x + 3;`
+  * **ข้อ 5 (Type Casting ทศนิยม):** ตอบ **ข (B)** `(float)a / b`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบคำนวณตัวประกอบกำลังไฟฟ้า (Power Factor) และพลังงานสะสมกิโลวัตต์-ชั่วโมง (kWh)
 
 ---
 
-### 5. Lab 3: โครงสร้างควบคุมแบบมีเงื่อนไข (Control Flow: if-else & switch)
+### 6. Lab 3: โครงสร้างการตัดสินใจและเงื่อนไข (Control Structures: if-else & switch-case)
 * **โฟลเดอร์ปฏิบัติการ:** `lab3/`
-* **หัวข้อการเรียนรู้:** `if-else`, `if-else if-else`, และ `switch-case`
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `switch` | ช่องที่ 2: `case` | ช่องที่ 3: `break;`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบตรวจวัดระดับน้ำในถังพักอุตสาหกรรม และควบคุมปั๊มน้ำ (Tank Water Level Controller)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `if`, `else`, `switch`, `case`, `break`, `scanf`, `printf`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    float waterLevel;
-    int mode;
-    
-    printf("Enter Water Level (0.0 - 100.0%%): ");
-    if (scanf("%f", &waterLevel) == 1) {
-        printf("Enter Mode (1: AUTO, 2: MANUAL DRAIN, 3: EMERGENCY STOP): ");
-        if (scanf("%d", &mode) == 1) {
-            printf("\n--- System Control Status ---\n");
-            switch (mode) {
-                case 1:
-                    printf("Mode: AUTOMATIC CONTROL\n");
-                    if (waterLevel < 20.0f) {
-                        printf("Water Status: LOW (%.1f%%) -> Pump Action: RUN HIGH SPEED\n", waterLevel);
-                    } else if (waterLevel <= 80.0f) {
-                        printf("Water Status: OPTIMAL (%.1f%%) -> Pump Action: RUN NORMAL SPEED\n", waterLevel);
-                    } else {
-                        printf("Water Status: FULL (%.1f%%) -> Pump Action: STOP PUMP\n", waterLevel);
-                    }
-                    break;
-                case 2:
-                    printf("Mode: MANUAL DRAIN -> Drain Valve: OPEN\n");
-                    break;
-                case 3:
-                    printf("Mode: EMERGENCY STOP -> ALL PUMPS & VALVES SHUTDOWN!\n");
-                    break;
-                default:
-                    printf("Invalid Mode Selected!\n");
-            }
-        }
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** `if`, `if-else`, Nested `if`, `switch-case`, `break`, `default`
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (เปรียบเทียบเท่ากับ):** ตอบ **ข (B)** `==`
+  * **ข้อ 2 (ป้องกัน Fall-through ใน switch):** ตอบ **ค (C)** `break;`
+  * **ข้อ 3 (กรณีไม่ตรง case ใดๆ):** ตอบ **ข (B)** `default:`
+  * **ข้อ 4 (ชนิดข้อมูลควบคุม switch):** ตอบ **ข (B)** `int หรือ char (Integral Types)`
+  * **ข้อ 5 (เงื่อนไข &&):** ตอบ **ข (B)** เมื่ออยู่ในช่วง 50 ถึง 100 ทั้งสองเงื่อนไขพร้อมกัน
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ตรรกะควบคุมระบบเตือนภัยแรงดันหม้อต้มไอน้ำอุตสาหกรรม (Boiler Pressure Monitoring)
 
 ---
 
-### 6. Lab 4: โครงสร้างการทำงานแบบวนรอบ (Loops & Iterations)
+### 7. Lab 4: โครงสร้างการวนซ้ำ (Loops & Iteration: for, while, do-while)
 * **โฟลเดอร์ปฏิบัติการ:** `lab4/`
-* **หัวข้อการเรียนรู้:** `for`, `while`, `do-while`, Nested Loops, `break`, `continue`
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `while` | ช่องที่ 2: `count++`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** โปรแกรมจำลองการสร้างสัญญาณ PWM ควบคุมมอเตอร์ (Motor PWM Simulation)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `for|while`, `scanf`, `printf`, `%|PWM|duty|voltage`, `\n`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    int dutyCycle, periods;
-    printf("Enter PWM Duty Cycle (0 - 100%%): ");
-    if (scanf("%d", &dutyCycle) == 1) {
-        printf("Enter Number of Periods to generate (e.g. 5): ");
-        if (scanf("%d", &periods) == 1) {
-            int onUnits = dutyCycle / 10;
-            int offUnits = 10 - onUnits;
-            
-            printf("\n--- Generated PWM Signal Waves (%d%% Duty Cycle) ---\n", dutyCycle);
-            for (int p = 1; p <= periods; p++) {
-                printf("Period %2d: [", p);
-                for (int i = 0; i < onUnits; i++) {
-                    printf("1");
-                }
-                for (int j = 0; j < offUnits; j++) {
-                    printf("0");
-                }
-                printf("] Output Voltage ~ %.1f V\n", (dutyCycle / 100.0f) * 5.0f);
-            }
-        }
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** `for`, `while`, `do-while`, `break`, `continue`, Nested Loops
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (ลูปที่ทำงานอย่างน้อย 1 รอบ):** ตอบ **ค (C)** `do-while`
+  * **ข้อ 2 (หยุดและออกจากลูปทันที):** ตอบ **ข (B)** `break;`
+  * **ข้อ 3 (ข้ามรอบปัจจุบันไปรอบถัดไป):** ตอบ **ก (A)** `continue;`
+  * **ข้อ 4 (ส่วนที่ทำครั้งเดียวตอนเริ่ม for):** ตอบ **ก (A)** `ส่วน A (Initialization)`
+  * **ข้อ 5 (while(1) หรือ for(;;)):** ตอบ **ค (C)** `Infinite Loop (วนซ้ำไม่สิ้นสุด)`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบบันทึกและเฉลี่ยสัญญาณเซนเซอร์อุณหภูมิ 10 ค่าแบบเรียลไทม์ (10-Sample Temperature Average)
 
 ---
 
-### 7. Lab 5: ฟังก์ชันและการขอบเขตตัวแปร (Functions & Scope)
+### 8. Lab 5: ฟังก์ชันและการเขียนโปรแกรมแบบแยกส่วน (Functions & Modular Programming)
 * **โฟลเดอร์ปฏิบัติการ:** `lab5/`
-* **หัวข้อการเรียนรู้:** User-defined Functions, Call-by-Value, Call-by-Reference, Scope
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `return a + b;` | ช่องที่ 2: `add(x, y)`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** ฟังก์ชันสอบเทียบเซนเซอร์วัดอุณหภูมิ (Sensor Calibration & Scaling)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `float|void|double`, `return`, `scanf`, `printf`, `&|\*`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-float calibrateTemperature(int rawADC) {
-    return (rawADC * 0.0977f) - 10.0f;
-}
-
-void updateMinMax(float temp, float *minTemp, float *maxTemp) {
-    if (temp < *minTemp) *minTemp = temp;
-    if (temp > *maxTemp) *maxTemp = temp;
-}
-
-int main() {
-    int adc1, adc2, adc3;
-    printf("Enter 3 Raw ADC Samples: ");
-    if (scanf("%d %d %d", &adc1, &adc2, &adc3) == 3) {
-        float t1 = calibrateTemperature(adc1);
-        float t2 = calibrateTemperature(adc2);
-        float t3 = calibrateTemperature(adc3);
-        
-        float minT = t1, maxT = t1;
-        updateMinMax(t2, &minT, &maxT);
-        updateMinMax(t3, &minT, &maxT);
-        
-        float avgT = (t1 + t2 + t3) / 3.0f;
-        
-        printf("\n--- Sensor Calibration Results ---\n");
-        printf("Sample 1: %.2f C\n", t1);
-        printf("Sample 2: %.2f C\n", t2);
-        printf("Sample 3: %.2f C\n", t3);
-        printf("Average Temp: %.2f C\n", avgT);
-        printf("Min Temp: %.2f C, Max Temp: %.2f C\n", minT, maxT);
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** Function Declaration, Definition, Call, Return Type, Pass-by-Value, Scope, Recursion
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (ฟังก์ชันไม่คืนค่า):** ตอบ **ค (C)** `void`
+  * **ข้อ 2 (ประโยชน์ Prototype):** ตอบ **ข (B)** แจ้ง Compiler ให้ทราบชื่อ พารามิเตอร์ และ return type ก่อนใช้งาน
+  * **ข้อ 3 (Pass-by-Value):** ตอบ **ก (A)** ฟังก์ชันได้รับสำเนาค่าตัวแปร ไม่กระทบตัวแปรต้นทาง
+  * **ข้อ 4 (ฟังก์ชันเรียกตัวเอง):** ตอบ **ข (B)** `Recursive Function`
+  * **ข้อ 5 (เงื่อนไขหยุด Recursion):** ตอบ **ค (C)** `Base Case (กรณีฐาน)`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ไลบรารีฟังก์ชันคำนวณอัตราการไหลและความเร็วรอบมอเตอร์ (Flow Rate & Motor RPM Library)
 
 ---
 
-### 8. Lab 6: อาร์เรย์และสตริง (Arrays & Strings)
+### 9. Lab 6: อาร์เรย์และการประมวลผลข้อมูลชุด (Arrays: 1D & 2D Arrays)
 * **โฟลเดอร์ปฏิบัติการ:** `lab6/`
-* **หัวข้อการเรียนรู้:** 1D/2D Arrays, String Representation, Null Terminator `\0`
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `int numbers[5]` | ช่องที่ 2: `numbers[i]`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** อาร์เรย์เก็บบันทึกประวัติกระแสไฟฟ้า และตรวจจับกระแสเกิน (Peak Overload Detection)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `\[\]`, `for|while`, `scanf`, `printf`, `float|int`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    float currentLog[5];
-    float sum = 0.0f, maxCurrent = 0.0f;
-    
-    printf("Enter 5 Motor Current Samples (Amp):\n");
-    for (int i = 0; i < 5; i++) {
-        printf("Sample [%d]: ", i + 1);
-        if (scanf("%f", &currentLog[i]) != 1) return 1;
-        sum += currentLog[i];
-        if (currentLog[i] > maxCurrent) {
-            maxCurrent = currentLog[i];
-        }
-    }
-    
-    float avgCurrent = sum / 5.0f;
-    printf("\n--- Motor Current Analysis ---\n");
-    printf("Average Current: %.2f A\n", avgCurrent);
-    printf("Peak Current:    %.2f A\n", maxCurrent);
-    
-    if (maxCurrent > 15.0f) {
-        printf("Status: [OVERLOAD WARNING] Current exceeded 15.0A safe threshold!\n");
-    } else {
-        printf("Status: [NORMAL] Motor operating within safe current limits.\n");
-    }
-    
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** Array 1 มิติ, Array 2 มิติ (Matrix), Indexing, Sequential Processing
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (ดัชนีแรกในภาษา C):** ตอบ **ข (B)** `0`
+  * **ข้อ 2 (ดัชนีตัวสุดท้ายของ data[10]):** ตอบ **ข (B)** `data[9]`
+  * **ข้อ 3 (หน่วยความจำ int arr[5]):** ตอบ **ค (C)** `20 ไบต์` (5 * 4 bytes)
+  * **ข้อ 4 (จำนวนสมาชิก matrix[3][4]):** ตอบ **ข (B)** `12 ตัว`
+  * **ข้อ 5 (แถวแรก คอลัมน์สอง):** ตอบ **ข (B)** `a[0][1]`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบบันทึกและวิเคราะห์ค่ากระแสไฟฟ้า 3 เฟสในรอบ 24 ชั่วโมง (3-Phase Matrix Analysis)
 
 ---
 
-### 9. Lab 7: ตัวชี้และการจัดการหน่วยความจำ (Pointers & Dynamic Memory)
+### 10. Lab 7: พอยน์เตอร์และการจัดการหน่วยความจำ (Pointers & Memory Addresses)
 * **โฟลเดอร์ปฏิบัติการ:** `lab7/`
-* **หัวข้อการเรียนรู้:** Pointer Declaration, Address-of `&`, Dereference `*`, `malloc()`, `free()`
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `&num` | ช่องที่ 2: `*ptr`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** การจัดสรรหน่วยความจำพลวัต (Dynamic Sensor Buffer) และการอ่านค่าผ่าน Pointer
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `\*`, `&`, `malloc`, `free`, `scanf|printf`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    int n;
-    printf("Enter number of sensor samples to record (N): ");
-    if (scanf("%d", &n) == 1 && n > 0) {
-        float *buffer = (float *)malloc(n * sizeof(float));
-        if (buffer == NULL) {
-            printf("Memory allocation failed!\n");
-            return 1;
-        }
-        
-        printf("Enter %d sensor readings:\n", n);
-        float sum = 0.0f;
-        for (int i = 0; i < n; i++) {
-            printf("Reading #%d: ", i + 1);
-            if (scanf("%f", buffer + i) == 1) {
-                sum += *(buffer + i);
-            }
-        }
-        
-        printf("\n--- Dynamic Buffer Processing ---\n");
-        printf("Allocated Memory: %zu Bytes\n", n * sizeof(float));
-        printf("Processed Average: %.2f\n", sum / n);
-        
-        free(buffer);
-        buffer = NULL;
-        printf("Memory successfully released (Heap freed).\n");
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** Address-of (`&`), Dereference (`*`), Pointer Arithmetic, Pass-by-Reference
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (หาแอดเดรสหน่วยความจำ):** ตอบ **ข (B)** `&` (Address-of)
+  * **ข้อ 2 (ดึงค่าข้อมูลที่ pointer ชี้):** ตอบ **ก (A)** `*` (Dereference)
+  * **ข้อ 3 (ค่าของ *p เมื่อ p=&x):** ตอบ **ค (C)** `*p` มีค่าเท่ากับ 20
+  * **ข้อ 4 (กำหนดค่าเริ่มต้น pointer ว่าง):** ตอบ **ก (A)** `0 หรือ NULL`
+  * **ข้อ 5 (Pointer Arithmetic ptr++ บน int):** ตอบ **ค (C)** `0x1004` (ขยับไป 4 ไบต์)
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ฟังก์ชัน Swap และสลับทิศทางหมุนของมอเตอร์แบบ Pass-by-Reference (Motor State Swapper)
 
 ---
 
-### 10. Lab 8: โครงสร้างข้อมูลและยูเนียน (Structures & Unions)
+### 11. Lab 8: โครงสร้างข้อมูลและยูเนียน (Structures & Unions)
 * **โฟลเดอร์ปฏิบัติการ:** `lab8/`
-* **หัวข้อการเรียนรู้:** `struct`, `union`, Member Access (`.`, `->`), Memory Layout
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `struct Point` | ช่องที่ 2: `p1.x`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** โครงสร้างข้อมูลโหนดตรวจวัด IoT (struct SensorNode Telemetry Record)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `struct`, `\.|\->`, `scanf`, `printf`, `float|int`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-struct SensorNode {
-    int nodeID;
-    float temperature;
-    float humidity;
-    int relayActive;
-};
-
-void displayTelemetry(const struct SensorNode *node) {
-    printf("\n--- IoT Telemetry Packet Report ---\n");
-    printf("Sensor Node ID:  #%04d\n", node->nodeID);
-    printf("Ambient Temp:    %.2f C\n", node->temperature);
-    printf("Relative Humid:  %.2f %%\n", node->humidity);
-    printf("Relay Status:    %s\n", node->relayActive ? "ACTIVATED [ON]" : "STANDBY [OFF]");
-    printf("Total Struct Size: %zu Bytes\n", sizeof(struct SensorNode));
-}
-
-int main() {
-    struct SensorNode node1;
-    printf("Enter Node ID (e.g. 101): ");
-    if (scanf("%d", &node1.nodeID) == 1) {
-        printf("Enter Temperature (C): ");
-        if (scanf("%f", &node1.temperature) == 1) {
-            printf("Enter Humidity (%%): ");
-            if (scanf("%f", &node1.humidity) == 1) {
-                printf("Enter Relay State (1 for ON, 0 for OFF): ");
-                if (scanf("%d", &node1.relayActive) == 1) {
-                    displayTelemetry(&node1);
-                }
-            }
-        }
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** `struct`, Dot (`.`), Arrow (`->`), `typedef`, `union`, Memory Alignment
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (รวมตัวแปรต่างชนิด):** ตอบ **ข (B)** `struct`
+  * **ข้อ 2 (เข้าถึงสมาชิกตัวแปรปกติ):** ตอบ **ก (A)** `. (Dot Operator)`
+  * **ข้อ 3 (เข้าถึงสมาชิกผ่าน pointer):** ตอบ **ข (B)** `-> (Arrow Operator)`
+  * **ข้อ 4 (ประโยชน์ typedef):** ตอบ **ค (C)** สร้างชื่อนามแฝง (Alias) หรือชนิดข้อมูลใหม่
+  * **ข้อ 5 (ความแตกต่าง struct กับ union):** ตอบ **ข (B)** สมาชิกใน union ใช้ RAM ร่วมกันตามขนาดสมาชิกที่ใหญ่ที่สุด
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ฐานข้อมูลโครงสร้าง telemetry ของเซนเซอร์เครื่องจักร (Machine Telemetry Struct)
 
 ---
 
-### 11. Lab 9: การจัดการไฟล์ (File I/O)
+### 12. Lab 9: การจัดการไฟล์และสตรีมข้อมูล (File Handling & I/O Streams)
 * **โฟลเดอร์ปฏิบัติการ:** `lab9/`
-* **หัวข้อการเรียนรู้:** `fopen()`, `fclose()`, `fprintf()`, `fscanf()`, `FILE*`
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `fopen("test.txt", "w")` | ช่องที่ 2: `fclose(fp)`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบบันทึกข้อมูลประวัติเครื่องจักรลงไฟล์ CSV (Industrial Data Logger to `datalog.csv`)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `fopen`, `fclose`, `fprintf|fputs|fwrite`, `FILE`, `\.csv`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    FILE *fp = fopen("datalog.csv", "w");
-    if (fp == NULL) {
-        printf("Error creating datalog.csv!\n");
-        return 1;
-    }
-    
-    // Write CSV Header
-    fprintf(fp, "Sample,Time,Voltage_V,Temperature_C\n");
-    
-    // Write Sample Industrial Records
-    fprintf(fp, "1,09:00,380.2,42.5\n");
-    fprintf(fp, "2,09:05,379.8,43.1\n");
-    fprintf(fp, "3,09:10,381.0,44.0\n");
-    
-    fclose(fp);
-    printf("Successfully logged industrial telemetry data to 'datalog.csv'!\n");
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** `FILE*`, `fopen()`, `fclose()`, Modes (`"r"`, `"w"`, `"a"`), `fprintf()`, `fscanf()`
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (ฟังก์ชันเปิดไฟล์):** ตอบ **ข (B)** `fopen()`
+  * **ข้อ 2 (โหมด "w" เมื่อมีไฟล์เดิม):** ตอบ **ค (C)** ลบข้อมูลเดิมในไฟล์ทั้งหมด แล้วเขียนใหม่
+  * **ข้อ 3 (โหมดเขียนต่อท้าย):** ตอบ **ค (C)** `"a" (Append Mode)`
+  * **ข้อ 4 (ฟังก์ชันปิดไฟล์):** ตอบ **ก (A)** `fclose()`
+  * **ข้อ 5 (fopen ล้มเหลว คืนค่าใด):** ตอบ **ค (C)** `NULL`
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบ Data Logger บันทึกประวัติความผิดพลาดของเครื่องจักรลงไฟล์ CSV (CSV Fault Logger)
 
 ---
 
-### 12. Lab 10: การจัดการสตริงขั้นสูง (String Manipulation Library)
+### 13. Lab 10: การประมวลผลสตริงและข้อความ (String Handling & Operations)
 * **โฟลเดอร์ปฏิบัติการ:** `lab10/`
-* **หัวข้อการเรียนรู้:** `<string.h>` Library (`strcpy`, `strncpy`, `strlen`, `strcmp`, `strcat`, `strstr`), Safe Input (`fgets`)
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `strcpy(dest, src)` | ช่องที่ 2: `strlen(dest)`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** การแยกวิเคราะห์รหัสคำสั่งควบคุมอุปกรณ์ IoT ผ่าน Serial Interface (AT / Serial Command Parser)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `string\.h`, `fgets`, `strlen`, `strstr|strcmp|strncpy`, `printf`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char cmdBuffer[64];
-    printf("Enter Serial Command (e.g. $SET,RELAY,ON# or $READ,TEMP#): ");
-    if (fgets(cmdBuffer, sizeof(cmdBuffer), stdin) != NULL) {
-        cmdBuffer[strcspn(cmdBuffer, "\r\n")] = '\0';
-        
-        printf("\n--- Command Packet Parser Analysis ---\n");
-        printf("Raw Packet:    %s (Length: %zu chars)\n", cmdBuffer, strlen(cmdBuffer));
-        
-        if (strstr(cmdBuffer, "$SET,RELAY,ON#") != NULL) {
-            printf("Action: Executing -> RELAY SWITCH ENERGIZED [ON]\n");
-        } else if (strstr(cmdBuffer, "$SET,RELAY,OFF#") != NULL) {
-            printf("Action: Executing -> RELAY SWITCH DE-ENERGIZED [OFF]\n");
-        } else if (strstr(cmdBuffer, "$READ,TEMP#") != NULL) {
-            printf("Action: Telemetry -> Reading Sensor Temp: 28.50 C\n");
-        } else {
-            printf("Action: [UNKNOWN COMMAND] Syntax error or invalid header.\n");
-        }
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** Null-terminator (`'\0'`), `strlen()`, `strcpy()`, `strcat()`, `strcmp()`, ASCII
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (ตัวปิดท้ายสตริงใน C):** ตอบ **ข (B)** `'\0'` (Null Terminator)
+  * **ข้อ 2 (หาความยาวสตริง):** ตอบ **ข (B)** `strlen()`
+  * **ข้อ 3 (คัดลอกข้อความ):** ตอบ **ก (A)** `strcpy(dest, src)`
+  * **ข้อ 4 (ต่อข้อความ):** ตอบ **ข (B)** `strcat(dest, src)`
+  * **ข้อ 5 (strcmp คืนค่า 0 เมื่อใด):** ตอบ **ค (C)** เมื่อสตริงทั้งสองมีข้อความเหมือนกันทุกตัวอักษร
+* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบถอดรหัสคำสั่งควบคุอุปกรณ์ผ่าน Serial Protocol เช่น `"CMD:PUMP_ON"` (Serial Command Parser)
 
 ---
 
-### 13. Lab 11: การเชื่อมโยงภาษา C สู่ไมโครคอนโทรลเลอร์ (C to Microcontroller & Embedded Bridge)
+### 14. Lab 11: การจัดสรรหน่วยความจำพลวัตและโครงสร้างข้อมูลลิงก์ลิสต์ (Dynamic Memory & Linked Lists)
 * **โฟลเดอร์ปฏิบัติการ:** `lab11/`
-* **หัวข้อการเรียนรู้:** Super-Loop Architecture (`setup()` & `loop()`), UART Serial Communication, Non-blocking Multi-tasking (`millis()`), Safety Override
-* **เฉลยเติมคำสั่งตัวอย่างที่ 2 (2.0 คะแนน):**
-  * ช่องที่ 1: `currentMillis` หรือ `millis()` | ช่องที่ 2: `interval` หรือ `500`
-* **กิจกรรมท้าทาย (4.0 คะแนน):** ระบบ Smart IoT Node Controller (Dual-Task Non-blocking Scheduler)
-  * **คีย์เวิร์ดตรวจโค้ด (`codeKeywords`):** `millis|currentMs|time`, `setup|loop|task|Task`, `if|else`, `printf|Serial`, `struct|float|bool`
-  * **โค้ดเฉลย (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-#include <stdbool.h>
-
-struct SystemState {
-    float temperature;
-    bool ledBeacon;
-    bool coolingFan;
-};
-
-void runTaskSensor(unsigned long currentMs, unsigned long *prevMs, struct SystemState *sys) {
-    if (currentMs - *prevMs >= 500) {
-        *prevMs = currentMs;
-        sys->temperature = 41.5f; 
-        
-        if (sys->temperature > 40.0f) {
-            sys->coolingFan = true;
-        } else {
-            sys->coolingFan = false;
-        }
-        
-        printf("[Task 1 @ %4lums] Sensor Temp: %.1f C -> Fan: %s\n", 
-               currentMs, sys->temperature, sys->coolingFan ? "ACTIVATED [ON]" : "STANDBY [OFF]");
-    }
-}
-
-void runTaskBeacon(unsigned long currentMs, unsigned long *prevMs, struct SystemState *sys) {
-    if (currentMs - *prevMs >= 100) {
-        *prevMs = currentMs;
-        sys->ledBeacon = !sys->ledBeacon;
-        printf("[Task 2 @ %4lums] Heartbeat LED: %s\n", 
-               currentMs, sys->ledBeacon ? "BLINK (1)" : "DARK  (0)");
-    }
-}
-
-int main() {
-    struct SystemState myNode = {25.0f, false, false};
-    unsigned long prevSensorMs = 0;
-    unsigned long prevBeaconMs = 0;
-    
-    printf("=== SMART IOT CONTROLLER NON-BLOCKING SCHEDULER ===\n");
-    
-    for (unsigned long simTime = 100; simTime <= 1000; simTime += 100) {
-        runTaskBeacon(simTime, &prevBeaconMs, &myNode);
-        runTaskSensor(simTime, &prevSensorMs, &myNode);
-    }
-    
-    printf("===================================================\n");
-    return 0;
-}
-```
-
----
-
-### 14. Lab Flowchart: การออกแบบผังงานและการไล่รหัสตรรกะโปรแกรม
-* **โฟลเดอร์ปฏิบัติการ:** `lab-flowchart/`
-* **หัวข้อการเรียนรู้:** ANSI/ISO Flowchart Standards, Trace Table / Dry Run, Debugging, Flowchart to C Code Bridge
-* **สัดส่วนคะแนน 5 ตอน (10.0 คะแนนเต็ม):**
-  * ตอนที่ 1: มาตรฐานและกฎของผังงาน (1.5 คะแนน)
-  * ตอนที่ 2: การแกะรอยตรรกะ Loop ด้วย Trace Table (2.5 คะแนน)
-  * ตอนที่ 3: Flowchart Debugging & Bug Hunting (2.0 คะแนน)
-  * ตอนที่ 4: กิจกรรมท้าทาย (Auto Fan Temperature Controller) (3.0 คะแนน)
-  * ตอนที่ 5: สรุปผลและการสะท้อนคิด (1.0 คะแนน)
-* **โค้ดเฉลยตอนที่ 4 (`challenge_solution.c`):**
-```c
-#include <stdio.h>
-
-int main() {
-    float temp;
-    printf("Enter Machine Temperature (C): ");
-    if (scanf("%f", &temp) == 1) {
-        printf("\n--- Auto Fan Controller Status ---\n");
-        printf("Temperature: %.2f C\n", temp);
-        if (temp >= 35.0f) {
-            printf("Fan Status: HIGH SPEED [MAX COOLING]\n");
-        } else if (temp >= 28.0f) {
-            printf("Fan Status: MEDIUM SPEED [NORMAL COOLING]\n");
-        } else {
-            printf("Fan Status: OFF [STANDBY MODE]\n");
-        }
-    }
-    return 0;
-}
-```
+* **หัวข้อการเรียนรู้:** Heap vs Stack, `malloc()`, `calloc()`, `free()`, Memory Leak, Singly Linked List
+* **เฉลยแบบทดสอบความรู้ 4 ตัวเลือก 5 ข้อ (5.0 คะแนน):**
+  * **ข้อ 1 (จอง heap โดยไม่ล้างค่า):** ตอบ **ข (B)** `malloc()`
+  * **ข้อ 2 (ความต่าง calloc กับ malloc):** ตอบ **ข (B)** `calloc` จะล้างค่าและกำหนดทุกไบต์เป็น 0
+  * **ข้อ 3 (คืน memory ป้องกัน leak):** ตอบ **ข (B)** `free()`
+  * **ข้อ 4 (RAM ไม่พอ malloc คืนค่าใด):** ตอบ **ก (A)** `0 หรือ NULL`
+  * **ข้อ 5 (องค์ประกอบ Node ใน Linked List):** ตอบ **ข (B)** ข้อมูล (Data) และตัวชี้ไปยังโหนดถัดไป (Pointer to next node)
+* **กิจกรรมท้าทาย (4.0 คะแนน):** คิวส่งงานการผลิตแบบ FIFO (First-In, First-Out Production Task Queue)
