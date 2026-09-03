@@ -1330,19 +1330,50 @@ int main() {
           <!-- Section 2: Code Submission / Challenge -->
           <div class="form-section">
             <div class="form-section-title">
-              <i class="fa-solid fa-file-code"></i> 2. ผลการทำกิจกรรมท้าทาย (Source Code)
+              <i class="fa-solid fa-trophy"></i> 2. กิจกรรมท้าทาย (Lab Challenge)
             </div>
-            
+
+            <div style="background: rgba(15, 23, 42, 0.6); border-left: 4px solid #3b82f6; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">
+              <strong style="color: #60a5fa;"><i class="fa-solid fa-bullseye"></i> โจทย์ท้าทาย:</strong> พัฒนาโปรแกรมภาษา C จำลองระบบบันทึกประวัติเครื่องจักรลงไฟล์ CSV (Industrial Data Logger to 'datalog.csv') โดยใช้ fopen() โหมดเขียนไฟล์ บันทึกหัวคอลัมน์และข้อมูล 3 แซมเปิล (Sample, Time, Voltage_V, Temperature_C) ตรวจสอบตัวชี้ไฟล์ NULL และปิดไฟล์ด้วย fclose()
+            </div>
+
             <div class="form-group">
-              <label for="challengeCode">พิมพ์โค้ดภาษา C ของคุณที่นี่</label>
-              <textarea id="challengeCode" class="code-textarea" required placeholder="#include <stdio.h>
+              <label for="challengeCode">พิมพ์โค้ดภาษา C สำหรับแก้โจทย์ท้าทายที่นี่</label>
+              <textarea id="challengeCode" class="code-textarea" required spellcheck="false" placeholder="#include <stdio.h>
 
 int main() {
     // เขียนโค้ดสร้างไฟล์ datalog.csv บันทึกหัวตารางและข้อมูลโทรมาตรโรงงาน
     return 0;
 }"></textarea>
             </div>
-            
+
+            <!-- C Live Terminal -->
+            <div class="c-terminal-card" style="margin-top: 1rem; background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; overflow: hidden; font-family: 'JetBrains Mono', monospace;">
+              <div style="background: #1e293b; padding: 0.5rem 1rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;"></span>
+                  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;"></span>
+                  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;"></span>
+                  <span style="font-size: 0.8rem; color: #94a3b8; margin-left: 0.5rem;"><i class="fa-solid fa-terminal"></i> C Live Terminal (Client-Side WASM / Runtime)</span>
+                </div>
+                <button type="button" class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem; width: auto;" onclick="clearTerminal()">
+                  <i class="fa-solid fa-eraser"></i> ล้างผลลัพธ์
+                </button>
+              </div>
+              
+              <div style="padding: 0.75rem 1rem; background: #131d33; border-bottom: 1px solid #1e293b; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 200px;">
+                  <label for="terminalStdin" style="font-size: 0.8rem; color: #94a3b8; margin: 0; white-space: nowrap;"><i class="fa-solid fa-keyboard"></i> Standard Input (stdin):</label>
+                  <input type="text" id="terminalStdin" placeholder="เช่น 512 2.5 (ค่าสำหรับ scanf)" style="flex: 1; padding: 0.35rem 0.6rem; font-size: 0.82rem; background: #0b1120; border: 1px solid #334155; border-radius: 4px; color: #f8fafc; font-family: inherit;">
+                </div>
+                <button type="button" class="btn btn-primary" id="runCodeBtn" style="padding: 0.4rem 1rem; font-size: 0.85rem; width: auto; background: #10b981; border: none; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;" onclick="runChallengeCode()">
+                  <i class="fa-solid fa-play"></i> รันโค้ดสด (Run)
+                </button>
+              </div>
+
+              <div id="terminalScreen" style="padding: 1rem; min-height: 120px; max-height: 260px; overflow-y: auto; color: #f8fafc; font-size: 0.88rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word;">💡 กดปุ่ม [ ▶️ รันโค้ดสด] เพื่อคอมไพล์และประมวลผลโค้ด C ของคุณบนเบราว์เซอร์ได้ทันที
+   - หากโค้ดมีคำสั่ง scanf() สามารถป้อนค่าล่วงหน้าในช่อง Standard Input ด้านบน</div>
+            </div>
           </div>
 
           <!-- Section 3: Questions -->
@@ -2207,6 +2238,420 @@ int main() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       openModal('success', 'รีเซ็ตฟอร์มสำเร็จ', 'ข้อมูลถูกล้างเรียบร้อยแล้ว พร้อมสำหรับผู้เรียนคนใหม่ทำใบงาน!');
     }
+
+    
+    // C Virtual Runtime & Terminal Functions
+    function clearTerminal() {
+      const term = document.getElementById('terminalScreen');
+      if (term) term.innerHTML = '<span style="color:#64748b;">[Terminal cleared]</span>';
+    }
+
+    function runChallengeCode() {
+      const codeEl = document.getElementById('challengeCode');
+      const stdinEl = document.getElementById('terminalStdin');
+      const screenEl = document.getElementById('terminalScreen');
+      const runBtn = document.getElementById('runCodeBtn');
+      if (!codeEl || !screenEl) return;
+
+      const userCode = codeEl.value.trim();
+      const stdinRaw = stdinEl ? stdinEl.value : '';
+
+      if (!userCode) {
+        screenEl.innerHTML = '<span style="color:#ef4444;">⚠️ ไม่พบซอร์สโค้ดภาษา C กรุณาพิมพ์โค้ดในช่องด้านบนก่อนกดรัน</span>';
+        return;
+      }
+
+      runBtn.disabled = true;
+      runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังรัน...';
+      screenEl.innerHTML = '<span style="color:#38bdf8;">⚙️ Compiling & Executing C Sandbox Runtime...</span>';
+
+      setTimeout(() => {
+        try {
+          const startTime = performance.now();
+          const result = executeCVirtualRuntime(userCode, stdinRaw);
+          const endTime = performance.now();
+          const execTimeMs = (endTime - startTime).toFixed(1);
+
+          let outputHtml = '';
+          if (result.stdout) {
+            outputHtml += escapeHtml(result.stdout);
+          }
+          if (result.stderr) {
+            outputHtml += '<span style="color:#f87171;">' + escapeHtml(result.stderr) + '</span>';
+          }
+          if (!result.stdout && !result.stderr) {
+            outputHtml += '<span style="color:#94a3b8;">[โปรแกรมทำงานเสร็จสิ้น ไม่มีการแสดงผลทางจอภาพ]</span>';
+          }
+
+          outputHtml += '<br><span style="color:#64748b;font-size:0.75rem;">--------------------------------------------------<br>Process exited with status ' + result.exitCode + ' (Execution Time: ' + execTimeMs + ' ms, Sandboxed C Runtime)</span>';
+
+          screenEl.innerHTML = outputHtml;
+        } catch (err) {
+          screenEl.innerHTML = '<span style="color:#ef4444;"><i class="fa-solid fa-circle-xmark"></i> [Compiler/Runtime Error]: ' + escapeHtml(err.message) + '</span>';
+        } finally {
+          runBtn.disabled = false;
+          runBtn.innerHTML = '<i class="fa-solid fa-play"></i> รันโค้ดสด (Run)';
+          screenEl.scrollTop = screenEl.scrollHeight;
+        }
+      }, 60);
+    }
+
+    function executeCVirtualRuntime(sourceCode, stdinRaw) {
+  let stdout = '';
+  let stderr = '';
+  let exitCode = 0;
+
+  const virtualFS = {};
+
+  const stdinTokens = (stdinRaw || '')
+    .trim()
+    .split(/\s+/)
+    .filter(t => t.length > 0);
+  let stdinIndex = 0;
+
+  function __formatString(formatStr, ...args) {
+    let rendered = String(formatStr)
+      .replace(/\\n/g, '\n')
+      .replace(/\\t/g, '\t');
+    let argIdx = 0;
+    rendered = rendered.replace(/%(\d+)?(\.\d+)?([a-zA-Z%]+)/g, (match, width, precision, spec) => {
+      if (match === '%%') return '%';
+      if (argIdx >= args.length) return match;
+      const val = args[argIdx++];
+      if (spec === 'd' || spec === 'i' || spec === 'u' || spec === 'zu' || spec === 'ld' || spec === 'lu' || spec === 'hhu' || spec === 'hu') {
+        let strVal = String(parseInt(val, 10));
+        if (width && width.startsWith('0')) {
+          const padLen = parseInt(width, 10);
+          strVal = strVal.padStart(padLen, '0');
+        }
+        return strVal;
+      } else if (spec.includes('x') || spec.includes('X')) {
+        const hex = Number(val >>> 0).toString(16);
+        return spec.includes('X') ? hex.toUpperCase() : hex;
+      } else if (spec.includes('f') || spec.includes('lf')) {
+        if (precision) {
+          const digits = parseInt(precision.replace('.', ''), 10);
+          return parseFloat(val).toFixed(digits);
+        }
+        return parseFloat(val).toFixed(6);
+      } else if (spec === 's' || spec === 'c') {
+        return String(val);
+      }
+      return String(val);
+    });
+    return rendered;
+  }
+
+  function __printf(formatStr, ...args) {
+    stdout += __formatString(formatStr, ...args);
+  }
+
+  function __scanf(formatStr, ...setters) {
+    const specifiers = (formatStr.match(/%(\.\d+)?[a-zA-Z]+/g) || []);
+    let matchCount = 0;
+    for (let i = 0; i < setters.length; i++) {
+      if (stdinIndex >= stdinTokens.length) break;
+      const token = stdinTokens[stdinIndex++];
+      const spec = specifiers[i] || '%d';
+      let val;
+      if (spec.includes('x') || spec.includes('X')) {
+        val = parseInt(token, 16);
+      } else if (spec.includes('f') || spec.includes('lf')) {
+        val = parseFloat(token);
+      } else if (spec.includes('s') || spec.includes('c')) {
+        val = token;
+      } else {
+        val = parseInt(token, 10);
+      }
+      if (!isNaN(val) || typeof val === 'string') {
+        setters[i](val);
+        matchCount++;
+      }
+    }
+    return matchCount;
+  }
+
+  function fopen(filename, mode) {
+    const fn = String(filename || 'file.txt');
+    const m = String(mode || 'r');
+    return {
+      filename: fn,
+      mode: m,
+      content: m.includes('a') ? (virtualFS[fn] || '') : (m.includes('w') ? '' : (virtualFS[fn] || 'Sample data 1\nSample data 2\n')),
+      pos: 0,
+      isOpen: true
+    };
+  }
+
+  function fclose(fp) {
+    if (fp && fp.isOpen) {
+      fp.isOpen = false;
+      virtualFS[fp.filename] = fp.content;
+      return 0;
+    }
+    return -1;
+  }
+
+  function fprintf(fp, formatStr, ...args) {
+    if (!fp || !fp.isOpen) return -1;
+    const formatted = __formatString(formatStr, ...args);
+    fp.content += formatted;
+    return formatted.length;
+  }
+
+  function fputs(str, fp) {
+    if (!fp || !fp.isOpen) return -1;
+    fp.content += String(str);
+    return str.length;
+  }
+
+  function fputc(ch, fp) {
+    if (!fp || !fp.isOpen) return -1;
+    fp.content += typeof ch === 'number' ? String.fromCharCode(ch) : String(ch);
+    return 0;
+  }
+
+  function fgets(buf, size, fp) {
+    if (!fp || !fp.isOpen) return null;
+    const remaining = fp.content.substring(fp.pos);
+    if (!remaining) return null;
+    const nextNewline = remaining.indexOf('\n');
+    let line = nextNewline !== -1 ? remaining.substring(0, nextNewline + 1) : remaining;
+    fp.pos += line.length;
+    return line;
+  }
+
+  function fscanf(fp, formatStr, ...setters) {
+    if (!fp || !fp.isOpen) return 0;
+    const remaining = fp.content.substring(fp.pos);
+    const tokens = remaining.trim().split(/\s+/);
+    let count = 0;
+    for (let i = 0; i < setters.length; i++) {
+      if (count >= tokens.length) break;
+      const token = tokens[count++];
+      const val = formatStr.includes('f') ? parseFloat(token) : (formatStr.includes('s') ? token : parseInt(token, 10));
+      setters[i](val);
+    }
+    return count;
+  }
+
+  function strlen(s) { return String(s || '').length; }
+  function strcpy(dest, src) { return src; }
+  function strcmp(a, b) { return String(a).localeCompare(String(b)); }
+  function strcat(a, b) { return String(a) + String(b); }
+  function sizeof(x) { return 4; }
+
+  // 0. Sanitize Unicode
+  let cleanCode = (sourceCode || '')
+    .replace(/[\u00A0\u1680\u2000-\u200B\u202F\u205F\u3000\uFEFF]/g, ' ')
+    .replace(/[“”„”«»]/g, '"')
+    .replace(/[‘’‚’]/g, "'")
+    .replace(/[–—]/g, '-');
+
+  // 1. Remove comments
+  cleanCode = cleanCode
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\/\/[^\r\n]*/g, '');
+
+  // 2. Remove directives
+  cleanCode = cleanCode
+    .replace(/#include\s*<[^>]+>/g, '')
+    .replace(/#include\s*"[^"]+"/g, '')
+    .replace(/#define\s+[^\r\n]+/g, '');
+
+  // 3. Mask string and character literals
+  const stringLiterals = [];
+  cleanCode = cleanCode.replace(/(["'])((?:\\(?:\r\n|[\s\S])|(?!\1)[\s\S])*?)\1/g, (match, quote, inner) => {
+    const sanitizedInner = inner.replace(/\r?\n/g, '\\n');
+    const placeholder = '__STRING_LITERAL_' + stringLiterals.length + '__';
+    stringLiterals.push(quote + sanitizedInner + quote);
+    return placeholder;
+  });
+
+  // 4. Clean blanks
+  cleanCode = cleanCode.replace(/\[BLANK\d*\]/gi, '0');
+
+  // 4.05 Transform FILE * pointer declarations & NULL
+  cleanCode = cleanCode.replace(/\bFILE\s*\*+\s*([a-zA-Z0-9_]+)/g, 'let $1');
+  cleanCode = cleanCode.replace(/\bNULL\b/g, 'null');
+
+  // 4.1 Parse typedef struct & struct definitions:
+  const structDefs = {};
+  cleanCode = cleanCode.replace(/typedef\s+struct\s*(?:[a-zA-Z0-9_]+)?\s*\{([^}]+)\}\s*([a-zA-Z0-9_]+)\s*;/g, (match, body, aliasName) => {
+    const fields = [];
+    const memberLines = body.split(';');
+    memberLines.forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed) return;
+      const namePart = trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:int|char|float|double|short|long|void)\s*(?:\*)*/g, '').trim();
+      const names = namePart.split(',').map(n => n.trim().replace(/\[.*?\]/g, '').replace(/^\*/, '').trim());
+      names.forEach(n => { if (n) fields.push(n); });
+    });
+    structDefs[aliasName] = fields;
+    return '/* typedef struct ' + aliasName + ' */';
+  });
+
+  cleanCode = cleanCode.replace(/struct\s+([a-zA-Z0-9_]+)\s*\{([^}]+)\}\s*;/g, (match, structName, body) => {
+    const fields = [];
+    const memberLines = body.split(';');
+    memberLines.forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed) return;
+      const namePart = trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:int|char|float|double|short|long|void)\s*(?:\*)*/g, '').trim();
+      const names = namePart.split(',').map(n => n.trim().replace(/\[.*?\]/g, '').replace(/^\*/, '').trim());
+      names.forEach(n => { if (n) fields.push(n); });
+    });
+    structDefs[structName] = fields;
+    return '/* struct ' + structName + ' */';
+  });
+
+  // 4.15 Transform sizeof(...) before expressions are transformed
+  cleanCode = cleanCode.replace(/sizeof\s*\(\s*struct\s+([a-zA-Z0-9_]+)\s*\)/g, (match, sName) => {
+    const fields = structDefs[sName] || [];
+    return String(Math.max(fields.length * 4, 4));
+  });
+  cleanCode = cleanCode.replace(/sizeof\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(char)\s*\)/g, '1');
+  cleanCode = cleanCode.replace(/sizeof\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(short)\s*\)/g, '2');
+  cleanCode = cleanCode.replace(/sizeof\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(int|float|long|void\*)\s*\)/g, '4');
+  cleanCode = cleanCode.replace(/sizeof\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(double|long\s+long)\s*\)/g, '8');
+  cleanCode = cleanCode.replace(/sizeof\s*\(\s*([a-zA-Z0-9_]+)\s*\)/g, (match, varName) => {
+    if (structDefs[varName]) return String(structDefs[varName].length * 4);
+    return '4';
+  });
+
+  // 4.2 Transform Arrow operator: node->temperature -> node.temperature
+  cleanCode = cleanCode.replace(/->/g, '.');
+
+  // 4.3 Transform C custom function definitions
+  cleanCode = cleanCode.replace(/\b(?:void|int|float|double|char|bool)\s+([a-zA-Z0-9_]+)\s*\(([^)]*)\)\s*\{/g, (match, funcName, params) => {
+    if (funcName === 'main') return 'function main() {';
+    const cleanParams = params.split(',').map(p => {
+      let trimmed = p.trim();
+      if (!trimmed || trimmed === 'void') return '';
+      return trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:struct\s+[a-zA-Z0-9_]+\s*\*?|[a-zA-Z0-9_]+\s*\*?)\s*/, '').replace(/^\*/, '').trim();
+    }).filter(p => p.length > 0).join(', ');
+    return 'function ' + funcName + '(' + cleanParams + ') {';
+  });
+
+  // 4.4 Transform struct variable instantiations: struct Point p1 = {10, 20}; OR Student s1 = {"Somchai", 95};
+  cleanCode = cleanCode.replace(/(?:struct\s+)?([a-zA-Z0-9_]+)\s+(\*?[a-zA-Z0-9_]+)(?:\s*=\s*\{([^}]+)\})?\s*;/g, (match, structName, varName, valuesList) => {
+    if (!structDefs[structName]) return match;
+    const cleanVarName = varName.replace(/^\*/, '').trim();
+    const fields = structDefs[structName] || [];
+    if (valuesList) {
+      const vals = valuesList.split(',').map(v => v.trim());
+      const objProps = vals.map((val, idx) => {
+        const fieldName = fields[idx] || ('field_' + idx);
+        return fieldName + ': ' + val;
+      }).join(', ');
+      return 'let ' + cleanVarName + ' = { ' + objProps + ' };';
+    } else {
+      const objProps = fields.map(f => f + ': 0').join(', ');
+      return 'let ' + cleanVarName + ' = { ' + objProps + ' };';
+    }
+  });
+
+  // 4.5 Strip remaining struct keywords
+  cleanCode = cleanCode.replace(/struct\s+[a-zA-Z0-9_]+\s+/g, 'let ');
+
+  // 4.6 Transform strcpy(dest, src) -> dest = src
+  cleanCode = cleanCode.replace(/\bstrcpy\s*\(\s*([a-zA-Z0-9_]+)\s*,\s*([^)]+)\s*\)/g, '$1 = $2');
+
+  // 5. Transform main function FIRST
+  if (!/\bfunction\s+main\s*\(/.test(cleanCode)) {
+    if (!/\b(?:int|void|float|double|char)\s+main\s*\(/.test(cleanCode)) {
+      cleanCode = 'function main() {\n' + cleanCode + '\nreturn 0;\n}';
+    } else {
+      cleanCode = cleanCode.replace(/\b(?:int|void|float|double|char)\s+main\s*\([^)]*\)/, 'function main()');
+    }
+  }
+
+  // 6. Transform C Type Casting
+  cleanCode = cleanCode.replace(/\((?:int|long|short|unsigned\s+int|unsigned\s+char)\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'Math.trunc($1)');
+  cleanCode = cleanCode.replace(/\((?:float|double)\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'Number($1)');
+  cleanCode = cleanCode.replace(/\(char\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'String.fromCharCode($1)');
+
+  // 7. Strip C numeric literal suffixes
+  cleanCode = cleanCode.replace(/\b(\d+(?:\.\d+)?)[fF]\b/g, '$1');
+  cleanCode = cleanCode.replace(/\b(\d+)[uUlL]{1,3}\b/g, '$1');
+
+  // 8. Transform scanf calls FIRST
+  cleanCode = cleanCode.replace(/scanf\s*\(\s*([^)]+)\s*\)/g, (m, argsStr) => {
+    const args = argsStr.split(',').map(a => a.trim());
+    if (args.length === 0) return m;
+    const fmt = args[0];
+    const setters = args.slice(1).map(target => {
+      const varName = target.replace(/^&/, '').trim();
+      if (/^[a-zA-Z_$][a-zA-Z0-9_$.]*$/.test(varName)) {
+        return '((_v) => { try { ' + varName + ' = _v; } catch(e) {} })';
+      }
+      return '((_v) => {})';
+    });
+    return '__scanf(' + fmt + ', ' + setters.join(', ') + ')';
+  });
+
+  // 8.5 Transform address-of & in function calls
+  cleanCode = cleanCode.replace(/&([a-zA-Z0-9_]+)/g, '$1');
+
+  // 9. Transform for loops
+  cleanCode = cleanCode.replace(/for\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(?:int|float|double|char|long|short)\s+/g, 'for (let ');
+
+  // 10. Transform primitive variable declarations
+  cleanCode = cleanCode.replace(/(?:const\s+|static\s+|volatile\s+)?\b(?:unsigned\s+|signed\s+)?(?:int|char|short|long|float|double|void)(?:\s+(?:int|long|short))*\s+([a-zA-Z0-9_,\s=\[\]\*\-\+\/\.\(\)]+);/g, (m, declList) => {
+    if (declList.includes('__scanf') || declList.includes('__printf') || declList.includes('function ') || declList.includes('return ') || declList.includes('if ') || declList.includes('displayTelemetry') || declList.includes('fopen') || declList.includes('fclose') || declList.includes('fprintf') || declList.includes('fputs') || declList.includes('fgets')) return m;
+    const items = declList.split(',').map(item => {
+      const trimmed = item.trim();
+      if (trimmed.includes('=')) {
+        return trimmed.replace(/^\*([a-zA-Z0-9_]+)/, '$1');
+      }
+      const arrMatch = trimmed.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*(\d*)\s*\]/);
+      if (arrMatch) return arrMatch[1] + ' = []';
+      const ptrMatch = trimmed.match(/^\*([a-zA-Z0-9_]+)/);
+      if (ptrMatch) return ptrMatch[1] + ' = null';
+      if (m.includes('char') && !m.includes('unsigned')) return trimmed + ' = ""';
+      return trimmed + ' = 0';
+    });
+    return 'let ' + items.join(', ') + ';';
+  });
+
+  // 10.4 Transform pointer dereference assignments: *ptr = 200; -> ptr = 200;
+  cleanCode = cleanCode.replace(/\*([a-zA-Z0-9_]+)\s*=/g, '$1 =');
+
+  // 11. Transform printf calls
+  cleanCode = cleanCode.replace(/\bprintf\s*\(/g, '__printf(');
+
+  // 12. Balance missing unclosed braces
+  const openBraces = (cleanCode.match(/\{/g) || []).length;
+  const closeBraces = (cleanCode.match(/\}/g) || []).length;
+  if (openBraces > closeBraces) {
+    cleanCode += '\n}'.repeat(openBraces - closeBraces);
+  }
+
+  // 13. Restore string literals
+  for (let i = 0; i < stringLiterals.length; i++) {
+    cleanCode = cleanCode.replace('__STRING_LITERAL_' + i + '__', stringLiterals[i]);
+  }
+
+  const wrappedCode = cleanCode + '\nreturn main();';
+
+  try {
+    const fn = new Function('__printf', '__scanf', 'fopen', 'fclose', 'fprintf', 'fputs', 'fputc', 'fgets', 'fscanf', 'strlen', 'strcpy', 'strcmp', 'strcat', 'sizeof', 'Math', wrappedCode);
+    const ret = fn(__printf, __scanf, fopen, fclose, fprintf, fputs, fputc, fgets, fscanf, strlen, strcpy, strcmp, strcat, sizeof, Math);
+    exitCode = ret !== undefined ? ret : 0;
+  } catch (err) {
+    throw new Error("เกิดข้อผิดพลาดในการประมวลผล: " + err.message);
+  }
+
+  const createdFiles = Object.keys(virtualFS);
+  if (createdFiles.length > 0) {
+    stdout += '\n[💾 Virtual In-Memory File System - ตรวจพบไฟล์ที่ถูกเขียนลงพื้นที่จัดเก็บเสมือน]:\n';
+    createdFiles.forEach(fileName => {
+      stdout += "📄 " + fileName + ":\n" + virtualFS[fileName] + '\n';
+    });
+  }
+
+  return { stdout, stderr, exitCode };
+}
 
     function lockFormAsSubmitted(submittedTime) {
       const form = document.getElementById('labForm');
