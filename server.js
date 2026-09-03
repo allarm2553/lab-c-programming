@@ -24,7 +24,7 @@ http.createServer((req, res) => {
   const parts = urlPath.split('/').filter(Boolean);
   const labFolder = parts[0];
 
-  if (labFolder && (labFolder === 'lab-flowchart' || labFolder === 'lab-basic' || labFolder === 'lab-structure' || /^lab([1-9]|10)$/.test(labFolder))) {
+  if (labFolder && (labFolder === 'lab-flowchart' || labFolder === 'lab-basic' || labFolder === 'lab-structure' || /^lab([1-9]|10|11)$/.test(labFolder))) {
     // If accessing just the folder name, redirect or resolve to index.html
     const rest = parts.slice(1).join('/');
     let relativeFilePath = '';
@@ -417,6 +417,21 @@ function servePortal(res) {
         </div>
         <div class="card-footer">
           <span class="card-badge">บทที่ 10</span>
+          <span>เข้าชมใบงาน <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </a>
+
+      <!-- Lab 11 -->
+      <a href="/lab11/" class="card">
+        <div>
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
+            <div class="card-title">Lab 11: C to Microcontroller Bridge</div>
+          </div>
+          <div class="card-desc">การเชื่อมโยงภาษา C สู่ไมโครคอนโทรลเลอร์ สถาปัตยกรรม Super-Loop (setup/loop), Serial API, และ Non-blocking Multi-tasking ด้วย millis()</div>
+        </div>
+        <div class="card-footer">
+          <span class="card-badge">บทพิเศษ</span>
           <span>เข้าชมใบงาน <i class="fa-solid fa-arrow-right"></i></span>
         </div>
       </a>
