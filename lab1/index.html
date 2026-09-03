@@ -697,6 +697,20 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
+    .btn.btn-reset-student {
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+      box-shadow: none;
+    }
+
+    .btn.btn-reset-student:hover {
+      background: rgba(244, 63, 94, 0.25);
+      border-color: rgba(244, 63, 94, 0.6);
+      color: #ffe4e6;
+      transform: translateY(-1px);
+    }
+
     .btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
@@ -1421,6 +1435,9 @@ int main() {
               <button type="button" class="btn btn-secondary" onclick="window.print()">
                 <i class="fa-solid fa-print"></i> พิมพ์ PDF
               </button>
+              <button type="button" class="btn btn-reset-student" id="resetStudentBtn" onclick="promptResetForNewStudent()">
+                <i class="fa-solid fa-rotate-left"></i> ผู้เรียนคนใหม่ (รีเซ็ต)
+              </button>
               <button type="submit" class="btn" id="submitBtn">
                 <i class="fa-solid fa-paper-plane"></i> ส่งใบงานออนไลน์
               </button>
@@ -1432,6 +1449,26 @@ int main() {
   </div>
 
 
+
+  <!-- Reset for New Student Confirmation Modal -->
+  <div class="modal-overlay" id="resetConfirmModal" style="display:none;">
+    <div class="modal-content" style="max-width: 440px; text-align: center;">
+      <div class="modal-icon" style="background: rgba(244, 63, 94, 0.15); color: #fb7185; margin: 0 auto 1.25rem;">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 class="modal-title" style="color: #fda4af; margin-bottom: 0.75rem;">เริ่มทำสำหรับผู้เรียนคนใหม่?</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem; text-align: left;">
+        ⚠️ การดำเนินการนี้จะ <strong>ล้างข้อมูลในฟอร์มทั้งหมด</strong> (ชื่อ, รหัสนักศึกษา, โค้ด, คำตอบ และไฟล์แนบ) และปลดล็อกฟอร์มให้พร้อมสำหรับผู้เรียนคนถัดไป<br><br>
+        <span style="color: #38bdf8;"><i class="fa-solid fa-circle-info"></i> หากเป็นผู้เรียนคนเดิมและเพิ่งส่งงาน แนะนำให้กดปุ่ม <strong>"พิมพ์ PDF"</strong> เพื่อบันทึกใบงานไว้ก่อน</span>
+      </p>
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button type="button" class="btn btn-secondary" onclick="closeResetModal()" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">ยกเลิก</button>
+        <button type="button" class="btn" onclick="confirmResetForNewStudent()" style="background: linear-gradient(135deg, #e11d48, #be123c); padding: 0.6rem 1.25rem; font-size: 0.9rem; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);">
+          <i class="fa-solid fa-rotate-left"></i> ยืนยันล้างข้อมูล
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Pre-submission Score Check Modal -->
   <div class="modal-overlay" id="scoreCheckModal">
@@ -2104,12 +2141,80 @@ int main() {
       }
     }
 
+    function promptResetForNewStudent() {
+      const modal = document.getElementById('resetConfirmModal');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById('resetConfirmModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function confirmResetForNewStudent() {
+      closeResetModal();
+
+      const currentId = (document.getElementById('studentId')?.value || '').trim();
+      localStorage.removeItem('student_name');
+      localStorage.removeItem('student_id');
+      localStorage.removeItem('student_group');
+      if (currentId) {
+        localStorage.removeItem('submitted_lab1_' + currentId);
+      }
+      Object.keys(localStorage).forEach(k => {
+        if (k.startsWith('submitted_lab1_')) {
+          localStorage.removeItem(k);
+        }
+      });
+
+      const form = document.getElementById('labForm');
+      if (form) {
+        form.reset();
+
+        form.querySelectorAll('input, textarea, select, button, .upload-area, .remove-file-btn').forEach(el => {
+          el.disabled = false;
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.readOnly = false;
+          }
+        });
+      }
+
+      if (typeof removeFile === 'function') {
+        removeFile('screenshot');
+        removeFile('code');
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.background = '';
+        submitBtn.style.boxShadow = '';
+        submitBtn.style.cursor = 'pointer';
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ส่งใบงานออนไลน์';
+      }
+
+      const notice = document.getElementById('submittedNoticeBanner');
+      if (notice) notice.remove();
+
+      const dateInput = document.getElementById('labDate');
+      if (dateInput) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+
+      document.querySelectorAll('input.code-inline-input').forEach(input => {
+        if (typeof autoResizeInlineInput === 'function') autoResizeInlineInput(input);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      openModal('success', 'รีเซ็ตฟอร์มสำเร็จ', 'ข้อมูลถูกล้างเรียบร้อยแล้ว พร้อมสำหรับผู้เรียนคนใหม่ทำใบงาน!');
+    }
+
     function lockFormAsSubmitted(submittedTime) {
       const form = document.getElementById('labForm');
       if (!form) return;
 
       form.querySelectorAll('input, textarea, select, button[type="submit"], .upload-area, .remove-file-btn').forEach(el => {
-        if (el.id !== 'printBtn' && !el.classList.contains('btn-secondary') && el.id !== 'checkScoreBtn') {
+        if (el.id !== 'printBtn' && !el.classList.contains('btn-secondary') && el.id !== 'checkScoreBtn' && el.id !== 'resetStudentBtn' && !el.classList.contains('btn-reset-student')) {
           el.disabled = true;
           if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
             el.readOnly = true;
