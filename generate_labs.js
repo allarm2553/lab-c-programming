@@ -4098,7 +4098,7 @@ function generateIndexHtml(lab) {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = \`${lab.example2RawCode || lab.example2Code}\`;
+      let codeStr = ${JSON.stringify(lab.example2RawCode || lab.example2Code || '')};
       ${blanks.map((b, idx) => `
       const val_${b.id} = (document.getElementById('${b.id}')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK${idx+1}]', val_${b.id});
@@ -4200,7 +4200,7 @@ function generateIndexHtml(lab) {
 
     // Copy interactive code helper (Challenge)
     function copyChallengeInteractiveCode() {
-      let codeStr = \`${lab.challengeRawCode || ''}\`;
+      let codeStr = ${JSON.stringify(lab.challengeRawCode || '')};
       ${challengeBlanks.map((b, idx) => `
       const val_${b.id} = (document.getElementById('${b.id}')?.value || '____').trim();
       codeStr = codeStr.replace('[CH_BLANK${idx+1}]', val_${b.id});

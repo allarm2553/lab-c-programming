@@ -1775,27 +1775,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    int *p;
-    
-    // เติมคำสั่งสำหรับจองพื้นที่ขนาด int 1 ช่อง
-    p = (int *)[BLANK1];
-    
-    if (p == NULL) {
-        printf("Memory allocation failed!\n");
-        return 1;
-    }
-    
-    *p = 500;
-    printf("Value in allocated memory: %d\n", *p);
-    
-    // เติมคำสั่งคืนหน่วยความจำให้กับระบบเพื่อลดปัญหา Memory leak
-    [BLANK2];
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int *p;\n    \n    // เติมคำสั่งสำหรับจองพื้นที่ขนาด int 1 ช่อง\n    p = (int *)[BLANK1];\n    \n    if (p == NULL) {\n        printf(\"Memory allocation failed!\\n\");\n        return 1;\n    }\n    \n    *p = 500;\n    printf(\"Value in allocated memory: %d\\n\", *p);\n    \n    // เติมคำสั่งคืนหน่วยความจำให้กับระบบเพื่อลดปัญหา Memory leak\n    [BLANK2];\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

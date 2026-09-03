@@ -1773,20 +1773,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-
-int main() {
-    int count = 1;
-    
-    // เติมเงื่อนไขเมื่อ count น้อยกว่าหรือเท่ากับ 3
-    while ([BLANK1]) {
-        printf("Count: %d\n", count);
-        
-        // เติมการบวกเพิ่มค่าตัวแปรนับรอบ
-        [BLANK2];
-    }
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n\nint main() {\n    int count = 1;\n    \n    // เติมเงื่อนไขเมื่อ count น้อยกว่าหรือเท่ากับ 3\n    while ([BLANK1]) {\n        printf(\"Count: %d\\n\", count);\n        \n        // เติมการบวกเพิ่มค่าตัวแปรนับรอบ\n        [BLANK2];\n    }\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

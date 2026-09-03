@@ -1818,23 +1818,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-#include <stdbool.h>
-
-int main() {
-    unsigned long currentMillis = 1500;  // จำลองเวลาปัจจุบัน (ms)
-    unsigned long previousMillis = 1000; // เวลาที่บันทึกไว้ล่าสุด (ms)
-    const long interval = 500;           // คาบเวลาที่ต้องการตรวจสอบ (500 ms)
-    bool ledState = false;
-
-    // ตรวจสอบเงื่อนไขว่าผ่านไปครบช่วงเวลา interval หรือยัง
-    if ([BLANK1] - previousMillis >= [BLANK2]) {
-        previousMillis = currentMillis;
-        ledState = !ledState; // สลับสถานะ LED (Toggle)
-        printf("Interval Elapsed! LED Toggled to: %s\n", ledState ? "ON (HIGH)" : "OFF (LOW)");
-    }
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n#include <stdbool.h>\n\nint main() {\n    unsigned long currentMillis = 1500;  // จำลองเวลาปัจจุบัน (ms)\n    unsigned long previousMillis = 1000; // เวลาที่บันทึกไว้ล่าสุด (ms)\n    const long interval = 500;           // คาบเวลาที่ต้องการตรวจสอบ (500 ms)\n    bool ledState = false;\n\n    // ตรวจสอบเงื่อนไขว่าผ่านไปครบช่วงเวลา interval หรือยัง\n    if ([BLANK1] - previousMillis >= [BLANK2]) {\n        previousMillis = currentMillis;\n        ledState = !ledState; // สลับสถานะ LED (Toggle)\n        printf(\"Interval Elapsed! LED Toggled to: %s\\n\", ledState ? \"ON (HIGH)\" : \"OFF (LOW)\");\n    }\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

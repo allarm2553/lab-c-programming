@@ -1799,26 +1799,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-
-int main() {
-    FILE *fp;
-    char buffer[50];
-    
-    // เติมโหมดการเปิดเพื่ออ่านไฟล์ข้อความ
-    fp = fopen("test.txt", "[BLANK1]");
-    
-    // ตรวจสอบพอยน์เตอร์การชี้ว่าเปิดล้มเหลวหรือไม่
-    if (fp == [BLANK2]) {
-        printf("Could not open file!\n");
-        return 1;
-    }
-    
-    fgets(buffer, 50, fp);
-    printf("File Content: %s\n", buffer);
-    fclose(fp);
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n\nint main() {\n    FILE *fp;\n    char buffer[50];\n    \n    // เติมโหมดการเปิดเพื่ออ่านไฟล์ข้อความ\n    fp = fopen(\"test.txt\", \"[BLANK1]\");\n    \n    // ตรวจสอบพอยน์เตอร์การชี้ว่าเปิดล้มเหลวหรือไม่\n    if (fp == [BLANK2]) {\n        printf(\"Could not open file!\\n\");\n        return 1;\n    }\n    \n    fgets(buffer, 50, fp);\n    printf(\"File Content: %s\\n\", buffer);\n    fclose(fp);\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

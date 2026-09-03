@@ -1874,17 +1874,7 @@ void showInfo() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `// เติมส่วนการประกาศนำเข้าห้องสมุด stdio.h
-[BLANK1]
-
-// เติมคำสำคัญประกาศฟังก์ชันหลักของระบบ
-[BLANK2] {
-    // เติมส่วนปิดท้ายคำสั่งแสดงข้อความ
-    printf("ตรวจสอบโครงสร้างโปรแกรมสำเร็จ")[BLANK3]
-    
-    // เติมส่วนส่งค่ากลับเพื่อยืนยันจบโปรแกรมปกติ
-    [BLANK4]
-}`;
+      let codeStr = "// เติมส่วนการประกาศนำเข้าห้องสมุด stdio.h\n[BLANK1]\n\n// เติมคำสำคัญประกาศฟังก์ชันหลักของระบบ\n[BLANK2] {\n    // เติมส่วนปิดท้ายคำสั่งแสดงข้อความ\n    printf(\"ตรวจสอบโครงสร้างโปรแกรมสำเร็จ\")[BLANK3]\n    \n    // เติมส่วนส่งค่ากลับเพื่อยืนยันจบโปรแกรมปกติ\n    [BLANK4]\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);
@@ -2029,35 +2019,7 @@ void showInfo() {
 
     // Copy interactive code helper (Challenge)
     function copyChallengeInteractiveCode() {
-      let codeStr = `/* 
-   กิจกรรมท้าทาย: โครงสร้างโปรแกรมภาษา C ที่สมบูรณ์ (Complete Program Structure)
-   เติมคำสั่งที่ถูกต้องลงในกล่องข้อความ เพื่อให้โปรแกรมคอมไพล์และทำงานได้อย่างสมบูรณ์
-*/
-
-// 1. เติมคำสั่ง Preprocessor Directive นำเข้าไลบรารี Standard I/O
-[CH_BLANK1]
-
-// 2. เติมการประกาศฟังก์ชันต้นแบบ (Function Prototype)
-[CH_BLANK2];
-
-// 3. จุดเริ่มต้นการทำงานของโปรแกรม (Main Function)
-[CH_BLANK3] {
-    // เรียกใช้งานฟังก์ชันย่อย
-    showInfo();
-    
-    // 4. เติมคำสั่งแสดงข้อความทางหน้าจอ
-    [CH_BLANK4]("C Program Structure Validated Successfully!\n");
-    
-    // 5. เติมคำสั่งส่งค่ากลับเพื่อแจ้งระบบว่าโปรแกรมทำงานเสร็จสมบูรณ์
-    [CH_BLANK5]
-}
-
-// นิยามฟังก์ชันย่อย (Function Definition)
-void showInfo() {
-    printf("=======================================\n");
-    printf("  C Programming: Structure Challenge   \n");
-    printf("=======================================\n");
-}`;
+      let codeStr = "/* \n   กิจกรรมท้าทาย: โครงสร้างโปรแกรมภาษา C ที่สมบูรณ์ (Complete Program Structure)\n   เติมคำสั่งที่ถูกต้องลงในกล่องข้อความ เพื่อให้โปรแกรมคอมไพล์และทำงานได้อย่างสมบูรณ์\n*/\n\n// 1. เติมคำสั่ง Preprocessor Directive นำเข้าไลบรารี Standard I/O\n[CH_BLANK1]\n\n// 2. เติมการประกาศฟังก์ชันต้นแบบ (Function Prototype)\n[CH_BLANK2];\n\n// 3. จุดเริ่มต้นการทำงานของโปรแกรม (Main Function)\n[CH_BLANK3] {\n    // เรียกใช้งานฟังก์ชันย่อย\n    showInfo();\n    \n    // 4. เติมคำสั่งแสดงข้อความทางหน้าจอ\n    [CH_BLANK4](\"C Program Structure Validated Successfully!\\n\");\n    \n    // 5. เติมคำสั่งส่งค่ากลับเพื่อแจ้งระบบว่าโปรแกรมทำงานเสร็จสมบูรณ์\n    [CH_BLANK5]\n}\n\n// นิยามฟังก์ชันย่อย (Function Definition)\nvoid showInfo() {\n    printf(\"=======================================\\n\");\n    printf(\"  C Programming: Structure Challenge   \\n\");\n    printf(\"=======================================\\n\");\n}";
       
       const val_ch_blank1 = (document.getElementById('ch_blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[CH_BLANK1]', val_ch_blank1);

@@ -1877,27 +1877,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char buffer[15];
-    char source[] = "SuperLongString";
-    char result[30] = "Prefix_";
-
-    printf("--- การใช้งาน strncpy() และ strncat() ---\n");
-    
-    // เติมคำสั่งคัดลอกสตริงแบบจำกัดจำนวนเพื่อความปลอดภัย
-    [BLANK1](buffer, source, sizeof(buffer) - 1);
-    buffer[sizeof(buffer) - 1] = '\0'; // ใส่ null terminator ด้วยตนเองเสมอเมื่อใช้ strncpy
-    printf("strncpy ผลลัพธ์ใน buffer: '%s'\n", buffer);
-
-    // เติมคำสั่งเชื่อมสตริงสูงสุด 5 ตัวอักษรแรก
-    [BLANK2](result, source, 5);
-    printf("strncat ผลลัพธ์ใน result: '%s'\n", result);
-
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char buffer[15];\n    char source[] = \"SuperLongString\";\n    char result[30] = \"Prefix_\";\n\n    printf(\"--- การใช้งาน strncpy() และ strncat() ---\\n\");\n    \n    // เติมคำสั่งคัดลอกสตริงแบบจำกัดจำนวนเพื่อความปลอดภัย\n    [BLANK1](buffer, source, sizeof(buffer) - 1);\n    buffer[sizeof(buffer) - 1] = '\\0'; // ใส่ null terminator ด้วยตนเองเสมอเมื่อใช้ strncpy\n    printf(\"strncpy ผลลัพธ์ใน buffer: '%s'\\n\", buffer);\n\n    // เติมคำสั่งเชื่อมสตริงสูงสุด 5 ตัวอักษรแรก\n    [BLANK2](result, source, 5);\n    printf(\"strncat ผลลัพธ์ใน result: '%s'\\n\", result);\n\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

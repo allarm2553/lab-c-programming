@@ -1784,27 +1784,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-
-int main() {
-    char grade;
-    printf("Enter grade (A, B, C): ");
-    scanf(" %c", &grade);
-    
-    // เติมคีย์เวิร์ดสำหรับเริ่มการประเมิน switch
-    [BLANK1] (grade) {
-        case 'A':
-            printf("Excellent!\n");
-            break;
-        case 'B':
-            printf("Good job!\n");
-            // เติมคีย์เวิร์ดหยุดการทำงานเล็ดลอดเคส
-            [BLANK2];
-        default:
-            printf("Try harder!\n");
-    }
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n\nint main() {\n    char grade;\n    printf(\"Enter grade (A, B, C): \");\n    scanf(\" %c\", &grade);\n    \n    // เติมคีย์เวิร์ดสำหรับเริ่มการประเมิน switch\n    [BLANK1] (grade) {\n        case 'A':\n            printf(\"Excellent!\\n\");\n            break;\n        case 'B':\n            printf(\"Good job!\\n\");\n            // เติมคีย์เวิร์ดหยุดการทำงานเล็ดลอดเคส\n            [BLANK2];\n        default:\n            printf(\"Try harder!\\n\");\n    }\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

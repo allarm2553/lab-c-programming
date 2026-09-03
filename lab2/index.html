@@ -1771,22 +1771,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-
-int main() {
-    int a = 5;  // Binary: 0101
-    int b = 3;  // Binary: 0011
-    
-    // เติมตัวดำเนินการระดับบิต AND
-    int and_res = a [BLANK1] b;
-    
-    // เติมตัวดำเนินการระดับบิต OR
-    int or_res = a [BLANK2] b;
-    
-    printf("Bitwise AND result: %d\n", and_res);
-    printf("Bitwise OR result: %d\n", or_res);
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n\nint main() {\n    int a = 5;  // Binary: 0101\n    int b = 3;  // Binary: 0011\n    \n    // เติมตัวดำเนินการระดับบิต AND\n    int and_res = a [BLANK1] b;\n    \n    // เติมตัวดำเนินการระดับบิต OR\n    int or_res = a [BLANK2] b;\n    \n    printf(\"Bitwise AND result: %d\\n\", and_res);\n    printf(\"Bitwise OR result: %d\\n\", or_res);\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

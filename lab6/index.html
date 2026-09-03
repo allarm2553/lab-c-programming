@@ -1767,19 +1767,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-
-int main() {
-    // ประกาศประเภทข้อมูลอาร์เรย์ตัวอักษรสำหรับเก็บชื่อ
-    [BLANK1] name[30];
-    
-    printf("Enter your name: ");
-    // เติม Format Specifier สำหรับตัวแปรสายอักษร
-    scanf("[BLANK2]", name);
-    
-    printf("Hello, %s!\n", name);
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n\nint main() {\n    // ประกาศประเภทข้อมูลอาร์เรย์ตัวอักษรสำหรับเก็บชื่อ\n    [BLANK1] name[30];\n    \n    printf(\"Enter your name: \");\n    // เติม Format Specifier สำหรับตัวแปรสายอักษร\n    scanf(\"[BLANK2]\", name);\n    \n    printf(\"Hello, %s!\\n\", name);\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);

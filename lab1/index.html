@@ -1803,23 +1803,7 @@ int main() {
 
     // Copy interactive code helper (Example 2)
     function copyInteractiveCode() {
-      let codeStr = `#include <stdio.h>
-
-int main() {
-    int num;
-    float score;
-    
-    printf("Enter integer: ");
-    // เติมส่วนสัญลักษณ์อ้างอิงตำแหน่งในหน่วยความจำของ num
-    scanf("%d", [BLANK1]);
-    
-    printf("Enter float score: ");
-    // เติมส่วน Format Specifier สำหรับตัวแปร float
-    scanf("[BLANK2]", &score);
-    
-    printf("Value = %d, Score = %.1f\n", num, score);
-    return 0;
-}`;
+      let codeStr = "#include <stdio.h>\n\nint main() {\n    int num;\n    float score;\n    \n    printf(\"Enter integer: \");\n    // เติมส่วนสัญลักษณ์อ้างอิงตำแหน่งในหน่วยความจำของ num\n    scanf(\"%d\", [BLANK1]);\n    \n    printf(\"Enter float score: \");\n    // เติมส่วน Format Specifier สำหรับตัวแปร float\n    scanf(\"[BLANK2]\", &score);\n    \n    printf(\"Value = %d, Score = %.1f\\n\", num, score);\n    return 0;\n}";
       
       const val_blank1 = (document.getElementById('blank1')?.value || '____').trim();
       codeStr = codeStr.replace('[BLANK1]', val_blank1);
