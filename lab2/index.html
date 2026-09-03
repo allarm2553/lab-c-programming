@@ -2902,6 +2902,8 @@ int main() {
       chDesc = `พบ ${codeMatches}/${codeKeywords.length} คำสั่ง/ไวยากรณ์สำคัญ`;
       
 
+      const hasQuiz = (typeof quizData !== 'undefined' && quizData && quizData.length > 0);
+
       // 3. Question 1
       const q1 = (document.getElementById('question1')?.value || '').trim();
       const q1Keywords = ["เลื่อนบิต","คูณ","หาร","2"];
@@ -2910,6 +2912,7 @@ int main() {
         if (new RegExp(kw, 'i').test(q1)) q1Matches++;
       });
       const q1Score = q1Keywords.length > 0 ? (q1Matches >= 1 ? 1.5 : 0) : 1.5;
+      const q1Adjusted = hasQuiz ? (q1Score > 0 ? 2.5 : 0) : q1Score;
 
       // 4. Question 2
       const q2 = (document.getElementById('question2')?.value || '').trim();
@@ -2919,11 +2922,13 @@ int main() {
         if (new RegExp(kw, 'i').test(q2)) q2Matches++;
       });
       const q2Score = q2Keywords.length > 0 ? (q2Matches >= 1 ? 1.5 : 0) : 1.5;
+      const q2Adjusted = hasQuiz ? (q2Score > 0 ? 2.5 : 0) : q2Score;
 
       // 5. Attachments
       let attachScore = 0;
       if (filesData.screenshotBase64) attachScore += 0.5;
       if (filesData.codeBase64) attachScore += 0.5;
+      const attachAdjusted = hasQuiz ? (attachScore > 0 ? (attachScore * 1.5) : 0) : attachScore;
 
       // 6. Conclusion check
       const conclusion = (document.getElementById('conclusion')?.value || '').trim();
@@ -2936,16 +2941,21 @@ int main() {
       const isInfoComplete = (nameVal && idVal && groupVal);
 
       // Total score
-      const totalScore = Number((blankScore + finalChScore + q1Score + q2Score + attachScore).toFixed(1));
+      const quizScore = hasQuiz ? quizResult.quizScore : 0;
+      const maxTotalScore = hasQuiz ? 15 : 10;
+      const totalScore = Number((blankScore + finalChScore + quizScore + q1Adjusted + q2Adjusted + attachAdjusted).toFixed(1));
 
       // Render Modal Elements
-      document.getElementById('preScoreTotal').innerHTML = `${totalScore.toFixed(1)} <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ 10</span>`;
+      document.getElementById('preScoreTotal').innerHTML = `${totalScore.toFixed(1)} <span style="font-size:1.1rem;color:#94a3b8;font-weight:400;">/ ${maxTotalScore}</span>`;
 
       const badgeEl = document.getElementById('preScoreBadge');
-      if (totalScore >= 8.5 && isInfoComplete && hasConclusion) {
+      const passThreshold = hasQuiz ? 12.0 : 8.5;
+      const warnThreshold = hasQuiz ? 7.5 : 5.0;
+
+      if (totalScore >= passThreshold && isInfoComplete && hasConclusion) {
         badgeEl.className = 'score-status-badge';
         badgeEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> พร้อมส่งรายงาน ยอดเยี่ยม!';
-      } else if (totalScore >= 5.0) {
+      } else if (totalScore >= warnThreshold) {
         badgeEl.className = 'score-status-badge warning';
         badgeEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> พอใช้ - ควรตรวจเพิ่ม';
       } else {
@@ -2992,7 +3002,21 @@ int main() {
           <div class="score-item-points">${finalChScore.toFixed(1)} / 4.0</div>
         </div>
 
-        <!-- Part 3: Q1 -->
+        ${hasQuiz ? `
+        <!-- Part 3: Multiple-Choice Quiz -->
+        <div class="score-item-row">
+          <div class="score-item-info">
+            <div class="score-item-title">
+              <i class="fa-solid fa-list-check" style="color:${quizResult.quizScore >= 2.0 ? '#34d399' : (quizResult.quizScore > 0 ? '#fbbf24' : '#f87171')};"></i>
+              แบบทดสอบวัดความรู้ท้ายการทดลอง (5 ข้อ)
+            </div>
+            <div class="score-item-desc">ตอบถูกต้อง ${quizResult.correctCount}/${quizResult.totalQuestions} ข้อ (ข้อละ 0.5 คะแนน)</div>
+          </div>
+          <div class="score-item-points" style="color:${quizResult.quizScore >= 2.0 ? '#34d399' : (quizResult.quizScore > 0 ? '#fbbf24' : '#f87171')};">${quizResult.quizScore.toFixed(1)} / 2.5</div>
+        </div>
+        ` : ''}
+
+        <!-- Part 4: Q1 -->
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
@@ -3001,10 +3025,10 @@ int main() {
             </div>
             <div class="score-item-desc">${q1Score > 0 ? 'พบแนวคิดสำคัญในคำตอบ' : '⚠️ ยังไม่พบคำสำคัญทางเทคนิค กรุณาอธิบายเพิ่มเติม'}</div>
           </div>
-          <div class="score-item-points">${q1Score.toFixed(1)} / 1.5</div>
+          <div class="score-item-points">${q1Adjusted.toFixed(1)} / ${hasQuiz ? '2.5' : '1.5'}</div>
         </div>
 
-        <!-- Part 4: Q2 -->
+        <!-- Part 5: Q2 -->
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
@@ -3013,19 +3037,19 @@ int main() {
             </div>
             <div class="score-item-desc">${q2Score > 0 ? 'พบแนวคิดสำคัญในคำตอบ' : '⚠️ ยังไม่พบคำสำคัญทางเทคนิค กรุณาอธิบายเพิ่มเติม'}</div>
           </div>
-          <div class="score-item-points">${q2Score.toFixed(1)} / 1.5</div>
+          <div class="score-item-points">${q2Adjusted.toFixed(1)} / ${hasQuiz ? '2.5' : '1.5'}</div>
         </div>
 
-        <!-- Part 5: Attachments -->
+        <!-- Part 6: Attachments -->
         <div class="score-item-row">
           <div class="score-item-info">
             <div class="score-item-title">
-              <i class="fa-solid fa-paperclip" style="color:${attachScore === 1 ? '#34d399' : (attachScore > 0 ? '#fbbf24' : '#f87171')};"></i>
+              <i class="fa-solid fa-paperclip" style="color:${attachScore > 0 ? '#34d399' : '#f87171'};"></i>
               ไฟล์แนบหลักฐานการทดลอง
             </div>
-            <div class="score-item-desc">${filesData.screenshotBase64 ? '✓ แนบภาพผลรัน (0.5)' : '✗ ยังไม่แนบภาพผลรัน'}, ${filesData.codeBase64 ? '✓ แนบไฟล์โค้ด (0.5)' : '✗ ยังไม่แนบไฟล์โค้ด'}</div>
+            <div class="score-item-desc">${filesData.screenshotBase64 ? '✓ แนบภาพผลรัน' : '✗ ยังไม่แนบภาพผลรัน'}, ${filesData.codeBase64 ? '✓ แนบไฟล์โค้ด' : '✗ ยังไม่แนบไฟล์โค้ด'}</div>
           </div>
-          <div class="score-item-points">${attachScore.toFixed(1)} / 1.0</div>
+          <div class="score-item-points">${attachAdjusted.toFixed(1)} / ${hasQuiz ? '1.5' : '1.0'}</div>
         </div>
 
         <!-- Conclusion -->
