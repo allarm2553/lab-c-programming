@@ -1622,7 +1622,7 @@ int main() {
 
     return 0;
 }`,
-    challengeDesc: "พัฒนาโปรแกรมถอดรหัสคำสั่ง Serial/IoT AT Command (เช่น $SET,RELAY,ON# หรือ $READ,TEMP#) โดยใช้ fgets() รับคำสั่งเข้าบัฟเฟอร์อย่างปลอดภัย และใช้ฟังก์ชันใน <string.h> (strstr, strcmp, strlen) ตรวจสอบและสั่งการจำลองการทำงานของอุปกรณ์",
+    challengeDesc: "พัฒนาโปรแกรมถอดรหัสคำสั่ง Serial/IoT AT Command (เช่น $SET,RELAY,ON# หรือ $READ,TEMP#) โดยใช้ fgets() รับคำสั่งเข้าบัฟเฟอร์อย่างปลอดภัย และใช้ฟังก์ชันจัดการสตริงใน &lt;string.h&gt; (เช่น strstr, strcmp, strlen) ตรวจสอบและสั่งการจำลองการทำงานของอุปกรณ์",
     challengePlaceholder: `#include <stdio.h>
 #include <string.h>
 
