@@ -2746,25 +2746,21 @@ void showInfo() {
   function strcat(a, b) { return String(a) + String(b); }
   function sizeof(x) { return 4; }
 
-  // 0. Sanitize Unicode
   let cleanCode = (sourceCode || '')
     .replace(/[\u00A0\u1680\u2000-\u200B\u202F\u205F\u3000\uFEFF]/g, ' ')
     .replace(/[“”„”«»]/g, '"')
     .replace(/[‘’‚’]/g, "'")
     .replace(/[–—]/g, '-');
 
-  // 1. Remove comments
   cleanCode = cleanCode
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\/\/[^\r\n]*/g, '');
 
-  // 2. Remove directives
   cleanCode = cleanCode
     .replace(/#include\s*<[^>]+>/g, '')
     .replace(/#include\s*"[^"]+"/g, '')
     .replace(/#define\s+[^\r\n]+/g, '');
 
-  // 3. Mask string and character literals
   const stringLiterals = [];
   cleanCode = cleanCode.replace(/(["'])((?:\\(?:\r\n|[\s\S])|(?!\1)[\s\S])*?)\1/g, (match, quote, inner) => {
     const sanitizedInner = inner.replace(/\r?\n/g, '\\n');
@@ -2773,14 +2769,11 @@ void showInfo() {
     return placeholder;
   });
 
-  // 4. Clean blanks
   cleanCode = cleanCode.replace(/\[BLANK\d*\]/gi, '0');
 
-  // 4.05 Transform FILE * pointer declarations & NULL
   cleanCode = cleanCode.replace(/\bFILE\s*\*+\s*([a-zA-Z0-9_]+)/g, 'let $1');
   cleanCode = cleanCode.replace(/\bNULL\b/g, 'null');
 
-  // 4.1 Parse typedef struct & struct definitions:
   const structDefs = {};
   cleanCode = cleanCode.replace(/typedef\s+struct\s*(?:[a-zA-Z0-9_]+)?\s*\{([^}]+)\}\s*([a-zA-Z0-9_]+)\s*;/g, (match, body, aliasName) => {
     const fields = [];
@@ -2810,7 +2803,6 @@ void showInfo() {
     return '/* struct ' + structName + ' */';
   });
 
-  // 4.15 Transform sizeof(...) before expressions are transformed
   cleanCode = cleanCode.replace(/sizeof\s*\(\s*struct\s+([a-zA-Z0-9_]+)\s*\)/g, (match, sName) => {
     const fields = structDefs[sName] || [];
     return String(Math.max(fields.length * 4, 4));
@@ -2824,10 +2816,8 @@ void showInfo() {
     return '4';
   });
 
-  // 4.2 Transform Arrow operator: node->temperature -> node.temperature
   cleanCode = cleanCode.replace(/->/g, '.');
 
-  // 4.3 Transform C custom function definitions
   cleanCode = cleanCode.replace(/\b(?:void|int|float|double|char|bool)\s+([a-zA-Z0-9_]+)\s*\(([^)]*)\)\s*\{/g, (match, funcName, params) => {
     if (funcName === 'main') return 'function main() {';
     const cleanParams = params.split(',').map(p => {
@@ -2838,7 +2828,6 @@ void showInfo() {
     return 'function ' + funcName + '(' + cleanParams + ') {';
   });
 
-  // 4.4 Transform struct variable instantiations: struct Point p1 = {10, 20}; OR Student s1 = {"Somchai", 95};
   cleanCode = cleanCode.replace(/(?:struct\s+)?([a-zA-Z0-9_]+)\s+(\*?[a-zA-Z0-9_]+)(?:\s*=\s*\{([^}]+)\})?\s*;/g, (match, structName, varName, valuesList) => {
     if (!structDefs[structName]) return match;
     const cleanVarName = varName.replace(/^\*/, '').trim();
@@ -2856,13 +2845,9 @@ void showInfo() {
     }
   });
 
-  // 4.5 Strip remaining struct keywords
   cleanCode = cleanCode.replace(/struct\s+[a-zA-Z0-9_]+\s+/g, 'let ');
-
-  // 4.6 Transform strcpy(dest, src) -> dest = src
   cleanCode = cleanCode.replace(/\bstrcpy\s*\(\s*([a-zA-Z0-9_]+)\s*,\s*([^)]+)\s*\)/g, '$1 = $2');
 
-  // 5. Transform main function FIRST
   if (!/\bfunction\s+main\s*\(/.test(cleanCode)) {
     if (!/\b(?:int|void|float|double|char)\s+main\s*\(/.test(cleanCode)) {
       cleanCode = 'function main() {\n' + cleanCode + '\nreturn 0;\n}';
@@ -2871,16 +2856,13 @@ void showInfo() {
     }
   }
 
-  // 6. Transform C Type Casting
   cleanCode = cleanCode.replace(/\((?:int|long|short|unsigned\s+int|unsigned\s+char)\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'Math.trunc($1)');
   cleanCode = cleanCode.replace(/\((?:float|double)\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'Number($1)');
   cleanCode = cleanCode.replace(/\(char\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'String.fromCharCode($1)');
 
-  // 7. Strip C numeric literal suffixes
   cleanCode = cleanCode.replace(/\b(\d+(?:\.\d+)?)[fF]\b/g, '$1');
   cleanCode = cleanCode.replace(/\b(\d+)[uUlL]{1,3}\b/g, '$1');
 
-  // 8. Transform scanf calls FIRST
   cleanCode = cleanCode.replace(/scanf\s*\(\s*([^)]+)\s*\)/g, (m, argsStr) => {
     const args = argsStr.split(',').map(a => a.trim());
     if (args.length === 0) return m;
@@ -2895,16 +2877,29 @@ void showInfo() {
     return '__scanf(' + fmt + ', ' + setters.join(', ') + ')';
   });
 
-  // 8.5 Transform address-of & in function calls
   cleanCode = cleanCode.replace(/&([a-zA-Z0-9_]+)/g, '$1');
-
-  // 9. Transform for loops
   cleanCode = cleanCode.replace(/for\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(?:int|float|double|char|long|short)\s+/g, 'for (let ');
 
-  // 10. Transform primitive variable declarations
-  cleanCode = cleanCode.replace(/(?:const\s+|static\s+|volatile\s+)?\b(?:unsigned\s+|signed\s+)?(?:int|char|short|long|float|double|void)(?:\s+(?:int|long|short))*\s+([a-zA-Z0-9_,\s=\[\]\*\-\+\/\.\(\)]+);/g, (m, declList) => {
+  // Robust variable declaration parsing: handles modulo %, bitwise &, |, ^, ~, <, >, ternary ?: etc.
+  cleanCode = cleanCode.replace(/(?:const\s+|static\s+|volatile\s+)?\b(?:unsigned\s+|signed\s+)?(?:int|char|short|long|float|double|void|bool)(?:\s+(?:int|long|short))*\s+([^;{}]+);/g, (m, declList) => {
     if (declList.includes('__scanf') || declList.includes('__printf') || declList.includes('function ') || declList.includes('return ') || declList.includes('if ') || declList.includes('displayTelemetry') || declList.includes('fopen') || declList.includes('fclose') || declList.includes('fprintf') || declList.includes('fputs') || declList.includes('fgets')) return m;
-    const items = declList.split(',').map(item => {
+    let items = [];
+    let cur = '';
+    let depth = 0;
+    for (let i = 0; i < declList.length; i++) {
+      const ch = declList[i];
+      if (ch === '(' || ch === '[' || ch === '{') depth++;
+      if (ch === ')' || ch === ']' || ch === '}') depth--;
+      if (ch === ',' && depth === 0) {
+        items.push(cur.trim());
+        cur = '';
+      } else {
+        cur += ch;
+      }
+    }
+    if (cur.trim()) items.push(cur.trim());
+
+    const mapped = items.map(item => {
       const trimmed = item.trim();
       if (trimmed.includes('=')) {
         return trimmed.replace(/^\*([a-zA-Z0-9_]+)/, '$1');
@@ -2916,23 +2911,18 @@ void showInfo() {
       if (m.includes('char') && !m.includes('unsigned')) return trimmed + ' = ""';
       return trimmed + ' = 0';
     });
-    return 'let ' + items.join(', ') + ';';
+    return 'let ' + mapped.join(', ') + ';';
   });
 
-  // 10.4 Transform pointer dereference assignments: *ptr = 200; -> ptr = 200;
   cleanCode = cleanCode.replace(/\*([a-zA-Z0-9_]+)\s*=/g, '$1 =');
-
-  // 11. Transform printf calls
   cleanCode = cleanCode.replace(/\bprintf\s*\(/g, '__printf(');
 
-  // 12. Balance missing unclosed braces
   const openBraces = (cleanCode.match(/\{/g) || []).length;
   const closeBraces = (cleanCode.match(/\}/g) || []).length;
   if (openBraces > closeBraces) {
     cleanCode += '\n}'.repeat(openBraces - closeBraces);
   }
 
-  // 13. Restore string literals
   for (let i = 0; i < stringLiterals.length; i++) {
     cleanCode = cleanCode.replace('__STRING_LITERAL_' + i + '__', stringLiterals[i]);
   }
