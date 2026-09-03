@@ -2307,7 +2307,7 @@ int main() {
       if (match === '%%') return '%';
       if (argIdx >= args.length) return match;
       const val = args[argIdx++];
-      if (spec === 'd' || spec === 'i' || spec === 'u' || spec === 'zu' || spec === 'ld' || spec === 'lu' || spec === 'hhu' || spec === 'hu') {
+      if (spec === 'd' || spec === 'i' || spec === 'u' || spec === 'zu' || spec === 'ld' || spec === 'lu' || spec === 'hhu' || spec === 'hu' || spec === '4lu' || spec === 'lums' || spec.endsWith('lu') || spec.endsWith('ld')) {
         let strVal = String(parseInt(val, 10));
         if (width && width.startsWith('0')) {
           const padLen = parseInt(width, 10);
@@ -2401,7 +2401,12 @@ int main() {
   }
 
   function fgets(buf, size, fp) {
-    if (!fp || !fp.isOpen) return null;
+    if (fp === 'stdin' || !fp || !fp.isOpen) {
+      if (stdinIndex < stdinTokens.length) {
+        return stdinTokens[stdinIndex++];
+      }
+      return 'admin';
+    }
     const remaining = fp.content.substring(fp.pos);
     if (!remaining) return null;
     const nextNewline = remaining.indexOf('\n');
@@ -2426,25 +2431,60 @@ int main() {
 
   function strlen(s) { return String(s || '').length; }
   function strcpy(dest, src) { return src; }
+  function strncpy(dest, src, n) { return String(src).substring(0, n); }
   function strcmp(a, b) { return String(a).localeCompare(String(b)); }
+  function strncmp(a, b, n) { return String(a).substring(0, n).localeCompare(String(b).substring(0, n)); }
   function strcat(a, b) { return String(a) + String(b); }
+  function strncat(a, b, n) { return String(a) + String(b).substring(0, n); }
+  function strcspn(s, reject) {
+    const str = String(s || '');
+    const rej = String(reject || '');
+    for (let i = 0; i < str.length; i++) {
+      if (rej.includes(str[i])) return i;
+    }
+    return str.length;
+  }
+  function strstr(haystack, needle) {
+    const h = String(haystack || '');
+    const n = String(needle || '');
+    const idx = h.indexOf(n);
+    return idx !== -1 ? h.substring(idx) : null;
+  }
+  function strchr(str, ch) {
+    const s = String(str || '');
+    const c = typeof ch === 'number' ? String.fromCharCode(ch) : String(ch);
+    const idx = s.indexOf(c);
+    return idx !== -1 ? s.substring(idx) : null;
+  }
+  function puts(s) { stdout += String(s) + '\n'; return 0; }
   function sizeof(x) { return 4; }
+  function malloc(size) { return []; }
+  function free(ptr) { return 0; }
 
+  const stdin = 'stdin';
+  const stdout_stream = 'stdout';
+  const stderr_stream = 'stderr';
+  const NULL = null;
+
+  // 0. Sanitize Unicode
   let cleanCode = (sourceCode || '')
     .replace(/[\u00A0\u1680\u2000-\u200B\u202F\u205F\u3000\uFEFF]/g, ' ')
     .replace(/[“”„”«»]/g, '"')
     .replace(/[‘’‚’]/g, "'")
     .replace(/[–—]/g, '-');
 
+  // 1. Remove comments
   cleanCode = cleanCode
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\/\/[^\r\n]*/g, '');
 
+  // 2. Remove directives
   cleanCode = cleanCode
     .replace(/#include\s*<[^>]+>/g, '')
     .replace(/#include\s*"[^"]+"/g, '')
     .replace(/#define\s+[^\r\n]+/g, '');
 
+  // 3. Mask string and character literals
   const stringLiterals = [];
   cleanCode = cleanCode.replace(/(["'])((?:\\(?:\r\n|[\s\S])|(?!\1)[\s\S])*?)\1/g, (match, quote, inner) => {
     const sanitizedInner = inner.replace(/\r?\n/g, '\\n');
@@ -2453,11 +2493,24 @@ int main() {
     return placeholder;
   });
 
+  // 4. Clean blanks
   cleanCode = cleanCode.replace(/\[BLANK\d*\]/gi, '0');
 
+  // 4.01 Strip C Function Prototypes / Forward Declarations
+  cleanCode = cleanCode.replace(/\b(?:void|int|float|double|char|bool|unsigned\s+long|unsigned\s+int|long|short)\s+[a-zA-Z0-9_]+\s*\([^;{}]*\)\s*;/g, '');
+
+  // 4.02 Transform Pointer & Array Casting: (int *), (float *), (char *), (void *)
+  cleanCode = cleanCode.replace(/\((?:const\s+|unsigned\s+|signed\s+)?(?:int|char|float|double|short|long|void)\s*\*+\s*\)/g, '');
+
+  // 4.05 Transform FILE * pointer declarations & NULL
   cleanCode = cleanCode.replace(/\bFILE\s*\*+\s*([a-zA-Z0-9_]+)/g, 'let $1');
   cleanCode = cleanCode.replace(/\bNULL\b/g, 'null');
 
+  // 4.08 Transform array with curly-brace initializers: int arr[5] = {85, 90, 78}; -> let arr = [85, 90, 78];
+  cleanCode = cleanCode.replace(/(?:const\s+|static\s+|volatile\s+)?\b(?:unsigned\s+|signed\s+)?(?:int|char|short|long|float|double|void|bool|unsigned\s+long)(?:\s+(?:int|long|short))*\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*[^\]]*\s*\]\s*=\s*\{([^}]+)\}\s*;/g, 'let $1 = [$2];');
+  cleanCode = cleanCode.replace(/(?:const\s+|static\s+|volatile\s+)?\b(?:unsigned\s+|signed\s+)?(?:char)(?:\s+(?:int|long|short))*\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*[^\]]*\s*\]\s*=\s*([^;]+);/g, 'let $1 = $2;');
+
+  // 4.1 Parse typedef struct & struct definitions:
   const structDefs = {};
   cleanCode = cleanCode.replace(/typedef\s+struct\s*(?:[a-zA-Z0-9_]+)?\s*\{([^}]+)\}\s*([a-zA-Z0-9_]+)\s*;/g, (match, body, aliasName) => {
     const fields = [];
@@ -2465,7 +2518,7 @@ int main() {
     memberLines.forEach(line => {
       const trimmed = line.trim();
       if (!trimmed) return;
-      const namePart = trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:int|char|float|double|short|long|void)\s*(?:\*)*/g, '').trim();
+      const namePart = trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:int|char|float|double|short|long|void|bool)\s*(?:\*)*/g, '').trim();
       const names = namePart.split(',').map(n => n.trim().replace(/\[.*?\]/g, '').replace(/^\*/, '').trim());
       names.forEach(n => { if (n) fields.push(n); });
     });
@@ -2479,7 +2532,7 @@ int main() {
     memberLines.forEach(line => {
       const trimmed = line.trim();
       if (!trimmed) return;
-      const namePart = trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:int|char|float|double|short|long|void)\s*(?:\*)*/g, '').trim();
+      const namePart = trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:int|char|float|double|short|long|void|bool)\s*(?:\*)*/g, '').trim();
       const names = namePart.split(',').map(n => n.trim().replace(/\[.*?\]/g, '').replace(/^\*/, '').trim());
       names.forEach(n => { if (n) fields.push(n); });
     });
@@ -2487,6 +2540,7 @@ int main() {
     return '/* struct ' + structName + ' */';
   });
 
+  // 4.15 Transform sizeof(...) before expressions are transformed
   cleanCode = cleanCode.replace(/sizeof\s*\(\s*struct\s+([a-zA-Z0-9_]+)\s*\)/g, (match, sName) => {
     const fields = structDefs[sName] || [];
     return String(Math.max(fields.length * 4, 4));
@@ -2500,18 +2554,24 @@ int main() {
     return '4';
   });
 
+  // 4.2 Transform Arrow operator: node->temperature -> node.temperature
   cleanCode = cleanCode.replace(/->/g, '.');
 
-  cleanCode = cleanCode.replace(/\b(?:void|int|float|double|char|bool)\s+([a-zA-Z0-9_]+)\s*\(([^)]*)\)\s*\{/g, (match, funcName, params) => {
+  // 4.3 Transform C custom function definitions
+  cleanCode = cleanCode.replace(/\b(?:void|int|float|double|char|bool|unsigned\s+long|unsigned\s+int|long|short)\s+([a-zA-Z0-9_]+)\s*\(([^)]*)\)\s*\{/g, (match, funcName, params) => {
     if (funcName === 'main') return 'function main() {';
     const cleanParams = params.split(',').map(p => {
       let trimmed = p.trim();
       if (!trimmed || trimmed === 'void') return '';
-      return trimmed.replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:struct\s+[a-zA-Z0-9_]+\s*\*?|[a-zA-Z0-9_]+\s*\*?)\s*/, '').replace(/^\*/, '').trim();
+      return trimmed
+        .replace(/^(?:const\s+|unsigned\s+|signed\s+)?(?:struct\s+[a-zA-Z0-9_]+\s*\*?|[a-zA-Z0-9_]+\s*\*?)\s*/, '')
+        .replace(/^\*+/, '')
+        .trim();
     }).filter(p => p.length > 0).join(', ');
     return 'function ' + funcName + '(' + cleanParams + ') {';
   });
 
+  // 4.4 Transform struct variable instantiations
   cleanCode = cleanCode.replace(/(?:struct\s+)?([a-zA-Z0-9_]+)\s+(\*?[a-zA-Z0-9_]+)(?:\s*=\s*\{([^}]+)\})?\s*;/g, (match, structName, varName, valuesList) => {
     if (!structDefs[structName]) return match;
     const cleanVarName = varName.replace(/^\*/, '').trim();
@@ -2529,9 +2589,11 @@ int main() {
     }
   });
 
+  // 4.5 Strip remaining struct keywords
   cleanCode = cleanCode.replace(/struct\s+[a-zA-Z0-9_]+\s+/g, 'let ');
   cleanCode = cleanCode.replace(/\bstrcpy\s*\(\s*([a-zA-Z0-9_]+)\s*,\s*([^)]+)\s*\)/g, '$1 = $2');
 
+  // 5. Transform main function FIRST
   if (!/\bfunction\s+main\s*\(/.test(cleanCode)) {
     if (!/\b(?:int|void|float|double|char)\s+main\s*\(/.test(cleanCode)) {
       cleanCode = 'function main() {\n' + cleanCode + '\nreturn 0;\n}';
@@ -2540,32 +2602,45 @@ int main() {
     }
   }
 
+  // 6. Transform C Type Casting
   cleanCode = cleanCode.replace(/\((?:int|long|short|unsigned\s+int|unsigned\s+char)\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'Math.trunc($1)');
   cleanCode = cleanCode.replace(/\((?:float|double)\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'Number($1)');
   cleanCode = cleanCode.replace(/\(char\)\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'String.fromCharCode($1)');
 
+  // 7. Strip C numeric literal suffixes
   cleanCode = cleanCode.replace(/\b(\d+(?:\.\d+)?)[fF]\b/g, '$1');
   cleanCode = cleanCode.replace(/\b(\d+)[uUlL]{1,3}\b/g, '$1');
 
+  // 8. Transform scanf calls FIRST
   cleanCode = cleanCode.replace(/scanf\s*\(\s*([^)]+)\s*\)/g, (m, argsStr) => {
     const args = argsStr.split(',').map(a => a.trim());
     if (args.length === 0) return m;
     const fmt = args[0];
     const setters = args.slice(1).map(target => {
-      const varName = target.replace(/^&/, '').trim();
-      if (/^[a-zA-Z_$][a-zA-Z0-9_$.]*$/.test(varName)) {
-        return '((_v) => { try { ' + varName + ' = _v; } catch(e) {} })';
+      let cleanTarget = target.replace(/^&/, '').trim();
+      const ptrPlusMatch = cleanTarget.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\+\s*([a-zA-Z0-9_$.]+)$/);
+      if (ptrPlusMatch) {
+        return '((_v) => { try { ' + ptrPlusMatch[1] + '[' + ptrPlusMatch[2] + '] = _v; } catch(e) {} })';
+      }
+      if (/^[a-zA-Z_$][a-zA-Z0-9_$.]*(\[[^\]]+\])?$/.test(cleanTarget)) {
+        return '((_v) => { try { ' + cleanTarget + ' = _v; } catch(e) {} })';
       }
       return '((_v) => {})';
     });
     return '__scanf(' + fmt + ', ' + setters.join(', ') + ')';
   });
 
+  // 8.5 Transform Pointer dereferencing expressions
+  cleanCode = cleanCode.replace(/\*\s*\(\s*([a-zA-Z0-9_$]+)\s*\+\s*([a-zA-Z0-9_$.]+)\s*\)/g, '$1[$2]');
+  cleanCode = cleanCode.replace(/\*([a-zA-Z0-9_]+)\s*=/g, '$1 =');
+  cleanCode = cleanCode.replace(/(?<![a-zA-Z0-9_$])\*([a-zA-Z0-9_]+)\b/g, '$1');
   cleanCode = cleanCode.replace(/&([a-zA-Z0-9_]+)/g, '$1');
-  cleanCode = cleanCode.replace(/for\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(?:int|float|double|char|long|short)\s+/g, 'for (let ');
 
-  // Robust variable declaration parsing: handles modulo %, bitwise &, |, ^, ~, <, >, ternary ?: etc.
-  cleanCode = cleanCode.replace(/(?:const\s+|static\s+|volatile\s+)?\b(?:unsigned\s+|signed\s+)?(?:int|char|short|long|float|double|void|bool)(?:\s+(?:int|long|short))*\s+([^;{}]+);/g, (m, declList) => {
+  // 9. Transform for loops
+  cleanCode = cleanCode.replace(/for\s*\(\s*(?:const\s+|unsigned\s+|signed\s+)?(?:int|float|double|char|long|short|unsigned\s+long)\s+/g, 'for (let ');
+
+  // 10. Robust variable declaration parsing
+  cleanCode = cleanCode.replace(/(?:const\s+|static\s+|volatile\s+)?\b(?:unsigned\s+|signed\s+)?(?:int|char|short|long|float|double|void|bool|unsigned\s+long)(?:\s+(?:int|long|short))*\s+([^;{}]+);/g, (m, declList) => {
     if (declList.includes('__scanf') || declList.includes('__printf') || declList.includes('function ') || declList.includes('return ') || declList.includes('if ') || declList.includes('displayTelemetry') || declList.includes('fopen') || declList.includes('fclose') || declList.includes('fprintf') || declList.includes('fputs') || declList.includes('fgets')) return m;
     let items = [];
     let cur = '';
@@ -2584,13 +2659,16 @@ int main() {
     if (cur.trim()) items.push(cur.trim());
 
     const mapped = items.map(item => {
-      const trimmed = item.trim();
+      let trimmed = item.trim().replace(/^\*+/, '');
       if (trimmed.includes('=')) {
-        return trimmed.replace(/^\*([a-zA-Z0-9_]+)/, '$1');
+        return trimmed.replace(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*[^\]]*\s*\]\s*=\s*/, '$1 = ');
       }
       const arrMatch = trimmed.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*(\d*)\s*\]/);
-      if (arrMatch) return arrMatch[1] + ' = []';
-      const ptrMatch = trimmed.match(/^\*([a-zA-Z0-9_]+)/);
+      if (arrMatch) {
+        if (m.includes('char') && !m.includes('unsigned')) return arrMatch[1] + ' = ""';
+        return arrMatch[1] + ' = []';
+      }
+      const ptrMatch = trimmed.match(/^\*+([a-zA-Z0-9_]+)/);
       if (ptrMatch) return ptrMatch[1] + ' = null';
       if (m.includes('char') && !m.includes('unsigned')) return trimmed + ' = ""';
       return trimmed + ' = 0';
@@ -2598,15 +2676,18 @@ int main() {
     return 'let ' + mapped.join(', ') + ';';
   });
 
-  cleanCode = cleanCode.replace(/\*([a-zA-Z0-9_]+)\s*=/g, '$1 =');
+  // 11. Transform printf & puts calls
   cleanCode = cleanCode.replace(/\bprintf\s*\(/g, '__printf(');
+  cleanCode = cleanCode.replace(/\bputs\s*\(/g, 'puts(');
 
+  // 12. Balance missing unclosed braces
   const openBraces = (cleanCode.match(/\{/g) || []).length;
   const closeBraces = (cleanCode.match(/\}/g) || []).length;
   if (openBraces > closeBraces) {
     cleanCode += '\n}'.repeat(openBraces - closeBraces);
   }
 
+  // 13. Restore string literals
   for (let i = 0; i < stringLiterals.length; i++) {
     cleanCode = cleanCode.replace('__STRING_LITERAL_' + i + '__', stringLiterals[i]);
   }
@@ -2614,8 +2695,8 @@ int main() {
   const wrappedCode = cleanCode + '\nreturn main();';
 
   try {
-    const fn = new Function('__printf', '__scanf', 'fopen', 'fclose', 'fprintf', 'fputs', 'fputc', 'fgets', 'fscanf', 'strlen', 'strcpy', 'strcmp', 'strcat', 'sizeof', 'Math', wrappedCode);
-    const ret = fn(__printf, __scanf, fopen, fclose, fprintf, fputs, fputc, fgets, fscanf, strlen, strcpy, strcmp, strcat, sizeof, Math);
+    const fn = new Function('__printf', '__scanf', 'fopen', 'fclose', 'fprintf', 'fputs', 'fputc', 'fgets', 'fscanf', 'strlen', 'strncpy', 'strcmp', 'strncmp', 'strcat', 'strncat', 'strcspn', 'strstr', 'strchr', 'puts', 'sizeof', 'malloc', 'free', 'stdin', 'NULL', 'Math', wrappedCode);
+    const ret = fn(__printf, __scanf, fopen, fclose, fprintf, fputs, fputc, fgets, fscanf, strlen, strncpy, strcmp, strncmp, strcat, strncat, strcspn, strstr, strchr, puts, sizeof, malloc, free, stdin, NULL, Math);
     exitCode = ret !== undefined ? ret : 0;
   } catch (err) {
     throw new Error("เกิดข้อผิดพลาดในการประมวลผล: " + err.message);
