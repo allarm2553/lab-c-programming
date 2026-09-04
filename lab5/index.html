@@ -2721,6 +2721,12 @@ int main() {
   cleanCode = cleanCode.replace(/\b(\d+(?:\.\d+)?)[fF]\b/g, '$1');
   cleanCode = cleanCode.replace(/\b(\d+)[uUlL]{1,3}\b/g, '$1');
 
+  // 7.4 Transform String mutating functions (strncpy, strncat, strcat, strcpy)
+  cleanCode = cleanCode.replace(/\bstrncpy\s*\(\s*([a-zA-Z0-9_$]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '($1 = strncpy($1, $2, $3))');
+  cleanCode = cleanCode.replace(/\bstrncat\s*\(\s*([a-zA-Z0-9_$]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '($1 = strncat($1, $2, $3))');
+  cleanCode = cleanCode.replace(/\bstrcat\s*\(\s*([a-zA-Z0-9_$]+)\s*,\s*([^)]+)\s*\)/g, '($1 = strcat($1, $2))');
+  cleanCode = cleanCode.replace(/\bstrcpy\s*\(\s*([a-zA-Z0-9_$]+)\s*,\s*([^)]+)\s*\)/g, '($1 = strcpy($1, $2))');
+
   // 7.5 Transform fgets(target, size, stream)
   cleanCode = cleanCode.replace(/\bfgets\s*\(\s*([a-zA-Z0-9_$]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '($1 = fgets($1, $2, $3))');
 
