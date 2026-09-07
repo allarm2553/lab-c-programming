@@ -2207,11 +2207,43 @@ function generateCodeGs(lab) {
  */
 
 function doGet(e) {
+  var page = e && e.parameter && e.parameter.page;
+  if (page === 'grader') {
+    try {
+      return HtmlService.createTemplateFromFile('grader')
+        .evaluate()
+        .setTitle('ตรวจใบงาน ${lab.titleTh} — ครู')
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    } catch (err) {}
+  }
   return HtmlService.createTemplateFromFile('index')
     .evaluate()
     .setTitle('${lab.titleTh}')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+/**
+ * รับคำขอ POST จากหน้าเว็บภายนอก (เช่น GitHub Pages)
+ */
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var result;
+    if (data.action === 'saveTeacherScore' && typeof saveTeacherScore === 'function') {
+      result = saveTeacherScore(data);
+    } else {
+      result = submitLabData(data);
+    }
+    return ContentService
+      .createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: 'doPost error: ' + err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 /**

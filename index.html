@@ -583,7 +583,202 @@
       font-size: 0.82rem;
       color: var(--text-muted);
     }
+
+    /* GAS Settings Modal */
+    .gas-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .gas-modal {
+      background: #0f172a;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 35px rgba(99, 102, 241, 0.2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .gas-modal-header {
+      padding: 1.25rem 1.75rem;
+      background: rgba(30, 41, 59, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gas-modal-title {
+      font-family: var(--heading-font);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .gas-modal-close {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .gas-modal-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .gas-modal-body {
+      padding: 1.5rem 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .gas-guide-tip {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 12px;
+      padding: 0.9rem 1.2rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.86rem;
+      color: #c7d2fe;
+      line-height: 1.55;
+    }
+    .gas-guide-tip strong {
+      color: #fff;
+    }
+    .gas-lab-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .gas-lab-item {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 0.85rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .gas-lab-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .gas-lab-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .gas-lab-badge {
+      font-size: 0.72rem;
+      font-family: var(--mono-font);
+      padding: 0.15rem 0.5rem;
+      border-radius: 5px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    .gas-input-wrap {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .gas-input {
+      flex: 1;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      color: #f8fafc;
+      font-family: var(--mono-font);
+      font-size: 0.82rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .gas-input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+    }
+    .gas-btn-sm {
+      padding: 0.45rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .gas-btn-sm:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    .gas-modal-footer {
+      padding: 1rem 1.75rem;
+      background: rgba(15, 23, 42, 0.85);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .card-gas-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.85rem;
+      font-weight: 500;
+      width: fit-content;
+    }
+    .card-gas-pill.connected {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+    .card-gas-pill.unconfigured {
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #94a3b8;
+    }
+
   </style>
+  <script src="./config.js"></script>
 </head>
 <body>
   <div class="bg-glow-1"></div>
@@ -608,8 +803,11 @@
         <a href="https://github.com/allarm2553/lab-c-programming/blob/main/TEACHER_ADMIN_MANUAL.md" target="_blank" class="nav-btn nav-btn-outline">
           <i class="fa-solid fa-book"></i> คู่มืออาจารย์
         </a>
-        <a href="https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec?page=grader" target="_blank" class="nav-btn nav-btn-accent" title="เปิดหน้าตรวจงานสำหรับครู">
-          <i class="fa-solid fa-clipboard-check"></i> ตรวจงานนักเรียน (ครู)
+        <button type="button" class="nav-btn nav-btn-accent" onclick="openGasSettingsModal()" style="cursor:pointer;" title="ตั้งค่าลิงก์ส่งคะแนน Google Apps Script">
+          <i class="fa-solid fa-link"></i> ลิงก์ส่งคะแนน (14 Labs)
+        </button>
+        <a href="https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec?page=grader" target="_blank" class="nav-btn nav-btn-outline" title="เปิดหน้าตรวจงานสำหรับครู">
+          <i class="fa-solid fa-clipboard-check"></i> ตรวจงาน Flowchart
         </a>
       </div>
     </nav>
@@ -690,7 +888,7 @@
     <div class="grid" id="labsGrid">
 
       <!-- Lab: Basic Flowchart -->
-      <div class="card theme-indigo" data-category="basics" data-keywords="flowchart logic ipo ผังงาน ออกแบบ ตรรกะ symbol decision loop">
+      <div class="card theme-indigo" data-lab-id="lab-flowchart"  data-category="basics" data-keywords="flowchart logic ipo ผังงาน ออกแบบ ตรรกะ symbol decision loop">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-diagram-project"></i></div>
           <span class="card-badge">FLOWCHART</span>
@@ -710,7 +908,7 @@
       </div>
 
       <!-- Lab: Basic Hello World -->
-      <div class="card theme-blue" data-category="basics" data-keywords="basic hello world gcc mingw setup ติดตั้ง compiler คอมไพเลอร์ printf include stdio">
+      <div class="card theme-blue" data-lab-id="lab-basic"  data-category="basics" data-keywords="basic hello world gcc mingw setup ติดตั้ง compiler คอมไพเลอร์ printf include stdio">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
           <span class="card-badge">LAB BASIC</span>
@@ -729,7 +927,7 @@
       </div>
 
       <!-- Lab: Structure & Flow -->
-      <div class="card theme-cyan" data-category="basics" data-keywords="structure flow main directive preprocessor link compile โครงสร้าง ส่วนประกอบ คอมไพล์">
+      <div class="card theme-cyan" data-lab-id="lab-structure"  data-category="basics" data-keywords="structure flow main directive preprocessor link compile โครงสร้าง ส่วนประกอบ คอมไพล์">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-sitemap"></i></div>
           <span class="card-badge">LAB STRUCTURE</span>
@@ -747,7 +945,7 @@
       </div>
 
       <!-- Lab 1: Variables & Basic I/O -->
-      <div class="card theme-emerald" data-category="basics" data-keywords="lab1 variable scanf printf format specifier datatype ชนิดข้อมูล ตัวแปร รับข้อมูล แสดงผล float int char">
+      <div class="card theme-emerald" data-lab-id="lab1"  data-category="basics" data-keywords="lab1 variable scanf printf format specifier datatype ชนิดข้อมูล ตัวแปร รับข้อมูล แสดงผล float int char">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-font"></i></div>
           <span class="card-badge">LAB 01</span>
@@ -766,7 +964,7 @@
       </div>
 
       <!-- Lab 2: Operators & Expressions -->
-      <div class="card theme-teal" data-category="basics" data-keywords="lab2 operator expression arithmetic logic bitwise precedence ตัวดำเนินการ นิพจน์ บิต ตรรกะ คำนวณ">
+      <div class="card theme-teal" data-lab-id="lab2"  data-category="basics" data-keywords="lab2 operator expression arithmetic logic bitwise precedence ตัวดำเนินการ นิพจน์ บิต ตรรกะ คำนวณ">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
           <span class="card-badge">LAB 02</span>
@@ -785,7 +983,7 @@
       </div>
 
       <!-- Lab 3: Conditionals -->
-      <div class="card theme-violet" data-category="control" data-keywords="lab3 conditional if else switch case nested เงื่อนไข ตัดสินใจ ทางเลือก">
+      <div class="card theme-violet" data-lab-id="lab3"  data-category="control" data-keywords="lab3 conditional if else switch case nested เงื่อนไข ตัดสินใจ ทางเลือก">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-code-branch"></i></div>
           <span class="card-badge">LAB 03</span>
@@ -803,7 +1001,7 @@
       </div>
 
       <!-- Lab 4: Loops & Nested Loops -->
-      <div class="card theme-rose" data-category="control" data-keywords="lab4 loop for while do while break continue nested วนซ้ำ ดาว pattern">
+      <div class="card theme-rose" data-lab-id="lab4"  data-category="control" data-keywords="lab4 loop for while do while break continue nested วนซ้ำ ดาว pattern">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-arrows-spin"></i></div>
           <span class="card-badge">LAB 04</span>
@@ -822,7 +1020,7 @@
       </div>
 
       <!-- Lab 5: Functions & Scope -->
-      <div class="card theme-blue" data-category="control" data-keywords="lab5 function scope recursion call by value parameter ฟังก์ชัน รีเคอร์ซีฟ พารามิเตอร์ สโคป">
+      <div class="card theme-blue" data-lab-id="lab5"  data-category="control" data-keywords="lab5 function scope recursion call by value parameter ฟังก์ชัน รีเคอร์ซีฟ พารามิเตอร์ สโคป">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-cubes"></i></div>
           <span class="card-badge">LAB 05</span>
@@ -841,7 +1039,7 @@
       </div>
 
       <!-- Lab 6: Arrays & Strings -->
-      <div class="card theme-amber" data-category="data" data-keywords="lab6 array string matrix 1d 2d แถวลำดับ อาร์เรย์ เมทริกซ์ ข้อความ สตริง">
+      <div class="card theme-amber" data-lab-id="lab6"  data-category="data" data-keywords="lab6 array string matrix 1d 2d แถวลำดับ อาร์เรย์ เมทริกซ์ ข้อความ สตริง">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-list-ol"></i></div>
           <span class="card-badge">LAB 06</span>
@@ -860,7 +1058,7 @@
       </div>
 
       <!-- Lab 7: Pointers & Memory -->
-      <div class="card theme-rose" data-category="data" data-keywords="lab7 pointer memory address malloc free dynamic call by reference พอยน์เตอร์ หน่วยความจำ ชี้">
+      <div class="card theme-rose" data-lab-id="lab7"  data-category="data" data-keywords="lab7 pointer memory address malloc free dynamic call by reference พอยน์เตอร์ หน่วยความจำ ชี้">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-magnifying-glass-location"></i></div>
           <span class="card-badge">LAB 07</span>
@@ -879,7 +1077,7 @@
       </div>
 
       <!-- Lab 8: Structures & Unions -->
-      <div class="card theme-violet" data-category="data" data-keywords="lab8 struct union typedef structure โครงสร้างข้อมูล ยูเนียน ไทป์เดฟ บันทึก">
+      <div class="card theme-violet" data-lab-id="lab8"  data-category="data" data-keywords="lab8 struct union typedef structure โครงสร้างข้อมูล ยูเนียน ไทป์เดฟ บันทึก">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-id-card"></i></div>
           <span class="card-badge">LAB 08</span>
@@ -898,7 +1096,7 @@
       </div>
 
       <!-- Lab 9: File Handling I/O -->
-      <div class="card theme-emerald" data-category="advanced" data-keywords="lab9 file io fopen fclose fprintf fscanf binary text ไฟล์ อ่านไฟล์ เขียนไฟล์ บันทึกข้อมูล">
+      <div class="card theme-emerald" data-lab-id="lab9"  data-category="advanced" data-keywords="lab9 file io fopen fclose fprintf fscanf binary text ไฟล์ อ่านไฟล์ เขียนไฟล์ บันทึกข้อมูล">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-file-arrow-up"></i></div>
           <span class="card-badge">LAB 09</span>
@@ -917,7 +1115,7 @@
       </div>
 
       <!-- Lab 10: String Functions -->
-      <div class="card theme-indigo" data-category="advanced" data-keywords="lab10 string string.h strlen strcpy strcat strcmp fgets puts สตริง ข้อความ คัดลอก เปรียบเทียบ">
+      <div class="card theme-indigo" data-lab-id="lab10"  data-category="advanced" data-keywords="lab10 string string.h strlen strcpy strcat strcmp fgets puts สตริง ข้อความ คัดลอก เปรียบเทียบ">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-quote-left"></i></div>
           <span class="card-badge">LAB 10</span>
@@ -936,7 +1134,7 @@
       </div>
 
       <!-- Lab 11: Microcontroller Bridge -->
-      <div class="card theme-orange" data-category="advanced" data-keywords="lab11 microcontroller embedded arduino super loop millis non blocking serial iot ไมโครคอนโทรลเลอร์ ฮาร์ดแวร์">
+      <div class="card theme-orange" data-lab-id="lab11"  data-category="advanced" data-keywords="lab11 microcontroller embedded arduino super loop millis non blocking serial iot ไมโครคอนโทรลเลอร์ ฮาร์ดแวร์">
         <div class="card-top">
           <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
           <span class="card-badge">LAB 11</span>
@@ -974,8 +1172,216 @@
     </footer>
   </div>
 
+
+  <!-- GAS Settings Modal -->
+  <div id="gasModalOverlay" class="gas-modal-overlay" onclick="handleModalOverlayClick(event)">
+    <div class="gas-modal" onclick="event.stopPropagation()">
+      <div class="gas-modal-header">
+        <div class="gas-modal-title">
+          <i class="fa-solid fa-sliders" style="color:#818cf8;"></i> ตั้งค่าลิงก์ส่งคะแนน Google Apps Script (14 Labs)
+        </div>
+        <button type="button" class="gas-modal-close" onclick="closeGasSettingsModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="gas-modal-body">
+        <div class="gas-guide-tip">
+          <strong><i class="fa-solid fa-circle-info"></i> คำแนะนำสำหรับอาจารย์:</strong><br>
+          1. นำ <strong>Web App URL</strong> ที่ได้จากการ Deploy ใน Google Apps Script (เช่น <code>https://script.google.com/macros/s/.../exec</code>) ของแต่ละแล็บมาวางในช่องด้านล่าง<br>
+          2. กด <strong>"💾 บันทึกลงเบราว์เซอร์"</strong> เพื่อให้เครื่องนี้ส่งงานได้ทันที หรือกด <strong>"📋 คัดลอกโค้ดไปใส่ config.js"</strong> เพื่อนำไปอัปเดตไฟล์ใน GitHub Repository ให้ทุกคนใช้ร่วมกัน
+        </div>
+
+        <div class="gas-lab-list" id="gasModalLabList">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="gas-modal-footer">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button type="button" class="gas-btn-sm" style="background:#4f46e5; color:#fff; border-color:#6366f1;" onclick="saveGasSettingsFromModal()">
+            <i class="fa-solid fa-floppy-disk"></i> บันทึกลงเบราว์เซอร์ (Save)
+          </button>
+          <button type="button" class="gas-btn-sm" onclick="copyConfigJsSnippet()">
+            <i class="fa-solid fa-code"></i> คัดลอกโค้ดสำหรับ config.js
+          </button>
+          <button type="button" class="gas-btn-sm" style="color:#f87171;" onclick="resetGasSettingsToDefault()">
+            <i class="fa-solid fa-rotate-left"></i> รีเซ็ตเป็นค่าเริ่มต้น
+          </button>
+        </div>
+        <button type="button" class="gas-btn-sm" onclick="closeGasSettingsModal()">
+          ปิดหน้าต่าง
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     let currentCategory = 'all';
+
+    
+    const LABS_CONFIG_META = [
+      { id: 'lab-flowchart', label: 'FLOWCHART', name: 'Basic Flowchart: การเขียนผังงาน' },
+      { id: 'lab-basic', label: 'LAB BASIC', name: 'Lab Basic: Hello World & GCC' },
+      { id: 'lab-structure', label: 'LAB STRUCTURE', name: 'Lab Basic: C Program Structure' },
+      { id: 'lab1', label: 'LAB 01', name: 'Lab 1: Variables & Basic I/O' },
+      { id: 'lab2', label: 'LAB 02', name: 'Lab 2: Operators & Expressions' },
+      { id: 'lab3', label: 'LAB 03', name: 'Lab 3: Conditionals (if/switch)' },
+      { id: 'lab4', label: 'LAB 04', name: 'Lab 4: Loops & Nested Loops' },
+      { id: 'lab5', label: 'LAB 05', name: 'Lab 5: Functions & Scope' },
+      { id: 'lab6', label: 'LAB 06', name: 'Lab 6: Arrays & Strings' },
+      { id: 'lab7', label: 'LAB 07', name: 'Lab 7: Pointers & Dynamic Memory' },
+      { id: 'lab8', label: 'LAB 08', name: 'Lab 8: Structures & Unions' },
+      { id: 'lab9', label: 'LAB 09', name: 'Lab 9: File Handling I/O' },
+      { id: 'lab10', label: 'LAB 10', name: 'Lab 10: String Functions' },
+      { id: 'lab11', label: 'LAB 11', name: 'Lab 11: C to Microcontroller Bridge' },
+    ];
+
+    function openGasSettingsModal() {
+      renderGasModalList();
+      const modal = document.getElementById('gasModalOverlay');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeGasSettingsModal() {
+      const modal = document.getElementById('gasModalOverlay');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function handleModalOverlayClick(e) {
+      if (e.target.id === 'gasModalOverlay') {
+        closeGasSettingsModal();
+      }
+    }
+
+    function renderGasModalList() {
+      const container = document.getElementById('gasModalLabList');
+      if (!container) return;
+
+      container.innerHTML = LABS_CONFIG_META.map(lab => {
+        const currentUrl = (typeof getLabScriptUrl === 'function' ? getLabScriptUrl(lab.id) : '') || (typeof LAB_CONFIG !== 'undefined' ? (LAB_CONFIG[lab.id] || '') : '');
+        const isConfigured = currentUrl && currentUrl.startsWith('https://script.google.com') && !currentUrl.includes('YOUR_GAS_URL');
+        const graderUrl = isConfigured ? (currentUrl.split('?')[0] + '?page=grader') : '#';
+
+        return `
+          <div class="gas-lab-item">
+            <div class="gas-lab-top">
+              <div class="gas-lab-name">
+                <span class="gas-lab-badge">${lab.label}</span>
+                <span>${lab.name}</span>
+              </div>
+              <div>
+                ${isConfigured 
+                  ? `<a href="${graderUrl}" target="_blank" class="gas-btn-sm" style="color:#fbbf24; border-color:rgba(251,191,36,0.4);"><i class="fa-solid fa-clipboard-check"></i> หน้าตรวจงานครู</a>` 
+                  : `<span style="font-size:0.75rem; color:#94a3b8;"><i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i> ยังไม่ได้ใส่ลิงก์</span>`
+                }
+              </div>
+            </div>
+            <div class="gas-input-wrap">
+              <input type="text" id="modal_url_${lab.id}" class="gas-input" value="${currentUrl}" placeholder="https://script.google.com/macros/s/.../exec">
+              ${isConfigured 
+                ? `<a href="${currentUrl}" target="_blank" class="gas-btn-sm" title="ทดสอบเปิด URL"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` 
+                : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function saveGasSettingsFromModal() {
+      LABS_CONFIG_META.forEach(lab => {
+        const input = document.getElementById('modal_url_' + lab.id);
+        if (input && window.localStorage) {
+          const val = input.value.trim();
+          if (val && val.startsWith('https://script.google.com')) {
+            localStorage.setItem('gas_url_' + lab.id, val);
+            if (typeof LAB_CONFIG !== 'undefined') LAB_CONFIG[lab.id] = val;
+          } else {
+            localStorage.removeItem('gas_url_' + lab.id);
+          }
+        }
+      });
+
+      updateCardGasBadges();
+      closeGasSettingsModal();
+      alert('✅ บันทึกลิงก์ Google Apps Script ลงในเบราว์เซอร์เรียบร้อยแล้ว! ทุกใบงานจะส่งคะแนนตรงไปยังลิงก์ที่คุณกำหนด');
+    }
+
+    function resetGasSettingsToDefault() {
+      if (!confirm('ต้องการล้างค่าลิงก์ที่บันทึกไว้ในเบราว์เซอร์นี้แล้วกลับไปใช้ค่าเดิมใน config.js หรือไม่?')) return;
+      LABS_CONFIG_META.forEach(lab => {
+        localStorage.removeItem('gas_url_' + lab.id);
+      });
+      renderGasModalList();
+      updateCardGasBadges();
+      alert('รีเซ็ตการตั้งค่าเรียบร้อยแล้ว');
+    }
+
+    function copyConfigJsSnippet() {
+      const configObj = {};
+      LABS_CONFIG_META.forEach(lab => {
+        const input = document.getElementById('modal_url_' + lab.id);
+        configObj[lab.id] = (input && input.value.trim()) ? input.value.trim() : ('YOUR_GAS_URL_FOR_' + lab.id.toUpperCase().replace(/-/g, '_'));
+      });
+
+      const snippet = "const LAB_CONFIG = " + JSON.stringify(configObj, null, 2) + ";\n\nfunction getLabScriptUrl(labId) {\n  if (typeof window !== 'undefined' && window.localStorage) {\n    const custom = window.localStorage.getItem('gas_url_' + labId);\n    if (custom && custom.trim().startsWith('https://script.google.com')) return custom.trim();\n  }\n  const url = LAB_CONFIG[labId] || '';\n  return (url && !url.includes('YOUR_GAS_URL')) ? url.trim() : '';\n}\n\nif (typeof module !== 'undefined' && module.exports) module.exports = { LAB_CONFIG, getLabScriptUrl };";
+
+      navigator.clipboard.writeText(snippet).then(() => {
+        alert('📋 คัดลอกโค้ดคอนฟิกเรียบร้อยแล้ว! สามารถนำไปวางแทนที่เนื้อหาในไฟล์ config.js แล้ว commit ขึ้น GitHub ได้ทันที');
+      }).catch(() => {
+        prompt('คัดลอกโค้ดด้านล่างนี้ไปวางในไฟล์ config.js:', snippet);
+      });
+    }
+
+    function updateCardGasBadges() {
+      document.querySelectorAll('.card[data-lab-id]').forEach(card => {
+        const labId = card.getAttribute('data-lab-id');
+        const currentUrl = (typeof getLabScriptUrl === 'function' ? getLabScriptUrl(labId) : '') || '';
+        const isConfigured = currentUrl && currentUrl.startsWith('https://script.google.com') && !currentUrl.includes('YOUR_GAS_URL');
+
+        let pill = card.querySelector('.card-gas-pill');
+        if (!pill) {
+          pill = document.createElement('div');
+          pill.className = 'card-gas-pill';
+          const cardTags = card.querySelector('.card-tags');
+          if (cardTags) card.insertBefore(pill, cardTags);
+        }
+
+        if (isConfigured) {
+          pill.className = 'card-gas-pill connected';
+          pill.innerHTML = '<i class="fa-solid fa-circle-check"></i> พร้อมส่งคะแนนเข้า Google Sheets';
+        } else {
+          pill.className = 'card-gas-pill unconfigured';
+          pill.innerHTML = '<i class="fa-solid fa-circle-pause"></i> โหมดจำลองผล (รอใส่ลิงก์ GAS)';
+        }
+
+        // Add or update grader button in card-actions
+        const actions = card.querySelector('.card-actions');
+        if (actions) {
+          let graderBtn = actions.querySelector('.btn-grader-quick');
+          if (isConfigured) {
+            const graderUrl = currentUrl.split('?')[0] + '?page=grader';
+            if (!graderBtn) {
+              graderBtn = document.createElement('a');
+              graderBtn.className = 'btn-grader-quick';
+              graderBtn.target = '_blank';
+              graderBtn.title = 'ตรวจงานนักเรียน (ครู)';
+              graderBtn.innerHTML = '<i class="fa-solid fa-clipboard-check"></i>';
+              actions.appendChild(graderBtn);
+            }
+            graderBtn.href = graderUrl;
+            graderBtn.style.display = 'inline-flex';
+          } else {
+            if (graderBtn && labId !== 'lab-flowchart') {
+              graderBtn.style.display = 'none';
+            }
+          }
+        }
+      });
+    }
+
+    // Call update on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      updateCardGasBadges();
+    });
 
     function setCategory(category, btnEl) {
       currentCategory = category;

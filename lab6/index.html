@@ -1168,6 +1168,8 @@
       display: none;
     }
   </style>
+  <!-- Global Lab Config -->
+  <script src="../config.js"></script>
 </head>
 <body>
   <div class="container">
@@ -1622,6 +1624,8 @@ int main() {
   </div>
 
   <script>
+    const SCRIPT_URL = (typeof getLabScriptUrl === "function" ? getLabScriptUrl("lab6") : "");
+
     // Global Data variables for base64 files
     const filesData = {
       screenshotBase64: null,
@@ -2149,7 +2153,8 @@ int main() {
       // Open Modal Loader
       openModal('loading', 'กำลังบันทึกข้อมูล...', 'ระบบกำลังส่งข้อมูลใบงานของท่านไปยังเซิร์ฟเวอร์ กรุณารอสักครู่...');
 
-      const isGoogleAppsScript = (typeof google !== 'undefined' && google.script && google.script.run);
+      const isGoogleAppsScript = (typeof google !== "undefined" && google.script && google.script.run);
+      const effectiveScriptUrl = (typeof getLabScriptUrl === "function" ? getLabScriptUrl("lab6") : "") || (typeof SCRIPT_URL !== "undefined" ? SCRIPT_URL : "");
       
       if (isGoogleAppsScript) {
         google.script.run
@@ -2174,6 +2179,34 @@ int main() {
             openModal('error', 'ระบบล้มเหลว', err.toString());
           })
           .submitLabData(payload);
+      } else if (effectiveScriptUrl && effectiveScriptUrl.startsWith('https://script.google.com') && !effectiveScriptUrl.includes('YOUR_GAS_URL')) {
+        fetch(effectiveScriptUrl, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+          redirect: "follow"
+        })
+        .then(r => r.json())
+        .then(response => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          if (response.status === "success") {
+            const nowFormatted = new Date().toLocaleString('th-TH');
+            localStorage.setItem('submitted_lab6_' + idVal, nowFormatted);
+            lockFormAsSubmitted(nowFormatted);
+            openModal("success", "ส่งรายงานสำเร็จ!", response.message);
+          } else if (response.status === "duplicate") {
+            openModal("error", "ไม่อนุญาตให้ส่งซ้ำ", response.message);
+            lockFormAsSubmitted('ก่อนหน้านี้');
+          } else {
+            openModal("error", "เกิดข้อผิดพลาด", response.message);
+          }
+        })
+        .catch(err => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          openModal("error", "ระบบล้มเหลว", "ไม่สามารถส่งข้อมูลไปยัง Google Apps Script ได้: " + err.toString());
+        });
       } else {
         // Offline simulation Mode (Local Preview)
         setTimeout(() => {

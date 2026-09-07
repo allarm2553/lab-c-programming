@@ -244,3 +244,25 @@ function submitLabData(data) {
     };
   }
 }
+
+/**
+ * รับคำขอ POST จากหน้าเว็บภายนอก (เช่น GitHub Pages)
+ */
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var result;
+    if (data.action === 'saveTeacherScore' && typeof saveTeacherScore === 'function') {
+      result = saveTeacherScore(data);
+    } else {
+      result = submitLabData(data);
+    }
+    return ContentService
+      .createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: 'doPost error: ' + err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}

@@ -996,6 +996,8 @@
       .button-group, .connection-status, .modal-overlay { display: none !important; }
     }
   </style>
+  <!-- Global Lab Config -->
+  <script src="../config.js"></script>
 </head>
 <body>
   <div class="container">
@@ -1724,7 +1726,7 @@ int main() {
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec";
+    const SCRIPT_URL = (typeof getLabScriptUrl === "function" ? getLabScriptUrl("lab-flowchart") : "") || "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec";
 
     const flowchartsData = {
       flowchartBmiBase64: null, flowchartBmiName: null, flowchartBmiType: null

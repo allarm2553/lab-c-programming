@@ -14,6 +14,16 @@ http.createServer((req, res) => {
     return;
   }
 
+  // Route: Global configuration file
+  if (urlPath === '/config.js') {
+    const configPath = path.join(__dirname, 'config.js');
+    if (fs.existsSync(configPath)) {
+      res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' });
+      res.end(fs.readFileSync(configPath, 'utf-8'));
+      return;
+    }
+  }
+
   // Route: Helper guide for unconfigured grader URL
   if (urlPath === '/GRADER_URL_HERE') {
     serveGraderSetupGuide(res);
