@@ -1379,6 +1379,30 @@ int main() {
             </div>
           </div>
 
+          <!-- เชื่อมต่อ Google Sheets ผู้สอน (Teacher Web App URL Box) -->
+          <div class="gas-connect-box" style="background: rgba(15, 23, 42, 0.7); border: 1.5px dashed rgba(59, 130, 246, 0.4); border-radius: 12px; padding: 1rem 1.25rem; margin: 1.25rem 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+              <div style="font-weight: 600; font-size: 0.92rem; color: #f8fafc; display: flex; align-items: center; gap: 0.45rem;">
+                <i class="fa-solid fa-link" style="color: #60a5fa;"></i> เชื่อมต่อ Google Sheets ผู้สอน (Teacher Web App URL):
+              </div>
+              <span id="teacherGasBadge" style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); color: #93c5fd; padding: 0.2rem 0.7rem; border-radius: 999px; font-size: 0.76rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.35rem;">
+                <i class="fa-solid fa-globe"></i> โหมดจำลองในเครื่อง (ยังไม่เชื่อมต่อชีต)
+              </span>
+            </div>
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.75rem; line-height: 1.4;">
+              นำลิงก์ Web App จาก Google Apps Script ของผู้สอนมาวาง เพื่อบันทึกคะแนนลงชีตของท่านโดยตรง
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="teacherGasUrlInput" placeholder="วางลิงก์ https://script.google.com/macros/s/.../exec ที่นี่..." style="flex: 1; min-width: 240px; background: rgba(11, 17, 32, 0.9); border: 1px solid #334155; border-radius: 7px; padding: 0.45rem 0.75rem; color: #f8fafc; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace; outline: none;">
+              <button type="button" onclick="saveTeacherGasUrl('lab7')" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: #fff; padding: 0.48rem 0.95rem; border-radius: 7px; font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; transition: all 0.2s;">
+                <i class="fa-solid fa-floppy-disk"></i> บันทึก URL
+              </button>
+              <button type="button" onclick="testTeacherGasUrl('lab7')" style="background: linear-gradient(135deg, #06b6d4, #0ea5e9); border: none; color: #fff; padding: 0.48rem 0.95rem; border-radius: 7px; font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; transition: all 0.2s;">
+                <i class="fa-solid fa-bolt"></i> ทดสอบเชื่อมต่อ
+              </button>
+            </div>
+          </div>
+
           <!-- Section 2: Code Submission / Challenge -->
           <div class="form-section">
             <div class="form-section-title">
@@ -1646,6 +1670,7 @@ int main() {
 
     // Auto-setup when DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
+      if (typeof initTeacherGasBox === "function") initTeacherGasBox();
       // 1. Check environment
       const isGoogleAppsScript = (typeof google !== 'undefined' && google.script && google.script.run);
       const connBanner = document.getElementById('connectionStatus');
@@ -2078,6 +2103,57 @@ int main() {
     }
 
     // Handle Form submission
+    
+    // Teacher Google Sheets Connection Management
+    function initTeacherGasBox() {
+      const input = document.getElementById('teacherGasUrlInput');
+      const badge = document.getElementById('teacherGasBadge');
+      if (!input || !badge) return;
+
+      const currentUrl = (typeof getLabScriptUrl === 'function' ? getLabScriptUrl('lab7') : '') || (typeof SCRIPT_URL !== 'undefined' ? SCRIPT_URL : '');
+      if (currentUrl && currentUrl.startsWith('https://script.google.com') && !currentUrl.includes('YOUR_GAS_URL') && !currentUrl.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) {
+        input.value = currentUrl;
+        badge.style.background = 'rgba(16, 185, 129, 0.15)';
+        badge.style.border = '1px solid rgba(16, 185, 129, 0.4)';
+        badge.style.color = '#6ee7b7';
+        badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> เชื่อมต่อ Google Sheets ผู้สอนแล้ว';
+      } else {
+        badge.style.background = 'rgba(59, 130, 246, 0.12)';
+        badge.style.border = '1px solid rgba(59, 130, 246, 0.3)';
+        badge.style.color = '#93c5fd';
+        badge.innerHTML = '<i class="fa-solid fa-globe"></i> โหมดจำลองในเครื่อง (ยังไม่เชื่อมต่อชีต)';
+      }
+    }
+
+    function saveTeacherGasUrl(labId) {
+      const input = document.getElementById('teacherGasUrlInput');
+      if (!input) return;
+      const val = input.value.trim();
+      if (val && !val.startsWith('https://script.google.com')) {
+        openModal('error', 'URL ไม่ถูกต้อง', 'กรุณาวาง Web App URL ที่ขึ้นต้นด้วย https://script.google.com/macros/s/.../exec');
+        return;
+      }
+      if (val) {
+        localStorage.setItem('gas_url_' + labId, val);
+        if (typeof LAB_CONFIG !== 'undefined') LAB_CONFIG[labId] = val;
+        openModal('success', 'บันทึกสำเร็จ!', 'เชื่อมต่อ Web App เรียบร้อยแล้ว ใบงานนี้จะส่งข้อมูลและประเมินผลคะแนนตรงไปยัง Google Sheets ของท่านทันที');
+      } else {
+        localStorage.removeItem('gas_url_' + labId);
+        openModal('info', 'ล้างการเชื่อมต่อ', 'ล้างค่า URL แล้ว ระบบจะกลับไปทำงานในโหมดจำลองผลออฟไลน์');
+      }
+      initTeacherGasBox();
+    }
+
+    function testTeacherGasUrl(labId) {
+      const input = document.getElementById('teacherGasUrlInput');
+      const val = input ? input.value.trim() : '';
+      if (!val || !val.startsWith('https://script.google.com')) {
+        openModal('error', 'ไม่พบคอนฟิก URL', 'กรุณากรอกหรือวาง Web App URL ก่อนกดทดสอบ');
+        return;
+      }
+      window.open(val.split('?')[0] + '?page=grader', '_blank');
+    }
+
     function handleFormSubmit(e) {
       if (e) e.preventDefault();
       openSubmitConfirmModal();
