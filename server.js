@@ -83,8 +83,19 @@ http.createServer((req, res) => {
   console.log(`======================================================\n`);
 });
 
-// Helper function to serve the dynamic landing portal page
+// Helper function to serve the landing portal page
 function servePortal(res) {
+  const portalPath = path.join(__dirname, 'index.html');
+  if (fs.existsSync(portalPath)) {
+    const html = fs.readFileSync(portalPath, 'utf-8');
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Permissions-Policy': 'clipboard-read=*, clipboard-write=*',
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+    });
+    res.end(html);
+    return;
+  }
   const html = `<!DOCTYPE html>
 <html lang="th">
 <head>
