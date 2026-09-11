@@ -1303,6 +1303,9 @@
               <button type="button" onclick="saveTeacherGasUrl('lab-flowchart')" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: #fff; padding: 0.48rem 0.95rem; border-radius: 7px; font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; transition: all 0.2s;">
                 <i class="fa-solid fa-floppy-disk"></i> บันทึก URL
               </button>
+              <button type="button" onclick="copyStudentShareLink('lab-flowchart')" style="background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; padding: 0.48rem 0.95rem; border-radius: 7px; font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; transition: all 0.2s;" title="คัดลอกลิงก์ที่แนบ Google Apps Script ส่งให้นักเรียน">
+                <i class="fa-solid fa-share-nodes"></i> คัดลอกลิงก์ให้นักเรียน
+              </button>
               <button type="button" onclick="testTeacherGasUrl('lab-flowchart')" style="background: linear-gradient(135deg, #06b6d4, #0ea5e9); border: none; color: #fff; padding: 0.48rem 0.95rem; border-radius: 7px; font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; transition: all 0.2s;">
                 <i class="fa-solid fa-bolt"></i> ทดสอบเชื่อมต่อ
               </button>
@@ -1750,27 +1753,33 @@ int main() {
   </div>
 
   <script>
-    const SCRIPT_URL = (typeof getLabScriptUrl === "function" ? getLabScriptUrl("lab-flowchart") : "") || "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec";
+    const SCRIPT_URL = (typeof getLabScriptUrl === "function" ? getLabScriptUrl("lab-flowchart") : "");
 
     const flowchartsData = {
       flowchartBmiBase64: null, flowchartBmiName: null, flowchartBmiType: null
     };
 
-    document.addEventListener("DOMContentLoaded", () => {
-      if (typeof initTeacherGasBox === "function") initTeacherGasBox();
+    function updateConnectionBanner() {
       const isGoogleAppsScript = (typeof google !== "undefined" && google.script && google.script.run);
       const connBanner = document.getElementById("connectionStatus");
+      if (!connBanner) return;
+      const effectiveScriptUrl = (typeof getLabScriptUrl === "function" ? getLabScriptUrl("lab-flowchart") : "") || (typeof SCRIPT_URL !== "undefined" ? SCRIPT_URL : "");
       
       if (isGoogleAppsScript) {
         connBanner.className = "connection-status cloud";
         connBanner.innerHTML = "<i class='fa-solid fa-cloud'></i> <span>เชื่อมต่อ Google Sheets แล้ว (Online Mode)</span>";
-      } else if (SCRIPT_URL && !SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_URL_HERE")) {
+      } else if (effectiveScriptUrl && effectiveScriptUrl.startsWith("https://script.google.com") && !effectiveScriptUrl.includes("YOUR_GAS_URL") && !effectiveScriptUrl.includes("YOUR_GOOGLE_APPS_SCRIPT_URL_HERE")) {
         connBanner.className = "connection-status cloud";
         connBanner.innerHTML = "<i class='fa-solid fa-link'></i> <span>เชื่อมต่อ Web API แล้ว (Online Endpoint)</span>";
       } else {
         connBanner.className = "connection-status local";
         connBanner.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> <span>Local Preview Mode (โหมดทดสอบออฟไลน์)</span>";
       }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof initTeacherGasBox === "function") initTeacherGasBox();
+      updateConnectionBanner();
 
       const dateInput = document.getElementById("labDate");
       if (dateInput) {
@@ -2248,6 +2257,22 @@ int main() {
         openModal('info', 'ล้างการเชื่อมต่อ', 'ล้างค่า URL แล้ว ระบบจะกลับไปทำงานในโหมดจำลองผลออฟไลน์');
       }
       initTeacherGasBox();
+      if (typeof updateConnectionBanner === 'function') updateConnectionBanner();
+    }
+
+    function copyStudentShareLink(labId) {
+      const input = document.getElementById('teacherGasUrlInput');
+      const val = (input && input.value.trim()) || (typeof getLabScriptUrl === 'function' ? getLabScriptUrl(labId) : '');
+      if (!val || !val.startsWith('https://script.google.com')) {
+        openModal('error', 'ยังไม่ได้ระบุลิงก์ GAS', 'กรุณาวาง Web App URL ในช่องแล้วกดบันทึก ก่อนคัดลอกลิงก์ส่งให้นักเรียน');
+        return;
+      }
+      const shareUrl = window.location.origin + window.location.pathname + '?gas=' + encodeURIComponent(val);
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        openModal('success', 'คัดลอกลิงก์สำเร็จ! 🎉', 'คัดลอกลิงก์ใบงานที่แนบระบบส่งคะแนนของคุณเรียบร้อยแล้ว:\n\n' + shareUrl + '\n\nสามารถส่งลิงก์นี้ให้นักเรียนในห้องเรียนได้ทันที!');
+      }).catch(() => {
+        prompt('คัดลอกลิงก์นี้ส่งให้นักเรียน:', shareUrl);
+      });
     }
 
     function testTeacherGasUrl(labId) {
@@ -2309,6 +2334,7 @@ int main() {
       openModal("loading", "กำลังบันทึกข้อมูล...", "ระบบกำลังบันทึกและประเมินผลการทดลอง กรุณารอสักครู่...");
 
       const isGoogleAppsScript = (typeof google !== "undefined" && google.script && google.script.run);
+      const effectiveScriptUrl = (typeof getLabScriptUrl === "function" ? getLabScriptUrl("lab-flowchart") : "") || (typeof SCRIPT_URL !== "undefined" ? SCRIPT_URL : "");
 
       if (isGoogleAppsScript) {
         google.script.run
@@ -2327,8 +2353,8 @@ int main() {
             openModal("error", "ระบบล้มเหลว", err.toString());
           })
           .submitLabData(payload);
-      } else if (SCRIPT_URL && !SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_URL_HERE")) {
-        fetch(SCRIPT_URL, {
+      } else if (effectiveScriptUrl && effectiveScriptUrl.startsWith("https://script.google.com") && !effectiveScriptUrl.includes("YOUR_GAS_URL") && !effectiveScriptUrl.includes("YOUR_GOOGLE_APPS_SCRIPT_URL_HERE")) {
+        fetch(effectiveScriptUrl, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload),

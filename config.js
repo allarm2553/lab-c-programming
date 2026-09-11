@@ -9,7 +9,7 @@
 
 const LAB_CONFIG = {
   // พื้นฐาน & ผังงาน
-  "lab-flowchart": "https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec",
+  "lab-flowchart": "YOUR_GAS_URL_FOR_LAB_FLOWCHART",
   "lab-basic": "YOUR_GAS_URL_FOR_LAB_BASIC",
   "lab-structure": "YOUR_GAS_URL_FOR_LAB_STRUCTURE",
 
@@ -32,15 +32,35 @@ const LAB_CONFIG = {
 };
 
 /**
- * ดึง Web App URL ที่พร้อมใช้งาน (ดึงจาก localStorage ก่อน หากอาจารย์ตั้งค่าผ่าน UI)
+ * ดึง Web App URL ที่พร้อมใช้งาน
+ * ลำดับการตรวจสอบ:
+ * 1. ตรวจสอบจาก URL Query Parameter (?gas=... หรือ ?gas_url=...) ก่อน (สำหรับลิงก์ที่อาจารย์แนบส่งให้นักศึกษา)
+ * 2. ตรวจสอบจาก localStorage (หากอาจารย์บันทึกผ่านหน้าเว็บในเบราว์เซอร์นี้)
+ * 3. ใช้ค่าเริ่มต้นจาก LAB_CONFIG ใน config.js
  */
 function getLabScriptUrl(labId) {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    const custom = window.localStorage.getItem('gas_url_' + labId);
-    if (custom && custom.trim().startsWith('https://script.google.com')) {
-      return custom.trim();
+  if (typeof window !== 'undefined') {
+    // 1. ตรวจสอบ URL Query Parameter (?gas=... หรือ ?gas_url=...)
+    if (window.location && window.location.search) {
+      const params = new URLSearchParams(window.location.search);
+      const queryGas = params.get('gas') || params.get('gas_url');
+      if (queryGas && queryGas.trim().startsWith('https://script.google.com')) {
+        const cleanGas = queryGas.trim();
+        if (window.localStorage && labId) {
+          try { window.localStorage.setItem('gas_url_' + labId, cleanGas); } catch(e){}
+        }
+        return cleanGas;
+      }
+    }
+    // 2. ตรวจสอบ localStorage ในเครื่อง
+    if (window.localStorage) {
+      const custom = window.localStorage.getItem('gas_url_' + labId);
+      if (custom && custom.trim().startsWith('https://script.google.com')) {
+        return custom.trim();
+      }
     }
   }
+  // 3. Fallback เป็นค่าใน config.js
   const url = LAB_CONFIG[labId] || '';
   if (url && !url.includes('YOUR_GAS_URL')) {
     return url.trim();

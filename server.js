@@ -251,8 +251,8 @@ function servePortal(res) {
             <div class="card-title">Basic Flowchart</div>
           </div>
           <div class="card-desc">การเขียนผังงาน (Flowchart) สัญลักษณ์มาตรฐาน การวิเคราะห์ Input-Process-Output และการออกแบบขั้นตอนการทำงานของโปรแกรม</div>
-          <!-- ปุ่มตรวจงานครู -->
-          <a href="https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec?page=grader" target="_blank" class="grader-btn" id="graderLink" title="เปิดหน้าตรวจงานสำหรับครู">
+          <!-- ปุ่มตรวจงานครู (จะแสดงเมื่อเชื่อมต่อกับ Google Apps Script) -->
+          <a href="#" target="_blank" class="grader-btn" id="graderLink" title="เปิดหน้าตรวจงานสำหรับครู" style="display:none;">
             <i class="fa-solid fa-clipboard-check"></i> ตรวจงานนักเรียน (ครู)
           </a>
         </div>

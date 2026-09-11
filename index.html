@@ -800,15 +800,15 @@
         <a href="https://github.com/allarm2553/lab-c-programming" target="_blank" class="nav-btn nav-btn-outline">
           <i class="fa-brands fa-github"></i> GitHub Repo
         </a>
-        <a href="https://github.com/allarm2553/lab-c-programming/blob/main/TEACHER_ADMIN_MANUAL.md" target="_blank" class="nav-btn nav-btn-outline">
-          <i class="fa-solid fa-book"></i> คู่มืออาจารย์
+        <a href="https://github.com/allarm2553/lab-c-programming/blob/main/TEACHER_GAS_SETUP_MANUAL.md" target="_blank" class="nav-btn nav-btn-outline" title="คู่มือเชื่อมต่อ Google Sheets และการแชร์ลิงก์ให้นักเรียน">
+          <i class="fa-solid fa-share-nodes"></i> วิธีส่งลิงก์ให้นักเรียน
+        </a>
+        <a href="https://github.com/allarm2553/lab-c-programming/blob/main/TEACHER_ADMIN_MANUAL.md" target="_blank" class="nav-btn nav-btn-outline" title="คู่มือการบริหารจัดการและปลดล็อกส่งงานใหม่">
+          <i class="fa-solid fa-book"></i> คู่มือปลดล็อกส่งงาน
         </a>
         <button type="button" class="nav-btn nav-btn-accent" onclick="openGasSettingsModal()" style="cursor:pointer;" title="ตั้งค่าลิงก์ส่งคะแนน Google Apps Script">
           <i class="fa-solid fa-link"></i> ลิงก์ส่งคะแนน (14 Labs)
         </button>
-        <a href="https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec?page=grader" target="_blank" class="nav-btn nav-btn-outline" title="เปิดหน้าตรวจงานสำหรับครู">
-          <i class="fa-solid fa-clipboard-check"></i> ตรวจงาน Flowchart
-        </a>
       </div>
     </nav>
 
@@ -903,7 +903,6 @@
         </div>
         <div class="card-actions">
           <a href="./lab-flowchart/" class="btn-enter-lab">เข้าสู่ใบงาน <i class="fa-solid fa-arrow-right"></i></a>
-          <a href="https://script.google.com/a/macros/tatc.ac.th/s/AKfycbw4yyO-SchYUrk7RCFgFr3hAJHYucagnyyHyu4CoSz0f3bw_e_DBicTB12CPmelKCet_w/exec?page=grader" target="_blank" class="btn-grader-quick" title="ตรวจงานนักเรียน (ครู)"><i class="fa-solid fa-clipboard-check"></i></a>
         </div>
       </div>
 
@@ -1370,7 +1369,7 @@
             graderBtn.href = graderUrl;
             graderBtn.style.display = 'inline-flex';
           } else {
-            if (graderBtn && labId !== 'lab-flowchart') {
+            if (graderBtn) {
               graderBtn.style.display = 'none';
             }
           }
