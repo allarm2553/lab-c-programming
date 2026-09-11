@@ -1185,8 +1185,9 @@
       <div class="gas-modal-body">
         <div class="gas-guide-tip">
           <strong><i class="fa-solid fa-circle-info"></i> คำแนะนำสำหรับอาจารย์:</strong><br>
-          1. นำ <strong>Web App URL</strong> ที่ได้จากการ Deploy ใน Google Apps Script (เช่น <code>https://script.google.com/macros/s/.../exec</code>) ของแต่ละแล็บมาวางในช่องด้านล่าง<br>
-          2. กด <strong>"💾 บันทึกลงเบราว์เซอร์"</strong> เพื่อให้เครื่องนี้ส่งงานได้ทันที หรือกด <strong>"📋 คัดลอกโค้ดไปใส่ config.js"</strong> เพื่อนำไปอัปเดตไฟล์ใน GitHub Repository ให้ทุกคนใช้ร่วมกัน
+          1. สามารถกดปุ่ม <strong>"📥 Code.gs"</strong> หรือ <strong>"📋 คัดลอก"</strong> เพื่อนำโค้ดประจำแล็บไปสร้าง Google Apps Script ได้ทันที<br>
+          2. นำ <strong>Web App URL</strong> ที่ได้จากการ Deploy มาวางในช่อง แล้วกด <strong>"💾 บันทึก"</strong> หรือกด <strong>"🔗 ลิงก์นักเรียน"</strong> เพื่อส่งให้นักเรียนเข้าทำใบงาน<br>
+          3. กด <strong>"📋 คัดลอกโค้ดสำหรับ config.js"</strong> หากต้องการนำไปอัปเดตไฟล์ config.js บน GitHub ให้ทุกคนใช้ร่วมกัน
         </div>
 
         <div class="gas-lab-list" id="gasModalLabList">
@@ -1267,9 +1268,16 @@
                 <span class="gas-lab-badge">${lab.label}</span>
                 <span>${lab.name}</span>
               </div>
-              <div>
+              <div style="display:flex; gap:0.35rem; align-items:center; flex-wrap:wrap;">
+                <a href="./${lab.id}/Code.gs" download="Code_${lab.id}.gs" class="gas-btn-sm" style="color:#60a5fa; border-color:rgba(96,165,250,0.4);" title="ดาวน์โหลดไฟล์ Code.gs ของแล็บนี้">
+                  <i class="fa-solid fa-download"></i> Code.gs
+                </a>
+                <button type="button" class="gas-btn-sm" onclick="copyCodeGsFromModal('${lab.id}')" style="color:#c084fc; border-color:rgba(192,132,252,0.4); cursor:pointer;" title="คัดลอกโค้ด Code.gs ไปวางใน Apps Script">
+                  <i class="fa-solid fa-copy"></i> คัดลอก
+                </button>
                 ${isConfigured 
-                  ? `<a href="${graderUrl}" target="_blank" class="gas-btn-sm" style="color:#fbbf24; border-color:rgba(251,191,36,0.4);"><i class="fa-solid fa-clipboard-check"></i> หน้าตรวจงานครู</a>` 
+                  ? `<button type="button" class="gas-btn-sm" onclick="copyStudentShareLinkFromModal('${lab.id}')" style="color:#34d399; border-color:rgba(52,211,153,0.4); cursor:pointer;" title="คัดลอกลิงก์ใบงานที่แนบส่งให้นักเรียน"><i class="fa-solid fa-share-nodes"></i> ลิงก์นักเรียน</button>
+                     <a href="${graderUrl}" target="_blank" class="gas-btn-sm" style="color:#fbbf24; border-color:rgba(251,191,36,0.4);"><i class="fa-solid fa-clipboard-check"></i> หน้าตรวจงานครู</a>` 
                   : `<span style="font-size:0.75rem; color:#94a3b8;"><i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i> ยังไม่ได้ใส่ลิงก์</span>`
                 }
               </div>
@@ -1327,6 +1335,40 @@
         alert('📋 คัดลอกโค้ดคอนฟิกเรียบร้อยแล้ว! สามารถนำไปวางแทนที่เนื้อหาในไฟล์ config.js แล้ว commit ขึ้น GitHub ได้ทันที');
       }).catch(() => {
         prompt('คัดลอกโค้ดด้านล่างนี้ไปวางในไฟล์ config.js:', snippet);
+      });
+    }
+
+    function copyCodeGsFromModal(labId) {
+      fetch('./' + labId + '/Code.gs')
+        .then(res => {
+          if (!res.ok) throw new Error('Network error');
+          return res.text();
+        })
+        .then(code => {
+          navigator.clipboard.writeText(code).then(() => {
+            alert('📋 คัดลอก Code.gs สำหรับ ' + labId + ' สำเร็จแล้ว!\nนำไปเปิดใน Google Apps Script แล้วกด Ctrl+V วางเพื่อ Deploy ได้ทันที');
+          }).catch(() => {
+            prompt('คัดลอกโค้ดด้านล่างนี้สำหรับ ' + labId + ':', code);
+          });
+        })
+        .catch(() => {
+          window.open('https://github.com/allarm2553/lab-c-programming/blob/main/' + labId + '/Code.gs', '_blank');
+        });
+    }
+
+    function copyStudentShareLinkFromModal(labId) {
+      const input = document.getElementById('modal_url_' + labId);
+      const val = (input && input.value.trim()) || (typeof getLabScriptUrl === 'function' ? getLabScriptUrl(labId) : '');
+      if (!val || !val.startsWith('https://script.google.com')) {
+        alert('⚠️ ยังไม่ได้ระบุลิงก์ GAS สำหรับ ' + labId + '\nกรุณาใส่ Web App URL ในช่องก่อนคัดลอกลิงก์ให้นักเรียน');
+        return;
+      }
+      const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/') + labId + '/';
+      const shareUrl = baseUrl + '?gas=' + encodeURIComponent(val);
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('🎉 คัดลอกลิงก์สำเร็จ!\n\n' + shareUrl + '\n\nส่งลิงก์นี้ให้นักเรียนเข้าทำ ' + labId + ' ได้ทันที!');
+      }).catch(() => {
+        prompt('คัดลอกลิงก์นี้ส่งให้นักเรียน:', shareUrl);
       });
     }
 
